@@ -152,5 +152,48 @@ console.log("== EXP / Nível / Evolução ==");
     eq(m.learnMove("TACKLE"), "known", "não reaprende golpe conhecido");
 }
 
+// status / estágios / efeitos (Fase 5b)
+console.log("== Status & Estágios (5b) ==");
+{
+    const B = ctx.PKM.Battle;
+    // imunidades de status
+    eq(B.statusImmune(new G("CHARIZARD", 50), "BRN"), true, "Fire imune a queimadura");
+    eq(B.statusImmune(new G("LAPRAS", 50), "FRZ"), true, "Ice imune a congelamento");
+    eq(B.statusImmune(new G("MUK", 50), "PSN"), true, "Poison imune a veneno");
+    eq(B.statusImmune(new G("RATTATA", 50), "PAR"), false, "Normal pode ser paralisado");
+
+    // aplicar status
+    const r = new G("RATTATA", 50);
+    ok(B.applyStatus(r, "PSN").ok && r.status === "PSN", "aplica veneno");
+    eq(B.applyStatus(r, "BRN").ok, false, "não aplica 2º status");
+
+    // dano residual de veneno
+    const before = r.hp;
+    B.endOfTurnResidual(r);
+    ok(r.hp === before - Math.floor(r.maxHp / 8), "veneno tira 1/8 do HP máx");
+
+    // estágios de stat
+    const s = new G("MACHAMP", 50);
+    const atk0 = s.battleStat("atk");
+    B.applyStatChange(s, "atk", 2);
+    eq(s.stage("atk"), 2, "Swords Dance: +2 de estágio de Ataque");
+    ok(s.battleStat("atk") === Math.floor(atk0 * 2), "Atk dobra com +2 estágios");
+    B.applyStatChange(s, "atk", 6);
+    eq(s.stage("atk"), 6, "estágio satura em +6");
+
+    // paralisia reduz velocidade pela metade
+    const par = new G("JOLTEON", 50);
+    const spe0 = par.battleSpeed();
+    par.status = "PAR";
+    ok(par.battleSpeed() === Math.floor(spe0 / 2), "paralisia reduz velocidade à metade");
+
+    // queimadura reduz dano físico
+    const a = new G("MACHAMP", 50), d = new G("SNORLAX", 50);
+    const normal = B.calcDamage(a, d, "TACKLE", { fixedRand: 1, forceCrit: false });
+    a.status = "BRN";
+    const burned = B.calcDamage(a, d, "TACKLE", { fixedRand: 1, forceCrit: false });
+    ok(burned.damage < normal.damage, "queimadura reduz dano físico");
+}
+
 console.log(`\nResultado: ${pass} passou, ${fail} falhou`);
 process.exit(fail ? 1 : 0);

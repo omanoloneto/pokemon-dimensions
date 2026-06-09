@@ -263,6 +263,37 @@
         return true;
     };
 
+    //--- estado de batalha: estágios de stat / velocidade (Fase 5b) ----------
+    Game_Pokemon.prototype.resetBattleState = function() {
+        this._stages = { atk: 0, def: 0, spa: 0, spd: 0, spe: 0, acc: 0, eva: 0 };
+        this._toxic = 0;
+        if (this._status !== "SLP") this._sleepTurns = 0;
+    };
+    Game_Pokemon.prototype.stage = function(k) {
+        if (!this._stages) this.resetBattleState();
+        return this._stages[k] || 0;
+    };
+    Game_Pokemon.prototype.changeStage = function(k, d) {
+        if (!this._stages) this.resetBattleState();
+        const before = this._stages[k] || 0;
+        const after = Math.max(-6, Math.min(6, before + d));
+        this._stages[k] = after;
+        return after - before;                 // delta efetivamente aplicado
+    };
+    Game_Pokemon.prototype.stageMult = function(k) {
+        const s = this.stage(k);
+        if (k === "acc" || k === "eva") return s >= 0 ? (3 + s) / 3 : 3 / (3 - s);
+        return s >= 0 ? (2 + s) / 2 : 2 / (2 - s);
+    };
+    Game_Pokemon.prototype.battleStat = function(k) {
+        return Math.max(1, Math.floor(this.stat(k) * this.stageMult(k)));
+    };
+    Game_Pokemon.prototype.battleSpeed = function() {
+        let spe = this.battleStat("spe");
+        if (this._status === "PAR") spe = Math.floor(spe * 0.5);   // paralisia reduz velocidade
+        return spe;
+    };
+
     //--- conveniências -------------------------------------------------------
     Game_Pokemon.prototype.genderSymbol = function() {
         return this._gender === "M" ? "♂" : this._gender === "F" ? "♀" : "";

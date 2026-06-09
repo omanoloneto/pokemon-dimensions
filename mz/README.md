@@ -16,7 +16,8 @@ da raiz — nada aqui sobrescreve o jogo original.
 | **Batalha 1v1 + Captura**               | ✅ Fases 5a/6 |
 | **Mochila, itens & dinheiro**           | ✅ Fase 3 |
 | **EXP, nível, golpes & evolução**       | ✅ Fase 7 |
-| Status em batalha (5b), PC, treinadores | ⬜ a fazer |
+| **Status, estágios & efeitos de golpe** | ✅ Fase 5b |
+| PC/boxes, treinadores, polimento        | ⬜ a fazer |
 
 ## Estrutura
 
@@ -74,10 +75,23 @@ mz/
 - O selvagem encontrado é registrado como **visto** na Pokédex.
 - A tela de resumo mostra EXP atual e EXP para o próximo nível.
 
+## Profundidade de batalha (Fase 5b)
+
+- **Condições de status**: veneno (1/8 HP/turno), veneno grave (TOX crescente),
+  queimadura (1/8 HP + metade do dano físico), paralisia (25% trava + ½
+  velocidade), sono (1–3 turnos), congelamento (20% descongela/turno).
+- **Estágios de stat** (−6…+6): golpes como Swords Dance, Growl, Thunder Wave,
+  Will-O-Wisp, Sleep Powder, Toxic, etc., além de efeitos secundários de golpes
+  de dano (ex.: Ember 10% queima, Thunderbolt 10% paralisa, Body Slam 30%).
+- **Precisão** afetada por estágios de precisão/evasão. Trocar de Pokémon zera
+  os estágios. Imunidades por tipo (Fogo não queima, Gelo não congela, etc.).
+- O registry `PKM.Battle.MOVE_EFFECTS` (em PKM_Battle.js) é data-driven — dá
+  para adicionar mais golpes facilmente.
+
 ## Testes automatizados (lógica)
 
 ```bash
-node mz/tools/test_harness.js   # Pokémon, dano, captura, itens e crescimento (27 testes)
+node mz/tools/test_harness.js   # Pokémon, dano, captura, itens, crescimento e status (39 testes)
 ```
 
 ## Como usar

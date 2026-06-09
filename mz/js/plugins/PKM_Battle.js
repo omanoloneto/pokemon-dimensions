@@ -42,8 +42,9 @@ PKM.Battle = PKM.Battle || {};
         const level = attacker.level;
         const power = md.power;
         const physical = md.category === "Physical";
-        const A = physical ? attacker.stat("atk") : attacker.stat("spa");
-        const D = physical ? defender.stat("def") : defender.stat("spd");
+        const useStage = typeof attacker.battleStat === "function";
+        const A = useStage ? attacker.battleStat(physical ? "atk" : "spa") : attacker.stat(physical ? "atk" : "spa");
+        const D = useStage ? defender.battleStat(physical ? "def" : "spd") : defender.stat(physical ? "def" : "spd");
 
         let base = Math.floor(Math.floor(Math.floor(2 * level / 5 + 2) * power * A / D) / 50) + 2;
 
@@ -52,13 +53,14 @@ PKM.Battle = PKM.Battle || {};
         const crit = opts.forceCrit || Math.randomInt(24) === 0;
         const critMod = crit ? 1.5 : 1.0;
         const rand = opts.fixedRand !== undefined ? opts.fixedRand : (85 + Math.randomInt(16)) / 100;
+        const burn = (physical && attacker.status === "BRN") ? 0.5 : 1.0;  // queimadura reduz ataque físico
 
         let damage = 0;
         if (eff > 0) {
-            damage = Math.floor(base * stab * eff * critMod * rand);
+            damage = Math.floor(base * stab * eff * critMod * rand * burn);
             if (damage < 1) damage = 1;
         }
-        return { damage, effectiveness: eff, crit, stab };
+        return { damage, effectiveness: eff, crit, stab, burn };
     };
 
     // tentativa de captura. ballBonus: PokeBall=1, Great=1.5, Ultra=2, Master=255.
@@ -85,8 +87,131 @@ PKM.Battle = PKM.Battle || {};
         const pa = (PKM.Core.move(moveA.id) || {}).priority || 0;
         const pb = (PKM.Core.move(moveB.id) || {}).priority || 0;
         if (pa !== pb) return pa > pb;
-        if (monA.spe !== monB.spe) return monA.spe > monB.spe;
+        const sa = monA.battleSpeed ? monA.battleSpeed() : monA.spe;
+        const sb = monB.battleSpeed ? monB.battleSpeed() : monB.spe;
+        if (sa !== sb) return sa > sb;
         return Math.random() < 0.5;
+    };
+
+    //=========================================================================
+    // Status, estágios de stat e efeitos de golpe (Fase 5b)
+    //=========================================================================
+
+    // registry de efeitos por golpe (internalName). target: "self" | "foe".
+    // status moves usam {status}/{stats}; golpes de dano usam {secondary, chance}.
+    PKM.Battle.MOVE_EFFECTS = {
+        // --- inflige status (golpes de status) ---
+        POISONPOWDER: { status: "PSN", target: "foe" }, POISONGAS: { status: "PSN", target: "foe" },
+        TOXIC: { status: "TOX", target: "foe" },
+        THUNDERWAVE: { status: "PAR", target: "foe" }, STUNSPORE: { status: "PAR", target: "foe" },
+        GLARE: { status: "PAR", target: "foe" },
+        WILLOWISP: { status: "BRN", target: "foe" },
+        SLEEPPOWDER: { status: "SLP", target: "foe" }, SPORE: { status: "SLP", target: "foe" },
+        HYPNOSIS: { status: "SLP", target: "foe" }, SING: { status: "SLP", target: "foe" },
+        LOVELYKISS: { status: "SLP", target: "foe" }, GRASSWHISTLE: { status: "SLP", target: "foe" },
+        // --- baixa stats do oponente ---
+        GROWL: { stats: { atk: -1 }, target: "foe" }, TAILWHIP: { stats: { def: -1 }, target: "foe" },
+        LEER: { stats: { def: -1 }, target: "foe" }, STRINGSHOT: { stats: { spe: -1 }, target: "foe" },
+        SCREECH: { stats: { def: -2 }, target: "foe" }, METALSOUND: { stats: { spd: -2 }, target: "foe" },
+        SMOKESCREEN: { stats: { acc: -1 }, target: "foe" }, SANDATTACK: { stats: { acc: -1 }, target: "foe" },
+        SCARYFACE: { stats: { spe: -2 }, target: "foe" }, CHARM: { stats: { atk: -2 }, target: "foe" },
+        // --- aumenta os próprios stats ---
+        SWORDSDANCE: { stats: { atk: 2 }, target: "self" }, GROWTH: { stats: { atk: 1, spa: 1 }, target: "self" },
+        AGILITY: { stats: { spe: 2 }, target: "self" }, HARDEN: { stats: { def: 1 }, target: "self" },
+        WITHDRAW: { stats: { def: 1 }, target: "self" }, DEFENSECURL: { stats: { def: 1 }, target: "self" },
+        IRONDEFENSE: { stats: { def: 2 }, target: "self" }, AMNESIA: { stats: { spd: 2 }, target: "self" },
+        CALMMIND: { stats: { spa: 1, spd: 1 }, target: "self" }, NASTYPLOT: { stats: { spa: 2 }, target: "self" },
+        DRAGONDANCE: { stats: { atk: 1, spe: 1 }, target: "self" }, BULKUP: { stats: { atk: 1, def: 1 }, target: "self" },
+        // --- golpes de dano com efeito secundário (chance %) ---
+        EMBER: { secondary: { status: "BRN" }, chance: 10 }, FLAMETHROWER: { secondary: { status: "BRN" }, chance: 10 },
+        FIREBLAST: { secondary: { status: "BRN" }, chance: 10 }, FIREPUNCH: { secondary: { status: "BRN" }, chance: 10 },
+        THUNDERSHOCK: { secondary: { status: "PAR" }, chance: 10 }, THUNDERBOLT: { secondary: { status: "PAR" }, chance: 10 },
+        THUNDER: { secondary: { status: "PAR" }, chance: 30 }, THUNDERPUNCH: { secondary: { status: "PAR" }, chance: 10 },
+        ICEBEAM: { secondary: { status: "FRZ" }, chance: 10 }, BLIZZARD: { secondary: { status: "FRZ" }, chance: 10 },
+        ICEPUNCH: { secondary: { status: "FRZ" }, chance: 10 },
+        BODYSLAM: { secondary: { status: "PAR" }, chance: 30 }, LICK: { secondary: { status: "PAR" }, chance: 30 },
+        POISONSTING: { secondary: { status: "PSN" }, chance: 30 }, SLUDGE: { secondary: { status: "PSN" }, chance: 30 },
+        SLUDGEBOMB: { secondary: { status: "PSN" }, chance: 30 }, POISONJAB: { secondary: { status: "PSN" }, chance: 30 },
+        // --- golpes de dano que baixam stat do alvo ---
+        PSYCHIC: { secondary: { stats: { spd: -1 }, target: "foe" }, chance: 10 },
+        CRUNCH: { secondary: { stats: { def: -1 }, target: "foe" }, chance: 20 },
+        ROCKTOMB: { secondary: { stats: { spe: -1 }, target: "foe" }, chance: 100 },
+        BUBBLE: { secondary: { stats: { spe: -1 }, target: "foe" }, chance: 10 },
+        AURORABEAM: { secondary: { stats: { atk: -1 }, target: "foe" }, chance: 10 }
+    };
+
+    const STAT_LABEL = { atk: "Ataque", def: "Defesa", spa: "At. Esp.", spd: "Def. Esp.", spe: "Velocidade", acc: "Precisão", eva: "Evasão" };
+    const STATUS_VERB = { PSN: " foi envenenado!", TOX: " foi gravemente envenenado!", BRN: " foi queimado!", PAR: " ficou paralisado!", SLP: " adormeceu!", FRZ: " foi congelado!" };
+
+    PKM.Battle.statusImmune = function(target, status) {
+        if (target.status) return true;             // já tem um status maior
+        const types = target.types();
+        if (status === "BRN" && types.includes("FIRE")) return true;
+        if (status === "FRZ" && types.includes("ICE")) return true;
+        if ((status === "PSN" || status === "TOX") && (types.includes("POISON") || types.includes("STEEL"))) return true;
+        return false;
+    };
+    PKM.Battle.applyStatus = function(target, status) {
+        if (PKM.Battle.statusImmune(target, status)) return { ok: false, messages: [] };
+        target.status = status;
+        if (status === "SLP") target._sleepTurns = 1 + Math.randomInt(3);
+        if (status === "TOX") target._toxic = 1;
+        return { ok: true, messages: [target.name + (STATUS_VERB[status] || " foi afetado!")] };
+    };
+    PKM.Battle.applyStatChange = function(target, stat, delta) {
+        const applied = target.changeStage(stat, delta);
+        const label = STAT_LABEL[stat] || stat;
+        if (applied === 0) {
+            return [label + " de " + target.name + (delta > 0 ? " não pode aumentar mais!" : " não pode diminuir mais!")];
+        }
+        const mag = Math.abs(applied);
+        const dir = delta > 0 ? (mag >= 2 ? " aumentou muito!" : " aumentou!") : (mag >= 2 ? " caiu bruscamente!" : " diminuiu!");
+        return [label + " de " + target.name + dir];
+    };
+    // pode agir? trata SLP/FRZ/PAR (mutável). Retorna {act, messages}
+    PKM.Battle.canAct = function(mon) {
+        if (mon.status === "FRZ") {
+            if (Math.randomInt(100) < 20) { mon.status = null; return { act: true, messages: [mon.name + " descongelou!"] }; }
+            return { act: false, messages: [mon.name + " está congelado!"] };
+        }
+        if (mon.status === "SLP") {
+            if ((mon._sleepTurns || 0) > 0) {
+                mon._sleepTurns--;
+                if (mon._sleepTurns <= 0) { mon.status = null; return { act: true, messages: [mon.name + " acordou!"] }; }
+                return { act: false, messages: [mon.name + " está dormindo."] };
+            }
+            mon.status = null; return { act: true, messages: [mon.name + " acordou!"] };
+        }
+        if (mon.status === "PAR" && Math.randomInt(100) < 25) {
+            return { act: false, messages: [mon.name + " está paralisado! Não consegue se mexer!"] };
+        }
+        return { act: true, messages: [] };
+    };
+    PKM.Battle.accuracyCheck = function(attacker, defender, move) {
+        const md = PKM.Core.move(move.id);
+        if (!md || md.accuracy === 0) return true;       // 0 = nunca erra
+        const accStage = attacker.stageMult ? attacker.stageMult("acc") : 1;
+        const evaStage = defender.stageMult ? defender.stageMult("eva") : 1;
+        return Math.randomInt(100) < (md.accuracy * accStage / evaStage);
+    };
+    // dano residual de fim de turno (PSN/TOX/BRN). Retorna mensagens.
+    PKM.Battle.endOfTurnResidual = function(mon) {
+        if (mon.isFainted()) return [];
+        const msgs = [];
+        if (mon.status === "PSN") {
+            mon.takeDamage(Math.max(1, Math.floor(mon.maxHp / 8)));
+            msgs.push(mon.name + " sofreu com o veneno!");
+        } else if (mon.status === "TOX") {
+            mon._toxic = mon._toxic || 1;
+            mon.takeDamage(Math.max(1, Math.floor(mon.maxHp * mon._toxic / 16)));
+            mon._toxic++;
+            msgs.push(mon.name + " sofreu com o veneno!");
+        } else if (mon.status === "BRN") {
+            mon.takeDamage(Math.max(1, Math.floor(mon.maxHp / 8)));
+            msgs.push(mon.name + " sofreu com a queimadura!");
+        }
+        if (mon.isFainted()) msgs.push(mon.name + " desmaiou!");
+        return msgs;
     };
 
     // chance de fuga (true = fugiu)
@@ -121,6 +246,8 @@ PKM.Battle = PKM.Battle || {};
         this._enemy = $gameTemp.pkmWild;
         this._player = $gameParty.pkmFirstAble();
         this._runAttempts = 0;
+        if (this._enemy.resetBattleState) this._enemy.resetBattleState();
+        if (this._player && this._player.resetBattleState) this._player.resetBattleState();
         this.createBackground();
         this.createWindowLayer();
         this.createAllWindows();
@@ -203,7 +330,14 @@ PKM.Battle = PKM.Battle || {};
         const col = rate > 0.5 ? "#78c850" : rate > 0.2 ? "#f8d030" : "#f85038";
         c.fillRect(8, y, w, h, "#303030");
         c.fillRect(9, y + 1, Math.floor((w - 2) * rate), h - 2, col);
-        if (hpText) c.drawText(p.hp + " / " + p.maxHp, 8, y + h + 2, w, win.lineHeight(), "right");
+        if (p.status) {
+            const sc = { PSN: "#a040a0", TOX: "#a040a0", BRN: "#f08030", PAR: "#f8d030", SLP: "#8888a0", FRZ: "#98d8d8" }[p.status] || "#888";
+            c.fillRect(8, y + h + 4, 56, 22, sc);
+            win.changeTextColor("#ffffff");
+            c.drawText(p.status, 8, y + h + 2, 56, win.lineHeight(), "center");
+            win.resetTextColor();
+        }
+        if (hpText) c.drawText(p.hp + " / " + p.maxHp, 72, y + h + 2, w - 72, win.lineHeight(), "right");
     };
     Scene_PkmBattle.prototype._drawMessage = function(text) {
         const c = this._msgWindow.contents; c.clear();
@@ -326,17 +460,43 @@ PKM.Battle = PKM.Battle || {};
         return usable[Math.randomInt(usable.length)];
     };
 
+    // aplica efeito de status/stat de um golpe. Retorna mensagens.
+    Scene_PkmBattle.prototype.applyMoveEffect = function(eff, attacker, defender) {
+        const out = [];
+        const tgt = eff.target === "self" ? attacker : defender;
+        if (eff.status) {
+            const r = PKM.Battle.applyStatus(tgt, eff.status);
+            out.push(...(r.messages.length ? r.messages : ["Mas não teve efeito em " + tgt.name + "."]));
+        }
+        if (eff.stats) {
+            for (const k in eff.stats) out.push(...PKM.Battle.applyStatChange(tgt, k, eff.stats[k]));
+        }
+        return out;
+    };
+
     Scene_PkmBattle.prototype.buildMoveMessages = function(attacker, defender, move) {
         const md = PKM.Core.move(move.id);
         const name = md ? md.name : move.id;
         const tag = attacker === this._enemy ? " selvagem" : "";
-        const msgs = [attacker.name + tag + " usou " + name + "!"];
+        const msgs = [];
+
+        // pré-ação: dorme/congela/paralisia
+        const ca = PKM.Battle.canAct(attacker);
+        msgs.push(...ca.messages);
+        if (!ca.act) return msgs.length ? msgs : [attacker.name + " não pode agir."];
+
+        msgs.push(attacker.name + tag + " usou " + name + "!");
         if (move.pp !== undefined && move.pp > 0) move.pp--;
-        const acc = md ? md.accuracy : 100;
-        if (acc !== 0 && Math.randomInt(100) >= acc) { msgs.push("Mas o ataque errou!"); return msgs; }
-        if (!md || md.category === "Status" || md.power <= 0) {
-            msgs.push("…mas o efeito ainda não foi implementado (Fase 5b)."); return msgs;
+        if (!PKM.Battle.accuracyCheck(attacker, defender, move)) { msgs.push("Mas o ataque errou!"); return msgs; }
+
+        const eff = PKM.Battle.MOVE_EFFECTS[move.id];
+        const isStatus = !md || md.category === "Status" || md.power <= 0;
+        if (isStatus) {
+            if (eff) msgs.push(...this.applyMoveEffect(eff, attacker, defender));
+            else msgs.push("…mas o golpe ainda não tem efeito implementado.");
+            return msgs;
         }
+
         const calc = PKM.Battle.calcDamage(attacker, defender, move.id);
         if (calc.effectiveness === 0) { msgs.push("Não afeta " + defender.name + "…"); return msgs; }
         defender.takeDamage(calc.damage);
@@ -346,6 +506,15 @@ PKM.Battle = PKM.Battle || {};
         if (defender.isFainted()) {
             const dt = defender === this._enemy ? " selvagem" : "";
             msgs.push(defender.name + dt + " desmaiou!");
+            return msgs;
+        }
+        // efeito secundário (por chance)
+        if (eff && eff.secondary) {
+            const chance = eff.chance || (md ? md.effectChance : 0) || 0;
+            if (chance > 0 && Math.randomInt(100) < chance) {
+                const sec = Object.assign({ target: "foe" }, eff.secondary);
+                msgs.push(...this.applyMoveEffect(sec, attacker, defender));
+            }
         }
         return msgs;
     };
@@ -357,9 +526,14 @@ PKM.Battle = PKM.Battle || {};
             ? [[this._player, this._enemy, playerMove], [this._enemy, this._player, enemyMove]]
             : [[this._enemy, this._player, enemyMove], [this._player, this._enemy, playerMove]];
         let msgs = this.buildMoveMessages(order[0][0], order[0][1], order[0][2]);
-        if (!order[0][1].isFainted()) {
+        // o segundo atacante (= alvo do primeiro) só age se não desmaiou
+        if (!order[1][0].isFainted()) {
             msgs = msgs.concat(this.buildMoveMessages(order[1][0], order[1][1], order[1][2]));
         }
+        // dano residual de fim de turno (veneno/queimadura), na ordem de velocidade
+        const resOrder = playerFirst ? [this._player, this._enemy] : [this._enemy, this._player];
+        for (const mon of resOrder) msgs = msgs.concat(PKM.Battle.endOfTurnResidual(mon));
+
         this.showSteps(msgs.map(t => ({ text: t })), this.settleTurn.bind(this));
     };
 
@@ -443,6 +617,7 @@ PKM.Battle = PKM.Battle || {};
         this._switchWindow.hide(); this._switchWindow.deactivate();
         const forced = this._forcedSwitch;
         this._player = p;
+        if (p.resetBattleState) p.resetBattleState();   // trocar zera os estágios de stat
         this.refreshStatus();
         if (forced) {
             this._forcedSwitch = false;
