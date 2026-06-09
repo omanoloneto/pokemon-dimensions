@@ -1,0 +1,291 @@
+//=============================================================================
+// PKM_Pokedex.js
+//=============================================================================
+/*:
+ * @target MZ
+ * @plugindesc [PKM v0.1] Sistema de Pokédex: lista navegável + ficha de detalhes
+ * (tipos, categoria, altura/peso, descrição), com estado visto/capturado.
+ * @author Pokémon Dimensions (port MZ)
+ * @base PKM_Core
+ * @orderAfter PKM_Core
+ *
+ * @help PKM_Pokedex.js
+ *
+ * Abre a Pokédex. Espécies não vistas aparecem como "----------" e ficham com
+ * "???". Espécies vistas mostram nome/tipos/altura/peso. A descrição completa
+ * só aparece quando a espécie foi CAPTURADA (igual aos jogos oficiais).
+ *
+ * COMO ABRIR
+ *   - Comando de plugin "Abrir Pokédex", ou
+ *   - Em um evento (Script):  SceneManager.push(Scene_Pokedex);
+ *
+ * SPRITES (opcional)
+ *   Coloque imagens em  img/pokemon/front/<numero>.png  (ex.: 1.png).
+ *   Se não houver imagem, um quadro de silhueta/placeholder é desenhado.
+ *
+ * @command open
+ * @text Abrir Pokédex
+ * @desc Abre a cena da Pokédex.
+ */
+
+(() => {
+    "use strict";
+
+    const FRONT_DIR = "img/pokemon/front/";
+
+    // Cores por tipo (hex) — usadas nos "badges" de tipo.
+    const TYPE_COLORS = {
+        NORMAL: "#9099a1", FIRE: "#ff6450", WATER: "#4d90d5", GRASS: "#63bb5b",
+        ELECTRIC: "#f3d23b", ICE: "#74cec0", FIGHTING: "#ce4069", POISON: "#ab6ac8",
+        GROUND: "#d97746", FLYING: "#8fa8dd", PSYCHIC: "#f97176", BUG: "#90c12c",
+        ROCK: "#c7b78b", GHOST: "#5269ac", DRAGON: "#0a6dc4", DARK: "#5a5366",
+        STEEL: "#5a8ea1", FAIRY: "#ec8fe6", "???": "#68a090"
+    };
+    const typeColor = (t) => TYPE_COLORS[t && t.toUpperCase()] || "#777777";
+    const num3 = (n) => String(n).padStart(3, "0");
+
+    //=========================================================================
+    // Window_PokedexList — lista de todas as espécies
+    //=========================================================================
+    function Window_PokedexList() { this.initialize(...arguments); }
+    Window_PokedexList.prototype = Object.create(Window_Selectable.prototype);
+    Window_PokedexList.prototype.constructor = Window_PokedexList;
+
+    Window_PokedexList.prototype.initialize = function(rect) {
+        Window_Selectable.prototype.initialize.call(this, rect);
+        this._detailWindow = null;
+        this.refresh();
+        this.select(0);
+        this.activate();
+    };
+    Window_PokedexList.prototype.maxItems = function() {
+        return PKM.Core.maxSpecies();
+    };
+    // índice 0 da lista => espécie nº 1
+    Window_PokedexList.prototype.speciesId = function(index) {
+        return index + 1;
+    };
+    Window_PokedexList.prototype.currentSpeciesId = function() {
+        return this.speciesId(this.index());
+    };
+    Window_PokedexList.prototype.setDetailWindow = function(w) {
+        this._detailWindow = w;
+        this.callUpdateHelp();
+    };
+    Window_PokedexList.prototype.callUpdateHelp = function() {
+        if (this._detailWindow) {
+            this._detailWindow.setSpeciesId(this.currentSpeciesId());
+        }
+    };
+    Window_PokedexList.prototype.drawItem = function(index) {
+        const id = this.speciesId(index);
+        const sp = PKM.Core.species(id);
+        if (!sp) return;
+        const rect = this.itemLineRect(index);
+        const seen = $gameSystem.pkmIsSeen(id);
+        const caught = $gameSystem.pkmIsCaught(id);
+
+        // marcador de capturado (poké ball "●")
+        this.changeTextColor(caught ? "#ff5959" : ColorManager.normalColor());
+        this.contents.drawText(caught ? "●" : "○", rect.x, rect.y, 28, rect.height, "left");
+
+        // número
+        this.changeTextColor(ColorManager.normalColor());
+        this.drawText("Nº" + num3(id), rect.x + 30, rect.y, 64, "left");
+
+        // nome ou silhueta
+        const name = seen ? sp.name : "----------";
+        this.changePaintOpacity(seen);
+        this.drawText(name, rect.x + 100, rect.y, rect.width - 100, "left");
+        this.changePaintOpacity(true);
+        this.resetTextColor();
+    };
+
+    //=========================================================================
+    // Window_PokedexDetail — ficha da espécie selecionada
+    //=========================================================================
+    function Window_PokedexDetail() { this.initialize(...arguments); }
+    Window_PokedexDetail.prototype = Object.create(Window_Base.prototype);
+    Window_PokedexDetail.prototype.constructor = Window_PokedexDetail;
+
+    Window_PokedexDetail.prototype.initialize = function(rect) {
+        Window_Base.prototype.initialize.call(this, rect);
+        this._id = 0;
+        this._bitmap = null;
+    };
+    Window_PokedexDetail.prototype.setSpeciesId = function(id) {
+        if (this._id === id) return;
+        this._id = id;
+        this.loadSprite();
+        this.refresh();
+    };
+    Window_PokedexDetail.prototype.loadSprite = function() {
+        this._bitmap = null;
+        if (!$gameSystem.pkmIsSeen(this._id)) return;
+        const bmp = ImageManager.loadBitmap(FRONT_DIR, num3(this._id));
+        bmp.addLoadListener(() => { this._bitmap = bmp; this.refresh(); });
+    };
+    Window_PokedexDetail.prototype.refresh = function() {
+        this.contents.clear();
+        const sp = PKM.Core.species(this._id);
+        if (!sp) return;
+        const seen = $gameSystem.pkmIsSeen(this._id);
+        const caught = $gameSystem.pkmIsCaught(this._id);
+
+        const pad = 8;
+        const boxW = 200;
+        const boxH = 200;
+        const boxX = pad;
+        const boxY = pad;
+
+        // moldura do sprite
+        this.contents.fillRect(boxX, boxY, boxW, boxH, "rgba(255,255,255,0.06)");
+        this.contents.strokeRect ?
+            this.contents.strokeRect(boxX, boxY, boxW, boxH, "#ffffff") : null;
+        if (seen && this._bitmap && this._bitmap.width > 0) {
+            const b = this._bitmap;
+            const scale = Math.min(boxW / b.width, boxH / b.height, 2);
+            const dw = Math.floor(b.width * scale);
+            const dh = Math.floor(b.height * scale);
+            this.contents.blt(b, 0, 0, b.width, b.height,
+                boxX + (boxW - dw) / 2, boxY + (boxH - dh) / 2, dw, dh);
+        } else {
+            // placeholder: "?" central
+            this.contents.fontSize = 96;
+            this.changeTextColor("#888888");
+            this.contents.drawText("?", boxX, boxY, boxW, boxH, "center");
+            this.resetFontSettings();
+        }
+
+        // coluna de texto à direita do quadro
+        const tx = boxX + boxW + 16;
+        const tw = this.contentsWidth() - tx - pad;
+        let ty = boxY;
+
+        // número + nome
+        this.changeTextColor(ColorManager.systemColor());
+        this.drawText("Nº" + num3(sp.id), tx, ty, 90, "left");
+        this.changeTextColor(ColorManager.normalColor());
+        this.contents.fontSize = 26;
+        this.drawText(seen ? sp.name : "???", tx + 92, ty, tw - 92, "left");
+        this.resetFontSettings();
+        ty += this.lineHeight();
+
+        // categoria (Kind)
+        if (seen && sp.category) {
+            this.drawText("Pokémon " + sp.category, tx, ty, tw, "left");
+        }
+        ty += this.lineHeight();
+
+        // tipos (badges coloridos)
+        if (seen) {
+            this.drawTypeBadge(sp.type1, tx, ty);
+            if (sp.type2 && sp.type2 !== sp.type1) {
+                this.drawTypeBadge(sp.type2, tx + 110, ty);
+            }
+        }
+        ty += this.lineHeight() + 6;
+
+        // altura / peso
+        if (seen) {
+            this.changeTextColor(ColorManager.systemColor());
+            this.drawText("Altura", tx, ty, 100, "left");
+            this.drawText("Peso", tx + 150, ty, 100, "left");
+            this.changeTextColor(ColorManager.normalColor());
+            ty += this.lineHeight();
+            this.drawText(sp.height.toFixed(1) + " m", tx, ty, 130, "left");
+            this.drawText(sp.weight.toFixed(1) + " kg", tx + 150, ty, 130, "left");
+        }
+
+        // descrição (largura total, abaixo do quadro) — só se capturado
+        let dy = boxY + boxH + 16;
+        this.changeTextColor(ColorManager.normalColor());
+        const entry = caught ? (sp.entry || "")
+            : (seen ? "Capture este Pokémon para revelar a descrição da Pokédex."
+                    : "Dados ainda não registrados.");
+        this.drawWrappedText(entry, pad, dy, this.contentsWidth() - pad * 2);
+
+        // rodapé: contadores
+        const fy = this.contentsHeight() - this.lineHeight();
+        this.changeTextColor(ColorManager.systemColor());
+        this.drawText(
+            "Vistos: " + $gameSystem.pkmSeenCount() +
+            "   Capturados: " + $gameSystem.pkmCaughtCount(),
+            pad, fy, this.contentsWidth() - pad * 2, "right");
+        this.resetTextColor();
+    };
+
+    Window_PokedexDetail.prototype.drawTypeBadge = function(type, x, y) {
+        if (!type) return;
+        const w = 100, h = 28;
+        this.contents.fillRect(x, y + 2, w, h, typeColor(type));
+        this.changeTextColor("#ffffff");
+        this.contents.fontSize = 18;
+        this.contents.drawText(type.toUpperCase(), x, y + 2, w, h, "center");
+        this.resetFontSettings();
+    };
+
+    // Quebra de texto simples por palavras.
+    Window_PokedexDetail.prototype.drawWrappedText = function(text, x, y, maxW) {
+        const words = String(text).split(/\s+/);
+        let line = "";
+        let cy = y;
+        const flush = () => {
+            if (line) this.drawText(line, x, cy, maxW, "left");
+            cy += this.lineHeight();
+            line = "";
+        };
+        for (const w of words) {
+            const test = line ? line + " " + w : w;
+            if (this.textWidth(test) > maxW && line) {
+                flush();
+                line = w;
+            } else {
+                line = test;
+            }
+        }
+        flush();
+    };
+
+    //=========================================================================
+    // Scene_Pokedex
+    //=========================================================================
+    window.Scene_Pokedex = function() { this.initialize(...arguments); };
+    Scene_Pokedex.prototype = Object.create(Scene_MenuBase.prototype);
+    Scene_Pokedex.prototype.constructor = Scene_Pokedex;
+
+    Scene_Pokedex.prototype.create = function() {
+        Scene_MenuBase.prototype.create.call(this);
+        this.createDetailWindow();
+        this.createListWindow();
+        this._listWindow.setDetailWindow(this._detailWindow);
+    };
+    Scene_Pokedex.prototype.listWindowRect = function() {
+        const ww = 360;
+        const wh = this.mainAreaHeight();
+        return new Rectangle(0, this.mainAreaTop(), ww, wh);
+    };
+    Scene_Pokedex.prototype.detailWindowRect = function() {
+        const x = 360;
+        const ww = Graphics.boxWidth - x;
+        const wh = this.mainAreaHeight();
+        return new Rectangle(x, this.mainAreaTop(), ww, wh);
+    };
+    Scene_Pokedex.prototype.createListWindow = function() {
+        this._listWindow = new Window_PokedexList(this.listWindowRect());
+        this._listWindow.setHandler("cancel", this.popScene.bind(this));
+        this._listWindow.setHandler("ok", () => this._listWindow.activate());
+        this.addWindow(this._listWindow);
+    };
+    Scene_Pokedex.prototype.createDetailWindow = function() {
+        this._detailWindow = new Window_PokedexDetail(this.detailWindowRect());
+        this.addWindow(this._detailWindow);
+    };
+
+    //=========================================================================
+    // Comando de plugin
+    //=========================================================================
+    PluginManager.registerCommand("PKM_Pokedex", "open", () => {
+        SceneManager.push(Scene_Pokedex);
+    });
+})();
