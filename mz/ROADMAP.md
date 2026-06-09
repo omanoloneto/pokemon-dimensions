@@ -12,7 +12,7 @@ Ordem de execução priorizando chegar a uma **demo jogável** o quanto antes:
 | 4 | Overworld & Encontros selvagens | ✅ |
 | 5a | Motor de Batalha — esqueleto jogável (1v1) | ✅ |
 | 6 | Captura (Poké Ball + fórmula) | ✅ |
-| 3 | Mochila & Itens | ⬜ |
+| 3 | Mochila & Itens | ✅ |
 | 5b | Batalha — efeitos de golpe, status, IA, clima | ⬜ |
 | 7 | EXP, Nível & Evolução | ⬜ |
 | 8 | PC / Boxes | ⬜ |

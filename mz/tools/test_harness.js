@@ -45,7 +45,7 @@ vm.runInContext(`
 `, ctx);
 
 // carrega plugins de lógica (não os de cena — esses usam render)
-for (const f of ["PKM_Core.js", "PKM_Pokemon.js", "PKM_Battle.js"]) {
+for (const f of ["PKM_Core.js", "PKM_Pokemon.js", "PKM_Battle.js", "PKM_Bag.js"]) {
     const p = path.join(ROOT, "js/plugins", f);
     if (fs.existsSync(p)) vm.runInContext(fs.readFileSync(p, "utf8"), ctx, { filename: f });
 }
@@ -96,6 +96,31 @@ if (ctx.PKM.Battle && ctx.PKM.Battle.tryCapture) {
     ok(caught > 0, `captura possível em alvo fraco (${caught}/200)`);
 } else {
     console.log("  (PKM.Battle.tryCapture indisponível — pulando)");
+}
+
+// itens (Fase 3) — função pura PKM.Items.useOnPokemon
+console.log("== Itens (mochila) ==");
+if (ctx.PKM.Items && ctx.PKM.Items.useOnPokemon) {
+    const inj = new G("BLASTOISE", 50);
+    inj.hp = 1;
+    const r = ctx.PKM.Items.useOnPokemon("POTION", inj);
+    ok(r.ok && inj.hp === 21, `Potion cura +20 (HP=${inj.hp})`);
+
+    const full = new G("BLASTOISE", 50);
+    eq(ctx.PKM.Items.useOnPokemon("POTION", full).ok, false, "Potion não usa em HP cheio");
+
+    const ko = new G("PIDGEY", 10); ko.hp = 0;
+    const rev = ctx.PKM.Items.useOnPokemon("REVIVE", ko);
+    ok(rev.ok && ko.hp === Math.floor(ko.maxHp / 2), "Revive volta com metade do HP");
+
+    const poisoned = new G("RATTATA", 10); poisoned.status = "PSN";
+    ok(ctx.PKM.Items.useOnPokemon("ANTIDOTE", poisoned).ok && poisoned.status === null, "Antídoto cura veneno");
+    eq(ctx.PKM.Items.useOnPokemon("BURNHEAL", new G("RATTATA", 10)).ok, false, "Burn Heal sem queimadura não tem efeito");
+
+    eq(ctx.PKM.Items.ballBonus("ULTRABALL"), 2, "Ultra Ball bônus = 2");
+    eq(ctx.PKM.Items.ballBonus("MASTERBALL"), 255, "Master Ball bônus = 255");
+} else {
+    console.log("  (PKM.Items indisponível — pulando)");
 }
 
 console.log(`\nResultado: ${pass} passou, ${fail} falhou`);

@@ -157,6 +157,12 @@ PKM.Battle = PKM.Battle || {};
         this._switchWindow.deactivate();
         this.addWindow(this._switchWindow);
 
+        this._ballWindow = new Window_BattleBalls(new Rectangle(0, 480, Graphics.boxWidth, 144));
+        this._ballWindow.setHandler("ok", this.onBallOk.bind(this));
+        this._ballWindow.setHandler("cancel", this.onBallCancel.bind(this));
+        this._ballWindow.hide(); this._ballWindow.deactivate();
+        this.addWindow(this._ballWindow);
+
         this.refreshStatus();
     };
 
@@ -211,6 +217,7 @@ PKM.Battle = PKM.Battle || {};
         this._commandWindow.hide(); this._commandWindow.deactivate();
         this._moveWindow.hide(); this._moveWindow.deactivate();
         this._switchWindow.hide(); this._switchWindow.deactivate();
+        if (this._ballWindow) { this._ballWindow.hide(); this._ballWindow.deactivate(); }
     };
 
     //--- ciclo ----------------------------------------------------------------
@@ -254,7 +261,30 @@ PKM.Battle = PKM.Battle || {};
     };
     Scene_PkmBattle.prototype.onBall = function() {
         this._commandWindow.hide(); this._commandWindow.deactivate();
-        this.doBall();
+        // se a mochila (PKM_Bag) existir, escolhe entre as bolas que você possui
+        if ($gameParty.pkmBalls) {
+            const balls = $gameParty.pkmBalls();
+            if (balls.length === 0) {
+                this.showSteps([{ text: "Você não tem nenhuma Poké Bola!" }], this.startInput.bind(this));
+                return;
+            }
+            this._ballWindow.setBalls(balls);
+            this._ballWindow.show(); this._ballWindow.activate(); this._ballWindow.select(0);
+            this._phase = "selectBall";
+            return;
+        }
+        // sem PKM_Bag: usa uma Poké Ball comum (modo autônomo)
+        this.doBallThrow("POKEBALL", 1, false);
+    };
+    Scene_PkmBattle.prototype.onBallOk = function() {
+        const e = this._ballWindow.currentBall();
+        this._ballWindow.hide(); this._ballWindow.deactivate();
+        if (!e) { this.startInput(); return; }
+        this.doBallThrow(e.name, PKM.Items.ballBonus(e.name), true);
+    };
+    Scene_PkmBattle.prototype.onBallCancel = function() {
+        this._ballWindow.hide(); this._ballWindow.deactivate();
+        this.startInput();
     };
     Scene_PkmBattle.prototype.onRun = function() {
         this._commandWindow.hide(); this._commandWindow.deactivate();
@@ -341,9 +371,13 @@ PKM.Battle = PKM.Battle || {};
         }
     };
 
-    Scene_PkmBattle.prototype.doBall = function() {
-        const res = PKM.Battle.tryCapture(this._enemy, 1, 1);
-        const steps = [{ text: "Você jogou uma Poké Ball!" }];
+    Scene_PkmBattle.prototype.doBallThrow = function(ballName, bonus, consume) {
+        const res = PKM.Battle.tryCapture(this._enemy, bonus, 1);
+        const ballLabel = (PKM.Core.item && PKM.Core.item(ballName) && PKM.Core.item(ballName).name) || "Poké Ball";
+        const steps = [{
+            text: "Você jogou uma " + ballLabel + "!",
+            fn: () => { if (consume && $gameParty.pkmLoseItem) $gameParty.pkmLoseItem(ballName, 1); }
+        }];
         const shakes = res.success ? 3 : res.shakes;
         for (let i = 0; i < shakes; i++) steps.push({ text: "…" });
         if (res.success) {
@@ -461,5 +495,24 @@ PKM.Battle = PKM.Battle || {};
         this.drawText("Nv." + p.level, r.x + 280, r.y + 4, 80, "left");
         this.drawText("HP " + p.hp + "/" + p.maxHp, r.x + 380, r.y + 4, 160, "left");
         this.changePaintOpacity(true);
+    };
+
+    function Window_BattleBalls() { this.initialize(...arguments); }
+    Window_BattleBalls.prototype = Object.create(Window_Selectable.prototype);
+    Window_BattleBalls.prototype.constructor = Window_BattleBalls;
+    Window_BattleBalls.prototype.initialize = function(rect) {
+        Window_Selectable.prototype.initialize.call(this, rect);
+        this._balls = [];
+    };
+    Window_BattleBalls.prototype.setBalls = function(balls) { this._balls = balls; this.refresh(); this.select(0); };
+    Window_BattleBalls.prototype.maxCols = function() { return 2; };
+    Window_BattleBalls.prototype.maxItems = function() { return this._balls.length; };
+    Window_BattleBalls.prototype.currentBall = function() { return this._balls[this.index()]; };
+    Window_BattleBalls.prototype.drawItem = function(index) {
+        const e = this._balls[index];
+        if (!e) return;
+        const r = this.itemLineRect(index);
+        this.drawText(e.data.name, r.x, r.y, r.width - 80, "left");
+        this.drawText("×" + e.qty, r.x + r.width - 80, r.y, 80, "right");
     };
 })();
