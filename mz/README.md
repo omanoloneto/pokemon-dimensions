@@ -18,7 +18,8 @@ da raiz — nada aqui sobrescreve o jogo original.
 | **EXP, nível, golpes & evolução**       | ✅ Fase 7 |
 | **Status, estágios & efeitos de golpe** | ✅ Fase 5b |
 | **Treinadores & insígnias**             | ✅ Fase 9 |
-| PC/boxes, polimento/áudio               | ⬜ a fazer |
+| **PC / caixas de armazenamento**        | ✅ Fase 8 |
+| Polimento, áudio, migração XP→MZ        | ⬜ a fazer |
 
 ## Estrutura
 
@@ -34,7 +35,8 @@ mz/
 │   ├── PKM_Encounters.js     # encontros no overworld (Fase 4)
 │   ├── PKM_Battle.js         # batalha 1v1 + captura (Fases 5a/6)
 │   ├── PKM_Bag.js            # mochila, itens, dinheiro (Fase 3)
-│   └── PKM_Trainers.js       # batalhas de treinador + insígnias (Fase 9)
+│   ├── PKM_Trainers.js       # batalhas de treinador + insígnias (Fase 9)
+│   └── PKM_Storage.js        # PC: caixas de armazenamento (Fase 8)
 ├── img/pokemon/front/        # (opcional) sprites <numero>.png, ex.: 001.png
 └── tools/
     ├── compile_all.rb        # PBS → todos os data/*.json
@@ -48,7 +50,7 @@ mz/
 2. Copie todos os `js/plugins/PKM_*.js` para `js/plugins/`.
 3. No **Gerenciador de Plugins**, adicione e ative **nesta ordem**:
    `PKM_Core` → `PKM_Pokemon` → `PKM_Pokedex` → `PKM_Party` →
-   `PKM_Encounters` → `PKM_Battle` → `PKM_Bag` → `PKM_Trainers`.
+   `PKM_Encounters` → `PKM_Battle` → `PKM_Bag` → `PKM_Trainers` → `PKM_Storage`.
 4. (Opcional) Sprites frontais em `img/pokemon/front/` (`001.png`…). Sem imagem,
    a Pokédex mostra um placeholder "?".
 
@@ -100,10 +102,18 @@ mz/
   ou comando `PKM_Trainers → Dar Insígnia`.
 - Dados de 60 treinadores e 75 tipos vêm do seu PBS.
 
+## PC / armazenamento (Fase 8)
+
+- 16 caixas × 30 espaços. Abra com o comando `PKM_Storage → Abrir PC`.
+- Capturas com a equipe cheia vão automaticamente para a 1ª caixa com espaço
+  (o array antigo de armazenamento é migrado para as caixas).
+- Na cena: **Q/W** trocam de caixa; em um Pokémon → Retirar / Resumo / Mover /
+  Soltar; em espaço vazio → Depositar (escolhe da equipe; mantém ≥1 na equipe).
+
 ## Testes automatizados (lógica)
 
 ```bash
-node mz/tools/test_harness.js   # tudo acima + treinadores (46 testes)
+node mz/tools/test_harness.js   # tudo acima + PC/caixas (53 testes)
 ```
 
 ## Como usar

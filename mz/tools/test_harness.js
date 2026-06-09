@@ -30,7 +30,7 @@ const ctx = {
     ColorManager: { normalColor: () => "#fff", systemColor: () => "#9cf" },
     Graphics: { boxWidth: 816, boxHeight: 624 },
     Game_System: function() {},
-    Game_Party: function() {},
+    Game_Party: (function() { function GP() {} GP.prototype.initialize = function() {}; return GP; })(),
     Scene_MenuBase: function() {}, Scene_Base: function() {}, Scene_Message: function() {},
     Window_Base: function() {}, Window_Selectable: function() {}, Window_Command: function() {},
     Input: { isTriggered() { return false; } }, TouchInput: {},
@@ -47,7 +47,7 @@ vm.runInContext(`
 `, ctx);
 
 // carrega plugins de lógica (não os de cena — esses usam render)
-for (const f of ["PKM_Core.js", "PKM_Pokemon.js", "PKM_Battle.js", "PKM_Bag.js", "PKM_Trainers.js"]) {
+for (const f of ["PKM_Core.js", "PKM_Pokemon.js", "PKM_Battle.js", "PKM_Bag.js", "PKM_Trainers.js", "PKM_Party.js", "PKM_Storage.js"]) {
     const p = path.join(ROOT, "js/plugins", f);
     if (fs.existsSync(p)) vm.runInContext(fs.readFileSync(p, "utf8"), ctx, { filename: f });
 }
@@ -216,6 +216,33 @@ if (ctx.PKM.Trainers) {
     ok(ctx.PKM.Battle.expGain(e, 1, 1.5) > ctx.PKM.Battle.expGain(e, 1, 1), "EXP de treinador (1.5×) > selvagem");
 } else {
     console.log("  (PKM.Trainers indisponível — pulando)");
+}
+
+// PC / caixas (Fase 8)
+console.log("== PC / Caixas (8) ==");
+{
+    const gp = new ctx.Game_Party();
+    gp.initialize();
+    // adiciona 8 Pokémon: 6 vão p/ equipe, 2 p/ caixa
+    const dests = [];
+    for (let i = 0; i < 8; i++) dests.push(gp.pkmAdd(new G("RATTATA", 5)));
+    eq(gp.pkmCount(), 6, "equipe enche em 6");
+    eq(dests.filter(d => d === "storage").length, 2, "os 2 extras vão para a caixa");
+    eq(gp.pkmStoredCount(), 2, "PC tem 2 armazenados");
+
+    // depositar e retirar
+    const dep = gp.pkmDeposit(0);
+    ok(dep.ok && gp.pkmCount() === 5 && gp.pkmStoredCount() === 3, "depósito: equipe 5, PC 3");
+    const wd = gp.pkmWithdraw(0, 0);
+    ok(wd.ok && gp.pkmCount() === 6 && gp.pkmStoredCount() === 2, "retirada: equipe 6, PC 2");
+
+    // não pode depositar o último
+    const solo = new ctx.Game_Party(); solo.initialize(); solo.pkmAdd(new G("PIDGEY", 5));
+    eq(solo.pkmDeposit(0).ok, false, "não deposita o último Pokémon");
+
+    // soltar (slot 1 ainda está preenchido)
+    const released = gp.pkmReleaseBox(0, 1);
+    ok(released && gp.pkmStoredCount() === 1, "soltar remove da caixa");
 }
 
 console.log(`\nResultado: ${pass} passou, ${fail} falhou`);

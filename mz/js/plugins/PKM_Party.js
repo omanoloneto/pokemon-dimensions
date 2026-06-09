@@ -83,6 +83,17 @@
         this._pkmParty.forEach(p => p.healFully());
     };
 
+    PluginManager.registerCommand("PKM_Party", "give", args => {
+        const lvl = Number(args.level) || 5;
+        const sp = /^\d+$/.test(args.species) ? Number(args.species) : args.species;
+        $gameParty.pkmCreate(sp, lvl);
+    });
+    PluginManager.registerCommand("PKM_Party", "openParty", () => SceneManager.push(Scene_PkmParty));
+    PluginManager.registerCommand("PKM_Party", "heal", () => $gameParty.pkmHealAll());
+
+    // headless (testes): só a lógica de party acima
+    if (typeof Scene_MenuBase === "undefined" || !Scene_MenuBase.prototype.create) return;
+
     //=========================================================================
     // Window_PkmPartyList
     //=========================================================================
@@ -226,14 +237,4 @@
         }
     };
 
-    //=========================================================================
-    // Comandos de plugin
-    //=========================================================================
-    PluginManager.registerCommand("PKM_Party", "give", args => {
-        const lvl = Number(args.level) || 5;
-        const sp = /^\d+$/.test(args.species) ? Number(args.species) : args.species;
-        $gameParty.pkmCreate(sp, lvl);
-    });
-    PluginManager.registerCommand("PKM_Party", "openParty", () => SceneManager.push(Scene_PkmParty));
-    PluginManager.registerCommand("PKM_Party", "heal", () => $gameParty.pkmHealAll());
 })();
