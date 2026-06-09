@@ -244,6 +244,11 @@
     Game_Pokemon.prototype.replaceMove = function(index, id) {
         if (index >= 0 && index < this._moves.length) this._moves[index] = this._makeMove(id);
     };
+    // define o conjunto de golpes (ex.: Pokémon de treinador com golpes fixos)
+    Game_Pokemon.prototype.setMoves = function(ids) {
+        const valid = (ids || []).filter(id => PKM.Core.move(id));
+        if (valid.length) this._moves = valid.slice(0, 4).map(id => this._makeMove(id));
+    };
 
     // evolução por nível disponível agora? retorna internalName ou null
     Game_Pokemon.prototype.evolutionByLevel = function() {

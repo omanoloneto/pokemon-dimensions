@@ -1,0 +1,2711 @@
+{
+  "types": {
+    "POKEMONTRAINER_Red": {
+      "id": 0,
+      "internalName": "POKEMONTRAINER_Red",
+      "name": "Pokémon Trainer",
+      "baseMoney": 60,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "POKEMONTRAINER_Leaf": {
+      "id": 1,
+      "internalName": "POKEMONTRAINER_Leaf",
+      "name": "Pokémon Trainer",
+      "baseMoney": 60,
+      "battleBGM": "",
+      "gender": "Female"
+    },
+    "POKEMONTRAINER_Brendan": {
+      "id": 2,
+      "internalName": "POKEMONTRAINER_Brendan",
+      "name": "Pokémon Trainer",
+      "baseMoney": 60,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "POKEMONTRAINER_May": {
+      "id": 3,
+      "internalName": "POKEMONTRAINER_May",
+      "name": "Pokémon Trainer",
+      "baseMoney": 60,
+      "battleBGM": "",
+      "gender": "Female"
+    },
+    "RIVAL1": {
+      "id": 4,
+      "internalName": "RIVAL1",
+      "name": "Rival",
+      "baseMoney": 16,
+      "battleBGM": "Rival Battle Theme.mp3",
+      "gender": "Male"
+    },
+    "RIVAL2": {
+      "id": 5,
+      "internalName": "RIVAL2",
+      "name": "Rival",
+      "baseMoney": 36,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "AROMALADY": {
+      "id": 6,
+      "internalName": "AROMALADY",
+      "name": "Aroma Lady",
+      "baseMoney": 32,
+      "battleBGM": "",
+      "gender": "Female"
+    },
+    "BEAUTY": {
+      "id": 7,
+      "internalName": "BEAUTY",
+      "name": "Beauty",
+      "baseMoney": 56,
+      "battleBGM": "",
+      "gender": "Female"
+    },
+    "BIKER": {
+      "id": 8,
+      "internalName": "BIKER",
+      "name": "Biker",
+      "baseMoney": 32,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "BIRDKEEPER": {
+      "id": 9,
+      "internalName": "BIRDKEEPER",
+      "name": "Bird Keeper",
+      "baseMoney": 32,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "BUGCATCHER": {
+      "id": 10,
+      "internalName": "BUGCATCHER",
+      "name": "Bug Catcher",
+      "baseMoney": 16,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "BURGLAR": {
+      "id": 11,
+      "internalName": "BURGLAR",
+      "name": "Burglar",
+      "baseMoney": 88,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "CHANELLER": {
+      "id": 12,
+      "internalName": "CHANELLER",
+      "name": "Channeler",
+      "baseMoney": 32,
+      "battleBGM": "",
+      "gender": "Female"
+    },
+    "CUEBALL": {
+      "id": 13,
+      "internalName": "CUEBALL",
+      "name": "Cue Ball",
+      "baseMoney": 24,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "ENGINEER": {
+      "id": 14,
+      "internalName": "ENGINEER",
+      "name": "Engineer",
+      "baseMoney": 48,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "FISHERMAN": {
+      "id": 15,
+      "internalName": "FISHERMAN",
+      "name": "Fisherman",
+      "baseMoney": 32,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "GAMBLER": {
+      "id": 16,
+      "internalName": "GAMBLER",
+      "name": "Gambler",
+      "baseMoney": 72,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "GENTLEMAN": {
+      "id": 17,
+      "internalName": "GENTLEMAN",
+      "name": "Gentleman",
+      "baseMoney": 72,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "HIKER": {
+      "id": 18,
+      "internalName": "HIKER",
+      "name": "Hiker",
+      "baseMoney": 32,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "JUGGLER": {
+      "id": 19,
+      "internalName": "JUGGLER",
+      "name": "Juggler",
+      "baseMoney": 32,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "LADY": {
+      "id": 20,
+      "internalName": "LADY",
+      "name": "Lady",
+      "baseMoney": 160,
+      "battleBGM": "",
+      "gender": "Female"
+    },
+    "PAINTER": {
+      "id": 21,
+      "internalName": "PAINTER",
+      "name": "Painter",
+      "baseMoney": 16,
+      "battleBGM": "",
+      "gender": "Female"
+    },
+    "POKEMANIAC": {
+      "id": 22,
+      "internalName": "POKEMANIAC",
+      "name": "Poké Maniac",
+      "baseMoney": 64,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "POKEMONBREEDER": {
+      "id": 23,
+      "internalName": "POKEMONBREEDER",
+      "name": "Pokémon Breeder",
+      "baseMoney": 48,
+      "battleBGM": "",
+      "gender": "Female"
+    },
+    "PROFESSOR": {
+      "id": 24,
+      "internalName": "PROFESSOR",
+      "name": "Professor",
+      "baseMoney": 100,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "ROCKER": {
+      "id": 25,
+      "internalName": "ROCKER",
+      "name": "Rocker",
+      "baseMoney": 24,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "RUINMANIAC": {
+      "id": 26,
+      "internalName": "RUINMANIAC",
+      "name": "Ruin Maniac",
+      "baseMoney": 48,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "SAILOR": {
+      "id": 27,
+      "internalName": "SAILOR",
+      "name": "Sailor",
+      "baseMoney": 32,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "SCIENTIST": {
+      "id": 28,
+      "internalName": "SCIENTIST",
+      "name": "Scientist",
+      "baseMoney": 48,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "SUPERNERD": {
+      "id": 29,
+      "internalName": "SUPERNERD",
+      "name": "Super Nerd",
+      "baseMoney": 48,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "TAMER": {
+      "id": 30,
+      "internalName": "TAMER",
+      "name": "Tamer",
+      "baseMoney": 40,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "BLACKBELT": {
+      "id": 31,
+      "internalName": "BLACKBELT",
+      "name": "Black Belt",
+      "baseMoney": 32,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "CRUSHGIRL": {
+      "id": 32,
+      "internalName": "CRUSHGIRL",
+      "name": "Crush Girl",
+      "baseMoney": 24,
+      "battleBGM": "",
+      "gender": "Female"
+    },
+    "CAMPER": {
+      "id": 33,
+      "internalName": "CAMPER",
+      "name": "Camper",
+      "baseMoney": 16,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "PICNICKER": {
+      "id": 34,
+      "internalName": "PICNICKER",
+      "name": "Picnicker",
+      "baseMoney": 16,
+      "battleBGM": "",
+      "gender": "Female"
+    },
+    "COOLTRAINER_M": {
+      "id": 35,
+      "internalName": "COOLTRAINER_M",
+      "name": "Cool Trainer",
+      "baseMoney": 60,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "COOLTRAINER_F": {
+      "id": 36,
+      "internalName": "COOLTRAINER_F",
+      "name": "Cool Trainer",
+      "baseMoney": 60,
+      "battleBGM": "",
+      "gender": "Female"
+    },
+    "YOUNGSTER": {
+      "id": 37,
+      "internalName": "YOUNGSTER",
+      "name": "Youngster",
+      "baseMoney": 16,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "LASS": {
+      "id": 38,
+      "internalName": "LASS",
+      "name": "Lass",
+      "baseMoney": 16,
+      "battleBGM": "",
+      "gender": "Female"
+    },
+    "POKEMONRANGER_M": {
+      "id": 39,
+      "internalName": "POKEMONRANGER_M",
+      "name": "Pokémon Ranger",
+      "baseMoney": 60,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "POKEMONRANGER_F": {
+      "id": 40,
+      "internalName": "POKEMONRANGER_F",
+      "name": "Pokémon Ranger",
+      "baseMoney": 60,
+      "battleBGM": "",
+      "gender": "Female"
+    },
+    "PSYCHIC_M": {
+      "id": 41,
+      "internalName": "PSYCHIC_M",
+      "name": "Psychic",
+      "baseMoney": 32,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "PSYCHIC_F": {
+      "id": 42,
+      "internalName": "PSYCHIC_F",
+      "name": "Psychic",
+      "baseMoney": 32,
+      "battleBGM": "",
+      "gender": "Female"
+    },
+    "SWIMMER_M": {
+      "id": 43,
+      "internalName": "SWIMMER_M",
+      "name": "Swimmer",
+      "baseMoney": 16,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "SWIMMER_F": {
+      "id": 44,
+      "internalName": "SWIMMER_F",
+      "name": "Swimmer",
+      "baseMoney": 16,
+      "battleBGM": "",
+      "gender": "Female"
+    },
+    "SWIMMER2_M": {
+      "id": 45,
+      "internalName": "SWIMMER2_M",
+      "name": "Swimmer",
+      "baseMoney": 16,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "SWIMMER2_F": {
+      "id": 46,
+      "internalName": "SWIMMER2_F",
+      "name": "Swimmer",
+      "baseMoney": 16,
+      "battleBGM": "",
+      "gender": "Female"
+    },
+    "TUBER_M": {
+      "id": 47,
+      "internalName": "TUBER_M",
+      "name": "Tuber",
+      "baseMoney": 4,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "TUBER_F": {
+      "id": 48,
+      "internalName": "TUBER_F",
+      "name": "Tuber",
+      "baseMoney": 4,
+      "battleBGM": "",
+      "gender": "Female"
+    },
+    "TUBER2_M": {
+      "id": 49,
+      "internalName": "TUBER2_M",
+      "name": "Tuber",
+      "baseMoney": 4,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "TUBER2_F": {
+      "id": 50,
+      "internalName": "TUBER2_F",
+      "name": "Tuber",
+      "baseMoney": 4,
+      "battleBGM": "",
+      "gender": "Female"
+    },
+    "COOLCOUPLE": {
+      "id": 51,
+      "internalName": "COOLCOUPLE",
+      "name": "Cool Couple",
+      "baseMoney": 72,
+      "battleBGM": "",
+      "gender": "Mixed"
+    },
+    "CRUSHKIN": {
+      "id": 52,
+      "internalName": "CRUSHKIN",
+      "name": "Crush Kin",
+      "baseMoney": 48,
+      "battleBGM": "",
+      "gender": "Mixed"
+    },
+    "SISANDBRO": {
+      "id": 53,
+      "internalName": "SISANDBRO",
+      "name": "Sis and Bro",
+      "baseMoney": 16,
+      "battleBGM": "",
+      "gender": "Mixed"
+    },
+    "TWINS": {
+      "id": 54,
+      "internalName": "TWINS",
+      "name": "Twins",
+      "baseMoney": 24,
+      "battleBGM": "",
+      "gender": "Mixed"
+    },
+    "YOUNGCOUPLE": {
+      "id": 55,
+      "internalName": "YOUNGCOUPLE",
+      "name": "Young Couple",
+      "baseMoney": 60,
+      "battleBGM": "",
+      "gender": "Mixed"
+    },
+    "TEAMROCKET_M": {
+      "id": 56,
+      "internalName": "TEAMROCKET_M",
+      "name": "Team Rocket",
+      "baseMoney": 32,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "TEAMROCKET_F": {
+      "id": 57,
+      "internalName": "TEAMROCKET_F",
+      "name": "Team Rocket",
+      "baseMoney": 32,
+      "battleBGM": "",
+      "gender": "Female"
+    },
+    "ROCKETBOSS": {
+      "id": 58,
+      "internalName": "ROCKETBOSS",
+      "name": "Rocket Boss",
+      "baseMoney": 100,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "LEADER_Brock": {
+      "id": 59,
+      "internalName": "LEADER_Brock",
+      "name": "Gym Leader",
+      "baseMoney": 100,
+      "battleBGM": "gymleader",
+      "gender": "Male"
+    },
+    "LEADER_Misty": {
+      "id": 60,
+      "internalName": "LEADER_Misty",
+      "name": "Gym Leader",
+      "baseMoney": 100,
+      "battleBGM": "gymleader",
+      "gender": "Female"
+    },
+    "LEADER_Surge": {
+      "id": 61,
+      "internalName": "LEADER_Surge",
+      "name": "Gym Leader",
+      "baseMoney": 100,
+      "battleBGM": "gymleader",
+      "gender": "Male"
+    },
+    "LEADER_Erika": {
+      "id": 62,
+      "internalName": "LEADER_Erika",
+      "name": "Gym Leader",
+      "baseMoney": 100,
+      "battleBGM": "Gym Leader Battle.mp3",
+      "gender": "Female"
+    },
+    "LEADER_Koga": {
+      "id": 63,
+      "internalName": "LEADER_Koga",
+      "name": "Gym Leader",
+      "baseMoney": 100,
+      "battleBGM": "gymleader",
+      "gender": "Male"
+    },
+    "LEADER_Sabrina": {
+      "id": 64,
+      "internalName": "LEADER_Sabrina",
+      "name": "Gym Leader",
+      "baseMoney": 100,
+      "battleBGM": "gymleader",
+      "gender": "Female"
+    },
+    "LEADER_Blaine": {
+      "id": 65,
+      "internalName": "LEADER_Blaine",
+      "name": "Gym Leader",
+      "baseMoney": 100,
+      "battleBGM": "gymleader",
+      "gender": "Male"
+    },
+    "LEADER_Giovanni": {
+      "id": 66,
+      "internalName": "LEADER_Giovanni",
+      "name": "Gym Leader",
+      "baseMoney": 100,
+      "battleBGM": "gymleader",
+      "gender": "Male"
+    },
+    "ELITEFOUR_Lorelei": {
+      "id": 67,
+      "internalName": "ELITEFOUR_Lorelei",
+      "name": "Elite Four",
+      "baseMoney": 100,
+      "battleBGM": "elite",
+      "gender": "Female"
+    },
+    "ELITEFOUR_Bruno": {
+      "id": 68,
+      "internalName": "ELITEFOUR_Bruno",
+      "name": "Elite Four",
+      "baseMoney": 100,
+      "battleBGM": "elite",
+      "gender": "Male"
+    },
+    "ELITEFOUR_Agatha": {
+      "id": 69,
+      "internalName": "ELITEFOUR_Agatha",
+      "name": "Elite Four",
+      "baseMoney": 100,
+      "battleBGM": "elite",
+      "gender": "Female"
+    },
+    "ELITEFOUR_Lance": {
+      "id": 70,
+      "internalName": "ELITEFOUR_Lance",
+      "name": "Elite Four",
+      "baseMoney": 100,
+      "battleBGM": "elite",
+      "gender": "Male"
+    },
+    "CHAMPION": {
+      "id": 71,
+      "internalName": "CHAMPION",
+      "name": "Champion",
+      "baseMoney": 100,
+      "battleBGM": "elite",
+      "gender": "Male"
+    },
+    "NERD": {
+      "id": 72,
+      "internalName": "NERD",
+      "name": "Nerd",
+      "baseMoney": 55,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "VIAJANTE": {
+      "id": 73,
+      "internalName": "VIAJANTE",
+      "name": "Viajante",
+      "baseMoney": 55,
+      "battleBGM": "",
+      "gender": "Male"
+    },
+    "TEAMBLUEGIRL": {
+      "id": 74,
+      "internalName": "TEAMBLUEGIRL",
+      "name": "Team Blue Girl",
+      "baseMoney": 65,
+      "battleBGM": "",
+      "gender": "Female"
+    }
+  },
+  "list": [
+    {
+      "type": "CAMPER",
+      "name": "Liam",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "DIGLETT",
+          "level": 10,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "BONSLY",
+          "level": 11,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "LEADER_Brock",
+      "name": "Brock",
+      "partyId": 0,
+      "items": [
+        "FULLRESTORE",
+        "FULLRESTORE"
+      ],
+      "party": [
+        {
+          "species": "GEODUDE",
+          "level": 12,
+          "item": null,
+          "moves": [
+            "DEFENSECURL",
+            "HEADSMASH",
+            "ROCKPOLISH",
+            "ROCKTHROW"
+          ],
+          "gender": "M",
+          "shiny": false
+        },
+        {
+          "species": "ONIX",
+          "level": 14,
+          "item": "SITRUSBERRY",
+          "moves": [
+            "HEADSMASH",
+            "ROCKTHROW",
+            "RAGE",
+            "ROCKTOMB"
+          ],
+          "gender": "M",
+          "shiny": true
+        }
+      ]
+    },
+    {
+      "type": "TEAMROCKET_M",
+      "name": "Grunt",
+      "partyId": 1,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "WEEPINBELL",
+          "level": 21,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": true
+        }
+      ]
+    },
+    {
+      "type": "TEAMROCKET_F",
+      "name": "Grunt",
+      "partyId": 1,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "BURMY",
+          "level": 19,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "WINGULL",
+          "level": 19,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "ELECTABUZZ",
+          "level": 20,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": true
+        }
+      ]
+    },
+    {
+      "type": "YOUNGSTER",
+      "name": "Ben",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "RATTATA",
+          "level": 11,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "EKANS",
+          "level": 11,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "CAMPER",
+      "name": "Jeff",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "SPEAROW",
+          "level": 16,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "SENTRET",
+          "level": 16,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "CAMPER",
+      "name": "Jeff",
+      "partyId": 1,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "FEAROW",
+          "level": 29,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "FURRET",
+          "level": 29,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "PICNICKER",
+      "name": "Susie",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "MEOWTH",
+          "level": 18,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "PICNICKER",
+      "name": "Susie",
+      "partyId": 1,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "PERSIAN",
+          "level": 32,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "HIKER",
+      "name": "Ford",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "MACHOP",
+          "level": 19,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "FISHERMAN",
+      "name": "Andrew",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "MAGIKARP",
+          "level": 14,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "MAGIKARP",
+          "level": 18,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "BEAUTY",
+      "name": "Bridget",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "SKITTY",
+          "level": 18,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "LASS",
+      "name": "Crissy",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "PLUSLE",
+          "level": 17,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "MINUN",
+          "level": 17,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "COOLCOUPLE",
+      "name": "Alice & Bob",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "TURTWIG",
+          "level": 19,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "CHIMCHAR",
+          "level": 19,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "POKEMONTRAINER_Brendan",
+      "name": "Brendan",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "MARSHTOMP",
+          "level": 19,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "SWIMMER2_F",
+      "name": "Ariel",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "STARYU",
+          "level": 15,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "GOLDEEN",
+          "level": 11,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "RIVAL1",
+      "name": "Blue",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "PIDGEOTTO",
+          "level": 17,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "RATTATA",
+          "level": 15,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "BULBASAUR",
+          "level": 18,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "RIVAL1",
+      "name": "Blue",
+      "partyId": 1,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "PIDGEOTTO",
+          "level": 17,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "RATTATA",
+          "level": 15,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "CHARMANDER",
+          "level": 18,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "RIVAL1",
+      "name": "Blue",
+      "partyId": 2,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "PIDGEOTTO",
+          "level": 17,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "RATTATA",
+          "level": 15,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "SQUIRTLE",
+          "level": 18,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "CHAMPION",
+      "name": "Blue",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "VENUSAUR",
+          "level": 63,
+          "item": "SITRUSBERRY",
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "CHARIZARD",
+          "level": 63,
+          "item": "SITRUSBERRY",
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "BLASTOISE",
+          "level": 63,
+          "item": "SITRUSBERRY",
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "YOUNGSTER",
+      "name": "Jow",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "TURTELISK",
+          "level": 10,
+          "item": null,
+          "moves": [
+            "WATERSPORT"
+          ],
+          "gender": "M",
+          "shiny": true
+        }
+      ]
+    },
+    {
+      "type": "RIVAL1",
+      "name": "Heitir",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "CHARMANDER",
+          "level": 5,
+          "item": null,
+          "moves": [
+            "SCRATCH",
+            "GROWL"
+          ],
+          "gender": "F",
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "RIVAL1",
+      "name": "Heitir",
+      "partyId": 1,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "SQUIRTLE",
+          "level": 5,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "TAILWHIP"
+          ],
+          "gender": "F",
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "RIVAL1",
+      "name": "Heitir",
+      "partyId": 2,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "BULBASAUR",
+          "level": 5,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "GROWL"
+          ],
+          "gender": "M",
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "RIVAL1",
+      "name": "Heitir",
+      "partyId": 3,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "EEVEE",
+          "level": 5,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "SANDATTACK"
+          ],
+          "gender": "M",
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "YOUNGSTER",
+      "name": "Akira",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "MAGIKARP",
+          "level": 8,
+          "item": null,
+          "moves": [
+            "SPLASH"
+          ],
+          "gender": null,
+          "shiny": true
+        }
+      ]
+    },
+    {
+      "type": "RIVAL1",
+      "name": "Heitir",
+      "partyId": 4,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "TORCHIC",
+          "level": 5,
+          "item": null,
+          "moves": [
+            "SCRATCH",
+            "GROWL"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "RIVAL1",
+      "name": "Heitir",
+      "partyId": 5,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "MUDKIP",
+          "level": 5,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "GROWL"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "RIVAL1",
+      "name": "Heitir",
+      "partyId": 6,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "TREECKO",
+          "level": 5,
+          "item": null,
+          "moves": [
+            "POUND",
+            "LEER",
+            "ABSORB",
+            "QUICKATTACK"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "VIAJANTE",
+      "name": "Zaki",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "SNIVY",
+          "level": 5,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "LEER"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "PIDOVE",
+          "level": 5,
+          "item": null,
+          "moves": [
+            "GUST",
+            "GROWL"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "SEWADDLE",
+          "level": 5,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "STRINGSHOT"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "RIVAL1",
+      "name": "Heitir",
+      "partyId": 7,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "TORCHIC",
+          "level": 7,
+          "item": null,
+          "moves": [
+            "SCRATCH",
+            "GROWL",
+            "FOCUSENERGY"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "TAILLOW",
+          "level": 5,
+          "item": null,
+          "moves": [
+            "PECK",
+            "GROWL",
+            "FOCUSENERGY"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "RIVAL1",
+      "name": "Heitir",
+      "partyId": 8,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "MUDKIP",
+          "level": 7,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "GROWL",
+            "MUDSLAP"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "TAILLOW",
+          "level": 5,
+          "item": null,
+          "moves": [
+            "PECK",
+            "GROWL",
+            "FOCUSENERGY"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "RIVAL1",
+      "name": "Heitir",
+      "partyId": 9,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "TREECKO",
+          "level": 7,
+          "item": null,
+          "moves": [
+            "POUND",
+            "LEER",
+            "ABSORB"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "TAILLOW",
+          "level": 5,
+          "item": null,
+          "moves": [
+            "PECK",
+            "GROWL",
+            "FOCUSENERGY"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "RIVAL1",
+      "name": "Heitir",
+      "partyId": 10,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "EEVEE",
+          "level": 7,
+          "item": null,
+          "moves": [
+            "HELPINGHAND",
+            "TACKLE",
+            "TAILWHIP",
+            "SANDATTACK"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "TAILLOW",
+          "level": 5,
+          "item": null,
+          "moves": [
+            "PECK",
+            "GROWL",
+            "FOCUSENERGY"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "YOUNGSTER",
+      "name": "Ken",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "LOTAD",
+          "level": 5,
+          "item": null,
+          "moves": [
+            "ASTONISH",
+            "GROWL",
+            "ABSORB"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "LOTAD",
+          "level": 4,
+          "item": null,
+          "moves": [
+            "ASTONISH",
+            "GROWL"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "LOTAD",
+          "level": 3,
+          "item": null,
+          "moves": [
+            "ASTONISH",
+            "GROWL"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "YOUNGSTER",
+      "name": "Yamato",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "CASCOON",
+          "level": 6,
+          "item": null,
+          "moves": [
+            "HARDEN"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "WURMPLE",
+          "level": 4,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "STRINGSHOT"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "WURMPLE",
+          "level": 3,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "STRINGSHOT"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "WURMPLE",
+          "level": 2,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "STRINGSHOT"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "TAILLOW",
+          "level": 6,
+          "item": null,
+          "moves": [
+            "PECK",
+            "GROWL",
+            "FOCUSENERGY"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "YOUNGSTER",
+      "name": "Sasuke",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "BEAUTIFLY",
+          "level": 9,
+          "item": null,
+          "moves": [
+            "ABSORB"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "DUSTOX",
+          "level": 9,
+          "item": null,
+          "moves": [
+            "CONFUSION"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "VIAJANTE",
+      "name": "Akira",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "TREECKO",
+          "level": 5,
+          "item": null,
+          "moves": [
+            "POUND",
+            "LEER"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "WURMPLE",
+          "level": 5,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "STRINGSHOT",
+            "POISONSTING"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "TAILLOW",
+          "level": 5,
+          "item": null,
+          "moves": [
+            "PECK",
+            "GROWL",
+            "FOCUSENERGY"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "YOUNGSTER",
+      "name": "Pedo",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "ABOMASNOW",
+          "level": 10,
+          "item": null,
+          "moves": [
+            "POWDERSNOW",
+            "LEER",
+            "RAZORLEAF",
+            "ICYWIND"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "YOUNGSTER",
+      "name": "Pedro",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "RATTATA",
+          "level": 4,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "TAILWHIP",
+            "QUICKATTACK"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "RATTATA",
+          "level": 5,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "TAILWHIP",
+            "QUICKATTACK"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "PIDGEY",
+          "level": 4,
+          "item": null,
+          "moves": [
+            "TACKLE"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "BEAUTY",
+      "name": "Julia",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "GEODUDE",
+          "level": 6,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "DEFENSECURL",
+            "MUDSPORT"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "YOUNGSTER",
+      "name": "Tiago",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "CATERPIE",
+          "level": 5,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "STRINGSHOT"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "WEEDLE",
+          "level": 5,
+          "item": null,
+          "moves": [
+            "POISONSTING",
+            "STRINGSHOT"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "METAPOD",
+          "level": 7,
+          "item": null,
+          "moves": [
+            "HARDEN"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "KAKUNA",
+          "level": 7,
+          "item": null,
+          "moves": [
+            "HARDEN"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "VENONAT",
+          "level": 8,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "DISABLE",
+            "FORESIGHT",
+            "SUPERSONIC"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "YOUNGSTER",
+      "name": "Paulo",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "ZUBAT",
+          "level": 7,
+          "item": null,
+          "moves": [
+            "LEECHLIFE",
+            "SUPERSONIC"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "GASTLY",
+          "level": 9,
+          "item": null,
+          "moves": [
+            "HYPNOSIS",
+            "LICK",
+            "SPITE",
+            "MEANLOOK"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "TEAMBLUEGIRL",
+      "name": "Sofia",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "SQUIRTLE",
+          "level": 10,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "TAILWHIP",
+            "BUBBLE",
+            "WITHDRAW"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "MAGIKARP",
+          "level": 14,
+          "item": null,
+          "moves": [
+            "SPLASH"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "KRABBY",
+          "level": 7,
+          "item": null,
+          "moves": [
+            "MUDSPORT",
+            "BUBBLE",
+            "VICEGRIP"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "TEAMBLUEGIRL",
+      "name": "Sofia",
+      "partyId": 1,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "SQUIRTLE",
+          "level": 12,
+          "item": null,
+          "moves": [
+            "BUBBLE",
+            "WITHDRAW",
+            "WATERGUN"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "MAGIKARP",
+          "level": 16,
+          "item": null,
+          "moves": [
+            "SPLASH",
+            "TACKLE"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "KRABBY",
+          "level": 10,
+          "item": null,
+          "moves": [
+            "BUBBLE",
+            "VICEGRIP",
+            "LEER",
+            "HARDEN"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "LEADER_Erika",
+      "name": "Diana",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "VENONAT",
+          "level": 12,
+          "item": null,
+          "moves": [
+            "DISABLE",
+            "FORESIGHT",
+            "SUPERSONIC",
+            "CONFUSION"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "BUTTERFREE",
+          "level": 14,
+          "item": null,
+          "moves": [
+            "CONFUSION",
+            "POISONPOWDER",
+            "STUNSPORE",
+            "SLEEPPOWDER"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "BEEDRILL",
+          "level": 16,
+          "item": null,
+          "moves": [
+            "FURYATTACK",
+            "FOCUSENERGY",
+            "TWINEEDLE"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "YOUNGSTER",
+      "name": "Alysson",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "CATERPIE",
+          "level": 8,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "STRINGSHOT"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "CATERPIE",
+          "level": 9,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "STRINGSHOT"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "METAPOD",
+          "level": 10,
+          "item": null,
+          "moves": [
+            "HARDEN"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "METAPOD",
+          "level": 11,
+          "item": null,
+          "moves": [
+            "HARDEN"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "YOUNGSTER",
+      "name": "Lucas",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "WEEDLE",
+          "level": 8,
+          "item": null,
+          "moves": [
+            "POISONSTING",
+            "STRINGSHOT"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "WEEDLE",
+          "level": 9,
+          "item": null,
+          "moves": [
+            "POISONSTING",
+            "STRINGSHOT"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "KAKUNA",
+          "level": 10,
+          "item": null,
+          "moves": [
+            "HARDEN"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "KAKUNA",
+          "level": 11,
+          "item": null,
+          "moves": [
+            "HARDEN"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "YOUNGSTER",
+      "name": "Theo",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "VENONAT",
+          "level": 12,
+          "item": null,
+          "moves": [
+            "DISABLE",
+            "FORESIGHT",
+            "SUPERSONIC",
+            "CONFUSION"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "RIVAL1",
+      "name": "Heitir",
+      "partyId": 11,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "CHARMANDER",
+          "level": 14,
+          "item": null,
+          "moves": [
+            "SCRATCH",
+            "GROWL",
+            "EMBER",
+            "SMOKESCREEN"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "PIDGEY",
+          "level": 10,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "SANDATTACK",
+            "GUST"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "GASTLY",
+          "level": 10,
+          "item": null,
+          "moves": [
+            "HYPNOSIS",
+            "LICK",
+            "SPITE",
+            "MEANLOOK"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "RIVAL1",
+      "name": "Heitir",
+      "partyId": 12,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "SQUIRTLE",
+          "level": 14,
+          "item": null,
+          "moves": [
+            "TAILWHIP",
+            "BUBBLE",
+            "WITHDRAW",
+            "WATERGUN"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "PIDGEY",
+          "level": 10,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "SANDATTACK",
+            "GUST"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "GASTLY",
+          "level": 10,
+          "item": null,
+          "moves": [
+            "HYPNOSIS",
+            "LICK",
+            "SPITE",
+            "MEANLOOK"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "RIVAL1",
+      "name": "Heitir",
+      "partyId": 13,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "BULBASAUR",
+          "level": 14,
+          "item": null,
+          "moves": [
+            "LEECHSEED",
+            "VINEWHIP",
+            "POISONPOWDER",
+            "SLEEPPOWDER"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "PIDGEY",
+          "level": 10,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "SANDATTACK",
+            "GUST"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "GASTLY",
+          "level": 10,
+          "item": null,
+          "moves": [
+            "HYPNOSIS",
+            "LICK",
+            "SPITE",
+            "MEANLOOK"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "RIVAL1",
+      "name": "Heitir",
+      "partyId": 14,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "EEVEE",
+          "level": 14,
+          "item": null,
+          "moves": [
+            "TAILWHIP",
+            "SANDATTACK",
+            "GROWL",
+            "QUICKATTACK"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "PIDGEY",
+          "level": 10,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "SANDATTACK",
+            "GUST"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "GASTLY",
+          "level": 10,
+          "item": null,
+          "moves": [
+            "HYPNOSIS",
+            "LICK",
+            "SPITE",
+            "MEANLOOK"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "YOUNGSTER",
+      "name": "Douglas",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "VENONAT",
+          "level": 10,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "DISABLE",
+            "FORESIGHT",
+            "SUPERSONIC"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "NIDORANfE",
+          "level": 10,
+          "item": null,
+          "moves": [
+            "GROWL",
+            "SCRATCH",
+            "TAILWHIP"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "NIDORANmA",
+          "level": 10,
+          "item": null,
+          "moves": [
+
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "YOUNGSTER",
+      "name": "Vitor",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "ODDISH",
+          "level": 7,
+          "item": null,
+          "moves": [
+            "ABSORB",
+            "SWEETSCENT"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "ODDISH",
+          "level": 8,
+          "item": null,
+          "moves": [
+            "ABSORB",
+            "SWEETSCENT"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "BULBASAUR",
+          "level": 12,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "GROWL",
+            "LEECHSEED",
+            "VINEWHIP"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "BUGCATCHER",
+      "name": "Gabriel",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "CATERPIE",
+          "level": 7,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "STRINGSHOT"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "CATERPIE",
+          "level": 8,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "STRINGSHOT"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "CATERPIE",
+          "level": 9,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "STRINGSHOT"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "METAPOD",
+          "level": 10,
+          "item": null,
+          "moves": [
+            "HARDEN"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "METAPOD",
+          "level": 11,
+          "item": null,
+          "moves": [
+            "HARDEN"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "BUTTERFREE",
+          "level": 12,
+          "item": null,
+          "moves": [
+            "CONFUSION",
+            "POISONPOWDER",
+            "STUNSPORE",
+            "SLEEPPOWDER"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "FISHERMAN",
+      "name": "Carlos",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "MAGIKARP",
+          "level": 10,
+          "item": null,
+          "moves": [
+            "SPLASH"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "MAGIKARP",
+          "level": 10,
+          "item": null,
+          "moves": [
+            "SPLASH"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "MAGIKARP",
+          "level": 10,
+          "item": null,
+          "moves": [
+            "SPLASH"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "GOLDEEN",
+          "level": 12,
+          "item": null,
+          "moves": [
+            "TAILWHIP",
+            "WATERSPORT",
+            "SUPERSONIC",
+            "HORNATTACK"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "FISHERMAN",
+      "name": "Riquelme",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "POLIWAG",
+          "level": 10,
+          "item": null,
+          "moves": [
+            "WATERSPORT",
+            "BUBBLE",
+            "HYPNOSIS"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "GOLDEEN",
+          "level": 12,
+          "item": null,
+          "moves": [
+            "TAILWHIP",
+            "WATERSPORT",
+            "SUPERSONIC",
+            "HORNATTACK"
+          ],
+          "gender": null,
+          "shiny": false
+        },
+        {
+          "species": "SHELLDER",
+          "level": 10,
+          "item": null,
+          "moves": [
+            "TACKLE",
+            "WITHDRAW",
+            "SUPERSONIC"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "FISHERMAN",
+      "name": "Ernesto",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "POLIWHIRL",
+          "level": 16,
+          "item": null,
+          "moves": [
+            "BUBBLE",
+            "HYPNOSIS",
+            "WATERGUN",
+            "DOUBLESLAP"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    },
+    {
+      "type": "BUGCATCHER",
+      "name": "Shirou",
+      "partyId": 0,
+      "items": [
+
+      ],
+      "party": [
+        {
+          "species": "DUSTOX",
+          "level": 10,
+          "item": null,
+          "moves": [
+            "CONFUSION"
+          ],
+          "gender": null,
+          "shiny": false
+        }
+      ]
+    }
+  ]
+}

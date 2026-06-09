@@ -222,11 +222,11 @@ PKM.Battle = PKM.Battle || {};
         return Math.randomInt(256) < odds;
     };
 
-    // EXP ganha por derrotar um Pokémon (dividida entre participantes)
-    PKM.Battle.expGain = function(faintedMon, participants = 1) {
+    // EXP ganha por derrotar um Pokémon (bonus 1.5 em treinadores)
+    PKM.Battle.expGain = function(faintedMon, participants = 1, bonus = 1) {
         const sp = faintedMon.species();
         const base = (sp && sp.baseExp) || 64;
-        return Math.max(1, Math.floor((base * faintedMon.level) / 7 / Math.max(1, participants)));
+        return Math.max(1, Math.floor((base * faintedMon.level * bonus) / 7 / Math.max(1, participants)));
     };
 
     //=========================================================================
@@ -243,7 +243,15 @@ PKM.Battle = PKM.Battle || {};
 
     Scene_PkmBattle.prototype.create = function() {
         Scene_Base.prototype.create.call(this);
-        this._enemy = $gameTemp.pkmWild;
+        this._trainer = $gameTemp.pkmTrainer || null;
+        this._isTrainer = !!this._trainer;
+        if (this._isTrainer) {
+            this._enemyParty = this._trainer.party;
+            this._enemyIndex = 0;
+            this._enemy = this._enemyParty[0];
+        } else {
+            this._enemy = $gameTemp.pkmWild;
+        }
         this._player = $gameParty.pkmFirstAble();
         this._runAttempts = 0;
         if (this._enemy.resetBattleState) this._enemy.resetBattleState();
@@ -314,8 +322,9 @@ PKM.Battle = PKM.Battle || {};
     };
 
     //--- status / mensagens ---------------------------------------------------
+    Scene_PkmBattle.prototype.foeTag = function() { return this._isTrainer ? "" : " selvagem"; };
     Scene_PkmBattle.prototype.refreshStatus = function() {
-        this.drawBattler(this._enemyWindow, this._enemy, " (selvagem)", false);
+        this.drawBattler(this._enemyWindow, this._enemy, this._isTrainer ? "" : " (selvagem)", false);
         this.drawBattler(this._playerWindow, this._player, "", true);
     };
     Scene_PkmBattle.prototype.drawBattler = function(win, p, tag, hpText) {
@@ -379,9 +388,17 @@ PKM.Battle = PKM.Battle || {};
     //--- ciclo ----------------------------------------------------------------
     Scene_PkmBattle.prototype.startBattle = function() {
         if ($gameSystem.pkmSetSeen) $gameSystem.pkmSetSeen(this._enemy.dexNumber);
-        this.showSteps([{ text: "Um " + this._enemy.name + " selvagem apareceu!" },
-                        { text: "Vai, " + this._player.name + "!" }],
-            this.startInput.bind(this));
+        let intro;
+        if (this._isTrainer) {
+            intro = [{ text: this._trainer.name + " quer batalhar!" }];
+            if (this._trainer.introText) intro.push({ text: this._trainer.introText });
+            intro.push({ text: this._trainer.name + " enviou " + this._enemy.name + "!" });
+            intro.push({ text: "Vai, " + this._player.name + "!" });
+        } else {
+            intro = [{ text: "Um " + this._enemy.name + " selvagem apareceu!" },
+                     { text: "Vai, " + this._player.name + "!" }];
+        }
+        this.showSteps(intro, this.startInput.bind(this));
     };
     Scene_PkmBattle.prototype.startInput = function() {
         this._phase = "input";
@@ -418,6 +435,11 @@ PKM.Battle = PKM.Battle || {};
     };
     Scene_PkmBattle.prototype.onBall = function() {
         this._commandWindow.hide(); this._commandWindow.deactivate();
+        if (this._isTrainer) {
+            this.showSteps([{ text: "Não dá para capturar o Pokémon de outro treinador!" }],
+                this.startInput.bind(this));
+            return;
+        }
         // se a mochila (PKM_Bag) existir, escolhe entre as bolas que você possui
         if ($gameParty.pkmBalls) {
             const balls = $gameParty.pkmBalls();
@@ -445,6 +467,11 @@ PKM.Battle = PKM.Battle || {};
     };
     Scene_PkmBattle.prototype.onRun = function() {
         this._commandWindow.hide(); this._commandWindow.deactivate();
+        if (this._isTrainer) {
+            this.showSteps([{ text: "Não dá para fugir de uma batalha de treinador!" }],
+                this.startInput.bind(this));
+            return;
+        }
         this.doRun();
     };
     Scene_PkmBattle.prototype.onPokemonCmd = function() {
@@ -477,7 +504,7 @@ PKM.Battle = PKM.Battle || {};
     Scene_PkmBattle.prototype.buildMoveMessages = function(attacker, defender, move) {
         const md = PKM.Core.move(move.id);
         const name = md ? md.name : move.id;
-        const tag = attacker === this._enemy ? " selvagem" : "";
+        const tag = attacker === this._enemy ? this.foeTag() : "";
         const msgs = [];
 
         // pré-ação: dorme/congela/paralisia
@@ -504,7 +531,7 @@ PKM.Battle = PKM.Battle || {};
         if (calc.effectiveness > 1) msgs.push("Foi super eficaz!");
         else if (calc.effectiveness < 1) msgs.push("Não foi muito eficaz…");
         if (defender.isFainted()) {
-            const dt = defender === this._enemy ? " selvagem" : "";
+            const dt = defender === this._enemy ? this.foeTag() : "";
             msgs.push(defender.name + dt + " desmaiou!");
             return msgs;
         }
@@ -539,7 +566,7 @@ PKM.Battle = PKM.Battle || {};
 
     Scene_PkmBattle.prototype.settleTurn = function() {
         if (this._enemy.isFainted()) {
-            this.awardExpAndFinish(() => this.endBattle());
+            this.awardExpAndFinish(() => this.onEnemyDefeated());
         } else if (this._player.isFainted()) {
             if ($gameParty.pkmAllFainted()) {
                 this.showSteps([{ text: this._player.name + " desmaiou!" },
@@ -640,12 +667,9 @@ PKM.Battle = PKM.Battle || {};
         const winner = this._player;
         this._afterGrowth = onDone;
         this._expWinner = winner;
-        const exp = PKM.Battle.expGain(this._enemy, 1);
+        const exp = PKM.Battle.expGain(this._enemy, 1, this._isTrainer ? 1.5 : 1);
         const res = winner.addExp(exp);
-        const steps = [
-            { text: "Você derrotou o " + this._enemy.name + " selvagem!" },
-            { text: winner.name + " ganhou " + res.gained + " de Exp.!" }
-        ];
+        const steps = [{ text: winner.name + " ganhou " + res.gained + " de Exp.!" }];
         res.levels.forEach(lv => steps.push({ text: winner.name + " subiu para o nível " + lv.level + "!" }));
         this._learnQueue = res.levels.reduce((a, lv) => a.concat(lv.learnable), []);
         this.showSteps(steps, () => this.processNextLearn());
@@ -720,9 +744,39 @@ PKM.Battle = PKM.Battle || {};
         cb();
     };
 
+    // após derrotar um Pokémon inimigo: próximo do treinador ou fim
+    Scene_PkmBattle.prototype.onEnemyDefeated = function() {
+        if (this._isTrainer) {
+            this._enemyIndex++;
+            if (this._enemyIndex < this._enemyParty.length) {
+                this._enemy = this._enemyParty[this._enemyIndex];
+                if (this._enemy.resetBattleState) this._enemy.resetBattleState();
+                if ($gameSystem.pkmSetSeen) $gameSystem.pkmSetSeen(this._enemy.dexNumber);
+                this.refreshStatus();
+                this.showSteps([{ text: this._trainer.name + " enviou " + this._enemy.name + "!" }],
+                    this.startInput.bind(this));
+            } else {
+                this.trainerDefeated();
+            }
+        } else {
+            this.endBattle();
+        }
+    };
+    Scene_PkmBattle.prototype.trainerDefeated = function() {
+        const reward = this._trainer.money || 0;
+        const steps = [{ text: "Você derrotou " + this._trainer.name + "!" }];
+        if (this._trainer.defeatText) steps.push({ text: this._trainer.defeatText });
+        steps.push({
+            text: "Você recebeu $" + reward + " de prêmio!",
+            fn: () => { if ($gameParty.pkmGainMoney) $gameParty.pkmGainMoney(reward); }
+        });
+        this.showSteps(steps, () => this.endBattle());
+    };
+
     //--- fim ------------------------------------------------------------------
     Scene_PkmBattle.prototype.endBattle = function() {
         $gameTemp.pkmWild = null;
+        $gameTemp.pkmTrainer = null;
         this.popScene();
     };
 

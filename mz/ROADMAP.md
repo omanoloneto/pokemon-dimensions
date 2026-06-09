@@ -15,8 +15,8 @@ Ordem de execução priorizando chegar a uma **demo jogável** o quanto antes:
 | 3 | Mochila & Itens | ✅ |
 | 7 | EXP, Nível & Evolução | ✅ |
 | 5b | Batalha — status, estágios de stat, efeitos de golpe | ✅ |
+| 9 | Treinadores & Ginásios | ✅ |
 | 8 | PC / Boxes | ⬜ |
-| 9 | Treinadores & Ginásios | ⬜ |
 | 10 | Polimento, áudio, migração XP→MZ | ⬜ |
 
 ## Marcos

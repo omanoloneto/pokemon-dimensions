@@ -21,6 +21,8 @@ const ctx = {
     $dataTypes: load("Types.json"),
     $dataItems2: load("Items.json"),
     $dataEncounters: load("Encounters.json"),
+    $dataTrainers: load("Trainers.json"),
+    $gameTemp: {},
     DataManager: { _databaseFiles: [] },
     PluginManager: { registerCommand() {} },
     SceneManager: { push() {}, _scene: {} },
@@ -45,7 +47,7 @@ vm.runInContext(`
 `, ctx);
 
 // carrega plugins de lógica (não os de cena — esses usam render)
-for (const f of ["PKM_Core.js", "PKM_Pokemon.js", "PKM_Battle.js", "PKM_Bag.js"]) {
+for (const f of ["PKM_Core.js", "PKM_Pokemon.js", "PKM_Battle.js", "PKM_Bag.js", "PKM_Trainers.js"]) {
     const p = path.join(ROOT, "js/plugins", f);
     if (fs.existsSync(p)) vm.runInContext(fs.readFileSync(p, "utf8"), ctx, { filename: f });
 }
@@ -193,6 +195,27 @@ console.log("== Status & Estágios (5b) ==");
     a.status = "BRN";
     const burned = B.calcDamage(a, d, "TACKLE", { fixedRand: 1, forceCrit: false });
     ok(burned.damage < normal.damage, "queimadura reduz dano físico");
+}
+
+// treinadores (Fase 9)
+console.log("== Treinadores (9) ==");
+if (ctx.PKM.Trainers) {
+    const def = ctx.PKM.Trainers.find("LEADER_Brock", "Brock");
+    ok(!!def, "encontra LEADER_Brock");
+    if (def) {
+        const built = ctx.PKM.Trainers.build(def);
+        eq(built.party.length, 2, "equipe do Brock tem 2 Pokémon");
+        eq(built.party[0].speciesName, "Geodude", "primeiro é Geodude");
+        ok(built.party[1].knowsMove("ROCKTOMB"), "Onix tem o golpe definido (Rock Tomb)");
+        ok(built.party[1].shiny, "Onix do Brock é shiny");
+        // prêmio = baseMoney(100) × nível do último (14) = 1400
+        eq(built.money, 1400, "prêmio = baseMoney × nível do último");
+    }
+    // bônus de EXP de treinador (1.5×) > selvagem
+    const e = new G("PIDGEY", 10);
+    ok(ctx.PKM.Battle.expGain(e, 1, 1.5) > ctx.PKM.Battle.expGain(e, 1, 1), "EXP de treinador (1.5×) > selvagem");
+} else {
+    console.log("  (PKM.Trainers indisponível — pulando)");
 }
 
 console.log(`\nResultado: ${pass} passou, ${fail} falhou`);

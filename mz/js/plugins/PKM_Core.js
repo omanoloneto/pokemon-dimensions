@@ -44,6 +44,7 @@ var $dataMoves = $dataMoves || null;
 var $dataTypes = $dataTypes || null;
 var $dataItems2 = $dataItems2 || null;       // itens Pokémon (evita colidir com $dataItems do MZ)
 var $dataEncounters = $dataEncounters || null;
+var $dataTrainers = $dataTrainers || null;
 
 var PKM = PKM || {};
 PKM.Core = {};
@@ -58,6 +59,7 @@ PKM.PLUGIN_NAME = "PKM_Core";
     DataManager._databaseFiles.push({ name: "$dataTypes", src: "Types.json" });
     DataManager._databaseFiles.push({ name: "$dataItems2", src: "Items.json" });
     DataManager._databaseFiles.push({ name: "$dataEncounters", src: "Encounters.json" });
+    DataManager._databaseFiles.push({ name: "$dataTrainers", src: "Trainers.json" });
 
     // --- Tabela de eficácia de tipos ---
     PKM.Core.typeEffectiveness = function(atkType, defType) {

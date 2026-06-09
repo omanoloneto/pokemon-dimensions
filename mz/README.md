@@ -17,7 +17,8 @@ da raiz — nada aqui sobrescreve o jogo original.
 | **Mochila, itens & dinheiro**           | ✅ Fase 3 |
 | **EXP, nível, golpes & evolução**       | ✅ Fase 7 |
 | **Status, estágios & efeitos de golpe** | ✅ Fase 5b |
-| PC/boxes, treinadores, polimento        | ⬜ a fazer |
+| **Treinadores & insígnias**             | ✅ Fase 9 |
+| PC/boxes, polimento/áudio               | ⬜ a fazer |
 
 ## Estrutura
 
@@ -32,7 +33,8 @@ mz/
 │   ├── PKM_Party.js          # equipe + telas de resumo (Fase 2)
 │   ├── PKM_Encounters.js     # encontros no overworld (Fase 4)
 │   ├── PKM_Battle.js         # batalha 1v1 + captura (Fases 5a/6)
-│   └── PKM_Bag.js            # mochila, itens, dinheiro (Fase 3)
+│   ├── PKM_Bag.js            # mochila, itens, dinheiro (Fase 3)
+│   └── PKM_Trainers.js       # batalhas de treinador + insígnias (Fase 9)
 ├── img/pokemon/front/        # (opcional) sprites <numero>.png, ex.: 001.png
 └── tools/
     ├── compile_all.rb        # PBS → todos os data/*.json
@@ -46,7 +48,7 @@ mz/
 2. Copie todos os `js/plugins/PKM_*.js` para `js/plugins/`.
 3. No **Gerenciador de Plugins**, adicione e ative **nesta ordem**:
    `PKM_Core` → `PKM_Pokemon` → `PKM_Pokedex` → `PKM_Party` →
-   `PKM_Encounters` → `PKM_Battle` → `PKM_Bag`.
+   `PKM_Encounters` → `PKM_Battle` → `PKM_Bag` → `PKM_Trainers`.
 4. (Opcional) Sprites frontais em `img/pokemon/front/` (`001.png`…). Sem imagem,
    a Pokédex mostra um placeholder "?".
 
@@ -88,10 +90,20 @@ mz/
 - O registry `PKM.Battle.MOVE_EFFECTS` (em PKM_Battle.js) é data-driven — dá
   para adicionar mais golpes facilmente.
 
+## Treinadores & ginásios (Fase 9)
+
+- Iniciar: comando `PKM_Trainers → Batalha de Treinador` (tipo + nome), ou
+  `PKM.Trainers.start("LEADER_Brock", "Brock", {defeatText:"..."} )` num evento.
+- O oponente envia cada Pokémon em sequência; **não dá para capturar nem fugir**;
+  ao vencer você recebe prêmio (`baseMoney × nível do último`) e EXP com bônus 1.5×.
+- Insígnias: `$gameSystem.pkmGiveBadge("KANTO_1")`, `pkmHasBadge`, `pkmBadgeCount`,
+  ou comando `PKM_Trainers → Dar Insígnia`.
+- Dados de 60 treinadores e 75 tipos vêm do seu PBS.
+
 ## Testes automatizados (lógica)
 
 ```bash
-node mz/tools/test_harness.js   # Pokémon, dano, captura, itens, crescimento e status (39 testes)
+node mz/tools/test_harness.js   # tudo acima + treinadores (46 testes)
 ```
 
 ## Como usar

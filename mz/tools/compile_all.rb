@@ -207,10 +207,68 @@ def compile_encounters
   write("Encounters.json", maps)
 end
 
+#---------------------------------------------------------------------------
+# TRAINERS  (trainertypes.txt + trainers.txt)
+#---------------------------------------------------------------------------
+def compile_trainers
+  # tipos de treinador: id,InternalName,Nome,baseMoney,bgm,...,gender,...
+  types = {}
+  File.foreach(File.join(PBS, "trainertypes.txt"), encoding: "bom|utf-8") do |raw|
+    line = raw.strip
+    next if line.empty? || line.start_with?("#")
+    f = line.split(",")
+    next if f.size < 3
+    types[f[1]] = {
+      "id" => f[0].to_i, "internalName" => f[1], "name" => f[2],
+      "baseMoney" => (f[3] || "30").to_i, "battleBGM" => (f[4] || "").strip,
+      "gender" => (f[7] || "").strip
+    }
+  end
+
+  # treinadores: linhas úteis (sem comentários/branco), parse sequencial
+  lines = []
+  File.foreach(File.join(PBS, "trainers.txt"), encoding: "bom|utf-8") do |raw|
+    s = raw.rstrip
+    next if s.strip.empty? || s.strip.start_with?("#")
+    lines << s
+  end
+
+  list = []
+  i = 0
+  while i < lines.size
+    type = lines[i].strip; i += 1
+    break if i >= lines.size
+    nf = lines[i].split(","); i += 1
+    name = nf[0].strip
+    party_id = nf[1] ? nf[1].to_i : 0
+    break if i >= lines.size
+    cf = lines[i].split(","); i += 1
+    count = cf[0].to_i
+    items = (cf[1..] || []).map(&:strip).reject(&:empty?)
+    party = []
+    count.times do
+      break if i >= lines.size
+      pf = lines[i].split(","); i += 1
+      moves = [pf[3], pf[4], pf[5], pf[6]].compact.map(&:strip).reject(&:empty?)
+      gender = pf.map { |x| x.to_s.strip }.find { |x| x == "M" || x == "F" }
+      shiny = pf.any? { |x| %w[shiny true].include?(x.to_s.strip.downcase) }
+      party << {
+        "species" => pf[0].to_s.strip, "level" => (pf[1] || "5").to_i,
+        "item" => (pf[2] && !pf[2].strip.empty? ? pf[2].strip : nil),
+        "moves" => moves, "gender" => gender, "shiny" => shiny
+      }
+    end
+    next if party.empty?
+    list << { "type" => type, "name" => name, "partyId" => party_id, "items" => items, "party" => party }
+  end
+  write("Trainers.json", { "types" => types, "list" => list })
+end
+
 Dir.mkdir(OUT) unless Dir.exist?(OUT)
 compile_pokemon
 compile_moves
 compile_types
 compile_items
 compile_encounters
+compile_trainers
 puts "Pronto."
