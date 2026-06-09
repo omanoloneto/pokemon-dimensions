@@ -40,6 +40,10 @@
  */
 
 var $dataPokemon = $dataPokemon || null;
+var $dataMoves = $dataMoves || null;
+var $dataTypes = $dataTypes || null;
+var $dataItems2 = $dataItems2 || null;       // itens Pokémon (evita colidir com $dataItems do MZ)
+var $dataEncounters = $dataEncounters || null;
 
 var PKM = PKM || {};
 PKM.Core = {};
@@ -48,8 +52,30 @@ PKM.PLUGIN_NAME = "PKM_Core";
 (() => {
     "use strict";
 
-    // --- Carrega data/Pokemon.json junto com os demais bancos de dados ---
+    // --- Carrega os bancos de dados Pokémon (data/*.json) ---
     DataManager._databaseFiles.push({ name: "$dataPokemon", src: "Pokemon.json" });
+    DataManager._databaseFiles.push({ name: "$dataMoves", src: "Moves.json" });
+    DataManager._databaseFiles.push({ name: "$dataTypes", src: "Types.json" });
+    DataManager._databaseFiles.push({ name: "$dataItems2", src: "Items.json" });
+    DataManager._databaseFiles.push({ name: "$dataEncounters", src: "Encounters.json" });
+
+    // --- Tabela de eficácia de tipos ---
+    PKM.Core.typeEffectiveness = function(atkType, defType) {
+        if (!$dataTypes || !$dataTypes.chart) return 1;
+        const row = $dataTypes.chart[atkType];
+        if (!row || row[defType] === undefined) return 1;
+        return row[defType];
+    };
+    // multiplicador total contra um ou dois tipos
+    PKM.Core.typeMultiplier = function(atkType, defTypes) {
+        return defTypes.reduce((m, t) => m * PKM.Core.typeEffectiveness(atkType, t), 1);
+    };
+    PKM.Core.move = function(internalName) {
+        return ($dataMoves && $dataMoves[internalName]) || null;
+    };
+    PKM.Core.item = function(internalName) {
+        return ($dataItems2 && $dataItems2[internalName]) || null;
+    };
 
     // --- Acesso a espécies ----------------------------------------------------
     PKM.Core.species = function(id) {

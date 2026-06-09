@@ -8,32 +8,57 @@ da raiz — nada aqui sobrescreve o jogo original.
 
 | Sistema   | Estado        |
 |-----------|---------------|
-| Dados das espécies (PBS → JSON) | ✅ 648 Pokémon |
-| **Pokédex** (lista + ficha)     | ✅ v0.1 |
-| Batalha, mochila, party, PC, mapa | ⬜ a fazer |
+| Dados (Pokémon, golpes, tipos, itens, encontros → JSON) | ✅ |
+| **Pokédex** (lista + ficha)             | ✅ |
+| **Game_Pokemon** (IVs/EVs/natureza/stats) | ✅ Fase 1 |
+| **Party & Resumo**                      | ✅ Fase 2 |
+| **Encontros selvagens**                 | ✅ Fase 4 |
+| **Batalha 1v1 + Captura**               | ✅ Fases 5a/6 |
+| Mochila, EXP/evolução, PC, treinadores  | ⬜ a fazer |
 
 ## Estrutura
 
 ```
 mz/
-├── data/
-│   └── Pokemon.json          # espécies compiladas do PBS (gerado)
+├── data/                     # bancos compilados do PBS (gerados)
+│   ├── Pokemon.json  Moves.json  Types.json  Items.json  Encounters.json
 ├── js/plugins/
-│   ├── PKM_Core.js           # núcleo: carrega dados + estado da Pokédex
-│   └── PKM_Pokedex.js        # cena da Pokédex
+│   ├── PKM_Core.js           # carrega dados, tabela de tipos, estado da Pokédex
+│   ├── PKM_Pokemon.js        # classe Game_Pokemon (Fase 1)
+│   ├── PKM_Pokedex.js        # cena da Pokédex
+│   ├── PKM_Party.js          # equipe + telas de resumo (Fase 2)
+│   ├── PKM_Encounters.js     # encontros no overworld (Fase 4)
+│   └── PKM_Battle.js         # batalha 1v1 + captura (Fases 5a/6)
 ├── img/pokemon/front/        # (opcional) sprites <numero>.png, ex.: 001.png
 └── tools/
-    └── compile_pbs.rb        # PBS/pokemon.txt → data/Pokemon.json
+    ├── compile_all.rb        # PBS → todos os data/*.json
+    ├── compile_pbs.rb        # (legado) só Pokemon.json
+    └── test_harness.js       # testes headless da lógica (node)
 ```
 
 ## Instalação num projeto MZ
 
-1. Copie `data/Pokemon.json` para a pasta `data/` do seu projeto MZ.
-2. Copie `js/plugins/PKM_Core.js` e `js/plugins/PKM_Pokedex.js` para `js/plugins/`.
-3. No **Gerenciador de Plugins**, adicione e ative, **nesta ordem**:
-   `PKM_Core` → `PKM_Pokedex`.
-4. (Opcional) Coloque sprites frontais em `img/pokemon/front/` com nome de 3
-   dígitos: `001.png`, `004.png`, etc. Sem imagem, mostra um placeholder "?".
+1. Copie tudo de `data/` para a pasta `data/` do seu projeto MZ.
+2. Copie todos os `js/plugins/PKM_*.js` para `js/plugins/`.
+3. No **Gerenciador de Plugins**, adicione e ative **nesta ordem**:
+   `PKM_Core` → `PKM_Pokemon` → `PKM_Pokedex` → `PKM_Party` →
+   `PKM_Encounters` → `PKM_Battle`.
+4. (Opcional) Sprites frontais em `img/pokemon/front/` (`001.png`…). Sem imagem,
+   a Pokédex mostra um placeholder "?".
+
+## Testar a demo jogável (andar → encontro → batalha → captura)
+
+1. Num evento, dê um inicial: comando `PKM_Party → Dar Pokémon` (ex.: CHARMANDER nv5).
+2. Pinte a **Região 1** (editor de mapa) sobre tiles de grama de um mapa que
+   exista em `Encounters.json` (ex.: mapa 5 = Route 1).
+3. Ande na grama → encontro selvagem → batalha. Teste Lutar/Bola/Pokémon/Fugir.
+   - Para forçar: comando `PKM_Encounters → Forçar Encontro` (PIDGEY nv7).
+
+## Testes automatizados (lógica)
+
+```bash
+node mz/tools/test_harness.js   # valida Game_Pokemon, dano e captura
+```
 
 ## Como usar
 

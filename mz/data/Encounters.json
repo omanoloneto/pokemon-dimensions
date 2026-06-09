@@ -1,0 +1,3332 @@
+{
+  "2": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Water": [
+        {
+          "species": "TENTACOOL",
+          "min": 14,
+          "max": 19
+        },
+        {
+          "species": "MANTYKE",
+          "min": 15,
+          "max": 16
+        },
+        {
+          "species": "REMORAID",
+          "min": 14,
+          "max": 16
+        },
+        {
+          "species": "REMORAID",
+          "min": 14,
+          "max": 16
+        },
+        {
+          "species": "REMORAID",
+          "min": 14,
+          "max": 16
+        }
+      ],
+      "OldRod": [
+        {
+          "species": "MAGIKARP",
+          "min": 16,
+          "max": 19
+        },
+        {
+          "species": "MAGIKARP",
+          "min": 16,
+          "max": 19
+        }
+      ],
+      "GoodRod": [
+        {
+          "species": "BARBOACH",
+          "min": 17,
+          "max": 18
+        },
+        {
+          "species": "SHELLDER",
+          "min": 16,
+          "max": 19
+        },
+        {
+          "species": "KRABBY",
+          "min": 15,
+          "max": 16
+        }
+      ],
+      "SuperRod": [
+        {
+          "species": "CHINCHOU",
+          "min": 17,
+          "max": 19
+        },
+        {
+          "species": "QWILFISH",
+          "min": 16,
+          "max": 19
+        },
+        {
+          "species": "CORSOLA",
+          "min": 15,
+          "max": 18
+        },
+        {
+          "species": "STARYU",
+          "min": 15,
+          "max": 17
+        },
+        {
+          "species": "STARYU",
+          "min": 15,
+          "max": 17
+        }
+      ]
+    }
+  },
+  "5": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Land": [
+        {
+          "species": "RATTATA",
+          "min": 11,
+          "max": 14
+        },
+        {
+          "species": "PIDGEY",
+          "min": 11,
+          "max": 14
+        },
+        {
+          "species": "RATTATA",
+          "min": 11,
+          "max": 14
+        },
+        {
+          "species": "PIDGEY",
+          "min": 11,
+          "max": 14
+        },
+        {
+          "species": "RATTATA",
+          "min": 11,
+          "max": 14
+        },
+        {
+          "species": "PIDGEY",
+          "min": 11,
+          "max": 14
+        },
+        {
+          "species": "RATTATA",
+          "min": 11,
+          "max": 13
+        },
+        {
+          "species": "PIDGEY",
+          "min": 11,
+          "max": 13
+        },
+        {
+          "species": "RATTATA",
+          "min": 11,
+          "max": 13
+        },
+        {
+          "species": "PIDGEY",
+          "min": 11,
+          "max": 13
+        },
+        {
+          "species": "RATTATA",
+          "min": 14,
+          "max": 14
+        },
+        {
+          "species": "PIDGEY",
+          "min": 14,
+          "max": 14
+        }
+      ],
+      "LandNight": [
+        {
+          "species": "RATTATA",
+          "min": 10,
+          "max": 14
+        },
+        {
+          "species": "HOOTHOOT",
+          "min": 10,
+          "max": 13
+        },
+        {
+          "species": "RATTATA",
+          "min": 10,
+          "max": 14
+        },
+        {
+          "species": "HOOTHOOT",
+          "min": 10,
+          "max": 13
+        },
+        {
+          "species": "SPINARAK",
+          "min": 8,
+          "max": 12
+        },
+        {
+          "species": "SPINARAK",
+          "min": 8,
+          "max": 12
+        },
+        {
+          "species": "RATTATA",
+          "min": 10,
+          "max": 14
+        },
+        {
+          "species": "HOOTHOOT",
+          "min": 10,
+          "max": 14
+        },
+        {
+          "species": "RATTATA",
+          "min": 10,
+          "max": 14
+        },
+        {
+          "species": "HOOTHOOT",
+          "min": 10,
+          "max": 14
+        },
+        {
+          "species": "RATTATA",
+          "min": 15,
+          "max": 15
+        },
+        {
+          "species": "HOOTHOOT",
+          "min": 14,
+          "max": 14
+        }
+      ]
+    }
+  },
+  "21": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Land": [
+        {
+          "species": "RATTATA",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "RATTATA",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "RATTATA",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "POOCHYENA",
+          "min": 11,
+          "max": 15
+        },
+        {
+          "species": "POOCHYENA",
+          "min": 11,
+          "max": 15
+        },
+        {
+          "species": "POOCHYENA",
+          "min": 11,
+          "max": 15
+        },
+        {
+          "species": "SHINX",
+          "min": 10,
+          "max": 12
+        },
+        {
+          "species": "SHINX",
+          "min": 10,
+          "max": 12
+        },
+        {
+          "species": "SHINX",
+          "min": 10,
+          "max": 11
+        },
+        {
+          "species": "SHINX",
+          "min": 10,
+          "max": 11
+        },
+        {
+          "species": "SHINX",
+          "min": 10,
+          "max": 11
+        },
+        {
+          "species": "SHINX",
+          "min": 10,
+          "max": 11
+        }
+      ],
+      "Water": [
+        {
+          "species": "MAGIKARP",
+          "min": 7,
+          "max": 10
+        },
+        {
+          "species": "GOLDEEN",
+          "min": 11,
+          "max": 14
+        },
+        {
+          "species": "STARYU",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "STARYU",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "STARYU",
+          "min": 12,
+          "max": 15
+        }
+      ],
+      "OldRod": [
+        {
+          "species": "MAGIKARP",
+          "min": 7,
+          "max": 10
+        },
+        {
+          "species": "MAGIKARP",
+          "min": 9,
+          "max": 15
+        }
+      ],
+      "GoodRod": [
+        {
+          "species": "GOLDEEN",
+          "min": 12,
+          "max": 14
+        },
+        {
+          "species": "FINNEON",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "MAGIKARP",
+          "min": 12,
+          "max": 17
+        }
+      ],
+      "SuperRod": [
+        {
+          "species": "GOLDEEN",
+          "min": 12,
+          "max": 14
+        },
+        {
+          "species": "FINNEON",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "STARYU",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "STARYU",
+          "min": 14,
+          "max": 17
+        },
+        {
+          "species": "STARYU",
+          "min": 14,
+          "max": 17
+        }
+      ],
+      "HeadbuttLow": [
+        {
+          "species": "PINECO",
+          "min": 11,
+          "max": 13
+        },
+        {
+          "species": "LEDYBA",
+          "min": 6,
+          "max": 8
+        },
+        {
+          "species": "PINECO",
+          "min": 11,
+          "max": 13
+        },
+        {
+          "species": "SPINARAK",
+          "min": 9,
+          "max": 12
+        },
+        {
+          "species": "LEDYBA",
+          "min": 6,
+          "max": 8
+        },
+        {
+          "species": "SPINARAK",
+          "min": 9,
+          "max": 12
+        },
+        {
+          "species": "SPINARAK",
+          "min": 9,
+          "max": 12
+        },
+        {
+          "species": "MUNCHLAX",
+          "min": 11,
+          "max": 14
+        }
+      ],
+      "HeadbuttHigh": [
+        {
+          "species": "PINECO",
+          "min": 11,
+          "max": 13
+        },
+        {
+          "species": "WURMPLE",
+          "min": 6,
+          "max": 8
+        },
+        {
+          "species": "PINECO",
+          "min": 11,
+          "max": 13
+        },
+        {
+          "species": "SPINARAK",
+          "min": 9,
+          "max": 12
+        },
+        {
+          "species": "WURMPLE",
+          "min": 6,
+          "max": 8
+        },
+        {
+          "species": "SPINARAK",
+          "min": 9,
+          "max": 12
+        },
+        {
+          "species": "SPINARAK",
+          "min": 9,
+          "max": 12
+        },
+        {
+          "species": "SPINARAK",
+          "min": 9,
+          "max": 12
+        }
+      ]
+    }
+  },
+  "28": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Land": [
+        {
+          "species": "CATERPIE",
+          "min": 10,
+          "max": 10
+        },
+        {
+          "species": "WEEDLE",
+          "min": 10,
+          "max": 10
+        },
+        {
+          "species": "PIDGEY",
+          "min": 10,
+          "max": 14
+        },
+        {
+          "species": "PIDGEY",
+          "min": 12,
+          "max": 14
+        },
+        {
+          "species": "SUNKERN",
+          "min": 12,
+          "max": 12
+        },
+        {
+          "species": "SUNKERN",
+          "min": 12,
+          "max": 12
+        },
+        {
+          "species": "METAPOD",
+          "min": 10,
+          "max": 10
+        },
+        {
+          "species": "KAKUNA",
+          "min": 10,
+          "max": 10
+        },
+        {
+          "species": "PIDGEY",
+          "min": 10,
+          "max": 14
+        },
+        {
+          "species": "PIDGEY",
+          "min": 12,
+          "max": 14
+        },
+        {
+          "species": "PIDGEY",
+          "min": 10,
+          "max": 14
+        },
+        {
+          "species": "PIDGEY",
+          "min": 12,
+          "max": 14
+        }
+      ],
+      "LandMorning": [
+        {
+          "species": "CATERPIE",
+          "min": 10,
+          "max": 12
+        },
+        {
+          "species": "WEEDLE",
+          "min": 10,
+          "max": 12
+        },
+        {
+          "species": "PIDGEY",
+          "min": 10,
+          "max": 14
+        },
+        {
+          "species": "PIDGEY",
+          "min": 10,
+          "max": 14
+        },
+        {
+          "species": "METAPOD",
+          "min": 10,
+          "max": 10
+        },
+        {
+          "species": "KAKUNA",
+          "min": 10,
+          "max": 10
+        },
+        {
+          "species": "METAPOD",
+          "min": 10,
+          "max": 10
+        },
+        {
+          "species": "KAKUNA",
+          "min": 10,
+          "max": 10
+        },
+        {
+          "species": "CATERPIE",
+          "min": 10,
+          "max": 12
+        },
+        {
+          "species": "WEEDLE",
+          "min": 10,
+          "max": 12
+        },
+        {
+          "species": "CATERPIE",
+          "min": 10,
+          "max": 12
+        },
+        {
+          "species": "WEEDLE",
+          "min": 10,
+          "max": 12
+        }
+      ],
+      "LandNight": [
+        {
+          "species": "HOOTHOOT",
+          "min": 10,
+          "max": 14
+        },
+        {
+          "species": "HOOTHOOT",
+          "min": 10,
+          "max": 14
+        },
+        {
+          "species": "HOOTHOOT",
+          "min": 10,
+          "max": 14
+        },
+        {
+          "species": "HOOTHOOT",
+          "min": 10,
+          "max": 14
+        },
+        {
+          "species": "HOOTHOOT",
+          "min": 10,
+          "max": 14
+        },
+        {
+          "species": "HOOTHOOT",
+          "min": 10,
+          "max": 14
+        },
+        {
+          "species": "HOOTHOOT",
+          "min": 10,
+          "max": 14
+        },
+        {
+          "species": "HOOTHOOT",
+          "min": 10,
+          "max": 14
+        },
+        {
+          "species": "HOOTHOOT",
+          "min": 10,
+          "max": 14
+        },
+        {
+          "species": "HOOTHOOT",
+          "min": 10,
+          "max": 14
+        },
+        {
+          "species": "HOOTHOOT",
+          "min": 10,
+          "max": 14
+        },
+        {
+          "species": "HOOTHOOT",
+          "min": 10,
+          "max": 14
+        }
+      ],
+      "BugContest": [
+        {
+          "species": "CATERPIE",
+          "min": 7,
+          "max": 18
+        },
+        {
+          "species": "WEEDLE",
+          "min": 7,
+          "max": 18
+        },
+        {
+          "species": "METAPOD",
+          "min": 9,
+          "max": 18
+        },
+        {
+          "species": "KAKUNA",
+          "min": 9,
+          "max": 18
+        },
+        {
+          "species": "PARAS",
+          "min": 10,
+          "max": 17
+        },
+        {
+          "species": "VENONAT",
+          "min": 10,
+          "max": 16
+        },
+        {
+          "species": "BUTTERFREE",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "BEEDRILL",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "SCYTHER",
+          "min": 13,
+          "max": 14
+        },
+        {
+          "species": "PINSIR",
+          "min": 13,
+          "max": 14
+        },
+        {
+          "species": "SCYTHER",
+          "min": 13,
+          "max": 14
+        },
+        {
+          "species": "PINSIR",
+          "min": 13,
+          "max": 14
+        }
+      ]
+    }
+  },
+  "31": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Land": [
+        {
+          "species": "PIKACHU",
+          "min": 14,
+          "max": 17
+        },
+        {
+          "species": "PIKACHU",
+          "min": 14,
+          "max": 17
+        },
+        {
+          "species": "PONYTA",
+          "min": 13,
+          "max": 15
+        },
+        {
+          "species": "PONYTA",
+          "min": 13,
+          "max": 15
+        },
+        {
+          "species": "EEVEE",
+          "min": 15,
+          "max": 15
+        },
+        {
+          "species": "EEVEE",
+          "min": 15,
+          "max": 15
+        },
+        {
+          "species": "EEVEE",
+          "min": 15,
+          "max": 15
+        },
+        {
+          "species": "EEVEE",
+          "min": 15,
+          "max": 15
+        }
+      ],
+      "Water": [
+        {
+          "species": "SURSKIT",
+          "min": 13,
+          "max": 14
+        },
+        {
+          "species": "LOTAD",
+          "min": 14,
+          "max": 14
+        },
+        {
+          "species": "LOTAD",
+          "min": 14,
+          "max": 14
+        },
+        {
+          "species": "LOTAD",
+          "min": 15,
+          "max": 15
+        },
+        {
+          "species": "LOTAD",
+          "min": 15,
+          "max": 15
+        }
+      ],
+      "RockSmash": [
+        {
+          "species": "NOSEPASS",
+          "min": 13,
+          "max": 14
+        },
+        {
+          "species": "GEODUDE",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "GEODUDE",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "GEODUDE",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "GEODUDE",
+          "min": 12,
+          "max": 15
+        }
+      ],
+      "OldRod": [
+        {
+          "species": "MAGIKARP",
+          "min": 6,
+          "max": 11
+        },
+        {
+          "species": "MAGIKARP",
+          "min": 10,
+          "max": 17
+        }
+      ],
+      "GoodRod": [
+        {
+          "species": "POLIWAG",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "PSYDUCK",
+          "min": 11,
+          "max": 14
+        },
+        {
+          "species": "WOOPER",
+          "min": 13,
+          "max": 17
+        }
+      ],
+      "SuperRod": [
+        {
+          "species": "CHINCHOU",
+          "min": 11,
+          "max": 12
+        },
+        {
+          "species": "REMORAID",
+          "min": 12,
+          "max": 14
+        },
+        {
+          "species": "LUVDISC",
+          "min": 10,
+          "max": 16
+        },
+        {
+          "species": "LUVDISC",
+          "min": 10,
+          "max": 16
+        },
+        {
+          "species": "LUVDISC",
+          "min": 10,
+          "max": 16
+        }
+      ],
+      "HeadbuttLow": [
+        {
+          "species": "PINECO",
+          "min": 14,
+          "max": 17
+        },
+        {
+          "species": "COMBEE",
+          "min": 15,
+          "max": 17
+        },
+        {
+          "species": "PINECO",
+          "min": 14,
+          "max": 16
+        },
+        {
+          "species": "HERACROSS",
+          "min": 16,
+          "max": 18
+        },
+        {
+          "species": "COMBEE",
+          "min": 15,
+          "max": 16
+        },
+        {
+          "species": "HERACROSS",
+          "min": 16,
+          "max": 17
+        },
+        {
+          "species": "HERACROSS",
+          "min": 16,
+          "max": 17
+        },
+        {
+          "species": "MUNCHLAX",
+          "min": 13,
+          "max": 18
+        }
+      ],
+      "HeadbuttHigh": [
+        {
+          "species": "SEEDOT",
+          "min": 14,
+          "max": 17
+        },
+        {
+          "species": "SHROOMISH",
+          "min": 14,
+          "max": 17
+        },
+        {
+          "species": "SEEDOT",
+          "min": 14,
+          "max": 17
+        },
+        {
+          "species": "BURMY",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "SHROOMISH",
+          "min": 14,
+          "max": 17
+        },
+        {
+          "species": "BURMY",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "BURMY",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "BURMY",
+          "min": 12,
+          "max": 15
+        }
+      ]
+    }
+  },
+  "34": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Cave": [
+        {
+          "species": "SWINUB",
+          "min": 16,
+          "max": 18
+        },
+        {
+          "species": "SWINUB",
+          "min": 16,
+          "max": 18
+        },
+        {
+          "species": "SNEASEL",
+          "min": 14,
+          "max": 16
+        },
+        {
+          "species": "SNEASEL",
+          "min": 14,
+          "max": 16
+        },
+        {
+          "species": "SNORUNT",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "SNORUNT",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "SNOVER",
+          "min": 14,
+          "max": 14
+        },
+        {
+          "species": "SNOVER",
+          "min": 14,
+          "max": 14
+        },
+        {
+          "species": "SMOOCHUM",
+          "min": 11,
+          "max": 14
+        },
+        {
+          "species": "SMOOCHUM",
+          "min": 11,
+          "max": 14
+        },
+        {
+          "species": "SMOOCHUM",
+          "min": 11,
+          "max": 14
+        },
+        {
+          "species": "SMOOCHUM",
+          "min": 11,
+          "max": 14
+        }
+      ]
+    }
+  },
+  "39": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Land": [
+        {
+          "species": "SHELLOS",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "SHELLOS",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "SHELLOS",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "GRIMER",
+          "min": 13,
+          "max": 15
+        },
+        {
+          "species": "GRIMER",
+          "min": 13,
+          "max": 15
+        },
+        {
+          "species": "GRIMER",
+          "min": 13,
+          "max": 15
+        },
+        {
+          "species": "GRIMER",
+          "min": 13,
+          "max": 15
+        },
+        {
+          "species": "GRIMER",
+          "min": 13,
+          "max": 15
+        },
+        {
+          "species": "MURKROW",
+          "min": 12,
+          "max": 14
+        },
+        {
+          "species": "MURKROW",
+          "min": 12,
+          "max": 14
+        },
+        {
+          "species": "MURKROW",
+          "min": 12,
+          "max": 14
+        },
+        {
+          "species": "MURKROW",
+          "min": 12,
+          "max": 14
+        }
+      ]
+    }
+  },
+  "41": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Land": [
+        {
+          "species": "GRIMER",
+          "min": 13,
+          "max": 15
+        },
+        {
+          "species": "GRIMER",
+          "min": 13,
+          "max": 15
+        },
+        {
+          "species": "GRIMER",
+          "min": 13,
+          "max": 15
+        },
+        {
+          "species": "SPEAROW",
+          "min": 13,
+          "max": 16
+        },
+        {
+          "species": "SPEAROW",
+          "min": 13,
+          "max": 16
+        },
+        {
+          "species": "SPEAROW",
+          "min": 13,
+          "max": 16
+        },
+        {
+          "species": "SPEAROW",
+          "min": 13,
+          "max": 16
+        },
+        {
+          "species": "SPEAROW",
+          "min": 13,
+          "max": 16
+        },
+        {
+          "species": "SLUGMA",
+          "min": 13,
+          "max": 14
+        },
+        {
+          "species": "SLUGMA",
+          "min": 13,
+          "max": 14
+        },
+        {
+          "species": "SLUGMA",
+          "min": 13,
+          "max": 14
+        },
+        {
+          "species": "SLUGMA",
+          "min": 13,
+          "max": 14
+        }
+      ]
+    }
+  },
+  "44": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Land": [
+        {
+          "species": "SHELLOS",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "SHELLOS",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "SHELLOS",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "GRIMER",
+          "min": 13,
+          "max": 15
+        },
+        {
+          "species": "GRIMER",
+          "min": 13,
+          "max": 15
+        },
+        {
+          "species": "GRIMER",
+          "min": 13,
+          "max": 15
+        },
+        {
+          "species": "GRIMER",
+          "min": 13,
+          "max": 15
+        },
+        {
+          "species": "GRIMER",
+          "min": 13,
+          "max": 15
+        },
+        {
+          "species": "MURKROW",
+          "min": 12,
+          "max": 14
+        },
+        {
+          "species": "MURKROW",
+          "min": 12,
+          "max": 14
+        },
+        {
+          "species": "MURKROW",
+          "min": 12,
+          "max": 14
+        },
+        {
+          "species": "MURKROW",
+          "min": 12,
+          "max": 14
+        }
+      ]
+    }
+  },
+  "47": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Land": [
+        {
+          "species": "SHELLOS",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "SHELLOS",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "SHELLOS",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "BIDOOF",
+          "min": 14,
+          "max": 17
+        },
+        {
+          "species": "BIDOOF",
+          "min": 14,
+          "max": 17
+        },
+        {
+          "species": "BIDOOF",
+          "min": 14,
+          "max": 17
+        },
+        {
+          "species": "MURKROW",
+          "min": 12,
+          "max": 14
+        },
+        {
+          "species": "MURKROW",
+          "min": 12,
+          "max": 14
+        },
+        {
+          "species": "WURMPLE",
+          "min": 9,
+          "max": 12
+        },
+        {
+          "species": "WURMPLE",
+          "min": 9,
+          "max": 12
+        },
+        {
+          "species": "WURMPLE",
+          "min": 9,
+          "max": 12
+        },
+        {
+          "species": "WURMPLE",
+          "min": 9,
+          "max": 12
+        }
+      ],
+      "RockSmash": [
+        {
+          "species": "NOSEPASS",
+          "min": 13,
+          "max": 14
+        },
+        {
+          "species": "NOSEPASS",
+          "min": 13,
+          "max": 14
+        },
+        {
+          "species": "GEODUDE",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "GEODUDE",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "GEODUDE",
+          "min": 12,
+          "max": 15
+        }
+      ]
+    }
+  },
+  "49": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Cave": [
+        {
+          "species": "NOSEPASS",
+          "min": 14,
+          "max": 15
+        },
+        {
+          "species": "NOSEPASS",
+          "min": 13,
+          "max": 14
+        },
+        {
+          "species": "MAGNETON",
+          "min": 14,
+          "max": 17
+        },
+        {
+          "species": "MAGNETON",
+          "min": 14,
+          "max": 17
+        },
+        {
+          "species": "MAGNETON",
+          "min": 14,
+          "max": 16
+        },
+        {
+          "species": "MAGNETON",
+          "min": 14,
+          "max": 16
+        },
+        {
+          "species": "GEODUDE",
+          "min": 13,
+          "max": 15
+        },
+        {
+          "species": "GEODUDE",
+          "min": 13,
+          "max": 15
+        },
+        {
+          "species": "MAWILE",
+          "min": 14,
+          "max": 16
+        },
+        {
+          "species": "MAWILE",
+          "min": 14,
+          "max": 16
+        },
+        {
+          "species": "MAWILE",
+          "min": 14,
+          "max": 16
+        },
+        {
+          "species": "MAWILE",
+          "min": 14,
+          "max": 16
+        }
+      ]
+    }
+  },
+  "50": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Cave": [
+        {
+          "species": "NOSEPASS",
+          "min": 14,
+          "max": 15
+        },
+        {
+          "species": "NOSEPASS",
+          "min": 13,
+          "max": 14
+        },
+        {
+          "species": "MAGNETON",
+          "min": 14,
+          "max": 17
+        },
+        {
+          "species": "MAGNETON",
+          "min": 14,
+          "max": 17
+        },
+        {
+          "species": "MAGNETON",
+          "min": 14,
+          "max": 16
+        },
+        {
+          "species": "MAGNETON",
+          "min": 14,
+          "max": 16
+        },
+        {
+          "species": "GEODUDE",
+          "min": 13,
+          "max": 15
+        },
+        {
+          "species": "GEODUDE",
+          "min": 13,
+          "max": 15
+        },
+        {
+          "species": "BURMY",
+          "min": 14,
+          "max": 16
+        },
+        {
+          "species": "BURMY",
+          "min": 14,
+          "max": 16
+        },
+        {
+          "species": "BURMY",
+          "min": 14,
+          "max": 16
+        },
+        {
+          "species": "BURMY",
+          "min": 14,
+          "max": 16
+        }
+      ]
+    }
+  },
+  "51": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Cave": [
+        {
+          "species": "PICHU",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "species": "CLEFFA",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "species": "IGGLYBUFF",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "species": "IGGLYBUFF",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "species": "CHINGLING",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "species": "CHINGLING",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "species": "RIOLU",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "species": "RIOLU",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "species": "TYROGUE",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "species": "TYROGUE",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "species": "TYROGUE",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "species": "TYROGUE",
+          "min": 1,
+          "max": 1
+        }
+      ]
+    }
+  },
+  "66": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Land": [
+        {
+          "species": "DODUO",
+          "min": 13,
+          "max": 15
+        },
+        {
+          "species": "DODUO",
+          "min": 13,
+          "max": 15
+        },
+        {
+          "species": "ABRA",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "ABRA",
+          "min": 12,
+          "max": 15
+        },
+        {
+          "species": "TANGELA",
+          "min": 14,
+          "max": 16
+        },
+        {
+          "species": "TANGELA",
+          "min": 14,
+          "max": 16
+        },
+        {
+          "species": "HOPPIP",
+          "min": 13,
+          "max": 17
+        },
+        {
+          "species": "HOPPIP",
+          "min": 13,
+          "max": 17
+        },
+        {
+          "species": "HOPPIP",
+          "min": 13,
+          "max": 17
+        },
+        {
+          "species": "HOPPIP",
+          "min": 13,
+          "max": 17
+        }
+      ]
+    }
+  },
+  "68": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Land": [
+        {
+          "species": "RHYHORN",
+          "min": 16,
+          "max": 18
+        },
+        {
+          "species": "EXEGGCUTE",
+          "min": 15,
+          "max": 18
+        },
+        {
+          "species": "VENONAT",
+          "min": 15,
+          "max": 17
+        },
+        {
+          "species": "VENONAT",
+          "min": 15,
+          "max": 18
+        },
+        {
+          "species": "AIPOM",
+          "min": 14,
+          "max": 17
+        },
+        {
+          "species": "GIRAFARIG",
+          "min": 16,
+          "max": 17
+        },
+        {
+          "species": "TAUROS",
+          "min": 15,
+          "max": 16
+        },
+        {
+          "species": "HERACROSS",
+          "min": 15,
+          "max": 17
+        },
+        {
+          "species": "SCYTHER",
+          "min": 16,
+          "max": 16
+        },
+        {
+          "species": "PINSIR",
+          "min": 16,
+          "max": 16
+        },
+        {
+          "species": "KANGASKHAN",
+          "min": 19,
+          "max": 19
+        },
+        {
+          "species": "CHANSEY",
+          "min": 17,
+          "max": 17
+        }
+      ],
+      "Water": [
+        {
+          "species": "PSYDUCK",
+          "min": 16,
+          "max": 18
+        },
+        {
+          "species": "MARILL",
+          "min": 15,
+          "max": 18
+        },
+        {
+          "species": "SLOWPOKE",
+          "min": 14,
+          "max": 16
+        },
+        {
+          "species": "BUIZEL",
+          "min": 15,
+          "max": 17
+        },
+        {
+          "species": "BUIZEL",
+          "min": 15,
+          "max": 17
+        }
+      ],
+      "OldRod": [
+        {
+          "species": "MAGIKARP",
+          "min": 17,
+          "max": 21
+        },
+        {
+          "species": "MAGIKARP",
+          "min": 17,
+          "max": 20
+        }
+      ],
+      "GoodRod": [
+        {
+          "species": "MAGIKARP",
+          "min": 16,
+          "max": 20
+        },
+        {
+          "species": "FEEBAS",
+          "min": 16,
+          "max": 20
+        },
+        {
+          "species": "POLIWAG",
+          "min": 17,
+          "max": 18
+        }
+      ],
+      "SuperRod": [
+        {
+          "species": "GOLDEEN",
+          "min": 16,
+          "max": 18
+        },
+        {
+          "species": "REMORAID",
+          "min": 17,
+          "max": 19
+        },
+        {
+          "species": "CARVANHA",
+          "min": 16,
+          "max": 17
+        },
+        {
+          "species": "FINNEON",
+          "min": 15,
+          "max": 18
+        },
+        {
+          "species": "DRATINI",
+          "min": 17,
+          "max": 17
+        }
+      ]
+    }
+  },
+  "69": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Land": [
+        {
+          "species": "ODDISH",
+          "min": 15,
+          "max": 17
+        },
+        {
+          "species": "MAREEP",
+          "min": 16,
+          "max": 18
+        },
+        {
+          "species": "LOTAD",
+          "min": 15,
+          "max": 17
+        },
+        {
+          "species": "LOTAD",
+          "min": 15,
+          "max": 18
+        },
+        {
+          "species": "DITTO",
+          "min": 15,
+          "max": 17
+        },
+        {
+          "species": "DITTO",
+          "min": 16,
+          "max": 18
+        },
+        {
+          "species": "BONSLY",
+          "min": 14,
+          "max": 17
+        },
+        {
+          "species": "BONSLY",
+          "min": 14,
+          "max": 16
+        },
+        {
+          "species": "BONSLY",
+          "min": 14,
+          "max": 16
+        },
+        {
+          "species": "BONSLY",
+          "min": 14,
+          "max": 16
+        },
+        {
+          "species": "BONSLY",
+          "min": 15,
+          "max": 16
+        },
+        {
+          "species": "BONSLY",
+          "min": 15,
+          "max": 15
+        }
+      ],
+      "Water": [
+        {
+          "species": "TENTACOOL",
+          "min": 14,
+          "max": 19
+        },
+        {
+          "species": "MANTYKE",
+          "min": 15,
+          "max": 16
+        },
+        {
+          "species": "REMORAID",
+          "min": 14,
+          "max": 16
+        },
+        {
+          "species": "REMORAID",
+          "min": 14,
+          "max": 16
+        },
+        {
+          "species": "REMORAID",
+          "min": 14,
+          "max": 16
+        }
+      ],
+      "OldRod": [
+        {
+          "species": "MAGIKARP",
+          "min": 16,
+          "max": 19
+        },
+        {
+          "species": "MAGIKARP",
+          "min": 16,
+          "max": 19
+        }
+      ],
+      "GoodRod": [
+        {
+          "species": "BARBOACH",
+          "min": 17,
+          "max": 18
+        },
+        {
+          "species": "SHELLDER",
+          "min": 16,
+          "max": 19
+        },
+        {
+          "species": "KRABBY",
+          "min": 15,
+          "max": 16
+        }
+      ],
+      "SuperRod": [
+        {
+          "species": "CHINCHOU",
+          "min": 17,
+          "max": 19
+        },
+        {
+          "species": "QWILFISH",
+          "min": 16,
+          "max": 19
+        },
+        {
+          "species": "CORSOLA",
+          "min": 15,
+          "max": 18
+        },
+        {
+          "species": "STARYU",
+          "min": 15,
+          "max": 17
+        },
+        {
+          "species": "STARYU",
+          "min": 15,
+          "max": 17
+        }
+      ]
+    }
+  },
+  "70": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Land": [
+        {
+          "species": "CLAMPERL",
+          "min": 18,
+          "max": 20
+        },
+        {
+          "species": "SHELLDER",
+          "min": 18,
+          "max": 20
+        },
+        {
+          "species": "CLAMPERL",
+          "min": 18,
+          "max": 19
+        },
+        {
+          "species": "SHELLDER",
+          "min": 18,
+          "max": 19
+        },
+        {
+          "species": "CHINCHOU",
+          "min": 17,
+          "max": 21
+        },
+        {
+          "species": "CHINCHOU",
+          "min": 17,
+          "max": 21
+        },
+        {
+          "species": "CORSOLA",
+          "min": 17,
+          "max": 20
+        },
+        {
+          "species": "CORSOLA",
+          "min": 17,
+          "max": 20
+        },
+        {
+          "species": "RELICANTH",
+          "min": 16,
+          "max": 19
+        },
+        {
+          "species": "RELICANTH",
+          "min": 16,
+          "max": 19
+        },
+        {
+          "species": "RELICANTH",
+          "min": 16,
+          "max": 19
+        },
+        {
+          "species": "RELICANTH",
+          "min": 16,
+          "max": 19
+        }
+      ]
+    }
+  },
+  "75": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Land": [
+        {
+          "species": "RATTATA",
+          "min": 11,
+          "max": 14
+        },
+        {
+          "species": "SENTRET",
+          "min": 11,
+          "max": 14
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 11,
+          "max": 14
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 11,
+          "max": 14
+        },
+        {
+          "species": "BIDOOF",
+          "min": 11,
+          "max": 14
+        },
+        {
+          "species": "BIDOOF",
+          "min": 11,
+          "max": 14
+        },
+        {
+          "species": "PATRAT",
+          "min": 11,
+          "max": 14
+        },
+        {
+          "species": "PATRAT",
+          "min": 11,
+          "max": 14
+        },
+        {
+          "species": "PATRAT",
+          "min": 11,
+          "max": 14
+        },
+        {
+          "species": "PATRAT",
+          "min": 11,
+          "max": 14
+        },
+        {
+          "species": "PATRAT",
+          "min": 11,
+          "max": 14
+        },
+        {
+          "species": "PATRAT",
+          "min": 11,
+          "max": 14
+        }
+      ]
+    }
+  },
+  "76": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Land": [
+        {
+          "species": "PIDGEY",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "PIDGEY",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "RATTATA",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "RATTATA",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "RATTATA",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "RATTATA",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "CATERPIE",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "CATERPIE",
+          "min": 3,
+          "max": 4
+        },
+        {
+          "species": "CATERPIE",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "METAPOD",
+          "min": 5,
+          "max": 9
+        },
+        {
+          "species": "CATERPIE",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "METAPOD",
+          "min": 5,
+          "max": 9
+        }
+      ],
+      "LandNight": [
+        {
+          "species": "ZUBAT",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ZUBAT",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "RATTATA",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "RATTATA",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "RATTATA",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "RATTATA",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "WEEDLE",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "WEEDLE",
+          "min": 3,
+          "max": 4
+        },
+        {
+          "species": "WEEDLE",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "KAKUNA",
+          "min": 5,
+          "max": 9
+        },
+        {
+          "species": "WEEDLE",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "KAKUNA",
+          "min": 5,
+          "max": 9
+        }
+      ]
+    }
+  },
+  "88": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Land": [
+        {
+          "species": "PIDGEY",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "PIDGEY",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "RATTATA",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "RATTATA",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "RATTATA",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "GEODUDE",
+          "min": 4,
+          "max": 6
+        },
+        {
+          "species": "GEODUDE",
+          "min": 4,
+          "max": 6
+        },
+        {
+          "species": "GEODUDE",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "CATERPIE",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "METAPOD",
+          "min": 5,
+          "max": 9
+        },
+        {
+          "species": "CATERPIE",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "METAPOD",
+          "min": 5,
+          "max": 9
+        }
+      ],
+      "LandNight": [
+        {
+          "species": "ZUBAT",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ZUBAT",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ZUBAT",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "GEODUDE",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "GEODUDE",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "GEODUDE",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "GASTLY",
+          "min": 3,
+          "max": 6
+        },
+        {
+          "species": "GASTLY",
+          "min": 3,
+          "max": 5
+        },
+        {
+          "species": "WEEDLE",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "KAKUNA",
+          "min": 5,
+          "max": 9
+        },
+        {
+          "species": "WEEDLE",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "KAKUNA",
+          "min": 5,
+          "max": 9
+        }
+      ]
+    }
+  },
+  "89": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Land": [
+        {
+          "species": "WEEDLE",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "WEEDLE",
+          "min": 3,
+          "max": 5
+        },
+        {
+          "species": "WEEDLE",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "CATERPIE",
+          "min": 3,
+          "max": 5
+        },
+        {
+          "species": "CATERPIE",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "SPEAROW",
+          "min": 3,
+          "max": 6
+        },
+        {
+          "species": "SPEAROW",
+          "min": 4,
+          "max": 6
+        },
+        {
+          "species": "SPEAROW",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "VENONAT",
+          "min": 3,
+          "max": 6
+        },
+        {
+          "species": "VENONAT",
+          "min": 3,
+          "max": 6
+        },
+        {
+          "species": "VENONAT",
+          "min": 3,
+          "max": 6
+        },
+        {
+          "species": "VENONAT",
+          "min": 3,
+          "max": 6
+        }
+      ],
+      "LandNight": [
+        {
+          "species": "KAKUNA",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "KAKUNA",
+          "min": 5,
+          "max": 7
+        },
+        {
+          "species": "KAKUNA",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "METAPOD",
+          "min": 5,
+          "max": 8
+        },
+        {
+          "species": "METAPOD",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "ZUBAT",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "ZUBAT",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "ZUBAT",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "VENONAT",
+          "min": 3,
+          "max": 6
+        },
+        {
+          "species": "VENONAT",
+          "min": 3,
+          "max": 6
+        },
+        {
+          "species": "VENONAT",
+          "min": 3,
+          "max": 6
+        },
+        {
+          "species": "VENONAT",
+          "min": 3,
+          "max": 6
+        }
+      ]
+    }
+  },
+  "94": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Land": [
+        {
+          "species": "ODDISH",
+          "min": 5,
+          "max": 8
+        },
+        {
+          "species": "ODDISH",
+          "min": 6,
+          "max": 9
+        },
+        {
+          "species": "ODDISH",
+          "min": 5,
+          "max": 8
+        },
+        {
+          "species": "SPEAROW",
+          "min": 5,
+          "max": 8
+        },
+        {
+          "species": "SPEAROW",
+          "min": 5,
+          "max": 8
+        },
+        {
+          "species": "VENONAT",
+          "min": 6,
+          "max": 9
+        },
+        {
+          "species": "VENONAT",
+          "min": 6,
+          "max": 9
+        },
+        {
+          "species": "VENONAT",
+          "min": 6,
+          "max": 9
+        },
+        {
+          "species": "VENONAT",
+          "min": 6,
+          "max": 9
+        }
+      ],
+      "OldRod": [
+        {
+          "species": "MAGIKARP",
+          "min": 5,
+          "max": 10
+        },
+        {
+          "species": "MAGIKARP",
+          "min": 8,
+          "max": 13
+        }
+      ],
+      "LandNight": [
+        {
+          "species": "ODDISH",
+          "min": 6,
+          "max": 9
+        },
+        {
+          "species": "ODDISH",
+          "min": 7,
+          "max": 10
+        },
+        {
+          "species": "ODDISH",
+          "min": 6,
+          "max": 9
+        },
+        {
+          "species": "ZUBAT",
+          "min": 7,
+          "max": 11
+        },
+        {
+          "species": "ZUBAT",
+          "min": 7,
+          "max": 11
+        },
+        {
+          "species": "VENONAT",
+          "min": 7,
+          "max": 10
+        },
+        {
+          "species": "VENONAT",
+          "min": 7,
+          "max": 10
+        },
+        {
+          "species": "VENONAT",
+          "min": 7,
+          "max": 10
+        },
+        {
+          "species": "VENONAT",
+          "min": 7,
+          "max": 10
+        }
+      ]
+    }
+  },
+  "110": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Land": [
+        {
+          "species": "BETAMON",
+          "min": 3,
+          "max": 6
+        },
+        {
+          "species": "BETAMON",
+          "min": 3,
+          "max": 6
+        },
+        {
+          "species": "BETAMON",
+          "min": 3,
+          "max": 6
+        },
+        {
+          "species": "TANEMON",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "TANEMON",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "TANEMON",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "KUNEMON",
+          "min": 3,
+          "max": 5
+        },
+        {
+          "species": "KUNEMON",
+          "min": 3,
+          "max": 5
+        },
+        {
+          "species": "KUNEMON",
+          "min": 3,
+          "max": 5
+        },
+        {
+          "species": "KUNEMON",
+          "min": 3,
+          "max": 5
+        },
+        {
+          "species": "BETAMON",
+          "min": 3,
+          "max": 6
+        },
+        {
+          "species": "BETAMON",
+          "min": 3,
+          "max": 6
+        }
+      ]
+    }
+  },
+  "113": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Land": [
+        {
+          "species": "TANEMON",
+          "min": 2,
+          "max": 3
+        },
+        {
+          "species": "TANEMON",
+          "min": 2,
+          "max": 3
+        },
+        {
+          "species": "TANEMON",
+          "min": 2,
+          "max": 3
+        },
+        {
+          "species": "PALMON",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "PALMON",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "PALMON",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ARURAUMON",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ARURAUMON",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ARURAUMON",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ARURAUMON",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ARURAUMON",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ARURAUMON",
+          "min": 2,
+          "max": 5
+        }
+      ]
+    }
+  },
+  "114": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Land": [
+        {
+          "species": "TANEMON",
+          "min": 2,
+          "max": 3
+        },
+        {
+          "species": "TANEMON",
+          "min": 2,
+          "max": 3
+        },
+        {
+          "species": "TANEMON",
+          "min": 2,
+          "max": 3
+        },
+        {
+          "species": "PALMON",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "PALMON",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "PALMON",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ARURAUMON",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ARURAUMON",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ARURAUMON",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ARURAUMON",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ARURAUMON",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ARURAUMON",
+          "min": 2,
+          "max": 5
+        }
+      ]
+    }
+  },
+  "115": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Land": [
+        {
+          "species": "TAILLOW",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "TAILLOW",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "WURMPLE",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "WURMPLE",
+          "min": 3,
+          "max": 4
+        },
+        {
+          "species": "WURMPLE",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "SILCOON",
+          "min": 5,
+          "max": 9
+        },
+        {
+          "species": "WURMPLE",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "SILCOON",
+          "min": 5,
+          "max": 9
+        }
+      ],
+      "LandNight": [
+        {
+          "species": "ZUBAT",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ZUBAT",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "WURMPLE",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "WURMPLE",
+          "min": 3,
+          "max": 4
+        },
+        {
+          "species": "WURMPLE",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "CASCOON",
+          "min": 5,
+          "max": 9
+        },
+        {
+          "species": "WURMPLE",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "CASCOON",
+          "min": 5,
+          "max": 9
+        }
+      ]
+    }
+  },
+  "121": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Land": [
+        {
+          "species": "TAILLOW",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "TAILLOW",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "LOTAD",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "LOTAD",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "LOTAD",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 3,
+          "max": 4
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "SILCOON",
+          "min": 5,
+          "max": 9
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "SILCOON",
+          "min": 5,
+          "max": 9
+        }
+      ],
+      "LandNight": [
+        {
+          "species": "ZUBAT",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ZUBAT",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "LOTAD",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "LOTAD",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "LOTAD",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 3,
+          "max": 4
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "CASCOON",
+          "min": 5,
+          "max": 9
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 2,
+          "max": 4
+        },
+        {
+          "species": "CASCOON",
+          "min": 5,
+          "max": 9
+        }
+      ]
+    }
+  },
+  "123": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Land": [
+        {
+          "species": "TAILLOW",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "TAILLOW",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "PICHU",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "PICHU",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "SILCOON",
+          "min": 7,
+          "max": 11
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "SILCOON",
+          "min": 7,
+          "max": 11
+        }
+      ],
+      "LandNight": [
+        {
+          "species": "ZUBAT",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "ZUBAT",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "PICHU",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "PICHU",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "CASCOON",
+          "min": 7,
+          "max": 11
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "CASCOON",
+          "min": 7,
+          "max": 11
+        }
+      ]
+    }
+  },
+  "131": {
+    "densities": [
+      25,
+      10,
+      10
+    ],
+    "methods": {
+      "Land": [
+        {
+          "species": "TAILLOW",
+          "min": 6,
+          "max": 9
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 6,
+          "max": 9
+        },
+        {
+          "species": "SILCOON",
+          "min": 6,
+          "max": 9
+        },
+        {
+          "species": "SILCOON",
+          "min": 6,
+          "max": 9
+        },
+        {
+          "species": "CASCOON",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "CASCOON",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "TAILLOW",
+          "min": 6,
+          "max": 9
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 6,
+          "max": 9
+        },
+        {
+          "species": "SEEDOT",
+          "min": 6,
+          "max": 9
+        },
+        {
+          "species": "PICHU",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "SEEDOT",
+          "min": 6,
+          "max": 9
+        },
+        {
+          "species": "PICHU",
+          "min": 2,
+          "max": 5
+        }
+      ],
+      "LandNight": [
+        {
+          "species": "ZUBAT",
+          "min": 7,
+          "max": 9
+        },
+        {
+          "species": "ZUBAT",
+          "min": 7,
+          "max": 9
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 7,
+          "max": 9
+        },
+        {
+          "species": "CASCOON",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "SILCOON",
+          "min": 6,
+          "max": 9
+        },
+        {
+          "species": "ZIGZAGOON",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "SILCOON",
+          "min": 6,
+          "max": 9
+        },
+        {
+          "species": "CASCOON",
+          "min": 4,
+          "max": 7
+        },
+        {
+          "species": "SEEDOT",
+          "min": 6,
+          "max": 9
+        },
+        {
+          "species": "PICHU",
+          "min": 2,
+          "max": 5
+        },
+        {
+          "species": "SEEDOT",
+          "min": 6,
+          "max": 9
+        },
+        {
+          "species": "PICHU",
+          "min": 2,
+          "max": 5
+        }
+      ]
+    }
+  }
+}
