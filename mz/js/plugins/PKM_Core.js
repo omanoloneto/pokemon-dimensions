@@ -86,6 +86,14 @@ PKM.PLUGIN_NAME = "PKM_Core";
     PKM.Core.maxSpecies = function() {
         return $dataPokemon ? $dataPokemon.length - 1 : 0;
     };
+    PKM.Core.speciesByInternal = function(internalName) {
+        if (!$dataPokemon || !internalName) return null;
+        const up = internalName.toUpperCase();
+        for (let i = 1; i < $dataPokemon.length; i++) {
+            if ($dataPokemon[i] && $dataPokemon[i].internalName === up) return $dataPokemon[i];
+        }
+        return null;
+    };
 
     //=========================================================================
     // Estado da Pokédex — persiste no save via Game_System

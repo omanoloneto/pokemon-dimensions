@@ -267,6 +267,12 @@ PKM.Battle = PKM.Battle || {};
         bmp.gradientFillRect(0, 0, Graphics.width, Graphics.height, "#bfe9ff", "#7fb24d", true);
         this._bg = new Sprite(bmp);
         this.addChild(this._bg);
+        // flash branco de entrada de batalha
+        const fb = new Bitmap(Graphics.width, Graphics.height);
+        fb.fillRect(0, 0, Graphics.width, Graphics.height, "#ffffff");
+        this._flash = new Sprite(fb);
+        this._flash.opacity = 255;
+        this.addChild(this._flash);
     };
 
     Scene_PkmBattle.prototype.createAllWindows = function() {
@@ -388,6 +394,7 @@ PKM.Battle = PKM.Battle || {};
     //--- ciclo ----------------------------------------------------------------
     Scene_PkmBattle.prototype.startBattle = function() {
         if ($gameSystem.pkmSetSeen) $gameSystem.pkmSetSeen(this._enemy.dexNumber);
+        if (PKM.Audio) { PKM.Audio.playBattleBgm(this._isTrainer); PKM.Audio.playCry(this._enemy.dexNumber); }
         let intro;
         if (this._isTrainer) {
             intro = [{ text: this._trainer.name + " quer batalhar!" }];
@@ -409,6 +416,7 @@ PKM.Battle = PKM.Battle || {};
 
     Scene_PkmBattle.prototype.update = function() {
         Scene_Base.prototype.update.call(this);
+        if (this._flash && this._flash.opacity > 0) this._flash.opacity -= 16;  // fade do flash de entrada
         if (this._phase === "message") {
             if (Input.isTriggered("ok") || Input.isTriggered("cancel") || TouchInput.isTriggered()) {
                 this._playNextStep();
@@ -752,6 +760,7 @@ PKM.Battle = PKM.Battle || {};
                 this._enemy = this._enemyParty[this._enemyIndex];
                 if (this._enemy.resetBattleState) this._enemy.resetBattleState();
                 if ($gameSystem.pkmSetSeen) $gameSystem.pkmSetSeen(this._enemy.dexNumber);
+                if (PKM.Audio) PKM.Audio.playCry(this._enemy.dexNumber);
                 this.refreshStatus();
                 this.showSteps([{ text: this._trainer.name + " enviou " + this._enemy.name + "!" }],
                     this.startInput.bind(this));
@@ -759,10 +768,12 @@ PKM.Battle = PKM.Battle || {};
                 this.trainerDefeated();
             }
         } else {
+            if (PKM.Audio) PKM.Audio.playVictory(false);
             this.endBattle();
         }
     };
     Scene_PkmBattle.prototype.trainerDefeated = function() {
+        if (PKM.Audio) PKM.Audio.playVictory(true);
         const reward = this._trainer.money || 0;
         const steps = [{ text: "Você derrotou " + this._trainer.name + "!" }];
         if (this._trainer.defeatText) steps.push({ text: this._trainer.defeatText });
@@ -777,6 +788,7 @@ PKM.Battle = PKM.Battle || {};
     Scene_PkmBattle.prototype.endBattle = function() {
         $gameTemp.pkmWild = null;
         $gameTemp.pkmTrainer = null;
+        if (PKM.Audio) PKM.Audio.restoreBgm();
         this.popScene();
     };
 

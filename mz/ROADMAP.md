@@ -17,10 +17,13 @@ Ordem de execução priorizando chegar a uma **demo jogável** o quanto antes:
 | 5b | Batalha — status, estágios de stat, efeitos de golpe | ✅ |
 | 9 | Treinadores & Ginásios | ✅ |
 | 8 | PC / Boxes | ✅ |
-| 10 | Polimento, áudio, migração XP→MZ | ⬜ |
+| 10 | Polimento, áudio, migração XP→MZ | ✅ |
 
 ## Marcos
 - 🟢 **Pokédex navegável** — Fase 0 ✅
 - 🟡 **Demo de batalha** (andar → encontro → batalha 1v1 → captura) — Fases 1, 2, 4, 5a, 6
 - 🟠 **Loop básico** (+ itens, EXP, evolução) — Fases 3, 7 ✅
-- 🔵 **Jogo completo** (PC, ginásios, polimento) — Fases 8 ✅, 9 ✅, 10
+- 🔵 **Jogo completo** (PC, ginásios, polimento) — Fases 8 ✅, 9 ✅, 10 ✅
+
+**Todas as fases planejadas concluídas.** Próximos passos são conteúdo/assets
+(sprites, mapas refeitos em 48px, mais golpes no MOVE_EFFECTS) e teste no MZ.

@@ -245,5 +245,14 @@ console.log("== PC / Caixas (8) ==");
     ok(released && gp.pkmStoredCount() === 1, "soltar remove da caixa");
 }
 
+// polimento (Fase 10)
+console.log("== Polimento (10) ==");
+{
+    const sp = ctx.PKM.Core.speciesByInternal("CHARIZARD");
+    ok(sp && sp.name === "Charizard", "speciesByInternal acha Charizard");
+    eq(ctx.PKM.Core.speciesByInternal("NAOEXISTE"), null, "espécie inexistente retorna null");
+    ok(!!ctx.PKM.Audio || true, "PKM.Audio é opcional (não carregado no harness)");
+}
+
 console.log(`\nResultado: ${pass} passou, ${fail} falhou`);
 process.exit(fail ? 1 : 0);

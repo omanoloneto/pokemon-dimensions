@@ -19,7 +19,7 @@ da raiz — nada aqui sobrescreve o jogo original.
 | **Status, estágios & efeitos de golpe** | ✅ Fase 5b |
 | **Treinadores & insígnias**             | ✅ Fase 9 |
 | **PC / caixas de armazenamento**        | ✅ Fase 8 |
-| Polimento, áudio, migração XP→MZ        | ⬜ a fazer |
+| **Áudio, Pokédex+, migração XP→MZ**     | ✅ Fase 10 |
 
 ## Estrutura
 
@@ -36,7 +36,8 @@ mz/
 │   ├── PKM_Battle.js         # batalha 1v1 + captura (Fases 5a/6)
 │   ├── PKM_Bag.js            # mochila, itens, dinheiro (Fase 3)
 │   ├── PKM_Trainers.js       # batalhas de treinador + insígnias (Fase 9)
-│   └── PKM_Storage.js        # PC: caixas de armazenamento (Fase 8)
+│   ├── PKM_Storage.js        # PC: caixas de armazenamento (Fase 8)
+│   └── PKM_Audio.js          # cries, BGM de batalha, vitória (Fase 10)
 ├── img/pokemon/front/        # (opcional) sprites <numero>.png, ex.: 001.png
 └── tools/
     ├── compile_all.rb        # PBS → todos os data/*.json
@@ -50,7 +51,8 @@ mz/
 2. Copie todos os `js/plugins/PKM_*.js` para `js/plugins/`.
 3. No **Gerenciador de Plugins**, adicione e ative **nesta ordem**:
    `PKM_Core` → `PKM_Pokemon` → `PKM_Pokedex` → `PKM_Party` →
-   `PKM_Encounters` → `PKM_Battle` → `PKM_Bag` → `PKM_Trainers` → `PKM_Storage`.
+   `PKM_Encounters` → `PKM_Battle` → `PKM_Bag` → `PKM_Trainers` →
+   `PKM_Storage` → `PKM_Audio`.
 4. (Opcional) Sprites frontais em `img/pokemon/front/` (`001.png`…). Sem imagem,
    a Pokédex mostra um placeholder "?".
 
@@ -110,10 +112,25 @@ mz/
 - Na cena: **Q/W** trocam de caixa; em um Pokémon → Retirar / Resumo / Mover /
   Soltar; em espaço vazio → Depositar (escolhe da equipe; mantém ≥1 na equipe).
 
+## Polimento (Fase 10)
+
+- **Áudio** (`PKM_Audio.js`, opcional): toca o *cry* do Pokémon ao aparecer/ser
+  enviado, BGM de batalha (selvagem/treinador) e fanfarra de vitória — basta
+  colocar os arquivos em `audio/se/Cries/`, `audio/bgm/`, `audio/me/`. Sem os
+  arquivos, nada quebra.
+- **Pokédex+**: ordenação (Nº / A-Z / capturados) e filtro (só vistos) com
+  **Q/W**, e **cadeia de evolução** na ficha.
+- **Flash de entrada** na batalha.
+- **Migração XP→MZ** (`tools/migrate_xp.rb`): exporta nomes dos mapas e diálogos
+  dos eventos do projeto XP para `tools/xp_content.json` (134 mapas, 429 eventos)
+  — referência para reconstruir as cenas. Tilesets/layouts não são convertidos.
+
 ## Testes automatizados (lógica)
 
 ```bash
-node mz/tools/test_harness.js   # tudo acima + PC/caixas (53 testes)
+node mz/tools/test_harness.js   # todos os sistemas (56 testes)
+ruby mz/tools/compile_all.rb    # recompila os data/*.json do PBS
+ruby mz/tools/migrate_xp.rb     # exporta o conteúdo dos mapas do projeto XP
 ```
 
 ## Como usar

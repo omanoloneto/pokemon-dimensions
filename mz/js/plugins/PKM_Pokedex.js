@@ -54,16 +54,23 @@
     Window_PokedexList.prototype.initialize = function(rect) {
         Window_Selectable.prototype.initialize.call(this, rect);
         this._detailWindow = null;
+        this._order = [];
+        for (let i = 1; i <= PKM.Core.maxSpecies(); i++) this._order.push(i);
         this.refresh();
         this.select(0);
         this.activate();
     };
-    Window_PokedexList.prototype.maxItems = function() {
-        return PKM.Core.maxSpecies();
+    Window_PokedexList.prototype.setOrder = function(ids) {
+        this._order = ids;
+        this.refresh();
+        this.select(0);
+        this.callUpdateHelp();
     };
-    // índice 0 da lista => espécie nº 1
+    Window_PokedexList.prototype.maxItems = function() {
+        return this._order ? this._order.length : 0;
+    };
     Window_PokedexList.prototype.speciesId = function(index) {
-        return index + 1;
+        return this._order[index] || 1;
     };
     Window_PokedexList.prototype.currentSpeciesId = function() {
         return this.speciesId(this.index());
@@ -205,14 +212,34 @@
                     : "Dados ainda não registrados.");
         this.drawWrappedText(entry, pad, dy, this.contentsWidth() - pad * 2);
 
-        // rodapé: contadores
+        // cadeia de evolução (se visto)
+        if (seen && sp.evolutions && sp.evolutions.length) {
+            const ey = this.contentsHeight() - this.lineHeight() * 2;
+            this.changeTextColor(ColorManager.systemColor());
+            this.drawText("Evolução:", pad, ey, 120, "left");
+            this.changeTextColor(ColorManager.normalColor());
+            const txt = sp.evolutions.map(ev => this.evoLabel(ev)).join(", ");
+            this.drawText(txt, pad + 120, ey, this.contentsWidth() - pad * 2 - 120, "left");
+        }
+
+        // rodapé: ordenação + contadores
         const fy = this.contentsHeight() - this.lineHeight();
         this.changeTextColor(ColorManager.systemColor());
+        if (this._sortLabel) this.drawText(this._sortLabel, pad, fy, 280, "left");
         this.drawText(
             "Vistos: " + $gameSystem.pkmSeenCount() +
             "   Capturados: " + $gameSystem.pkmCaughtCount(),
             pad, fy, this.contentsWidth() - pad * 2, "right");
         this.resetTextColor();
+    };
+    Window_PokedexDetail.prototype.setSortLabel = function(label) { this._sortLabel = label; this.refresh(); };
+    Window_PokedexDetail.prototype.evoLabel = function(ev) {
+        const sp = PKM.Core.speciesByInternal ? PKM.Core.speciesByInternal(ev.into) : null;
+        const name = sp ? sp.name : ev.into;
+        if (ev.method === "Level" || ev.method === "LevelMale" || ev.method === "LevelFemale") {
+            return name + " (Nv " + ev.param + ")";
+        }
+        return name + " (" + ev.method + (ev.param ? " " + ev.param : "") + ")";
     };
 
     Window_PokedexDetail.prototype.drawTypeBadge = function(type, x, y) {
@@ -254,11 +281,46 @@
     Scene_Pokedex.prototype = Object.create(Scene_MenuBase.prototype);
     Scene_Pokedex.prototype.constructor = Scene_Pokedex;
 
+    const SORT_MODES = [
+        { key: "num",    label: "Ordem: Nº" },
+        { key: "name",   label: "Ordem: A-Z" },
+        { key: "caught", label: "Ordem: Capturados" },
+        { key: "seenOnly", label: "Filtro: Só vistos" }
+    ];
+
     Scene_Pokedex.prototype.create = function() {
         Scene_MenuBase.prototype.create.call(this);
+        this._sortMode = 0;
         this.createDetailWindow();
         this.createListWindow();
         this._listWindow.setDetailWindow(this._detailWindow);
+        this.applySort();
+    };
+    Scene_Pokedex.prototype.applySort = function() {
+        const max = PKM.Core.maxSpecies();
+        let ids = [];
+        for (let i = 1; i <= max; i++) ids.push(i);
+        const mode = SORT_MODES[this._sortMode].key;
+        if (mode === "name") {
+            ids.sort((a, b) => {
+                const na = PKM.Core.species(a).name, nb = PKM.Core.species(b).name;
+                return na < nb ? -1 : na > nb ? 1 : 0;
+            });
+        } else if (mode === "caught") {
+            ids.sort((a, b) => (($gameSystem.pkmIsCaught(b) ? 1 : 0) - ($gameSystem.pkmIsCaught(a) ? 1 : 0)) || (a - b));
+        } else if (mode === "seenOnly") {
+            ids = ids.filter(i => $gameSystem.pkmIsSeen(i));
+            if (ids.length === 0) ids = [1];
+        }
+        this._detailWindow.setSortLabel(SORT_MODES[this._sortMode].label + "  (Q/W muda)");
+        this._listWindow.setOrder(ids);
+    };
+    Scene_Pokedex.prototype.update = function() {
+        Scene_MenuBase.prototype.update.call(this);
+        if (this._listWindow.active) {
+            if (Input.isTriggered("pagedown")) { this._sortMode = (this._sortMode + 1) % SORT_MODES.length; this.applySort(); SoundManager.playCursor(); }
+            else if (Input.isTriggered("pageup")) { this._sortMode = (this._sortMode + SORT_MODES.length - 1) % SORT_MODES.length; this.applySort(); SoundManager.playCursor(); }
+        }
     };
     Scene_Pokedex.prototype.listWindowRect = function() {
         const ww = 360;
