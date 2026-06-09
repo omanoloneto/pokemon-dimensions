@@ -15,7 +15,8 @@ da raiz — nada aqui sobrescreve o jogo original.
 | **Encontros selvagens**                 | ✅ Fase 4 |
 | **Batalha 1v1 + Captura**               | ✅ Fases 5a/6 |
 | **Mochila, itens & dinheiro**           | ✅ Fase 3 |
-| EXP/evolução, PC, treinadores           | ⬜ a fazer |
+| **EXP, nível, golpes & evolução**       | ✅ Fase 7 |
+| Status em batalha (5b), PC, treinadores | ⬜ a fazer |
 
 ## Estrutura
 
@@ -64,10 +65,19 @@ mz/
   tipo: Great ×1.5, Ultra ×2, Master ×255). Sem `PKM_Bag`, usa uma Poké Ball comum.
 - Começa com $3000; `PKM_Bag → Dar Dinheiro` ajusta.
 
+## EXP, nível e evolução (Fase 7)
+
+- Ao vencer uma batalha, o Pokémon ativo ganha EXP (`baseExp × nível ÷ 7`),
+  pode **subir de nível** (com aumento de stats e cura proporcional do HP),
+  **aprender golpes** por nível (com fluxo de "esquecer golpe" quando já tem 4)
+  e **evoluir** por nível (ex.: Bulbasaur → Ivysaur no nível 16).
+- O selvagem encontrado é registrado como **visto** na Pokédex.
+- A tela de resumo mostra EXP atual e EXP para o próximo nível.
+
 ## Testes automatizados (lógica)
 
 ```bash
-node mz/tools/test_harness.js   # Game_Pokemon, dano, captura e itens (19 testes)
+node mz/tools/test_harness.js   # Pokémon, dano, captura, itens e crescimento (27 testes)
 ```
 
 ## Como usar

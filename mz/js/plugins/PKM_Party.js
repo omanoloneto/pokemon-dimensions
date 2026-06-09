@@ -178,7 +178,11 @@
         this.drawText("Nº" + String(p.dexNumber).padStart(3, "0") +
             "  " + p.types().join(" / "), 0, y, 480, "left"); y += lh;
         this.drawText("Natureza: " + p.natureData().name +
-            (p._ability ? "   Hab.: " + p._ability : ""), 0, y, 600, "left"); y += lh + 6;
+            (p._ability ? "   Hab.: " + p._ability : ""), 0, y, 600, "left"); y += lh;
+        if (p.expToNext) {
+            this.drawText("EXP: " + p.exp + "   Próx. nível: " + p.expToNext(), 0, y, 600, "left");
+        }
+        y += lh + 6;
 
         // stats
         const labels = { hp: "HP", atk: "Ataque", def: "Defesa", spa: "Sp.Atk", spd: "Sp.Def", spe: "Velocidade" };

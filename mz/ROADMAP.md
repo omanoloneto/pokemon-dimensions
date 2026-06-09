@@ -13,8 +13,8 @@ Ordem de execução priorizando chegar a uma **demo jogável** o quanto antes:
 | 5a | Motor de Batalha — esqueleto jogável (1v1) | ✅ |
 | 6 | Captura (Poké Ball + fórmula) | ✅ |
 | 3 | Mochila & Itens | ✅ |
+| 7 | EXP, Nível & Evolução | ✅ |
 | 5b | Batalha — efeitos de golpe, status, IA, clima | ⬜ |
-| 7 | EXP, Nível & Evolução | ⬜ |
 | 8 | PC / Boxes | ⬜ |
 | 9 | Treinadores & Ginásios | ⬜ |
 | 10 | Polimento, áudio, migração XP→MZ | ⬜ |
@@ -22,5 +22,5 @@ Ordem de execução priorizando chegar a uma **demo jogável** o quanto antes:
 ## Marcos
 - 🟢 **Pokédex navegável** — Fase 0 ✅
 - 🟡 **Demo de batalha** (andar → encontro → batalha 1v1 → captura) — Fases 1, 2, 4, 5a, 6
-- 🟠 **Loop básico** (+ itens, EXP, evolução) — Fases 3, 7
+- 🟠 **Loop básico** (+ itens, EXP, evolução) — Fases 3, 7 ✅
 - 🔵 **Jogo completo** (PC, ginásios, polimento) — Fases 8, 9, 10

@@ -196,6 +196,73 @@
         return Math.floor(n ** 3 * (Math.floor(n / 2) + 32) / 50);
     }
 
+    //--- crescimento: EXP, nível, golpes, evolução (Fase 7) ------------------
+    Object.defineProperty(Game_Pokemon.prototype, "exp", { get() { return this._exp; }, configurable: true });
+
+    Game_Pokemon.prototype.expToNext = function() {
+        if (this._level >= 100) return 0;
+        return Math.max(0, this.expForLevel(this._level + 1) - this._exp);
+    };
+    Game_Pokemon.prototype.expRate = function() {
+        if (this._level >= 100) return 1;
+        const cur = this.expForLevel(this._level), nxt = this.expForLevel(this._level + 1);
+        return nxt > cur ? (this._exp - cur) / (nxt - cur) : 0;
+    };
+
+    // adiciona EXP; retorna {gained, levels:[{level, learnable:[moveId,...]}]}
+    Game_Pokemon.prototype.addExp = function(amount) {
+        const result = { gained: 0, levels: [] };
+        if (this._level >= 100) return result;
+        amount = Math.max(0, Math.floor(amount));
+        this._exp += amount;
+        result.gained = amount;
+        const cap = this.expForLevel(100);
+        if (this._exp > cap) this._exp = cap;
+        while (this._level < 100 && this._exp >= this.expForLevel(this._level + 1)) {
+            const beforeMax = this.maxHp;
+            this._level++;
+            const delta = this.maxHp - beforeMax;          // sobe o HP atual junto
+            if (delta > 0 && !this.isFainted()) this._hp = Math.min(this.maxHp, this._hp + delta);
+            result.levels.push({ level: this._level, learnable: this.levelUpMoves(this._level) });
+        }
+        return result;
+    };
+
+    Game_Pokemon.prototype.knowsMove = function(id) { return this._moves.some(m => m.id === id); };
+    Game_Pokemon.prototype.levelUpMoves = function(level) {
+        const out = [];
+        for (const lm of (this.species().levelMoves || [])) {
+            if (lm.level === level && !this.knowsMove(lm.move) && !out.includes(lm.move)) out.push(lm.move);
+        }
+        return out;
+    };
+    Game_Pokemon.prototype.learnMove = function(id) {
+        if (this.knowsMove(id)) return "known";
+        if (this._moves.length < 4) { this._moves.push(this._makeMove(id)); return "learned"; }
+        return "full";
+    };
+    Game_Pokemon.prototype.replaceMove = function(index, id) {
+        if (index >= 0 && index < this._moves.length) this._moves[index] = this._makeMove(id);
+    };
+
+    // evolução por nível disponível agora? retorna internalName ou null
+    Game_Pokemon.prototype.evolutionByLevel = function() {
+        for (const ev of (this.species().evolutions || [])) {
+            if (Number(ev.param) > this._level) continue;
+            if (ev.method === "Level") return ev.into;
+            if (ev.method === "LevelMale" && this._gender === "M") return ev.into;
+            if (ev.method === "LevelFemale" && this._gender === "F") return ev.into;
+        }
+        return null;
+    };
+    Game_Pokemon.prototype.evolveInto = function(internalName) {
+        const target = this._resolveSpecies(internalName);
+        if (!target) return false;
+        this._speciesId = target.id;
+        this._hp = Math.min(this._hp, this.maxHp);   // clampa ao novo máximo
+        return true;
+    };
+
     //--- conveniências -------------------------------------------------------
     Game_Pokemon.prototype.genderSymbol = function() {
         return this._gender === "M" ? "♂" : this._gender === "F" ? "♀" : "";

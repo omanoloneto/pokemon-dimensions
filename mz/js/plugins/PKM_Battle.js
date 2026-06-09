@@ -97,6 +97,13 @@ PKM.Battle = PKM.Battle || {};
         return Math.randomInt(256) < odds;
     };
 
+    // EXP ganha por derrotar um Pokémon (dividida entre participantes)
+    PKM.Battle.expGain = function(faintedMon, participants = 1) {
+        const sp = faintedMon.species();
+        const base = (sp && sp.baseExp) || 64;
+        return Math.max(1, Math.floor((base * faintedMon.level) / 7 / Math.max(1, participants)));
+    };
+
     //=========================================================================
     // Scene_PkmBattle  (a partir daqui usa render; ignorado no harness headless)
     //=========================================================================
@@ -163,6 +170,19 @@ PKM.Battle = PKM.Battle || {};
         this._ballWindow.hide(); this._ballWindow.deactivate();
         this.addWindow(this._ballWindow);
 
+        // aprender golpe (Fase 7): sim/não + seleção do golpe a esquecer
+        this._yesnoWindow = new Window_BattleYesNo(new Rectangle(Graphics.boxWidth - 240, 336, 240, 144));
+        this._yesnoWindow.setHandler("yes", this.onForgetYes.bind(this));
+        this._yesnoWindow.setHandler("no", this.onForgetNo.bind(this));
+        this._yesnoWindow.hide(); this._yesnoWindow.deactivate();
+        this.addWindow(this._yesnoWindow);
+
+        this._forgetWindow = new Window_BattleMoves(new Rectangle(0, 480, Graphics.boxWidth, 144));
+        this._forgetWindow.setHandler("ok", this.onForgetOk.bind(this));
+        this._forgetWindow.setHandler("cancel", this.onForgetCancel.bind(this));
+        this._forgetWindow.hide(); this._forgetWindow.deactivate();
+        this.addWindow(this._forgetWindow);
+
         this.refreshStatus();
     };
 
@@ -218,10 +238,13 @@ PKM.Battle = PKM.Battle || {};
         this._moveWindow.hide(); this._moveWindow.deactivate();
         this._switchWindow.hide(); this._switchWindow.deactivate();
         if (this._ballWindow) { this._ballWindow.hide(); this._ballWindow.deactivate(); }
+        if (this._yesnoWindow) { this._yesnoWindow.hide(); this._yesnoWindow.deactivate(); }
+        if (this._forgetWindow) { this._forgetWindow.hide(); this._forgetWindow.deactivate(); }
     };
 
     //--- ciclo ----------------------------------------------------------------
     Scene_PkmBattle.prototype.startBattle = function() {
+        if ($gameSystem.pkmSetSeen) $gameSystem.pkmSetSeen(this._enemy.dexNumber);
         this.showSteps([{ text: "Um " + this._enemy.name + " selvagem apareceu!" },
                         { text: "Vai, " + this._player.name + "!" }],
             this.startInput.bind(this));
@@ -342,8 +365,7 @@ PKM.Battle = PKM.Battle || {};
 
     Scene_PkmBattle.prototype.settleTurn = function() {
         if (this._enemy.isFainted()) {
-            this.showSteps([{ text: "Você derrotou o " + this._enemy.name + " selvagem!" }],
-                () => this.endBattle());
+            this.awardExpAndFinish(() => this.endBattle());
         } else if (this._player.isFainted()) {
             if ($gameParty.pkmAllFainted()) {
                 this.showSteps([{ text: this._player.name + " desmaiou!" },
@@ -438,6 +460,91 @@ PKM.Battle = PKM.Battle || {};
         this.startInput();
     };
 
+    //--- crescimento: EXP, nível, golpes, evolução (Fase 7) ------------------
+    Scene_PkmBattle.prototype.awardExpAndFinish = function(onDone) {
+        const winner = this._player;
+        this._afterGrowth = onDone;
+        this._expWinner = winner;
+        const exp = PKM.Battle.expGain(this._enemy, 1);
+        const res = winner.addExp(exp);
+        const steps = [
+            { text: "Você derrotou o " + this._enemy.name + " selvagem!" },
+            { text: winner.name + " ganhou " + res.gained + " de Exp.!" }
+        ];
+        res.levels.forEach(lv => steps.push({ text: winner.name + " subiu para o nível " + lv.level + "!" }));
+        this._learnQueue = res.levels.reduce((a, lv) => a.concat(lv.learnable), []);
+        this.showSteps(steps, () => this.processNextLearn());
+    };
+
+    Scene_PkmBattle.prototype.processNextLearn = function() {
+        const w = this._expWinner;
+        if (!this._learnQueue || this._learnQueue.length === 0) return this.evolutionStep();
+        const moveId = this._learnQueue.shift();
+        if (w.knowsMove(moveId)) return this.processNextLearn();
+        const md = PKM.Core.move(moveId);
+        const nm = md ? md.name : moveId;
+        if (w.moves.length < 4) {
+            w.learnMove(moveId);
+            this.showSteps([{ text: w.name + " aprendeu " + nm + "!" }], () => this.processNextLearn());
+        } else {
+            this._pendingLearn = { moveId, name: nm };
+            this.showSteps([{ text: w.name + " quer aprender " + nm + ", mas já conhece 4 golpes." }],
+                () => this.openForgetPrompt());
+        }
+    };
+
+    Scene_PkmBattle.prototype.openForgetPrompt = function() {
+        this._phase = "learn";
+        this.hideMenus();
+        this._drawMessage("Esquecer um golpe para aprender " + this._pendingLearn.name + "?");
+        this._yesnoWindow.show(); this._yesnoWindow.activate(); this._yesnoWindow.select(0);
+    };
+    Scene_PkmBattle.prototype.onForgetYes = function() {
+        this._yesnoWindow.hide(); this._yesnoWindow.deactivate();
+        this._forgetWindow.setPokemon(this._expWinner);
+        this._forgetWindow.show(); this._forgetWindow.activate(); this._forgetWindow.select(0);
+        this._phase = "learn";
+        this._drawMessage("Qual golpe deve ser esquecido?");
+    };
+    Scene_PkmBattle.prototype.onForgetNo = function() {
+        this._yesnoWindow.hide(); this._yesnoWindow.deactivate();
+        this.showSteps([{ text: this._expWinner.name + " não aprendeu " + this._pendingLearn.name + "." }],
+            () => this.processNextLearn());
+    };
+    Scene_PkmBattle.prototype.onForgetOk = function() {
+        const idx = this._forgetWindow.index();
+        const oldMv = PKM.Core.move(this._expWinner.moves[idx].id);
+        const oldName = oldMv ? oldMv.name : this._expWinner.moves[idx].id;
+        this._expWinner.replaceMove(idx, this._pendingLearn.moveId);
+        this._forgetWindow.hide(); this._forgetWindow.deactivate();
+        this.showSteps([
+            { text: "1, 2 e… pof!" },
+            { text: this._expWinner.name + " esqueceu " + oldName + " e aprendeu " + this._pendingLearn.name + "!" }
+        ], () => this.processNextLearn());
+    };
+    Scene_PkmBattle.prototype.onForgetCancel = function() {
+        this._forgetWindow.hide(); this._forgetWindow.deactivate();
+        this.showSteps([{ text: this._expWinner.name + " não aprendeu " + this._pendingLearn.name + "." }],
+            () => this.processNextLearn());
+    };
+
+    Scene_PkmBattle.prototype.evolutionStep = function() {
+        const w = this._expWinner;
+        const into = w.evolutionByLevel ? w.evolutionByLevel() : null;
+        if (!into) return this.finishGrowth();
+        const oldName = w.name;
+        this.showSteps([{ text: "O quê? " + oldName + " está evoluindo!" }], () => {
+            w.evolveInto(into);
+            this.refreshStatus();
+            this.showSteps([{ text: oldName + " evoluiu em " + w.speciesName + "!" }],
+                () => this.finishGrowth());
+        });
+    };
+    Scene_PkmBattle.prototype.finishGrowth = function() {
+        const cb = this._afterGrowth; this._afterGrowth = null;
+        cb();
+    };
+
     //--- fim ------------------------------------------------------------------
     Scene_PkmBattle.prototype.endBattle = function() {
         $gameTemp.pkmWild = null;
@@ -514,5 +621,13 @@ PKM.Battle = PKM.Battle || {};
         const r = this.itemLineRect(index);
         this.drawText(e.data.name, r.x, r.y, r.width - 80, "left");
         this.drawText("×" + e.qty, r.x + r.width - 80, r.y, 80, "right");
+    };
+
+    function Window_BattleYesNo() { this.initialize(...arguments); }
+    Window_BattleYesNo.prototype = Object.create(Window_Command.prototype);
+    Window_BattleYesNo.prototype.constructor = Window_BattleYesNo;
+    Window_BattleYesNo.prototype.makeCommandList = function() {
+        this.addCommand("Sim", "yes");
+        this.addCommand("Não", "no");
     };
 })();

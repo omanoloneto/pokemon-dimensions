@@ -123,5 +123,34 @@ if (ctx.PKM.Items && ctx.PKM.Items.useOnPokemon) {
     console.log("  (PKM.Items indisponível — pulando)");
 }
 
+// crescimento (Fase 7)
+console.log("== EXP / Nível / Evolução ==");
+{
+    // EXP suficiente para subir de nível
+    const c = new G("CATERPIE", 5);
+    const before = c.level;
+    const res = c.addExp(c.expForLevel(8) - c.exp); // exatamente até o nível 8
+    ok(c.level === 8, `Caterpie subiu de ${before} para ${c.level} (esperado 8)`);
+    ok(res.levels.length === 3, `registrou ${res.levels.length} level-ups (esperado 3)`);
+
+    // fórmula de EXP positiva
+    ok(ctx.PKM.Battle.expGain(new G("PIDGEY", 10), 1) > 0, "expGain > 0");
+
+    // evolução por nível: Bulbasaur evolui em Ivysaur no nível 16
+    const b = new G("BULBASAUR", 15);
+    eq(b.evolutionByLevel(), null, "Bulbasaur nv15 ainda não evolui");
+    b.addExp(b.expForLevel(16) - b.exp);
+    const into = b.evolutionByLevel();
+    eq(into, "IVYSAUR", "Bulbasaur nv16 evolui em IVYSAUR");
+    b.evolveInto(into);
+    eq(b.speciesName, "Ivysaur", "espécie virou Ivysaur após evoluir");
+
+    // aprender golpe em slot vazio
+    const m = new G("MAGIKARP", 1);
+    while (m.moves.length > 0) m.moves.pop();
+    eq(m.learnMove("TACKLE"), "learned", "aprende golpe em slot vazio");
+    eq(m.learnMove("TACKLE"), "known", "não reaprende golpe conhecido");
+}
+
 console.log(`\nResultado: ${pass} passou, ${fail} falhou`);
 process.exit(fail ? 1 : 0);
