@@ -4,6 +4,8 @@ Reescrita gradual do projeto (originalmente Pokémon Essentials / RPG Maker XP, 
 Ruby) para **RPG Maker MZ** (JavaScript). Esta pasta é independente do projeto XP
 da raiz — nada aqui sobrescreve o jogo original.
 
+> 🧪 Para instalar e testar no MZ passo a passo, veja **[TESTING.md](TESTING.md)**.
+
 ## Status
 
 | Sistema   | Estado        |
