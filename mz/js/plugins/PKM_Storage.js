@@ -25,6 +25,8 @@
  * @desc Abre a cena do sistema de armazenamento (caixas).
  */
 
+var PKM = PKM || {};
+
 (() => {
     "use strict";
     const MAX_PARTY = 6;

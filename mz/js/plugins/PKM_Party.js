@@ -37,6 +37,8 @@
  * @desc Restaura HP/PP/status de toda a equipe.
  */
 
+var PKM = PKM || {};
+
 (() => {
     "use strict";
     const MAX_PARTY = 6;

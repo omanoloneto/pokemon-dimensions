@@ -13,11 +13,16 @@ captura → EXP/evolução → mochila → treinador → PC.
 
 1. No RPG Maker MZ: **Arquivo → Novo Projeto** (ex.: `PKMDimensionsMZ`).
 2. Feche o editor (para ele não sobrescrever arquivos).
-3. Copie o conteúdo da pasta `mz/` deste repositório para o projeto:
-   - `mz/data/*.json`  → `<Projeto>/data/`
-     (`Pokemon.json`, `Moves.json`, `Types.json`, `Items.json`,
-      `Encounters.json`, `Trainers.json`)
+3. Copie SOMENTE estes arquivos para o projeto (não copie a pasta inteira —
+   sobrescrever os arquivos do próprio MZ como `Items.json`/`System.json` quebra
+   o editor):
+   - Estes 6 JSON → `<Projeto>/data/`:
+     `Pokemon.json`, `Moves.json`, `Types.json`, `PkmItems.json`,
+     `Encounters.json`, `Trainers.json`
    - `mz/js/plugins/PKM_*.js` → `<Projeto>/js/plugins/`
+
+   > Se o projeto MZ foi criado DENTRO da pasta `mz/` (como neste repositório),
+   > os arquivos já estão no lugar — nada a copiar.
 4. (Opcional) Sprites: `mz/img/pokemon/front/001.png`… → `<Projeto>/img/pokemon/front/`.
    Sem isso, a Pokédex mostra um placeholder "?".
 5. (Opcional) Áudio: coloque cries em `audio/se/Cries/001Cry.ogg`…, e
@@ -46,6 +51,9 @@ nesta ordem (a ordem importa — dependências):
 ```
 
 Salve (Ctrl+S).
+
+> Nota: desde a v0.5.1 os plugins toleram qualquer ordem de carga (namespace
+> defensivo), mas a ordem acima continua recomendada.
 
 ### Smoke test (liga?)
 - **Playtest** (F12 / botão ▶). Se o jogo **abre no mapa inicial sem erro**, os

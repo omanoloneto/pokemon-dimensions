@@ -39,6 +39,8 @@
  * @default Victory Trainer
  */
 
+var PKM = PKM || {};
+
 (() => {
     "use strict";
     const P = PluginManager.parameters("PKM_Audio");

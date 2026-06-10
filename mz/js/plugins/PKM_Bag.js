@@ -40,6 +40,8 @@
  * @arg amount @type number @min 0 @default 100 @text Valor
  */
 
+var PKM = PKM || {};
+
 (() => {
     "use strict";
 

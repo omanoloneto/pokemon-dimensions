@@ -36,6 +36,8 @@
  * @arg badge @type string @text ID da insígnia @desc ex.: KANTO_1
  */
 
+var PKM = PKM || {};
+
 (() => {
     "use strict";
 

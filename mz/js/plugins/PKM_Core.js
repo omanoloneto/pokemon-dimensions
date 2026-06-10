@@ -57,7 +57,7 @@ PKM.PLUGIN_NAME = "PKM_Core";
     DataManager._databaseFiles.push({ name: "$dataPokemon", src: "Pokemon.json" });
     DataManager._databaseFiles.push({ name: "$dataMoves", src: "Moves.json" });
     DataManager._databaseFiles.push({ name: "$dataTypes", src: "Types.json" });
-    DataManager._databaseFiles.push({ name: "$dataItems2", src: "Items.json" });
+    DataManager._databaseFiles.push({ name: "$dataItems2", src: "PkmItems.json" });
     DataManager._databaseFiles.push({ name: "$dataEncounters", src: "Encounters.json" });
     DataManager._databaseFiles.push({ name: "$dataTrainers", src: "Trainers.json" });
 

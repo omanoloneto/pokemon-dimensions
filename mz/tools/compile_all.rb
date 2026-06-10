@@ -167,7 +167,7 @@ def compile_items
       "machine" => (f[10] || "").strip
     }
   end
-  write("Items.json", by_internal)
+  write("PkmItems.json", by_internal)
 end
 
 #---------------------------------------------------------------------------

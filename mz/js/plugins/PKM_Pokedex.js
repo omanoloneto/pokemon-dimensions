@@ -28,6 +28,8 @@
  * @desc Abre a cena da Pokédex.
  */
 
+var PKM = PKM || {};
+
 (() => {
     "use strict";
 

@@ -20,6 +20,8 @@
  * Fórmulas: stats e natureza no padrão Gen 3+.
  */
 
+var PKM = PKM || {};
+
 (() => {
     "use strict";
 

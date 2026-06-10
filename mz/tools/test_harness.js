@@ -19,7 +19,7 @@ const ctx = {
     $dataPokemon: load("Pokemon.json"),
     $dataMoves: load("Moves.json"),
     $dataTypes: load("Types.json"),
-    $dataItems2: load("Items.json"),
+    $dataItems2: load("PkmItems.json"),
     $dataEncounters: load("Encounters.json"),
     $dataTrainers: load("Trainers.json"),
     $gameTemp: {},

@@ -28,7 +28,7 @@ da raiz — nada aqui sobrescreve o jogo original.
 ```
 mz/
 ├── data/                     # bancos compilados do PBS (gerados)
-│   ├── Pokemon.json  Moves.json  Types.json  Items.json  Encounters.json
+│   ├── Pokemon.json  Moves.json  Types.json  PkmItems.json  Encounters.json
 ├── js/plugins/
 │   ├── PKM_Core.js           # carrega dados, tabela de tipos, estado da Pokédex
 │   ├── PKM_Pokemon.js        # classe Game_Pokemon (Fase 1)

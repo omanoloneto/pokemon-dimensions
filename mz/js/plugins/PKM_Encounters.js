@@ -40,6 +40,8 @@
  * @desc Sorteia um encontro do mapa atual (método Land) e inicia, se houver.
  */
 
+var PKM = PKM || {};
+
 (() => {
     "use strict";
     const P = PluginManager.parameters("PKM_Encounters");
