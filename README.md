@@ -9,6 +9,7 @@ deste repositório É o projeto MZ (abra `game.rmmzproject` no editor).
 > Os assets gráficos dos Pokémon foram preservados em `img/pokemon/`.
 
 > 🧪 Para instalar e testar no MZ passo a passo, veja **[TESTING.md](TESTING.md)**.
+> 🎮 Design e roadmap do jogo: **[docs/](docs/README.md)** (visão, franquias, mundo, produção, roadmap mestre).
 
 ## Status
 
