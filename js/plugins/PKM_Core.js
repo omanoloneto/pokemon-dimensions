@@ -107,7 +107,7 @@ PKM.PLUGIN_NAME = "PKM_Core";
         if (!$dataPokemon || !internalName) return null;
         const up = internalName.toUpperCase();
         for (let i = 1; i < $dataPokemon.length; i++) {
-            if ($dataPokemon[i] && $dataPokemon[i].internalName === up) return $dataPokemon[i];
+            if ($dataPokemon[i] && $dataPokemon[i].internalName.toUpperCase() === up) return $dataPokemon[i];
         }
         return null;
     };

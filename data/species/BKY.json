@@ -1,25 +1,60 @@
 [
  {
-  "id": 780,
+  "id": 900,
   "name": "Jibac",
   "internalName": "JIBAC",
   "type1": "FIRE",
   "type2": null,
-  "stats": { "hp": 100, "atk": 130, "def": 90, "spe": 110, "spa": 120, "spd": 90 },
+  "stats": {
+   "hp": 100,
+   "atk": 130,
+   "def": 90,
+   "spe": 110,
+   "spa": 120,
+   "spd": 90
+  },
   "genderRate": "Genderless",
   "growthRate": "Slow",
   "baseExp": 255,
-  "evYield": { "hp": 0, "atk": 3, "def": 0, "spe": 0, "spa": 0, "spd": 0 },
-  "catchRate": 3,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 5,
   "abilities": [],
   "levelMoves": [
-   { "level": 1, "move": "EMBER" },
-   { "level": 12, "move": "FLAMEWHEEL" },
-   { "level": 24, "move": "JIBAKUMINOR" },
-   { "level": 36, "move": "FLAMETHROWER" },
-   { "level": 48, "move": "JIBAKUSEAL" },
-   { "level": 60, "move": "JIBAKUCHAIN" },
-   { "level": 70, "move": "JIBAKU" }
+   {
+    "level": 1,
+    "move": "EMBER"
+   },
+   {
+    "level": 12,
+    "move": "FLAMEWHEEL"
+   },
+   {
+    "level": 24,
+    "move": "JIBAKUMINOR"
+   },
+   {
+    "level": 36,
+    "move": "FLAMETHROWER"
+   },
+   {
+    "level": 42,
+    "move": "JIBAKUSEAL"
+   },
+   {
+    "level": 48,
+    "move": "JIBAKUCHAIN"
+   },
+   {
+    "level": 50,
+    "move": "JIBAKU"
+   }
   ],
   "height": 0.4,
   "weight": 4.5,
@@ -28,30 +63,65 @@
   "category": "Espírito",
   "entry": "Espírito do Mundo da Chama. Rola em silêncio até escolher alguém — e então explode de alegria. Só firma pacto com quem já provou ser uma Grande Criança.",
   "evolutions": [],
-  "pactBadge": "GC_01",
+  "pactMark": "GC_01",
   "world": "Mundo da Chama"
  },
  {
-  "id": 781,
+  "id": 901,
   "name": "Bambi",
   "internalName": "BAMBI",
   "type1": "PSYCHIC",
   "type2": null,
-  "stats": { "hp": 110, "atk": 90, "def": 100, "spe": 105, "spa": 135, "spd": 110 },
+  "stats": {
+   "hp": 110,
+   "atk": 90,
+   "def": 100,
+   "spe": 105,
+   "spa": 135,
+   "spd": 110
+  },
   "genderRate": "Genderless",
   "growthRate": "Slow",
   "baseExp": 255,
-  "evYield": { "hp": 0, "atk": 0, "def": 0, "spe": 0, "spa": 3, "spd": 0 },
-  "catchRate": 3,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 3,
+   "spd": 0
+  },
+  "catchRate": 5,
   "abilities": [],
   "levelMoves": [
-   { "level": 1, "move": "CONFUSION" },
-   { "level": 12, "move": "PSYBEAM" },
-   { "level": 24, "move": "JIBAKUMINOR" },
-   { "level": 36, "move": "PSYCHIC" },
-   { "level": 48, "move": "JIBAKUSEAL" },
-   { "level": 60, "move": "EXTRASENSORY" },
-   { "level": 70, "move": "JIBAKU" }
+   {
+    "level": 1,
+    "move": "CONFUSION"
+   },
+   {
+    "level": 12,
+    "move": "PSYBEAM"
+   },
+   {
+    "level": 24,
+    "move": "JIBAKUMINOR"
+   },
+   {
+    "level": 36,
+    "move": "PSYCHIC"
+   },
+   {
+    "level": 42,
+    "move": "JIBAKUSEAL"
+   },
+   {
+    "level": 48,
+    "move": "EXTRASENSORY"
+   },
+   {
+    "level": 50,
+    "move": "JIBAKU"
+   }
   ],
   "height": 0.4,
   "weight": 3.8,
@@ -60,30 +130,65 @@
   "category": "Espírito",
   "entry": "Espírito do Mundo do Sonho e parceiro da Pinky. Lê a intenção de quem se aproxima antes de decidir se vale explodir por essa pessoa.",
   "evolutions": [],
-  "pactBadge": "GC_02",
+  "pactMark": "GC_02",
   "world": "Mundo do Sonho"
  },
  {
-  "id": 782,
+  "id": 902,
   "name": "Aquac",
   "internalName": "AQUAC",
   "type1": "WATER",
   "type2": null,
-  "stats": { "hp": 115, "atk": 110, "def": 110, "spe": 95, "spa": 125, "spd": 105 },
+  "stats": {
+   "hp": 115,
+   "atk": 110,
+   "def": 110,
+   "spe": 95,
+   "spa": 125,
+   "spd": 105
+  },
   "genderRate": "Genderless",
   "growthRate": "Slow",
   "baseExp": 250,
-  "evYield": { "hp": 3, "atk": 0, "def": 0, "spe": 0, "spa": 0, "spd": 0 },
-  "catchRate": 3,
+  "evYield": {
+   "hp": 3,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 5,
   "abilities": [],
   "levelMoves": [
-   { "level": 1, "move": "WATERGUN" },
-   { "level": 12, "move": "AQUATAIL" },
-   { "level": 24, "move": "JIBAKUMINOR" },
-   { "level": 36, "move": "SURF" },
-   { "level": 48, "move": "JIBAKUSEAL" },
-   { "level": 60, "move": "JIBAKUCHAIN" },
-   { "level": 70, "move": "JIBAKU" }
+   {
+    "level": 1,
+    "move": "WATERGUN"
+   },
+   {
+    "level": 12,
+    "move": "AQUATAIL"
+   },
+   {
+    "level": 24,
+    "move": "JIBAKUMINOR"
+   },
+   {
+    "level": 36,
+    "move": "SURF"
+   },
+   {
+    "level": 42,
+    "move": "JIBAKUSEAL"
+   },
+   {
+    "level": 48,
+    "move": "JIBAKUCHAIN"
+   },
+   {
+    "level": 50,
+    "move": "JIBAKU"
+   }
   ],
   "height": 0.5,
   "weight": 8.2,
@@ -92,30 +197,65 @@
   "category": "Espírito",
   "entry": "Espírito do Mundo da Maré. Sua explosão não queima: arrebenta como uma onda que arrasta tudo o que estava errado no mundo.",
   "evolutions": [],
-  "pactBadge": "GC_03",
+  "pactMark": "GC_03",
   "world": "Mundo da Maré"
  },
  {
-  "id": 783,
+  "id": 903,
   "name": "Verdac",
   "internalName": "VERDAC",
   "type1": "GRASS",
   "type2": null,
-  "stats": { "hp": 120, "atk": 115, "def": 105, "spe": 85, "spa": 120, "spd": 115 },
+  "stats": {
+   "hp": 120,
+   "atk": 115,
+   "def": 105,
+   "spe": 85,
+   "spa": 120,
+   "spd": 115
+  },
   "genderRate": "Genderless",
   "growthRate": "Slow",
   "baseExp": 250,
-  "evYield": { "hp": 3, "atk": 0, "def": 0, "spe": 0, "spa": 0, "spd": 0 },
-  "catchRate": 3,
+  "evYield": {
+   "hp": 3,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 5,
   "abilities": [],
   "levelMoves": [
-   { "level": 1, "move": "VINEWHIP" },
-   { "level": 12, "move": "LEAFBLADE" },
-   { "level": 24, "move": "JIBAKUMINOR" },
-   { "level": 36, "move": "ENERGYBALL" },
-   { "level": 48, "move": "JIBAKUSEAL" },
-   { "level": 60, "move": "SOLARBEAM" },
-   { "level": 70, "move": "JIBAKU" }
+   {
+    "level": 1,
+    "move": "VINEWHIP"
+   },
+   {
+    "level": 12,
+    "move": "LEAFBLADE"
+   },
+   {
+    "level": 24,
+    "move": "JIBAKUMINOR"
+   },
+   {
+    "level": 36,
+    "move": "ENERGYBALL"
+   },
+   {
+    "level": 42,
+    "move": "JIBAKUSEAL"
+   },
+   {
+    "level": 48,
+    "move": "SOLARBEAM"
+   },
+   {
+    "level": 50,
+    "move": "JIBAKU"
+   }
   ],
   "height": 0.5,
   "weight": 6.6,
@@ -124,30 +264,65 @@
   "category": "Espírito",
   "entry": "Espírito do Mundo da Seiva. Ao se autodestruir espalha sementes; onde havia cratera, no dia seguinte há floresta.",
   "evolutions": [],
-  "pactBadge": "GC_04",
+  "pactMark": "GC_04",
   "world": "Mundo da Seiva"
  },
  {
-  "id": 784,
+  "id": 904,
   "name": "Voltac",
   "internalName": "VOLTAC",
   "type1": "ELECTRIC",
   "type2": null,
-  "stats": { "hp": 95, "atk": 105, "def": 85, "spe": 145, "spa": 130, "spd": 90 },
+  "stats": {
+   "hp": 95,
+   "atk": 105,
+   "def": 85,
+   "spe": 145,
+   "spa": 130,
+   "spd": 90
+  },
   "genderRate": "Genderless",
   "growthRate": "Slow",
   "baseExp": 255,
-  "evYield": { "hp": 0, "atk": 0, "def": 0, "spe": 3, "spa": 0, "spd": 0 },
-  "catchRate": 3,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 3,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 5,
   "abilities": [],
   "levelMoves": [
-   { "level": 1, "move": "THUNDERSHOCK" },
-   { "level": 12, "move": "SWIFT" },
-   { "level": 24, "move": "JIBAKUMINOR" },
-   { "level": 36, "move": "THUNDERBOLT" },
-   { "level": 48, "move": "JIBAKUSEAL" },
-   { "level": 60, "move": "WILDCHARGE" },
-   { "level": 70, "move": "JIBAKU" }
+   {
+    "level": 1,
+    "move": "THUNDERSHOCK"
+   },
+   {
+    "level": 12,
+    "move": "SWIFT"
+   },
+   {
+    "level": 24,
+    "move": "JIBAKUMINOR"
+   },
+   {
+    "level": 36,
+    "move": "THUNDERBOLT"
+   },
+   {
+    "level": 42,
+    "move": "JIBAKUSEAL"
+   },
+   {
+    "level": 48,
+    "move": "WILDCHARGE"
+   },
+   {
+    "level": 50,
+    "move": "JIBAKU"
+   }
   ],
   "height": 0.3,
   "weight": 2.9,
@@ -156,30 +331,65 @@
   "category": "Espírito",
   "entry": "Espírito do Mundo da Tempestade. É o mais impaciente dos doze: carrega a explosão antes mesmo de ouvir o pedido da sua Grande Criança.",
   "evolutions": [],
-  "pactBadge": "GC_05",
+  "pactMark": "GC_05",
   "world": "Mundo da Tempestade"
  },
  {
-  "id": 785,
+  "id": 905,
   "name": "Gelac",
   "internalName": "GELAC",
   "type1": "ICE",
   "type2": null,
-  "stats": { "hp": 110, "atk": 100, "def": 120, "spe": 90, "spa": 125, "spd": 120 },
+  "stats": {
+   "hp": 110,
+   "atk": 100,
+   "def": 120,
+   "spe": 90,
+   "spa": 125,
+   "spd": 120
+  },
   "genderRate": "Genderless",
   "growthRate": "Slow",
   "baseExp": 250,
-  "evYield": { "hp": 0, "atk": 0, "def": 0, "spe": 0, "spa": 0, "spd": 3 },
-  "catchRate": 3,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 3
+  },
+  "catchRate": 5,
   "abilities": [],
   "levelMoves": [
-   { "level": 1, "move": "ICESHARD" },
-   { "level": 12, "move": "ICICLECRASH" },
-   { "level": 24, "move": "JIBAKUMINOR" },
-   { "level": 36, "move": "ICEBEAM" },
-   { "level": 48, "move": "JIBAKUSEAL" },
-   { "level": 60, "move": "JIBAKUCHAIN" },
-   { "level": 70, "move": "JIBAKU" }
+   {
+    "level": 1,
+    "move": "ICESHARD"
+   },
+   {
+    "level": 12,
+    "move": "ICICLECRASH"
+   },
+   {
+    "level": 24,
+    "move": "JIBAKUMINOR"
+   },
+   {
+    "level": 36,
+    "move": "ICEBEAM"
+   },
+   {
+    "level": 42,
+    "move": "JIBAKUSEAL"
+   },
+   {
+    "level": 48,
+    "move": "JIBAKUCHAIN"
+   },
+   {
+    "level": 50,
+    "move": "JIBAKU"
+   }
   ],
   "height": 0.4,
   "weight": 9.1,
@@ -188,30 +398,65 @@
   "category": "Espírito",
   "entry": "Espírito do Mundo do Gelo. Fala pouco e explode em estilhaços que ficam brilhando no ar por horas depois do combate.",
   "evolutions": [],
-  "pactBadge": "GC_06",
+  "pactMark": "GC_06",
   "world": "Mundo do Gelo"
  },
  {
-  "id": 786,
+  "id": 906,
   "name": "Terrac",
   "internalName": "TERRAC",
   "type1": "GROUND",
   "type2": null,
-  "stats": { "hp": 125, "atk": 135, "def": 115, "spe": 75, "spa": 95, "spd": 100 },
+  "stats": {
+   "hp": 125,
+   "atk": 135,
+   "def": 115,
+   "spe": 75,
+   "spa": 95,
+   "spd": 100
+  },
   "genderRate": "Genderless",
   "growthRate": "Slow",
   "baseExp": 250,
-  "evYield": { "hp": 0, "atk": 3, "def": 0, "spe": 0, "spa": 0, "spd": 0 },
-  "catchRate": 3,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 5,
   "abilities": [],
   "levelMoves": [
-   { "level": 1, "move": "MUDSLAP" },
-   { "level": 12, "move": "BULLDOZE" },
-   { "level": 24, "move": "JIBAKUMINOR" },
-   { "level": 36, "move": "EARTHQUAKE" },
-   { "level": 48, "move": "JIBAKUSEAL" },
-   { "level": 60, "move": "SANDSTORM" },
-   { "level": 70, "move": "JIBAKU" }
+   {
+    "level": 1,
+    "move": "MUDSLAP"
+   },
+   {
+    "level": 12,
+    "move": "BULLDOZE"
+   },
+   {
+    "level": 24,
+    "move": "JIBAKUMINOR"
+   },
+   {
+    "level": 36,
+    "move": "EARTHQUAKE"
+   },
+   {
+    "level": 42,
+    "move": "JIBAKUSEAL"
+   },
+   {
+    "level": 48,
+    "move": "SANDSTORM"
+   },
+   {
+    "level": 50,
+    "move": "JIBAKU"
+   }
   ],
   "height": 0.6,
   "weight": 22.4,
@@ -220,62 +465,132 @@
   "category": "Espírito",
   "entry": "Espírito do Mundo das Dunas. Enterra-se por semanas esperando a Grande Criança certa passar por cima dele.",
   "evolutions": [],
-  "pactBadge": "GC_07",
+  "pactMark": "GC_07",
   "world": "Mundo das Dunas"
  },
  {
-  "id": 787,
+  "id": 907,
   "name": "Petrac",
   "internalName": "PETRAC",
   "type1": "ROCK",
   "type2": null,
-  "stats": { "hp": 120, "atk": 130, "def": 140, "spe": 70, "spa": 90, "spd": 100 },
+  "stats": {
+   "hp": 120,
+   "atk": 130,
+   "def": 140,
+   "spe": 70,
+   "spa": 90,
+   "spd": 100
+  },
   "genderRate": "Genderless",
   "growthRate": "Slow",
   "baseExp": 250,
-  "evYield": { "hp": 0, "atk": 0, "def": 3, "spe": 0, "spa": 0, "spd": 0 },
-  "catchRate": 3,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 3,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 5,
   "abilities": [],
   "levelMoves": [
-   { "level": 1, "move": "ROCKTHROW" },
-   { "level": 12, "move": "ROCKSLIDE" },
-   { "level": 24, "move": "JIBAKUMINOR" },
-   { "level": 36, "move": "STONEEDGE" },
-   { "level": 48, "move": "JIBAKUSEAL" },
-   { "level": 60, "move": "JIBAKUCHAIN" },
-   { "level": 70, "move": "JIBAKU" }
+   {
+    "level": 1,
+    "move": "ROCKTHROW"
+   },
+   {
+    "level": 12,
+    "move": "ROCKSLIDE"
+   },
+   {
+    "level": 24,
+    "move": "JIBAKUMINOR"
+   },
+   {
+    "level": 36,
+    "move": "STONEEDGE"
+   },
+   {
+    "level": 42,
+    "move": "JIBAKUSEAL"
+   },
+   {
+    "level": 48,
+    "move": "JIBAKUCHAIN"
+   },
+   {
+    "level": 50,
+    "move": "JIBAKU"
+   }
   ],
   "height": 0.6,
-  "weight": 31.0,
+  "weight": 31,
   "color": "Gray",
   "habitat": "Rare",
   "category": "Espírito",
   "entry": "Espírito do Mundo da Pedra. Dizem que ele é o pedaço que sobrou do primeiro mundo, e que sua explosão é o barulho de uma promessa cumprida.",
   "evolutions": [],
-  "pactBadge": "GC_08",
+  "pactMark": "GC_08",
   "world": "Mundo da Pedra"
  },
  {
-  "id": 788,
+  "id": 908,
   "name": "Ferrac",
   "internalName": "FERRAC",
   "type1": "STEEL",
   "type2": null,
-  "stats": { "hp": 105, "atk": 125, "def": 145, "spe": 80, "spa": 100, "spd": 105 },
+  "stats": {
+   "hp": 105,
+   "atk": 125,
+   "def": 145,
+   "spe": 80,
+   "spa": 100,
+   "spd": 105
+  },
   "genderRate": "Genderless",
   "growthRate": "Slow",
   "baseExp": 250,
-  "evYield": { "hp": 0, "atk": 0, "def": 3, "spe": 0, "spa": 0, "spd": 0 },
-  "catchRate": 3,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 3,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 5,
   "abilities": [],
   "levelMoves": [
-   { "level": 1, "move": "METALCLAW" },
-   { "level": 12, "move": "METALSOUND" },
-   { "level": 24, "move": "JIBAKUMINOR" },
-   { "level": 36, "move": "IRONHEAD" },
-   { "level": 48, "move": "JIBAKUSEAL" },
-   { "level": 60, "move": "FLASHCANNON" },
-   { "level": 70, "move": "JIBAKU" }
+   {
+    "level": 1,
+    "move": "METALCLAW"
+   },
+   {
+    "level": 12,
+    "move": "METALSOUND"
+   },
+   {
+    "level": 24,
+    "move": "JIBAKUMINOR"
+   },
+   {
+    "level": 36,
+    "move": "IRONHEAD"
+   },
+   {
+    "level": 42,
+    "move": "JIBAKUSEAL"
+   },
+   {
+    "level": 48,
+    "move": "FLASHCANNON"
+   },
+   {
+    "level": 50,
+    "move": "JIBAKU"
+   }
   ],
   "height": 0.5,
   "weight": 45.5,
@@ -284,30 +599,65 @@
   "category": "Espírito",
   "entry": "Espírito do Mundo da Forja. Foi martelado até virar esfera perfeita; a cada pacto recusado ele volta sozinho para a bigorna.",
   "evolutions": [],
-  "pactBadge": "GC_09",
+  "pactMark": "GC_09",
   "world": "Mundo da Forja"
  },
  {
-  "id": 789,
+  "id": 909,
   "name": "Fantac",
   "internalName": "FANTAC",
   "type1": "GHOST",
   "type2": null,
-  "stats": { "hp": 100, "atk": 95, "def": 95, "spe": 125, "spa": 140, "spd": 115 },
+  "stats": {
+   "hp": 100,
+   "atk": 95,
+   "def": 95,
+   "spe": 125,
+   "spa": 140,
+   "spd": 115
+  },
   "genderRate": "Genderless",
   "growthRate": "Slow",
   "baseExp": 255,
-  "evYield": { "hp": 0, "atk": 0, "def": 0, "spe": 0, "spa": 3, "spd": 0 },
-  "catchRate": 3,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 3,
+   "spd": 0
+  },
+  "catchRate": 5,
   "abilities": [],
   "levelMoves": [
-   { "level": 1, "move": "LICK" },
-   { "level": 12, "move": "HEX" },
-   { "level": 24, "move": "JIBAKUMINOR" },
-   { "level": 36, "move": "SHADOWBALL" },
-   { "level": 48, "move": "JIBAKUSEAL" },
-   { "level": 60, "move": "JIBAKUCHAIN" },
-   { "level": 70, "move": "JIBAKU" }
+   {
+    "level": 1,
+    "move": "LICK"
+   },
+   {
+    "level": 12,
+    "move": "HEX"
+   },
+   {
+    "level": 24,
+    "move": "JIBAKUMINOR"
+   },
+   {
+    "level": 36,
+    "move": "SHADOWBALL"
+   },
+   {
+    "level": 42,
+    "move": "JIBAKUSEAL"
+   },
+   {
+    "level": 48,
+    "move": "JIBAKUCHAIN"
+   },
+   {
+    "level": 50,
+    "move": "JIBAKU"
+   }
   ],
   "height": 0.4,
   "weight": 0.9,
@@ -316,30 +666,65 @@
   "category": "Espírito",
   "entry": "Espírito do Mundo do Véu. É o único dos doze que já explodiu antes: voltou porque o pacto anterior ficou sem terminar.",
   "evolutions": [],
-  "pactBadge": "GC_10",
+  "pactMark": "GC_10",
   "world": "Mundo do Véu"
  },
  {
-  "id": 790,
+  "id": 910,
   "name": "Umbrac",
   "internalName": "UMBRAC",
   "type1": "DARK",
   "type2": null,
-  "stats": { "hp": 105, "atk": 140, "def": 100, "spe": 120, "spa": 110, "spd": 95 },
+  "stats": {
+   "hp": 105,
+   "atk": 140,
+   "def": 100,
+   "spe": 120,
+   "spa": 110,
+   "spd": 95
+  },
   "genderRate": "Genderless",
   "growthRate": "Slow",
   "baseExp": 255,
-  "evYield": { "hp": 0, "atk": 3, "def": 0, "spe": 0, "spa": 0, "spd": 0 },
-  "catchRate": 3,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 5,
   "abilities": [],
   "levelMoves": [
-   { "level": 1, "move": "BITE" },
-   { "level": 12, "move": "SUCKERPUNCH" },
-   { "level": 24, "move": "JIBAKUMINOR" },
-   { "level": 36, "move": "CRUNCH" },
-   { "level": 48, "move": "JIBAKUSEAL" },
-   { "level": 60, "move": "DARKPULSE" },
-   { "level": 70, "move": "JIBAKU" }
+   {
+    "level": 1,
+    "move": "BITE"
+   },
+   {
+    "level": 12,
+    "move": "SUCKERPUNCH"
+   },
+   {
+    "level": 24,
+    "move": "JIBAKUMINOR"
+   },
+   {
+    "level": 36,
+    "move": "CRUNCH"
+   },
+   {
+    "level": 42,
+    "move": "JIBAKUSEAL"
+   },
+   {
+    "level": 48,
+    "move": "DARKPULSE"
+   },
+   {
+    "level": 50,
+    "move": "JIBAKU"
+   }
   ],
   "height": 0.4,
   "weight": 5.4,
@@ -348,30 +733,65 @@
   "category": "Espírito",
   "entry": "Espírito do Mundo da Sombra. Guarda o mundo que ninguém quis; aceita pacto só de quem entra lá sem lanterna.",
   "evolutions": [],
-  "pactBadge": "GC_11",
+  "pactMark": "GC_11",
   "world": "Mundo da Sombra"
  },
  {
-  "id": 791,
+  "id": 911,
   "name": "Dragac",
   "internalName": "DRAGAC",
   "type1": "DRAGON",
   "type2": null,
-  "stats": { "hp": 130, "atk": 140, "def": 120, "spe": 110, "spa": 140, "spd": 120 },
+  "stats": {
+   "hp": 130,
+   "atk": 140,
+   "def": 120,
+   "spe": 110,
+   "spa": 140,
+   "spd": 120
+  },
   "genderRate": "Genderless",
   "growthRate": "Slow",
   "baseExp": 270,
-  "evYield": { "hp": 0, "atk": 0, "def": 0, "spe": 0, "spa": 3, "spd": 0 },
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 3,
+   "spd": 0
+  },
   "catchRate": 3,
   "abilities": [],
   "levelMoves": [
-   { "level": 1, "move": "DRAGONBREATH" },
-   { "level": 12, "move": "DRAGONCLAW" },
-   { "level": 24, "move": "JIBAKUMINOR" },
-   { "level": 36, "move": "DRAGONPULSE" },
-   { "level": 48, "move": "JIBAKUSEAL" },
-   { "level": 60, "move": "JIBAKUCHAIN" },
-   { "level": 70, "move": "JIBAKU" }
+   {
+    "level": 1,
+    "move": "DRAGONBREATH"
+   },
+   {
+    "level": 12,
+    "move": "DRAGONCLAW"
+   },
+   {
+    "level": 24,
+    "move": "JIBAKUMINOR"
+   },
+   {
+    "level": 36,
+    "move": "DRAGONPULSE"
+   },
+   {
+    "level": 42,
+    "move": "JIBAKUSEAL"
+   },
+   {
+    "level": 48,
+    "move": "JIBAKUCHAIN"
+   },
+   {
+    "level": 50,
+    "move": "JIBAKU"
+   }
   ],
   "height": 0.7,
   "weight": 18.8,
@@ -380,7 +800,512 @@
   "category": "Espírito",
   "entry": "Espírito do Mundo Zero, onde os doze mundos se encostam. Só desperta quando os outros onze pactos já foram firmados.",
   "evolutions": [],
-  "pactBadge": "GC_12",
-  "world": "Mundo Zero"
+  "pactMark": "GC_12",
+  "world": "Mundo Zero",
+  "requiresAllPacts": true
+ },
+ {
+  "id": 912,
+  "name": "Greymon Turvo",
+  "internalName": "TRBGREYMON",
+  "type1": "FIRE",
+  "type2": "DARK",
+  "stats": {
+   "hp": 95,
+   "atk": 113,
+   "def": 83,
+   "spe": 77,
+   "spa": 95,
+   "spd": 77
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Medium",
+  "baseExp": 190,
+  "evYield": {
+   "hp": 0,
+   "atk": 2,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 45,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "EMBER"
+   },
+   {
+    "level": 14,
+    "move": "BITE"
+   },
+   {
+    "level": 26,
+    "move": "FLAMEWHEEL"
+   },
+   {
+    "level": 34,
+    "move": "CRUNCH"
+   },
+   {
+    "level": 40,
+    "move": "FLAMETHROWER"
+   },
+   {
+    "level": 44,
+    "move": "FIREBLAST"
+   }
+  ],
+  "height": 2.6,
+  "weight": 166.8,
+  "color": "Red",
+  "habitat": "Cave",
+  "category": "Troublemonster",
+  "entry": "Greymon arrastado por uma fenda e devolvido errado. A chama saiu preta e ele não reconhece mais ninguém.",
+  "evolutions": [],
+  "troublemonster": true,
+  "corruptedFrom": "GREYMON"
+ },
+ {
+  "id": 913,
+  "name": "Garurumon Turvo",
+  "internalName": "TRBGARURUMON",
+  "type1": "ICE",
+  "type2": "GHOST",
+  "stats": {
+   "hp": 86,
+   "atk": 92,
+   "def": 80,
+   "spe": 109,
+   "spa": 98,
+   "spd": 75
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Medium",
+  "baseExp": 190,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 2,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 45,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "ICESHARD"
+   },
+   {
+    "level": 14,
+    "move": "LICK"
+   },
+   {
+    "level": 26,
+    "move": "ICEFANG"
+   },
+   {
+    "level": 34,
+    "move": "SHADOWCLAW"
+   },
+   {
+    "level": 40,
+    "move": "ICEBEAM"
+   },
+   {
+    "level": 44,
+    "move": "SHADOWBALL"
+   }
+  ],
+  "height": 2.5,
+  "weight": 149.5,
+  "color": "White",
+  "habitat": "Cave",
+  "category": "Troublemonster",
+  "entry": "Corre em bando com sombras que não são dele. Uiva no altar até alguém responder — e ninguém responde.",
+  "evolutions": [],
+  "troublemonster": true,
+  "corruptedFrom": "GARURUMON"
+ },
+ {
+  "id": 914,
+  "name": "Metabee Turvo",
+  "internalName": "TRBMETABEE",
+  "type1": "STEEL",
+  "type2": "POISON",
+  "stats": {
+   "hp": 101,
+   "atk": 88,
+   "def": 81,
+   "spe": 101,
+   "spa": 88,
+   "spd": 81
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Medium",
+  "baseExp": 190,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 2,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 45,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "METALCLAW"
+   },
+   {
+    "level": 14,
+    "move": "POISONSTING"
+   },
+   {
+    "level": 26,
+    "move": "IRONHEAD"
+   },
+   {
+    "level": 34,
+    "move": "POISONJAB"
+   },
+   {
+    "level": 40,
+    "move": "FLASHCANNON"
+   },
+   {
+    "level": 44,
+    "move": "GUNKSHOT"
+   }
+  ],
+  "height": 1.3,
+  "weight": 59.8,
+  "color": "Yellow",
+  "habitat": "Cave",
+  "category": "Troublemonster",
+  "entry": "A medalha vazou. O casco enferrujou de dentro para fora e ele dispara em quem quer que se mova.",
+  "evolutions": [],
+  "troublemonster": true,
+  "corruptedFrom": "METABEE"
+ },
+ {
+  "id": 915,
+  "name": "Suezo Turvo",
+  "internalName": "TRBSUEZO",
+  "type1": "PSYCHIC",
+  "type2": "DARK",
+  "stats": {
+   "hp": 92,
+   "atk": 86,
+   "def": 66,
+   "spe": 79,
+   "spa": 125,
+   "spd": 92
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Medium",
+  "baseExp": 190,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 2,
+   "spd": 0
+  },
+  "catchRate": 45,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "CONFUSION"
+   },
+   {
+    "level": 14,
+    "move": "BITE"
+   },
+   {
+    "level": 26,
+    "move": "PSYBEAM"
+   },
+   {
+    "level": 34,
+    "move": "CRUNCH"
+   },
+   {
+    "level": 40,
+    "move": "PSYCHIC"
+   },
+   {
+    "level": 44,
+    "move": "DARKPULSE"
+   }
+  ],
+  "height": 1.2,
+  "weight": 36.8,
+  "color": "Yellow",
+  "habitat": "Cave",
+  "category": "Troublemonster",
+  "entry": "O olho único ficou fosco e agora enxerga só o pior de quem olha de volta.",
+  "evolutions": [],
+  "troublemonster": true,
+  "corruptedFrom": "SUEZO"
+ },
+ {
+  "id": 916,
+  "name": "Golem Turvo",
+  "internalName": "TRBGOLEM",
+  "type1": "ROCK",
+  "type2": "GHOST",
+  "stats": {
+   "hp": 119,
+   "atk": 119,
+   "def": 140,
+   "spe": 27,
+   "spa": 49,
+   "spd": 86
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Medium",
+  "baseExp": 190,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 2,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 45,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "ROCKTHROW"
+   },
+   {
+    "level": 14,
+    "move": "ASTONISH"
+   },
+   {
+    "level": 26,
+    "move": "ROCKSLIDE"
+   },
+   {
+    "level": 34,
+    "move": "SHADOWCLAW"
+   },
+   {
+    "level": 40,
+    "move": "STONEEDGE"
+   },
+   {
+    "level": 44,
+    "move": "SHADOWBALL"
+   }
+  ],
+  "height": 3.7,
+  "weight": 713.0,
+  "color": "Brown",
+  "habitat": "Cave",
+  "category": "Troublemonster",
+  "entry": "Pedra de outro mundo com um vazio dentro. Guarda a câmara errada há tempo demais para lembrar do quê.",
+  "evolutions": [],
+  "troublemonster": true,
+  "corruptedFrom": "GOLEM_MRA"
+ },
+ {
+  "id": 917,
+  "name": "Gengar Turvo",
+  "internalName": "TRBGENGAR",
+  "type1": "GHOST",
+  "type2": "DARK",
+  "stats": {
+   "hp": 65,
+   "atk": 70,
+   "def": 65,
+   "spe": 119,
+   "spa": 140,
+   "spd": 81
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Medium",
+  "baseExp": 190,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 2,
+   "spd": 0
+  },
+  "catchRate": 45,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "LICK"
+   },
+   {
+    "level": 14,
+    "move": "CONFUSERAY"
+   },
+   {
+    "level": 26,
+    "move": "HEX"
+   },
+   {
+    "level": 34,
+    "move": "SUCKERPUNCH"
+   },
+   {
+    "level": 40,
+    "move": "SHADOWBALL"
+   },
+   {
+    "level": 44,
+    "move": "DARKPULSE"
+   }
+  ],
+  "height": 1.7,
+  "weight": 46.6,
+  "color": "Purple",
+  "habitat": "Cave",
+  "category": "Troublemonster",
+  "entry": "Perdeu a piada e ficou só o riso. Copia a sombra da Grande Criança que passou por último.",
+  "evolutions": [],
+  "troublemonster": true,
+  "corruptedFrom": "GENGAR"
+ },
+ {
+  "id": 918,
+  "name": "Gyarados Turvo",
+  "internalName": "TRBGYARADOS",
+  "type1": "WATER",
+  "type2": "POISON",
+  "stats": {
+   "hp": 106,
+   "atk": 139,
+   "def": 88,
+   "spe": 90,
+   "spa": 67,
+   "spd": 111
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Medium",
+  "baseExp": 235,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 45,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "WATERGUN"
+   },
+   {
+    "level": 14,
+    "move": "ACID"
+   },
+   {
+    "level": 26,
+    "move": "AQUATAIL"
+   },
+   {
+    "level": 34,
+    "move": "POISONJAB"
+   },
+   {
+    "level": 40,
+    "move": "WATERFALL"
+   },
+   {
+    "level": 44,
+    "move": "SLUDGEBOMB"
+   }
+  ],
+  "height": 7.2,
+  "weight": 270.2,
+  "color": "Blue",
+  "habitat": "Cave",
+  "category": "Troublemonster",
+  "entry": "Subiu pela fenda da Maré e trouxe a água apodrecida junto. Chefe recorrente das câmaras baixas.",
+  "evolutions": [],
+  "troublemonster": true,
+  "corruptedFrom": "GYARADOS"
+ },
+ {
+  "id": 919,
+  "name": "Dragon Turvo",
+  "internalName": "TRBDRAGON",
+  "type1": "DRAGON",
+  "type2": "DARK",
+  "stats": {
+   "hp": 95,
+   "atk": 116,
+   "def": 89,
+   "spe": 95,
+   "spa": 116,
+   "spd": 89
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Medium",
+  "baseExp": 235,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 45,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "DRAGONBREATH"
+   },
+   {
+    "level": 14,
+    "move": "BITE"
+   },
+   {
+    "level": 26,
+    "move": "DRAGONCLAW"
+   },
+   {
+    "level": 34,
+    "move": "CRUNCH"
+   },
+   {
+    "level": 40,
+    "move": "DRAGONPULSE"
+   },
+   {
+    "level": 44,
+    "move": "DARKPULSE"
+   }
+  ],
+  "height": 4.6,
+  "weight": 391.0,
+  "color": "Black",
+  "habitat": "Cave",
+  "category": "Troublemonster",
+  "entry": "O maior dos Troublemonsters. Enrosca-se no altar do Mundo Zero e cospe o escuro que sobrou da fusão.",
+  "evolutions": [],
+  "troublemonster": true,
+  "corruptedFrom": "DRAGON"
  }
 ]

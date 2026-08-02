@@ -1,5 +1,10 @@
 # 02 — Franquias: identidade mecânica
 
+> **Status:** os 5 sistemas estão implementados. Detalhes técnicos, faixas de ID e
+> desvios de implementação em [06-arquitetura-franquias.md](06-arquitetura-franquias.md).
+> Elenco cadastrado: 649 Pokémon (Kanto recortado em `data/dex/KANTO.json`),
+> 101 Digimon de *Adventure*, 10 Medabots + 40 peças, 13 Monster Rancher, 20 Bucky.
+
 Regra: **reusar o engine existente** (batalha 1v1, fórmula de dano/captura, evolução por nível, tabela de tipos data-driven) e permitir **no máximo UM sistema novo por franquia**.
 
 ## Resumo executivo

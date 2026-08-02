@@ -1,5 +1,11 @@
 {
-  "order": ["PKM", "DGM", "MDB", "MRA", "BKY"],
+  "order": [
+    "PKM",
+    "DGM",
+    "MDB",
+    "MRA",
+    "BKY"
+  ],
   "list": {
     "PKM": {
       "id": "PKM",
@@ -20,10 +26,14 @@
       "name": "Digimon",
       "dimension": "Dimensão Digital",
       "speciesFrom": 650,
-      "speciesTo": 699,
+      "speciesTo": 799,
       "capture": {
         "inField": true,
-        "items": ["DIGILINK", "DIGILINKPLUS", "DIGILINKOMEGA"],
+        "items": [
+          "DIGILINK",
+          "DIGILINKPLUS",
+          "DIGILINKOMEGA"
+        ],
         "verb": "conectado",
         "throwText": "Você ativou o {item}!",
         "successText": "Conexão estabelecida! {target} virou seu parceiro!"
@@ -33,11 +43,14 @@
       "id": "MDB",
       "name": "Medabots",
       "dimension": "Dimensão Medabots",
-      "speciesFrom": 700,
-      "speciesTo": 739,
+      "speciesFrom": 800,
+      "speciesTo": 849,
       "capture": {
         "inField": true,
-        "items": ["MEDALCASE", "MEDALCASEPRO"],
+        "items": [
+          "MEDALCASE",
+          "MEDALCASEPRO"
+        ],
         "maxHpRate": 0.34,
         "verb": "recuperada",
         "throwText": "Você abriu o {item}!",
@@ -49,8 +62,8 @@
       "id": "MRA",
       "name": "Monster Rancher",
       "dimension": "Dimensão Fazenda",
-      "speciesFrom": 740,
-      "speciesTo": 779,
+      "speciesFrom": 850,
+      "speciesTo": 899,
       "capture": {
         "inField": false,
         "items": [],
@@ -62,11 +75,13 @@
       "id": "BKY",
       "name": "Bucky",
       "dimension": "Dimensão dos Doze Mundos",
-      "speciesFrom": 780,
-      "speciesTo": 791,
+      "speciesFrom": 900,
+      "speciesTo": 919,
       "capture": {
         "inField": true,
-        "items": ["GCEMBLEM"],
+        "items": [
+          "GCEMBLEM"
+        ],
         "requiresBadge": true,
         "verb": "pactuado",
         "throwText": "Você ergueu o {item}!",

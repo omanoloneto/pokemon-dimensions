@@ -50,7 +50,7 @@ PKM.Battle = PKM.Battle || {};
 
         const stab = attacker.types().includes(md.type) ? 1.5 : 1.0;
         const eff = PKM.Core.typeMultiplier(md.type, defender.types());
-        const crit = opts.forceCrit || Math.randomInt(24) === 0;
+        const crit = opts.forceCrit !== undefined ? !!opts.forceCrit : Math.randomInt(24) === 0;
         const critMod = crit ? 1.5 : 1.0;
         const rand = opts.fixedRand !== undefined ? opts.fixedRand : (85 + Math.randomInt(16)) / 100;
         const burn = (physical && attacker.status === "BRN") ? 0.5 : 1.0;  // queimadura reduz ataque físico
@@ -679,9 +679,10 @@ PKM.Battle = PKM.Battle || {};
         const throwText = PKM.Franchise
             ? PKM.Franchise.throwText(this._enemy, ballName)
             : "Você jogou uma " + ((PKM.Core.item(ballName) || {}).name || "Poké Ball") + "!";
+        const spend = consume && (!PKM.Items || !PKM.Items.isConsumedOnThrow || PKM.Items.isConsumedOnThrow(ballName));
         const steps = [{
             text: throwText,
-            fn: () => { if (consume && $gameParty.pkmLoseItem) $gameParty.pkmLoseItem(ballName, 1); }
+            fn: () => { if (spend && $gameParty.pkmLoseItem) $gameParty.pkmLoseItem(ballName, 1); }
         }];
         const shakes = res.success ? 3 : res.shakes;
         for (let i = 0; i < shakes; i++) steps.push({ text: "…" });

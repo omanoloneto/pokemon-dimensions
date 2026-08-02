@@ -268,9 +268,9 @@ console.log("== Multi-franquia (core) ==");
     const F = ctx.PKM.Franchise;
     eq(F.ofSpecies(1).id, "PKM", "id 1 pertence a Pokémon");
     eq(F.ofSpecies(650).id, "DGM", "id 650 pertence a Digimon");
-    eq(F.ofSpecies(700).id, "MDB", "id 700 pertence a Medabots");
-    eq(F.ofSpecies(740).id, "MRA", "id 740 pertence a Monster Rancher");
-    eq(F.ofSpecies(780).id, "BKY", "id 780 pertence a Bucky");
+    eq(F.ofSpecies(800).id, "MDB", "id 700 pertence a Medabots");
+    eq(F.ofSpecies(850).id, "MRA", "id 740 pertence a Monster Rancher");
+    eq(F.ofSpecies(900).id, "BKY", "id 780 pertence a Bucky");
     ok(F.all().length === 5, "5 franquias registradas");
 
     // itens de captura são exclusivos da franquia dona
@@ -281,10 +281,10 @@ console.log("== Multi-franquia (core) ==");
     ok(!F.itemWorksOn("DIGILINK", mockOf(1)), "Digi-Link não funciona em Pokémon");
 
     // Monster Rancher nunca é capturável em campo
-    eq(F.captureRule(mockOf(740), null).allowed, false, "Monster Rancher bloqueia captura em campo");
+    eq(F.captureRule(mockOf(850), null).allowed, false, "Monster Rancher bloqueia captura em campo");
     // Medabot exige HP baixo
-    eq(F.captureRule(mockOf(700), "MEDALCASE").allowed, false, "Medabot com HP cheio recusa o estojo");
-    const hurt = { speciesId: 700, name: "Alvo", species: () => null, hpRate: () => 0.2 };
+    eq(F.captureRule(mockOf(800), "MEDALCASE").allowed, false, "Medabot com HP cheio recusa o estojo");
+    const hurt = { speciesId: 800, name: "Alvo", species: () => null, hpRate: () => 0.2 };
     eq(F.captureRule(hurt, "MEDALCASE").allowed, true, "Medabot danificado aceita o estojo");
 
     // itens extras entraram no banco de itens

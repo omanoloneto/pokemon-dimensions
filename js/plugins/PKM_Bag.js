@@ -71,7 +71,17 @@ var PKM = PKM || {};
     const BALL_BONUS = { POKEBALL: 1, GREATBALL: 1.5, ULTRABALL: 2, MASTERBALL: 255, PREMIERBALL: 1 };
 
     PKM.Items = PKM.Items || {};
-    PKM.Items.ballBonus = (name) => BALL_BONUS[name] !== undefined ? BALL_BONUS[name] : 1;
+    // itens de captura das outras dimensões declaram "catchBonus" no próprio dado
+    PKM.Items.ballBonus = function(name) {
+        if (BALL_BONUS[name] !== undefined) return BALL_BONUS[name];
+        const it = PKM.Core.item(name);
+        return it && it.catchBonus !== undefined ? it.catchBonus : 1;
+    };
+    // itens-chave de captura (ex.: Emblema G.C.) não são gastos no arremesso
+    PKM.Items.isConsumedOnThrow = function(name) {
+        const it = PKM.Core.item(name);
+        return !(it && it.keepOnUse);
+    };
     PKM.Items.isBall = (name) => { const it = PKM.Core.item(name); return it && it.pocket === 3; };
     PKM.Items.isMedicine = (name) => { const it = PKM.Core.item(name); return it && it.pocket === 2; };
 

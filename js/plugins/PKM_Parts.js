@@ -16,7 +16,7 @@
  * @help PKM_Parts.js
  *
  * A Medalha é o monstro: ela carrega nível e EXP. O corpo são 4 Medapeças
- * trocáveis que somam stats e substituem os golpes disponíveis em batalha.
+ * trocáveis que somam stats e ACRESCENTAM golpes ao repertório da Medalha.
  * Vencer uma Robattle contra um Medabot dropa 1 peça do loadout dele.
  *
  * DESVIO CONSCIENTE DO DESIGN (docs/02-franquias.md)
@@ -29,12 +29,21 @@
  * Catálogo: data/Parts.json (array). Slots válidos: head, rArm, lArm, legs.
  * "legs" dá bônus de velocidade e nunca traz golpe.
  *
+ * Todo Medabot nasce montado com as peças do próprio modelo (loadout padrão),
+ * então selvagens e equipes de treinador já entram na arena com corpo e drop.
+ *
  * API
  *   PKM.Parts.equip(pokemon, partId)   -> {ok, message, replaced}
  *   PKM.Parts.unequip(pokemon, slot)   -> partId removido ou null
  *   PKM.Parts.equipped(pokemon)        -> {head, rArm, lArm, legs} (ids)
  *   PKM.Parts.loadout(pokemon)         -> {head, rArm, lArm, legs} (dados)
- *   PKM.Parts.statBonus(pokemon, key)  -> soma dos bônus das peças
+ *   PKM.Parts.defaultLoadout(pokemon)  -> {head, rArm, lArm, legs} (ids, puro)
+ *   PKM.Parts.applyDefaultLoadout(p)   -> monta o padrão se ainda não tem peça
+ *   PKM.Parts.rawStatBonus(p, key)     -> soma crua do catálogo (ponto de base)
+ *   PKM.Parts.statBonus(pokemon, key)  -> bônus já escalado pelo nível
+ *   PKM.Parts.partMoves(pokemon)       -> ids de golpe oferecidos pelas peças
+ *   PKM.Parts.grantedMoves(pokemon)    -> ids que as peças de fato ensinaram
+ *   PKM.Parts.syncMoves(pokemon)       -> concilia golpes de peça e da Medalha
  *   PKM.Parts.rollDrop(defeated, rng)  -> partId sorteado ou null (puro)
  *   PKM.Parts.victoryDrop(winner, defeated, rng) -> [mensagens]
  *
@@ -147,6 +156,7 @@ PKM.Parts = PKM.Parts || {};
         }
         const replaced = state[part.slot] || null;
         state[part.slot] = partId;
+        PKM.Parts.syncMoves(pokemon);
         clampHp(pokemon);
         return { ok: true, message: pokemon.name + " montou " + part.name + ".", replaced };
     };
@@ -157,14 +167,48 @@ PKM.Parts = PKM.Parts || {};
         if (!state || !state[slot]) return null;
         const removed = state[slot];
         state[slot] = null;
+        PKM.Parts.syncMoves(pokemon);
         clampHp(pokemon);
         return removed;
     };
 
     //=========================================================================
+    // Loadout padrão: as 4 peças do próprio modelo
+    //=========================================================================
+    PKM.Parts.defaultLoadout = function(pokemon) {
+        const out = {};
+        for (const slot of SLOTS) out[slot] = null;
+        if (!PKM.Parts.isMedabot(pokemon)) return out;
+        const sp = pokemon.species && pokemon.species();
+        if (!sp || !sp.internalName) return out;
+        for (const part of PKM.Parts.byModel(sp.internalName)) {
+            if (SLOTS.includes(part.slot) && !out[part.slot]) out[part.slot] = part.id;
+        }
+        return out;
+    };
+
+    // Sem isto o inimigo criado por PKM_Encounters/PKM_Trainers nasceria sem peça
+    // alguma: stats de Medalha nua e drop de Robattle impossível.
+    PKM.Parts.applyDefaultLoadout = function(pokemon) {
+        if (!PKM.Parts.isMedabot(pokemon) || slotState(pokemon, false)) return false;
+        const ids = PKM.Parts.defaultLoadout(pokemon);
+        if (!SLOTS.some(slot => ids[slot])) return false;
+        const state = slotState(pokemon, true);
+        for (const slot of SLOTS) state[slot] = ids[slot];
+        PKM.Parts.syncMoves(pokemon);
+        return true;
+    };
+
+    const _Game_Pokemon_initialize = Game_Pokemon.prototype.initialize;
+    Game_Pokemon.prototype.initialize = function() {
+        _Game_Pokemon_initialize.apply(this, arguments);
+        if (PKM.Parts.applyDefaultLoadout(this)) this.hp = this.maxHp;
+    };
+
+    //=========================================================================
     // Stats: alias que soma os bônus das peças
     //=========================================================================
-    PKM.Parts.statBonus = function(pokemon, key) {
+    PKM.Parts.rawStatBonus = function(pokemon, key) {
         const state = slotState(pokemon, false);
         if (!state) return 0;
         let sum = 0;
@@ -173,6 +217,16 @@ PKM.Parts = PKM.Parts || {};
             if (part && part.stats && part.stats[key]) sum += part.stats[key];
         }
         return sum;
+    };
+
+    // A peça vale como ponto de stat BASE e escala com o nível igual ao resto do
+    // jogo: o bônus plano antigo valia +40% no nv30 e só +25% no nv50, ou seja, a
+    // franquia enfraquecia sozinha ao longo da campanha.
+    PKM.Parts.statBonus = function(pokemon, key) {
+        const raw = PKM.Parts.rawStatBonus(pokemon, key);
+        if (!raw) return 0;
+        const level = (pokemon && pokemon.level) || 1;
+        return Math.trunc(2 * raw * level / 100);
     };
 
     const _Game_Pokemon_stat = Game_Pokemon.prototype.stat;
@@ -185,39 +239,101 @@ PKM.Parts = PKM.Parts || {};
     //=========================================================================
     // Golpes das peças
     //=========================================================================
-    // A batalha lê pokemon.moves; em vez de escrever dentro de _moves (destrutivo,
-    // e o monstro perderia os golpes ao desmontar), o getter passa a devolver os
-    // golpes das peças e cai de volta na lista própria do monstro quando não há peça.
+    // As peças SOMAM golpes ao repertório da Medalha, nos slots livres do teto de
+    // 4 do motor: pokemon.moves continua sendo a lista real do monstro, então
+    // learnMove/knowsMove/replaceMove (e a mensagem de "aprendeu!") seguem válidos.
     PKM.Parts.partMoves = function(pokemon) {
         const state = slotState(pokemon, false);
         if (!state) return [];
-        const cache = pokemon._pkmPartMoves || (pokemon._pkmPartMoves = {});
         const out = [];
         for (const slot of SLOTS) {
             const part = state[slot] && catalog()[state[slot]];
             const moveId = part && part.move;
-            if (!moveId || out.some(m => m.id === moveId)) continue;
-            const data = PKM.Core.move(moveId);
-            if (!data) continue;
-            if (!cache[moveId]) cache[moveId] = { id: moveId, pp: data.pp, ppMax: data.pp };
-            out.push(cache[moveId]);
+            if (moveId && !out.includes(moveId) && PKM.Core.move(moveId)) out.push(moveId);
         }
         return out;
     };
 
-    const _movesDescriptor = Object.getOwnPropertyDescriptor(Game_Pokemon.prototype, "moves");
-    Object.defineProperty(Game_Pokemon.prototype, "moves", {
-        get() {
-            const fromParts = PKM.Parts.partMoves(this);
-            return fromParts.length ? fromParts : _movesDescriptor.get.call(this);
-        },
-        configurable: true
-    });
+    function grantedList(pokemon) {
+        if (!pokemon._pkmGrantedMoves) pokemon._pkmGrantedMoves = [];
+        return pokemon._pkmGrantedMoves;
+    }
 
-    const _Game_Pokemon_healFully = Game_Pokemon.prototype.healFully;
-    Game_Pokemon.prototype.healFully = function() {
-        _Game_Pokemon_healFully.call(this);
-        for (const move of PKM.Parts.partMoves(this)) move.pp = move.ppMax;
+    PKM.Parts.grantedMoves = function(pokemon) {
+        return pokemon && pokemon._pkmGrantedMoves ? pokemon._pkmGrantedMoves.slice() : [];
+    };
+
+    // golpe que a curva de nível da Medalha já ensinaria sozinha
+    function isNaturalMove(pokemon, moveId) {
+        const sp = pokemon.species();
+        return ((sp && sp.levelMoves) || []).some(lm => lm.move === moveId && lm.level <= pokemon.level);
+    }
+
+    // desmontar não pode apagar golpe que a Medalha já conquistou por nível:
+    // não há reaprendiz de golpes no port, a perda seria permanente.
+    function forgetMove(pokemon, moveId) {
+        if (isNaturalMove(pokemon, moveId)) return false;
+        const list = pokemon.moves;
+        const idx = list.findIndex(m => m.id === moveId);
+        if (idx >= 0) list.splice(idx, 1);
+        return true;
+    }
+
+    // golpes da Medalha deslocados por uma peça: voltam quando a peça sai
+    function benchList(pokemon) {
+        if (!pokemon._pkmBenchedMoves) pokemon._pkmBenchedMoves = [];
+        return pokemon._pkmBenchedMoves;
+    }
+    PKM.Parts.benchedMoves = function(pokemon) {
+        return pokemon && pokemon._pkmBenchedMoves ? pokemon._pkmBenchedMoves.slice() : [];
+    };
+
+    // devolve os ids recém-ensinados pelas peças
+    PKM.Parts.syncMoves = function(pokemon) {
+        if (!PKM.Parts.isMedabot(pokemon)) return [];
+        const offered = PKM.Parts.partMoves(pokemon);
+        const granted = grantedList(pokemon);
+        const benched = benchList(pokemon);
+
+        for (let i = granted.length - 1; i >= 0; i--) {
+            if (offered.includes(granted[i])) continue;
+            forgetMove(pokemon, granted[i]);
+            granted.splice(i, 1);
+        }
+        while (benched.length && pokemon.moves.length < 4) {
+            const moveId = benched.shift();
+            if (!pokemon.knowsMove(moveId)) pokemon.learnMove(moveId);
+        }
+        const added = [];
+        for (const moveId of offered) {
+            if (pokemon.knowsMove(moveId)) {
+                if (!granted.includes(moveId)) granted.push(moveId);
+                continue;
+            }
+            if (pokemon.learnMove(moveId) === "learned") {
+                granted.push(moveId);
+                added.push(moveId);
+                continue;
+            }
+            // A peça é o que define um Medabot, então tem prioridade sobre o golpe de
+            // nível da Medalha — senão nenhum Medabot da faixa de D3 entraria em
+            // batalha com um único golpe de Medapeça. O deslocado vai para a bancada.
+            const victim = pokemon.moves.findIndex(m => !granted.includes(m.id) && !offered.includes(m.id));
+            if (victim < 0) break;
+            benched.unshift(pokemon.moves[victim].id);
+            pokemon.replaceMove(victim, moveId);
+            granted.push(moveId);
+            added.push(moveId);
+        }
+        return added;
+    };
+
+    // treinador com golpes fixos reescreve a lista inteira e apaga o que a peça deu
+    const _Game_Pokemon_setMoves = Game_Pokemon.prototype.setMoves;
+    Game_Pokemon.prototype.setMoves = function(ids) {
+        _Game_Pokemon_setMoves.call(this, ids);
+        if (this._pkmGrantedMoves) this._pkmGrantedMoves.length = 0;
+        PKM.Parts.syncMoves(this);
     };
 
     //=========================================================================

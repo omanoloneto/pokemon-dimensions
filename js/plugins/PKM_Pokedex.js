@@ -179,9 +179,17 @@ var PKM = PKM || {};
         this.resetFontSettings();
         ty += this.lineHeight();
 
-        // categoria (Kind)
-        if (seen && sp.category) {
-            this.drawText("Pokémon " + sp.category, tx, ty, tw, "left");
+        // categoria + selo da dimensão de origem (e atributo, nas franquias que usam)
+        if (seen) {
+            const fr = PKM.Franchise && PKM.Franchise.of({ speciesId: sp.id, species: () => sp });
+            const kind = sp.category ? (fr && fr.id !== "PKM" ? sp.category : "Pokémon " + sp.category) : "";
+            if (kind) this.drawText(kind, tx, ty, tw, "left");
+            const tag = [fr && fr.id !== "PKM" ? fr.name : null, sp.attribute].filter(Boolean).join(" · ");
+            if (tag) {
+                this.changeTextColor(ColorManager.systemColor());
+                this.drawText(tag, tx, ty, tw, "right");
+                this.changeTextColor(ColorManager.normalColor());
+            }
         }
         ty += this.lineHeight();
 

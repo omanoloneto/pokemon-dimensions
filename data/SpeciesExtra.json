@@ -4,7 +4,9 @@
   "name": "Botamon",
   "internalName": "BOTAMON",
   "type1": "NORMAL",
+  "type2": null,
   "attribute": "Data",
+  "stage": "Baby I",
   "stats": {
    "hp": 30,
    "atk": 20,
@@ -17,14 +19,14 @@
   "growthRate": "Parabolic",
   "baseExp": 40,
   "evYield": {
-   "hp": 1,
-   "atk": 0,
+   "hp": 0,
+   "atk": 1,
    "def": 0,
    "spe": 0,
    "spa": 0,
    "spd": 0
   },
-  "catchRate": 190,
+  "catchRate": 200,
   "abilities": [],
   "levelMoves": [
    {
@@ -41,12 +43,12 @@
   "color": "Black",
   "habitat": "Urban",
   "category": "Bolha",
-  "entry": "Estágio Fresh. Uma bolinha de dados recém-nascida, coberta de penugem preta. Cospe bolhas quando se assusta.",
+  "entry": "Bolinha de dados coberta de penugem preta. Cospe bolhas quando se assusta — que é quase sempre.",
   "evolutions": [
    {
     "into": "KOROMON",
     "method": "Level",
-    "param": "8"
+    "param": "6"
    }
   ],
   "franchise": "DGM"
@@ -56,27 +58,29 @@
   "name": "Koromon",
   "internalName": "KOROMON",
   "type1": "NORMAL",
+  "type2": null,
   "attribute": "Data",
+  "stage": "Baby II",
   "stats": {
-   "hp": 40,
-   "atk": 35,
+   "hp": 42,
+   "atk": 36,
    "def": 30,
-   "spe": 30,
+   "spe": 32,
    "spa": 30,
    "spd": 30
   },
   "genderRate": "Genderless",
   "growthRate": "Parabolic",
-  "baseExp": 60,
+  "baseExp": 62,
   "evYield": {
-   "hp": 1,
-   "atk": 0,
+   "hp": 0,
+   "atk": 1,
    "def": 0,
    "spe": 0,
    "spa": 0,
    "spd": 0
   },
-  "catchRate": 150,
+  "catchRate": 170,
   "abilities": [],
   "levelMoves": [
    {
@@ -88,11 +92,11 @@
     "move": "BUBBLE"
    },
    {
-    "level": 10,
+    "level": 8,
     "move": "QUICKATTACK"
    },
    {
-    "level": 13,
+    "level": 12,
     "move": "BITE"
    }
   ],
@@ -101,7 +105,7 @@
   "color": "Pink",
   "habitat": "Urban",
   "category": "Semente",
-  "entry": "Estágio In-Training. Salta em vez de andar e morde tudo o que se mexe. Já reconhece a voz do parceiro.",
+  "entry": "Salta em vez de andar e morde tudo o que se mexe. Já reconhece a voz do parceiro entre mil.",
   "evolutions": [
    {
     "into": "AGUMON",
@@ -116,7 +120,9 @@
   "name": "Agumon",
   "internalName": "AGUMON",
   "type1": "FIRE",
+  "type2": null,
   "attribute": "Vaccine",
+  "stage": "Rookie",
   "stats": {
    "hp": 55,
    "atk": 70,
@@ -136,7 +142,7 @@
    "spa": 0,
    "spd": 0
   },
-  "catchRate": 120,
+  "catchRate": 130,
   "abilities": [],
   "levelMoves": [
    {
@@ -177,7 +183,7 @@
   "color": "Yellow",
   "habitat": "Urban",
   "category": "Réptil",
-  "entry": "Estágio Rookie. Pequeno dinossauro de garras curtas e coragem desproporcional. O caminho que segue depende de quanto o parceiro o protege.",
+  "entry": "Dinossauro pequeno de coragem desproporcional. O caminho que segue depende de quanto o parceiro o protege.",
   "evolutions": [
    {
     "into": "GREYMON",
@@ -200,14 +206,16 @@
   "name": "Greymon",
   "internalName": "GREYMON",
   "type1": "FIRE",
+  "type2": null,
   "attribute": "Vaccine",
+  "stage": "Champion",
   "stats": {
    "hp": 80,
-   "atk": 95,
-   "def": 70,
-   "spe": 65,
-   "spa": 80,
-   "spd": 65
+   "atk": 98,
+   "def": 72,
+   "spe": 62,
+   "spa": 82,
+   "spd": 66
   },
   "genderRate": "Genderless",
   "growthRate": "Parabolic",
@@ -220,7 +228,7 @@
    "spa": 0,
    "spd": 0
   },
-  "catchRate": 45,
+  "catchRate": 70,
   "abilities": [],
   "levelMoves": [
    {
@@ -236,19 +244,19 @@
     "move": "NOVABLAST"
    },
    {
-    "level": 23,
+    "level": 24,
     "move": "HORNATTACK"
    },
    {
-    "level": 27,
+    "level": 28,
     "move": "CRUNCH"
    },
    {
-    "level": 31,
+    "level": 32,
     "move": "FIREFANG"
    },
    {
-    "level": 35,
+    "level": 36,
     "move": "FLAMETHROWER"
    },
    {
@@ -261,12 +269,12 @@
   "color": "Yellow",
   "habitat": "Urban",
   "category": "Dinossauro",
-  "entry": "Estágio Champion. O crânio blindado guarda um temperamento surpreendentemente leal — enquanto a confiança do parceiro se mantém.",
+  "entry": "O crânio blindado guarda uma lealdade surpreendente — enquanto a confiança do parceiro se mantém.",
   "evolutions": [
    {
     "into": "SKULLGREYMON",
     "method": "Level",
-    "param": "28",
+    "param": "30",
     "condition": {
      "friendshipBelow": 60
     }
@@ -274,38 +282,261 @@
    {
     "into": "METALGREYMON",
     "method": "Level",
-    "param": "28"
+    "param": "30"
    }
   ],
   "franchise": "DGM"
  },
  {
   "id": 654,
-  "name": "Tyrannomon",
-  "internalName": "TYRANNOMON",
+  "name": "MetalGreymon",
+  "internalName": "METALGREYMON",
   "type1": "FIRE",
-  "type2": "DRAGON",
-  "attribute": "Data",
+  "type2": "STEEL",
+  "attribute": "Vaccine",
+  "stage": "Ultimate",
   "stats": {
-   "hp": 90,
-   "atk": 100,
-   "def": 80,
-   "spe": 45,
-   "spa": 65,
-   "spd": 65
+   "hp": 95,
+   "atk": 118,
+   "def": 92,
+   "spe": 78,
+   "spa": 105,
+   "spd": 82
   },
   "genderRate": "Genderless",
   "growthRate": "Parabolic",
-  "baseExp": 155,
+  "baseExp": 200,
   "evYield": {
-   "hp": 1,
-   "atk": 1,
+   "hp": 0,
+   "atk": 3,
    "def": 0,
    "spe": 0,
    "spa": 0,
    "spd": 0
   },
-  "catchRate": 45,
+  "catchRate": 30,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "SCRATCH"
+   },
+   {
+    "level": 1,
+    "move": "METALCLAW"
+   },
+   {
+    "level": 30,
+    "move": "GIGABLASTER"
+   },
+   {
+    "level": 34,
+    "move": "FIREFANG"
+   },
+   {
+    "level": 38,
+    "move": "IRONHEAD"
+   },
+   {
+    "level": 42,
+    "move": "FLAMETHROWER"
+   },
+   {
+    "level": 46,
+    "move": "FLASHCANNON"
+   },
+   {
+    "level": 50,
+    "move": "FIREBLAST"
+   }
+  ],
+  "height": 4.2,
+  "weight": 210,
+  "color": "Red",
+  "habitat": "Urban",
+  "category": "Ciborgue",
+  "entry": "Meio dinossauro, meio metal. O peito abre e vira lançador de mísseis — e o rugido continua o mesmo de Agumon.",
+  "evolutions": [
+   {
+    "into": "WARGREYMON",
+    "method": "Level",
+    "param": "42",
+    "condition": {
+     "hasItem": "DIGILINKOMEGA"
+    }
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 655,
+  "name": "WarGreymon",
+  "internalName": "WARGREYMON",
+  "type1": "FIRE",
+  "type2": "DRAGON",
+  "attribute": "Vaccine",
+  "stage": "Mega",
+  "stats": {
+   "hp": 100,
+   "atk": 138,
+   "def": 100,
+   "spe": 108,
+   "spa": 118,
+   "spd": 95
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 255,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 8,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "SLASH"
+   },
+   {
+    "level": 1,
+    "move": "IRONDEFENSE"
+   },
+   {
+    "level": 42,
+    "move": "TERRAFORCE"
+   },
+   {
+    "level": 46,
+    "move": "GREATTORNADO"
+   },
+   {
+    "level": 50,
+    "move": "DRAGONCLAW"
+   },
+   {
+    "level": 55,
+    "move": "FIREBLAST"
+   },
+   {
+    "level": 60,
+    "move": "GIGAIMPACT"
+   }
+  ],
+  "height": 2.1,
+  "weight": 105,
+  "color": "Yellow",
+  "habitat": "Rare",
+  "category": "Guerreiro",
+  "entry": "A armadura de Chrome Digizoid não pesa: é a coragem do parceiro que a sustenta. Reúne a atmosfera inteira numa única esfera.",
+  "evolutions": [],
+  "franchise": "DGM"
+ },
+ {
+  "id": 656,
+  "name": "SkullGreymon",
+  "internalName": "SKULLGREYMON",
+  "type1": "GHOST",
+  "type2": "DRAGON",
+  "attribute": "Virus",
+  "stage": "Ultimate",
+  "stats": {
+   "hp": 92,
+   "atk": 130,
+   "def": 78,
+   "spe": 84,
+   "spa": 96,
+   "spd": 70
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 200,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 30,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "BITE"
+   },
+   {
+    "level": 1,
+    "move": "SCARYFACE"
+   },
+   {
+    "level": 30,
+    "move": "GROUNDZERO"
+   },
+   {
+    "level": 34,
+    "move": "SHADOWCLAW"
+   },
+   {
+    "level": 38,
+    "move": "CRUNCH"
+   },
+   {
+    "level": 42,
+    "move": "DRAGONCLAW"
+   },
+   {
+    "level": 46,
+    "move": "SHADOWBALL"
+   },
+   {
+    "level": 50,
+    "move": "OUTRAGE"
+   }
+  ],
+  "height": 4.5,
+  "weight": 180,
+  "color": "White",
+  "habitat": "Rare",
+  "category": "Esqueleto",
+  "entry": "O que sobra quando a digievolução é forçada por raiva. Não distingue inimigo de aliado — nem o próprio parceiro.",
+  "evolutions": [],
+  "lore": "Ramo escuro: beco sem saída canônico. A série nunca mostrou uma Mega para SkullGreymon — use a Digimemória para voltar a Greymon.",
+  "franchise": "DGM"
+ },
+ {
+  "id": 657,
+  "name": "Tyrannomon",
+  "internalName": "TYRANNOMON",
+  "type1": "FIRE",
+  "type2": "DRAGON",
+  "attribute": "Data",
+  "stage": "Champion",
+  "stats": {
+   "hp": 86,
+   "atk": 92,
+   "def": 76,
+   "spe": 58,
+   "spa": 74,
+   "spd": 68
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 155,
+  "evYield": {
+   "hp": 0,
+   "atk": 2,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 70,
   "abilities": [],
   "levelMoves": [
    {
@@ -326,7 +557,7 @@
    },
    {
     "level": 28,
-    "move": "ROCKSLIDE"
+    "move": "DRAGONBREATH"
    },
    {
     "level": 32,
@@ -338,36 +569,43 @@
    },
    {
     "level": 40,
-    "move": "FIREBLAST"
+    "move": "DRAGONCLAW"
    }
   ],
-  "height": 2.6,
-  "weight": 168,
+  "height": 3,
+  "weight": 190,
   "color": "Red",
   "habitat": "RoughTerrain",
   "category": "Dinossauro",
-  "entry": "Estágio Champion. Nasce do Rookie que aprendeu a lutar sozinho: mais bruto, mais resistente e sem paciência para ordens.",
-  "evolutions": [],
+  "entry": "Dinossauro vermelho de temperamento instável. Ronda a Ilha File em bando e ataca o que estiver por perto.",
+  "evolutions": [
+   {
+    "into": "METALTYRANNOMON",
+    "method": "Level",
+    "param": "30"
+   }
+  ],
   "franchise": "DGM"
  },
  {
-  "id": 655,
-  "name": "MetalGreymon",
-  "internalName": "METALGREYMON",
-  "type1": "FIRE",
-  "type2": "STEEL",
-  "attribute": "Vaccine",
+  "id": 658,
+  "name": "MetalTyrannomon",
+  "internalName": "METALTYRANNOMON",
+  "type1": "STEEL",
+  "type2": "DRAGON",
+  "attribute": "Virus",
+  "stage": "Ultimate",
   "stats": {
-   "hp": 90,
-   "atk": 115,
-   "def": 95,
-   "spe": 70,
-   "spa": 95,
-   "spd": 75
+   "hp": 100,
+   "atk": 118,
+   "def": 100,
+   "spe": 62,
+   "spa": 92,
+   "spd": 84
   },
   "genderRate": "Genderless",
   "growthRate": "Parabolic",
-  "baseExp": 210,
+  "baseExp": 200,
   "evYield": {
    "hp": 0,
    "atk": 3,
@@ -376,148 +614,79 @@
    "spa": 0,
    "spd": 0
   },
-  "catchRate": 25,
+  "catchRate": 30,
   "abilities": [],
   "levelMoves": [
-   {
-    "level": 1,
-    "move": "SLASH"
-   },
    {
     "level": 1,
     "move": "METALCLAW"
-   },
-   {
-    "level": 28,
-    "move": "GIGABLASTER"
-   },
-   {
-    "level": 32,
-    "move": "CRUNCH"
-   },
-   {
-    "level": 36,
-    "move": "IRONHEAD"
-   },
-   {
-    "level": 40,
-    "move": "FLAMETHROWER"
-   },
-   {
-    "level": 45,
-    "move": "FLASHCANNON"
-   },
-   {
-    "level": 50,
-    "move": "FIREBLAST"
-   }
-  ],
-  "height": 3.1,
-  "weight": 275,
-  "color": "Red",
-  "habitat": "Rare",
-  "category": "Ciborgue",
-  "entry": "Estágio Ultimate. Metade do corpo virou liga cromada, mas a memória do vínculo permaneceu intacta no núcleo.",
-  "evolutions": [],
-  "franchise": "DGM"
- },
- {
-  "id": 656,
-  "name": "SkullGreymon",
-  "internalName": "SKULLGREYMON",
-  "type1": "GHOST",
-  "type2": "DRAGON",
-  "attribute": "Virus",
-  "stats": {
-   "hp": 85,
-   "atk": 130,
-   "def": 80,
-   "spe": 75,
-   "spa": 90,
-   "spd": 70
-  },
-  "genderRate": "Genderless",
-  "growthRate": "Parabolic",
-  "baseExp": 210,
-  "evYield": {
-   "hp": 0,
-   "atk": 3,
-   "def": 0,
-   "spe": 0,
-   "spa": 0,
-   "spd": 0
-  },
-  "catchRate": 25,
-  "abilities": [],
-  "levelMoves": [
-   {
-    "level": 1,
-    "move": "BITE"
    },
    {
     "level": 1,
     "move": "LEER"
    },
    {
-    "level": 28,
-    "move": "GROUNDZERO"
+    "level": 30,
+    "move": "NUCLEARLASER"
    },
    {
-    "level": 32,
-    "move": "SHADOWCLAW"
+    "level": 34,
+    "move": "IRONHEAD"
    },
    {
-    "level": 36,
+    "level": 38,
     "move": "CRUNCH"
    },
    {
-    "level": 40,
-    "move": "EARTHQUAKE"
+    "level": 42,
+    "move": "FLASHCANNON"
    },
    {
-    "level": 45,
-    "move": "SHADOWBALL"
+    "level": 46,
+    "move": "DRAGONCLAW"
    },
    {
     "level": 50,
-    "move": "EXPLOSION"
+    "move": "GIGAIMPACT"
    }
   ],
-  "height": 3,
-  "weight": 210,
-  "color": "White",
-  "habitat": "Rare",
-  "category": "Esqueleto",
-  "entry": "Estágio Ultimate. A digievolução forçada de um Champion abandonado: só restou o esqueleto e a fome de combate.",
+  "height": 4,
+  "weight": 260,
+  "color": "Purple",
+  "habitat": "Urban",
+  "category": "Ciborgue",
+  "entry": "Metade do corpo foi substituída por maquinário militar. Obedece a qualquer um que segure o controle.",
   "evolutions": [],
   "franchise": "DGM"
  },
  {
-  "id": 657,
+  "id": 659,
   "name": "Punimon",
   "internalName": "PUNIMON",
   "type1": "NORMAL",
+  "type2": null,
   "attribute": "Data",
+  "stage": "Baby I",
   "stats": {
-   "hp": 30,
+   "hp": 32,
    "atk": 20,
    "def": 22,
-   "spe": 13,
-   "spa": 20,
+   "spe": 14,
+   "spa": 18,
    "spd": 20
   },
   "genderRate": "Genderless",
   "growthRate": "Parabolic",
   "baseExp": 40,
   "evYield": {
-   "hp": 1,
+   "hp": 0,
    "atk": 0,
-   "def": 0,
+   "def": 1,
    "spe": 0,
    "spa": 0,
    "spd": 0
   },
-  "catchRate": 190,
+  "catchRate": 200,
   "abilities": [],
   "levelMoves": [
    {
@@ -532,44 +701,46 @@
   "height": 0.2,
   "weight": 1,
   "color": "Pink",
-  "habitat": "Urban",
+  "habitat": "Cave",
   "category": "Bolha",
-  "entry": "Estágio Fresh. Gelatina viva que treme de frio o tempo todo. O sopro gelado é reflexo, não ataque.",
+  "entry": "Bolinha rosada com uma teimosia impressionante para o tamanho. Rola contra o perigo em vez de fugir.",
   "evolutions": [
    {
     "into": "TSUNOMON",
     "method": "Level",
-    "param": "8"
+    "param": "6"
    }
   ],
   "franchise": "DGM"
  },
  {
-  "id": 658,
+  "id": 660,
   "name": "Tsunomon",
   "internalName": "TSUNOMON",
   "type1": "NORMAL",
+  "type2": null,
   "attribute": "Data",
+  "stage": "Baby II",
   "stats": {
-   "hp": 40,
-   "atk": 32,
+   "hp": 44,
+   "atk": 34,
    "def": 32,
-   "spe": 32,
+   "spe": 30,
    "spa": 30,
-   "spd": 29
+   "spd": 32
   },
   "genderRate": "Genderless",
   "growthRate": "Parabolic",
-  "baseExp": 60,
+  "baseExp": 62,
   "evYield": {
    "hp": 0,
-   "atk": 0,
-   "def": 1,
+   "atk": 1,
+   "def": 0,
    "spe": 0,
    "spa": 0,
    "spd": 0
   },
-  "catchRate": 150,
+  "catchRate": 170,
   "abilities": [],
   "levelMoves": [
    {
@@ -581,20 +752,20 @@
     "move": "POWDERSNOW"
    },
    {
-    "level": 10,
-    "move": "HORNATTACK"
+    "level": 8,
+    "move": "HEADBUTT"
    },
    {
-    "level": 13,
+    "level": 12,
     "move": "BITE"
    }
   ],
   "height": 0.4,
   "weight": 3.2,
   "color": "Yellow",
-  "habitat": "Urban",
-  "category": "Chifre",
-  "entry": "Estágio In-Training. Usa o único chifre da testa como aríete. Dorme enrolado nos pés do parceiro.",
+  "habitat": "Cave",
+  "category": "Pelagem",
+  "entry": "Uma bola de pelo laranja com um chifre único. Usa o chifre como martelo e a cabeça como escudo.",
   "evolutions": [
    {
     "into": "GABUMON",
@@ -605,31 +776,33 @@
   "franchise": "DGM"
  },
  {
-  "id": 659,
+  "id": 661,
   "name": "Gabumon",
   "internalName": "GABUMON",
   "type1": "ICE",
+  "type2": null,
   "attribute": "Data",
+  "stage": "Rookie",
   "stats": {
-   "hp": 50,
-   "atk": 55,
-   "def": 55,
-   "spe": 60,
-   "spa": 65,
-   "spd": 50
+   "hp": 58,
+   "atk": 62,
+   "def": 62,
+   "spe": 48,
+   "spa": 58,
+   "spd": 52
   },
   "genderRate": "Genderless",
   "growthRate": "Parabolic",
   "baseExp": 95,
   "evYield": {
    "hp": 0,
-   "atk": 0,
+   "atk": 1,
    "def": 0,
    "spe": 0,
-   "spa": 1,
+   "spa": 0,
    "spd": 0
   },
-  "catchRate": 120,
+  "catchRate": 130,
   "abilities": [],
   "levelMoves": [
    {
@@ -638,7 +811,7 @@
    },
    {
     "level": 1,
-    "move": "GROWL"
+    "move": "LEER"
    },
    {
     "level": 14,
@@ -665,12 +838,12 @@
     "move": "AURORABEAM"
    }
   ],
-  "height": 1,
+  "height": 1.2,
   "weight": 24,
   "color": "Yellow",
-  "habitat": "Urban",
+  "habitat": "Cave",
   "category": "Réptil",
-  "entry": "Estágio Rookie. Tímido a ponto de viver escondido sob uma pele emprestada. Só se solta ao lado de quem já lutou com ele.",
+  "entry": "Tímido demais para andar sem a pele de Garurumon nas costas. Debaixo dela existe um lobo esperando a hora.",
   "evolutions": [
    {
     "into": "GARURUMON",
@@ -689,18 +862,20 @@
   "franchise": "DGM"
  },
  {
-  "id": 660,
+  "id": 662,
   "name": "Garurumon",
   "internalName": "GARURUMON",
   "type1": "ICE",
+  "type2": null,
   "attribute": "Vaccine",
+  "stage": "Champion",
   "stats": {
-   "hp": 75,
-   "atk": 80,
-   "def": 70,
-   "spe": 95,
-   "spa": 85,
-   "spd": 65
+   "hp": 82,
+   "atk": 88,
+   "def": 74,
+   "spe": 92,
+   "spa": 90,
+   "spd": 72
   },
   "genderRate": "Genderless",
   "growthRate": "Parabolic",
@@ -713,7 +888,7 @@
    "spa": 0,
    "spd": 0
   },
-  "catchRate": 45,
+  "catchRate": 70,
   "abilities": [],
   "levelMoves": [
    {
@@ -722,216 +897,148 @@
    },
    {
     "level": 1,
-    "move": "LEER"
+    "move": "HOWL"
    },
    {
     "level": 20,
     "move": "HOWLINGBLASTER"
    },
    {
-    "level": 23,
+    "level": 24,
     "move": "ICEFANG"
    },
    {
-    "level": 27,
+    "level": 28,
+    "move": "QUICKATTACK"
+   },
+   {
+    "level": 32,
     "move": "CRUNCH"
    },
    {
-    "level": 31,
+    "level": 36,
     "move": "AURORABEAM"
-   },
-   {
-    "level": 35,
-    "move": "AGILITY"
    },
    {
     "level": 40,
     "move": "ICEBEAM"
    }
   ],
-  "height": 2.3,
+  "height": 2.9,
   "weight": 130,
   "color": "Blue",
-  "habitat": "Mountain",
-  "category": "Fera",
-  "entry": "Estágio Champion. Corre mais rápido do que a vista acompanha. Só cruza a barreira do Ultimate com um Digivice de nível Nexus.",
+  "habitat": "Cave",
+  "category": "Lobo",
+  "entry": "Corre mais rápido do que a vista acompanha e uiva chamas azuis. A pelagem branca não derrete nem em lava.",
   "evolutions": [
-   {
-    "into": "METALGARURUMON",
-    "method": "Level",
-    "param": "28",
-    "condition": {
-     "hasItem": "DIGILINKOMEGA"
-    }
-   },
    {
     "into": "WEREGARURUMON",
     "method": "Level",
-    "param": "28"
+    "param": "30"
    }
   ],
   "franchise": "DGM"
  },
  {
-  "id": 661,
-  "name": "Gururumon",
-  "internalName": "GURURUMON",
-  "type1": "ICE",
-  "type2": "DARK",
-  "attribute": "Virus",
-  "stats": {
-   "hp": 70,
-   "atk": 90,
-   "def": 65,
-   "spe": 90,
-   "spa": 75,
-   "spd": 60
-  },
-  "genderRate": "Genderless",
-  "growthRate": "Parabolic",
-  "baseExp": 155,
-  "evYield": {
-   "hp": 0,
-   "atk": 1,
-   "def": 0,
-   "spe": 1,
-   "spa": 0,
-   "spd": 0
-  },
-  "catchRate": 45,
-  "abilities": [],
-  "levelMoves": [
-   {
-    "level": 1,
-    "move": "BITE"
-   },
-   {
-    "level": 1,
-    "move": "SCREECH"
-   },
-   {
-    "level": 20,
-    "move": "FREEZEFANG"
-   },
-   {
-    "level": 24,
-    "move": "ASSURANCE"
-   },
-   {
-    "level": 28,
-    "move": "CRUNCH"
-   },
-   {
-    "level": 32,
-    "move": "ICYWIND"
-   },
-   {
-    "level": 36,
-    "move": "SUCKERPUNCH"
-   },
-   {
-    "level": 40,
-    "move": "DARKPULSE"
-   }
-  ],
-  "height": 2.2,
-  "weight": 118,
-  "color": "Blue",
-  "habitat": "Cave",
-  "category": "Fera",
-  "entry": "Estágio Champion. Versão selvagem do lobo de dados: caça sozinho porque nunca teve para quem voltar.",
-  "evolutions": [],
-  "franchise": "DGM"
- },
- {
-  "id": 662,
+  "id": 663,
   "name": "WereGarurumon",
   "internalName": "WEREGARURUMON",
   "type1": "ICE",
   "type2": "FIGHTING",
   "attribute": "Vaccine",
+  "stage": "Ultimate",
   "stats": {
-   "hp": 90,
+   "hp": 92,
    "atk": 120,
-   "def": 85,
-   "spe": 100,
-   "spa": 70,
-   "spd": 75
+   "def": 86,
+   "spe": 110,
+   "spa": 88,
+   "spd": 82
   },
   "genderRate": "Genderless",
   "growthRate": "Parabolic",
-  "baseExp": 210,
+  "baseExp": 200,
   "evYield": {
    "hp": 0,
-   "atk": 2,
+   "atk": 3,
    "def": 0,
-   "spe": 1,
+   "spe": 0,
    "spa": 0,
    "spd": 0
   },
-  "catchRate": 25,
+  "catchRate": 30,
   "abilities": [],
   "levelMoves": [
-   {
-    "level": 1,
-    "move": "SLASH"
-   },
    {
     "level": 1,
     "move": "KARATECHOP"
    },
    {
-    "level": 28,
+    "level": 1,
+    "move": "HOWL"
+   },
+   {
+    "level": 30,
     "move": "WOLFCLAW"
    },
    {
-    "level": 32,
-    "move": "ICEFANG"
+    "level": 34,
+    "move": "ICEPUNCH"
    },
    {
-    "level": 36,
-    "move": "BRICKBREAK"
+    "level": 38,
+    "move": "CROSSCHOP"
    },
    {
-    "level": 40,
-    "move": "CRUNCH"
-   },
-   {
-    "level": 45,
+    "level": 42,
     "move": "CLOSECOMBAT"
    },
    {
-    "level": 50,
+    "level": 46,
     "move": "ICEBEAM"
+   },
+   {
+    "level": 50,
+    "move": "MEGAKICK"
    }
   ],
-  "height": 2.1,
-  "weight": 145,
+  "height": 2.2,
+  "weight": 98,
   "color": "Blue",
-  "habitat": "Rare",
+  "habitat": "Cave",
   "category": "Lobisomem",
-  "entry": "Estágio Ultimate. Abandonou as quatro patas para lutar de pé, do jeito que o parceiro luta.",
-  "evolutions": [],
+  "entry": "Levanta-se nas duas patas e luta com técnica de gente. Prefere o combate limpo, mesmo contra quem não merece.",
+  "evolutions": [
+   {
+    "into": "METALGARURUMON",
+    "method": "Level",
+    "param": "42",
+    "condition": {
+     "hasItem": "DIGILINKOMEGA"
+    }
+   }
+  ],
   "franchise": "DGM"
  },
  {
-  "id": 663,
+  "id": 664,
   "name": "MetalGarurumon",
   "internalName": "METALGARURUMON",
   "type1": "ICE",
   "type2": "STEEL",
   "attribute": "Data",
+  "stage": "Mega",
   "stats": {
-   "hp": 85,
-   "atk": 90,
-   "def": 95,
-   "spe": 95,
-   "spa": 110,
-   "spd": 85
+   "hp": 100,
+   "atk": 118,
+   "def": 108,
+   "spe": 112,
+   "spa": 132,
+   "spd": 100
   },
   "genderRate": "Genderless",
-  "growthRate": "Parabolic",
-  "baseExp": 210,
+  "growthRate": "Slow",
+  "baseExp": 255,
   "evYield": {
    "hp": 0,
    "atk": 0,
@@ -940,77 +1047,147 @@
    "spa": 3,
    "spd": 0
   },
-  "catchRate": 25,
+  "catchRate": 8,
   "abilities": [],
   "levelMoves": [
-   {
-    "level": 1,
-    "move": "ICEFANG"
-   },
    {
     "level": 1,
     "move": "METALCLAW"
    },
    {
-    "level": 28,
+    "level": 1,
+    "move": "IRONDEFENSE"
+   },
+   {
+    "level": 42,
     "move": "METALWOLFCLAW"
    },
    {
-    "level": 32,
-    "move": "IRONHEAD"
-   },
-   {
-    "level": 36,
-    "move": "ICEBEAM"
-   },
-   {
-    "level": 40,
-    "move": "FLASHCANNON"
-   },
-   {
-    "level": 45,
-    "move": "BLIZZARD"
+    "level": 46,
+    "move": "FREEZEFANG"
    },
    {
     "level": 50,
-    "move": "HYPERBEAM"
+    "move": "FLASHCANNON"
+   },
+   {
+    "level": 55,
+    "move": "BLIZZARD"
+   },
+   {
+    "level": 60,
+    "move": "SHEERCOLD"
    }
   ],
-  "height": 2.7,
-  "weight": 290,
-  "color": "White",
+  "height": 2.6,
+  "weight": 200,
+  "color": "Blue",
   "habitat": "Rare",
   "category": "Ciborgue",
-  "entry": "Estágio Ultimate. Blindagem de Chrome Digizoid resfriada a zero absoluto. Só o sinal de um Digi-Link Ω sustenta essa forma.",
+  "entry": "Cada centímetro do corpo é uma arma, e ainda assim o hálito de zero absoluto é o que menos assusta: é a frieza do olhar.",
   "evolutions": [],
   "franchise": "DGM"
  },
  {
-  "id": 664,
-  "name": "Tokomon",
-  "internalName": "TOKOMON",
-  "type1": "NORMAL",
-  "attribute": "Data",
+  "id": 665,
+  "name": "Gururumon",
+  "internalName": "GURURUMON",
+  "type1": "ICE",
+  "type2": "DARK",
+  "attribute": "Virus",
+  "stage": "Champion",
   "stats": {
-   "hp": 38,
-   "atk": 30,
-   "def": 30,
-   "spe": 35,
-   "spa": 33,
-   "spd": 30
+   "hp": 78,
+   "atk": 96,
+   "def": 68,
+   "spe": 96,
+   "spa": 82,
+   "spd": 62
   },
   "genderRate": "Genderless",
-  "growthRate": "Medium",
-  "baseExp": 60,
+  "growthRate": "Parabolic",
+  "baseExp": 155,
   "evYield": {
-   "hp": 1,
-   "atk": 0,
+   "hp": 0,
+   "atk": 2,
    "def": 0,
    "spe": 0,
    "spa": 0,
    "spd": 0
   },
-  "catchRate": 150,
+  "catchRate": 70,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "BITE"
+   },
+   {
+    "level": 1,
+    "move": "SCARYFACE"
+   },
+   {
+    "level": 20,
+    "move": "FOXFIRE"
+   },
+   {
+    "level": 24,
+    "move": "ICEFANG"
+   },
+   {
+    "level": 28,
+    "move": "FEINTATTACK"
+   },
+   {
+    "level": 32,
+    "move": "CRUNCH"
+   },
+   {
+    "level": 36,
+    "move": "ICYWIND"
+   },
+   {
+    "level": 40,
+    "move": "DARKPULSE"
+   }
+  ],
+  "height": 2.7,
+  "weight": 118,
+  "color": "Blue",
+  "habitat": "Cave",
+  "category": "Lobo",
+  "entry": "O lobo que digievoluiu sem vínculo nenhum: caça sozinho, ataca pelas costas e não obedece a ninguém.",
+  "evolutions": [],
+  "franchise": "DGM"
+ },
+ {
+  "id": 666,
+  "name": "Nyokimon",
+  "internalName": "NYOKIMON",
+  "type1": "GRASS",
+  "type2": null,
+  "attribute": "Data",
+  "stage": "Baby I",
+  "stats": {
+   "hp": 30,
+   "atk": 18,
+   "def": 22,
+   "spe": 16,
+   "spa": 22,
+   "spd": 22
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 40,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 1,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 200,
   "abilities": [],
   "levelMoves": [
    {
@@ -1018,45 +1195,105 @@
     "move": "TACKLE"
    },
    {
-    "level": 5,
-    "move": "BITE"
-   },
-   {
-    "level": 10,
-    "move": "GUST"
+    "level": 4,
+    "move": "ABSORB"
    }
   ],
-  "height": 0.3,
-  "weight": 2.4,
-  "color": "White",
-  "habitat": "Forest",
-  "category": "Dente",
-  "entry": "Estágio In-Training. Toda a boca e nenhum medo. Morde primeiro e reconhece o parceiro depois.",
+  "height": 0.2,
+  "weight": 0.9,
+  "color": "Green",
+  "habitat": "Grassland",
+  "category": "Broto",
+  "entry": "Semente com carinha, que finca a raiz onde se sente segura. Cospe uma seiva ácida quando alguém chega perto demais.",
   "evolutions": [
    {
-    "into": "PATAMON",
+    "into": "YOKOMON",
     "method": "Level",
-    "param": "12"
+    "param": "6"
    }
   ],
   "franchise": "DGM"
  },
  {
-  "id": 665,
-  "name": "Patamon",
-  "internalName": "PATAMON",
-  "type1": "FLYING",
+  "id": 667,
+  "name": "Yokomon",
+  "internalName": "YOKOMON",
+  "type1": "GRASS",
+  "type2": null,
   "attribute": "Data",
+  "stage": "Baby II",
   "stats": {
-   "hp": 55,
-   "atk": 40,
-   "def": 45,
-   "spe": 50,
-   "spa": 60,
-   "spd": 50
+   "hp": 40,
+   "atk": 30,
+   "def": 30,
+   "spe": 34,
+   "spa": 38,
+   "spd": 34
   },
   "genderRate": "Genderless",
-  "growthRate": "Medium",
+  "growthRate": "Parabolic",
+  "baseExp": 62,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 1,
+   "spd": 0
+  },
+  "catchRate": 170,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "TACKLE"
+   },
+   {
+    "level": 1,
+    "move": "ABSORB"
+   },
+   {
+    "level": 8,
+    "move": "BUBBLE"
+   },
+   {
+    "level": 12,
+    "move": "MAGICALLEAF"
+   }
+  ],
+  "height": 0.4,
+  "weight": 2.8,
+  "color": "Blue",
+  "habitat": "Grassland",
+  "category": "Broto",
+  "entry": "Vive em vilarejos inteiros ao redor de uma fonte. Quando a fonte seca, o vilarejo inteiro sai andando atrás de outra.",
+  "evolutions": [
+   {
+    "into": "BIYOMON",
+    "method": "Level",
+    "param": "14"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 668,
+  "name": "Biyomon",
+  "internalName": "BIYOMON",
+  "type1": "FLYING",
+  "type2": null,
+  "attribute": "Vaccine",
+  "stage": "Rookie",
+  "stats": {
+   "hp": 56,
+   "atk": 56,
+   "def": 48,
+   "spe": 62,
+   "spa": 66,
+   "spd": 58
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
   "baseExp": 95,
   "evYield": {
    "hp": 0,
@@ -1066,7 +1303,2091 @@
    "spa": 1,
    "spd": 0
   },
-  "catchRate": 120,
+  "catchRate": 130,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "PECK"
+   },
+   {
+    "level": 1,
+    "move": "GROWL"
+   },
+   {
+    "level": 14,
+    "move": "SPIRALTWISTER"
+   },
+   {
+    "level": 17,
+    "move": "GUST"
+   },
+   {
+    "level": 20,
+    "move": "WINGATTACK"
+   },
+   {
+    "level": 24,
+    "move": "EMBER"
+   },
+   {
+    "level": 28,
+    "move": "AERIALACE"
+   },
+   {
+    "level": 32,
+    "move": "AIRSLASH"
+   }
+  ],
+  "height": 1,
+  "weight": 16,
+  "color": "Pink",
+  "habitat": "Grassland",
+  "category": "Pássaro",
+  "entry": "Pássaro rosa de bico afiado e coração maior que o corpo. Fala sem parar até o parceiro admitir que está triste.",
+  "evolutions": [
+   {
+    "into": "BIRDRAMON",
+    "method": "Level",
+    "param": "20",
+    "condition": {
+     "faintsBelow": 3
+    }
+   },
+   {
+    "into": "SABERDRAMON",
+    "method": "Level",
+    "param": "20"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 669,
+  "name": "Birdramon",
+  "internalName": "BIRDRAMON",
+  "type1": "FIRE",
+  "type2": "FLYING",
+  "attribute": "Vaccine",
+  "stage": "Champion",
+  "stats": {
+   "hp": 80,
+   "atk": 86,
+   "def": 66,
+   "spe": 94,
+   "spa": 96,
+   "spd": 70
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 155,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 2,
+   "spd": 0
+  },
+  "catchRate": 70,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "PECK"
+   },
+   {
+    "level": 1,
+    "move": "LEER"
+   },
+   {
+    "level": 20,
+    "move": "METEORWING"
+   },
+   {
+    "level": 24,
+    "move": "WINGATTACK"
+   },
+   {
+    "level": 28,
+    "move": "FLAMECHARGE"
+   },
+   {
+    "level": 32,
+    "move": "AERIALACE"
+   },
+   {
+    "level": 36,
+    "move": "FLAMETHROWER"
+   },
+   {
+    "level": 40,
+    "move": "AIRSLASH"
+   }
+  ],
+  "height": 5,
+  "weight": 130,
+  "color": "Red",
+  "habitat": "Mountain",
+  "category": "Pássaro de Fogo",
+  "entry": "Ave gigante envolta em chamas. Carrega o parceiro nas garras com um cuidado que contradiz o tamanho.",
+  "evolutions": [
+   {
+    "into": "GARUDAMON",
+    "method": "Level",
+    "param": "30"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 670,
+  "name": "Garudamon",
+  "internalName": "GARUDAMON",
+  "type1": "FIRE",
+  "type2": "FLYING",
+  "attribute": "Vaccine",
+  "stage": "Ultimate",
+  "stats": {
+   "hp": 95,
+   "atk": 112,
+   "def": 84,
+   "spe": 100,
+   "spa": 112,
+   "spd": 88
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 200,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 30,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "WINGATTACK"
+   },
+   {
+    "level": 1,
+    "move": "SCARYFACE"
+   },
+   {
+    "level": 30,
+    "move": "WINGBLADE"
+   },
+   {
+    "level": 34,
+    "move": "AERIALACE"
+   },
+   {
+    "level": 38,
+    "move": "FLAMETHROWER"
+   },
+   {
+    "level": 42,
+    "move": "BRAVEBIRD"
+   },
+   {
+    "level": 46,
+    "move": "HEATWAVE"
+   },
+   {
+    "level": 50,
+    "move": "HURRICANE"
+   }
+  ],
+  "height": 5.5,
+  "weight": 210,
+  "color": "Red",
+  "habitat": "Mountain",
+  "category": "Guerreiro Alado",
+  "entry": "Metade ave, metade guerreiro. Desenha um pássaro de fogo no céu antes de despencar sobre o inimigo.",
+  "evolutions": [
+   {
+    "into": "PHOENIXMON",
+    "method": "Level",
+    "param": "44",
+    "condition": {
+     "hasItem": "DIGILINKOMEGA"
+    }
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 671,
+  "name": "Phoenixmon",
+  "internalName": "PHOENIXMON",
+  "type1": "FIRE",
+  "type2": "FLYING",
+  "attribute": "Vaccine",
+  "stage": "Mega",
+  "stats": {
+   "hp": 110,
+   "atk": 106,
+   "def": 100,
+   "spe": 112,
+   "spa": 128,
+   "spd": 118
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 255,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 3,
+   "spd": 0
+  },
+  "catchRate": 8,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "WINGATTACK"
+   },
+   {
+    "level": 1,
+    "move": "MORNINGSUN"
+   },
+   {
+    "level": 44,
+    "move": "CRIMSONFLAME"
+   },
+   {
+    "level": 48,
+    "move": "HEATWAVE"
+   },
+   {
+    "level": 52,
+    "move": "BRAVEBIRD"
+   },
+   {
+    "level": 56,
+    "move": "HURRICANE"
+   },
+   {
+    "level": 60,
+    "move": "FIREBLAST"
+   }
+  ],
+  "height": 6,
+  "weight": 190,
+  "color": "Red",
+  "habitat": "Rare",
+  "category": "Fênix",
+  "entry": "Quatro asas douradas e fogo que cura em vez de destruir. Renasce das cinzas para que ninguém mais precise renascer.",
+  "evolutions": [],
+  "lore": "Mega não exibida na 1ª temporada: canônica da franquia (Hououmon), reservada para o pós-jogo.",
+  "franchise": "DGM"
+ },
+ {
+  "id": 672,
+  "name": "Saberdramon",
+  "internalName": "SABERDRAMON",
+  "type1": "DARK",
+  "type2": "FLYING",
+  "attribute": "Virus",
+  "stage": "Champion",
+  "stats": {
+   "hp": 76,
+   "atk": 94,
+   "def": 62,
+   "spe": 98,
+   "spa": 86,
+   "spd": 62
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 155,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 2,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 70,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "PECK"
+   },
+   {
+    "level": 1,
+    "move": "SCARYFACE"
+   },
+   {
+    "level": 20,
+    "move": "BLACKSABER"
+   },
+   {
+    "level": 24,
+    "move": "WINGATTACK"
+   },
+   {
+    "level": 28,
+    "move": "FEINTATTACK"
+   },
+   {
+    "level": 32,
+    "move": "AERIALACE"
+   },
+   {
+    "level": 36,
+    "move": "DARKPULSE"
+   },
+   {
+    "level": 40,
+    "move": "AIRSLASH"
+   }
+  ],
+  "height": 5,
+  "weight": 128,
+  "color": "Black",
+  "habitat": "Mountain",
+  "category": "Pássaro Sombrio",
+  "entry": "Birdramon nascida da desconfiança. Caça em silêncio e queima com chama negra, sem alarde e sem aviso.",
+  "evolutions": [],
+  "franchise": "DGM"
+ },
+ {
+  "id": 673,
+  "name": "Pabumon",
+  "internalName": "PABUMON",
+  "type1": "NORMAL",
+  "type2": null,
+  "attribute": "Data",
+  "stage": "Baby I",
+  "stats": {
+   "hp": 32,
+   "atk": 18,
+   "def": 20,
+   "spe": 16,
+   "spa": 24,
+   "spd": 22
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 40,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 1,
+   "spd": 0
+  },
+  "catchRate": 200,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "TACKLE"
+   },
+   {
+    "level": 4,
+    "move": "BUBBLE"
+   }
+  ],
+  "height": 0.2,
+  "weight": 1.1,
+  "color": "Green",
+  "habitat": "Forest",
+  "category": "Bolha",
+  "entry": "Gelatina esverdeada que se protege soltando bolhas grudentas. Curiosa a ponto de se meter em encrenca.",
+  "evolutions": [
+   {
+    "into": "MOTIMON",
+    "method": "Level",
+    "param": "6"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 674,
+  "name": "Motimon",
+  "internalName": "MOTIMON",
+  "type1": "NORMAL",
+  "type2": null,
+  "attribute": "Data",
+  "stage": "Baby II",
+  "stats": {
+   "hp": 42,
+   "atk": 32,
+   "def": 32,
+   "spe": 30,
+   "spa": 38,
+   "spd": 32
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 62,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 1,
+   "spd": 0
+  },
+  "catchRate": 170,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "TACKLE"
+   },
+   {
+    "level": 1,
+    "move": "BUBBLE"
+   },
+   {
+    "level": 8,
+    "move": "SUPERSONIC"
+   },
+   {
+    "level": 12,
+    "move": "ABSORB"
+   }
+  ],
+  "height": 0.4,
+  "weight": 3,
+  "color": "Pink",
+  "habitat": "Forest",
+  "category": "Mochi",
+  "entry": "Corpo macio feito de dados soltos. Faz perguntas mais rápido do que qualquer um consegue responder.",
+  "evolutions": [
+   {
+    "into": "TENTOMON",
+    "method": "Level",
+    "param": "14"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 675,
+  "name": "Tentomon",
+  "internalName": "TENTOMON",
+  "type1": "BUG",
+  "type2": null,
+  "attribute": "Vaccine",
+  "stage": "Rookie",
+  "stats": {
+   "hp": 56,
+   "atk": 58,
+   "def": 62,
+   "spe": 48,
+   "spa": 62,
+   "spd": 54
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 95,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 1,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 130,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "TACKLE"
+   },
+   {
+    "level": 1,
+    "move": "STRINGSHOT"
+   },
+   {
+    "level": 14,
+    "move": "SUPERSHOCKER"
+   },
+   {
+    "level": 17,
+    "move": "BUGBITE"
+   },
+   {
+    "level": 20,
+    "move": "THUNDERSHOCK"
+   },
+   {
+    "level": 24,
+    "move": "SIGNALBEAM"
+   },
+   {
+    "level": 28,
+    "move": "SPARK"
+   },
+   {
+    "level": 32,
+    "move": "XSCISSOR"
+   }
+  ],
+  "height": 1.2,
+  "weight": 20,
+  "color": "Red",
+  "habitat": "Forest",
+  "category": "Inseto",
+  "entry": "Besouro vermelho de carapaça dura e fala metódica. Analisa o inimigo antes de bater — e às vezes analisa demais.",
+  "evolutions": [
+   {
+    "into": "KABUTERIMON",
+    "method": "Level",
+    "param": "20",
+    "condition": {
+     "friendshipAbove": 84
+    }
+   },
+   {
+    "into": "KUWAGAMON",
+    "method": "Level",
+    "param": "20"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 676,
+  "name": "Kabuterimon",
+  "internalName": "KABUTERIMON",
+  "type1": "BUG",
+  "type2": "ELECTRIC",
+  "attribute": "Vaccine",
+  "stage": "Champion",
+  "stats": {
+   "hp": 86,
+   "atk": 84,
+   "def": 82,
+   "spe": 68,
+   "spa": 98,
+   "spd": 74
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 155,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 2,
+   "spd": 0
+  },
+  "catchRate": 70,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "TACKLE"
+   },
+   {
+    "level": 1,
+    "move": "HARDEN"
+   },
+   {
+    "level": 20,
+    "move": "ELECTROSHOCKER"
+   },
+   {
+    "level": 24,
+    "move": "BUGBITE"
+   },
+   {
+    "level": 28,
+    "move": "CHARGEBEAM"
+   },
+   {
+    "level": 32,
+    "move": "SIGNALBEAM"
+   },
+   {
+    "level": 36,
+    "move": "DISCHARGE"
+   },
+   {
+    "level": 40,
+    "move": "XSCISSOR"
+   }
+  ],
+  "height": 3.4,
+  "weight": 175,
+  "color": "Blue",
+  "habitat": "Forest",
+  "category": "Inseto",
+  "entry": "Besouro azul do tamanho de um caminhão. Junta eletricidade entre os chifres e devolve tudo numa esfera só.",
+  "evolutions": [
+   {
+    "into": "MEGAKABUTERIMON",
+    "method": "Level",
+    "param": "30"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 677,
+  "name": "MegaKabuterimon",
+  "internalName": "MEGAKABUTERIMON",
+  "type1": "BUG",
+  "type2": "ELECTRIC",
+  "attribute": "Vaccine",
+  "stage": "Ultimate",
+  "stats": {
+   "hp": 100,
+   "atk": 118,
+   "def": 100,
+   "spe": 72,
+   "spa": 108,
+   "spd": 88
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 200,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 30,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "HORNATTACK"
+   },
+   {
+    "level": 1,
+    "move": "IRONDEFENSE"
+   },
+   {
+    "level": 30,
+    "move": "HORNBUSTER"
+   },
+   {
+    "level": 34,
+    "move": "DISCHARGE"
+   },
+   {
+    "level": 38,
+    "move": "MEGAHORN"
+   },
+   {
+    "level": 42,
+    "move": "SIGNALBEAM"
+   },
+   {
+    "level": 46,
+    "move": "THUNDER"
+   },
+   {
+    "level": 50,
+    "move": "GIGAIMPACT"
+   }
+  ],
+  "height": 4.2,
+  "weight": 280,
+  "color": "Red",
+  "habitat": "Forest",
+  "category": "Inseto Gigante",
+  "entry": "A carapaça ficou vermelha e o chifre virou aríete. Voa carregando o peso de um caminhão sem perder velocidade.",
+  "evolutions": [
+   {
+    "into": "HERCULESKABUTERIMON",
+    "method": "Level",
+    "param": "44",
+    "condition": {
+     "hasItem": "DIGILINKOMEGA"
+    }
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 678,
+  "name": "HerculesKabuterimon",
+  "internalName": "HERCULESKABUTERIMON",
+  "type1": "BUG",
+  "type2": "STEEL",
+  "attribute": "Vaccine",
+  "stage": "Mega",
+  "stats": {
+   "hp": 112,
+   "atk": 122,
+   "def": 128,
+   "spe": 86,
+   "spa": 122,
+   "spd": 104
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 255,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 3,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 8,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "MEGAHORN"
+   },
+   {
+    "level": 1,
+    "move": "IRONDEFENSE"
+   },
+   {
+    "level": 44,
+    "move": "MEGAELECTROSHOCKER"
+   },
+   {
+    "level": 48,
+    "move": "IRONHEAD"
+   },
+   {
+    "level": 52,
+    "move": "THUNDER"
+   },
+   {
+    "level": 56,
+    "move": "FLASHCANNON"
+   },
+   {
+    "level": 60,
+    "move": "GIGAIMPACT"
+   }
+  ],
+  "height": 4.8,
+  "weight": 320,
+  "color": "Yellow",
+  "habitat": "Rare",
+  "category": "Inseto Supremo",
+  "entry": "Carapaça dourada praticamente indestrutível. É chamado de o inseto mais forte do Mundo Digital — e não discute o título.",
+  "evolutions": [],
+  "lore": "Mega não exibida na 1ª temporada: canônica da franquia, reservada para o pós-jogo.",
+  "franchise": "DGM"
+ },
+ {
+  "id": 679,
+  "name": "Kuwagamon",
+  "internalName": "KUWAGAMON",
+  "type1": "BUG",
+  "type2": "FLYING",
+  "attribute": "Virus",
+  "stage": "Champion",
+  "stats": {
+   "hp": 78,
+   "atk": 102,
+   "def": 72,
+   "spe": 88,
+   "spa": 66,
+   "spd": 58
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 155,
+  "evYield": {
+   "hp": 0,
+   "atk": 2,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 70,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "BUGBITE"
+   },
+   {
+    "level": 1,
+    "move": "LEER"
+   },
+   {
+    "level": 20,
+    "move": "SCISSORCLAW"
+   },
+   {
+    "level": 24,
+    "move": "WINGATTACK"
+   },
+   {
+    "level": 28,
+    "move": "XSCISSOR"
+   },
+   {
+    "level": 32,
+    "move": "SLASH"
+   },
+   {
+    "level": 36,
+    "move": "AERIALACE"
+   },
+   {
+    "level": 40,
+    "move": "MEGAHORN"
+   }
+  ],
+  "height": 3,
+  "weight": 155,
+  "color": "Red",
+  "habitat": "Forest",
+  "category": "Inseto",
+  "entry": "O primeiro monstro que qualquer visitante da Ilha File encontra. As mandíbulas cortam árvore, pedra e paciência.",
+  "evolutions": [
+   {
+    "into": "OKUWAMON",
+    "method": "Level",
+    "param": "30"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 680,
+  "name": "Okuwamon",
+  "internalName": "OKUWAMON",
+  "type1": "BUG",
+  "type2": "STEEL",
+  "attribute": "Virus",
+  "stage": "Ultimate",
+  "stats": {
+   "hp": 92,
+   "atk": 126,
+   "def": 104,
+   "spe": 82,
+   "spa": 72,
+   "spd": 72
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 200,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 30,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "SCISSORCLAW"
+   },
+   {
+    "level": 1,
+    "move": "HARDEN"
+   },
+   {
+    "level": 30,
+    "move": "DOUBLESCISSORCLAW"
+   },
+   {
+    "level": 34,
+    "move": "IRONHEAD"
+   },
+   {
+    "level": 38,
+    "move": "XSCISSOR"
+   },
+   {
+    "level": 42,
+    "move": "MEGAHORN"
+   },
+   {
+    "level": 46,
+    "move": "FLASHCANNON"
+   },
+   {
+    "level": 50,
+    "move": "GIGAIMPACT"
+   }
+  ],
+  "height": 3.8,
+  "weight": 250,
+  "color": "Purple",
+  "habitat": "Forest",
+  "category": "Inseto Blindado",
+  "entry": "Duas pinças gigantes e nenhuma ideia na cabeça. Ataca o que entrar no território até não sobrar território.",
+  "evolutions": [],
+  "franchise": "DGM"
+ },
+ {
+  "id": 681,
+  "name": "Yuramon",
+  "internalName": "YURAMON",
+  "type1": "GRASS",
+  "type2": null,
+  "attribute": "Data",
+  "stage": "Baby I",
+  "stats": {
+   "hp": 30,
+   "atk": 18,
+   "def": 24,
+   "spe": 14,
+   "spa": 22,
+   "spd": 22
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 40,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 1,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 200,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "TACKLE"
+   },
+   {
+    "level": 4,
+    "move": "ABSORB"
+   }
+  ],
+  "height": 0.2,
+  "weight": 0.8,
+  "color": "Purple",
+  "habitat": "Forest",
+  "category": "Semente",
+  "entry": "Semente de casca dura com dois olhos enormes. Fica pendurada nos galhos esperando alguém a levar embora.",
+  "evolutions": [
+   {
+    "into": "TANEMON",
+    "method": "Level",
+    "param": "6"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 682,
+  "name": "Tanemon",
+  "internalName": "TANEMON",
+  "type1": "GRASS",
+  "type2": null,
+  "attribute": "Data",
+  "stage": "Baby II",
+  "stats": {
+   "hp": 42,
+   "atk": 32,
+   "def": 34,
+   "spe": 28,
+   "spa": 34,
+   "spd": 32
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 62,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 1,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 170,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "TACKLE"
+   },
+   {
+    "level": 1,
+    "move": "ABSORB"
+   },
+   {
+    "level": 8,
+    "move": "MAGICALLEAF"
+   },
+   {
+    "level": 12,
+    "move": "GROWTH"
+   }
+  ],
+  "height": 0.4,
+  "weight": 3,
+  "color": "Green",
+  "habitat": "Forest",
+  "category": "Broto",
+  "entry": "Broto de folhas na cabeça e apetite sem fim. Se planta no chão para dormir e reclama quando alguém a arranca.",
+  "evolutions": [
+   {
+    "into": "PALMON",
+    "method": "Level",
+    "param": "14"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 683,
+  "name": "Palmon",
+  "internalName": "PALMON",
+  "type1": "GRASS",
+  "type2": null,
+  "attribute": "Data",
+  "stage": "Rookie",
+  "stats": {
+   "hp": 58,
+   "atk": 58,
+   "def": 58,
+   "spe": 44,
+   "spa": 66,
+   "spd": 56
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 95,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 1,
+   "spd": 0
+  },
+  "catchRate": 130,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "SCRATCH"
+   },
+   {
+    "level": 1,
+    "move": "GROWTH"
+   },
+   {
+    "level": 14,
+    "move": "POISONIVY"
+   },
+   {
+    "level": 17,
+    "move": "MAGICALLEAF"
+   },
+   {
+    "level": 20,
+    "move": "SLEEPPOWDER"
+   },
+   {
+    "level": 24,
+    "move": "MEGADRAIN"
+   },
+   {
+    "level": 28,
+    "move": "SEEDBOMB"
+   },
+   {
+    "level": 32,
+    "move": "ENERGYBALL"
+   }
+  ],
+  "height": 1,
+  "weight": 15,
+  "color": "Green",
+  "habitat": "Forest",
+  "category": "Planta",
+  "entry": "Uma flor que anda, fala e reclama de sujeira. Os cipós dos dedos agarram com uma força que ninguém espera.",
+  "evolutions": [
+   {
+    "into": "TOGEMON",
+    "method": "Level",
+    "param": "20",
+    "condition": {
+     "faintsBelow": 3
+    }
+   },
+   {
+    "into": "WOODMON",
+    "method": "Level",
+    "param": "20"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 684,
+  "name": "Togemon",
+  "internalName": "TOGEMON",
+  "type1": "GRASS",
+  "type2": "FIGHTING",
+  "attribute": "Data",
+  "stage": "Champion",
+  "stats": {
+   "hp": 90,
+   "atk": 96,
+   "def": 76,
+   "spe": 60,
+   "spa": 76,
+   "spd": 74
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 155,
+  "evYield": {
+   "hp": 0,
+   "atk": 2,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 70,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "SCRATCH"
+   },
+   {
+    "level": 1,
+    "move": "HARDEN"
+   },
+   {
+    "level": 20,
+    "move": "NEEDLESPRAY"
+   },
+   {
+    "level": 24,
+    "move": "MEGADRAIN"
+   },
+   {
+    "level": 28,
+    "move": "MEGAPUNCH"
+   },
+   {
+    "level": 32,
+    "move": "SEEDBOMB"
+   },
+   {
+    "level": 36,
+    "move": "BRICKBREAK"
+   },
+   {
+    "level": 40,
+    "move": "ENERGYBALL"
+   }
+  ],
+  "height": 2.5,
+  "weight": 135,
+  "color": "Green",
+  "habitat": "Forest",
+  "category": "Cacto",
+  "entry": "Cacto de luvas de boxe que soca primeiro e pensa depois. Todo espinho vira projétil quando ela gira.",
+  "evolutions": [
+   {
+    "into": "LILLYMON",
+    "method": "Level",
+    "param": "30"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 685,
+  "name": "Lillymon",
+  "internalName": "LILLYMON",
+  "type1": "GRASS",
+  "type2": "FLYING",
+  "attribute": "Data",
+  "stage": "Ultimate",
+  "stats": {
+   "hp": 88,
+   "atk": 92,
+   "def": 80,
+   "spe": 108,
+   "spa": 122,
+   "spd": 96
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 200,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 3,
+   "spd": 0
+  },
+  "catchRate": 30,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "MAGICALLEAF"
+   },
+   {
+    "level": 1,
+    "move": "SWEETSCENT"
+   },
+   {
+    "level": 30,
+    "move": "FLOWERCANNON"
+   },
+   {
+    "level": 34,
+    "move": "ENERGYBALL"
+   },
+   {
+    "level": 38,
+    "move": "AIRSLASH"
+   },
+   {
+    "level": 42,
+    "move": "GIGADRAIN"
+   },
+   {
+    "level": 46,
+    "move": "PETALDANCE"
+   },
+   {
+    "level": 50,
+    "move": "SOLARBEAM"
+   }
+  ],
+  "height": 1.2,
+  "weight": 22,
+  "color": "Green",
+  "habitat": "Forest",
+  "category": "Fada Floral",
+  "entry": "Pequena, delicada e capaz de abrir um canhão de flor nas mãos. Prefere convencer a lutar — mas não hesita.",
+  "evolutions": [
+   {
+    "into": "ROSEMON",
+    "method": "Level",
+    "param": "44",
+    "condition": {
+     "hasItem": "DIGILINKOMEGA"
+    }
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 686,
+  "name": "Rosemon",
+  "internalName": "ROSEMON",
+  "type1": "GRASS",
+  "type2": "POISON",
+  "attribute": "Data",
+  "stage": "Mega",
+  "stats": {
+   "hp": 100,
+   "atk": 118,
+   "def": 96,
+   "spe": 118,
+   "spa": 128,
+   "spd": 112
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 255,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 3,
+   "spd": 0
+  },
+  "catchRate": 8,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "PETALDANCE"
+   },
+   {
+    "level": 1,
+    "move": "SWEETSCENT"
+   },
+   {
+    "level": 44,
+    "move": "THORNWHIP"
+   },
+   {
+    "level": 48,
+    "move": "SOLARBEAM"
+   },
+   {
+    "level": 52,
+    "move": "POISONJAB"
+   },
+   {
+    "level": 56,
+    "move": "GIGADRAIN"
+   },
+   {
+    "level": 60,
+    "move": "POWERWHIP"
+   }
+  ],
+  "height": 1.7,
+  "weight": 38,
+  "color": "Red",
+  "habitat": "Rare",
+  "category": "Rainha Floral",
+  "entry": "A rainha das plantas do Mundo Digital. Beleza e crueldade na mesma flor: quem se aproxima demais aprende com os espinhos.",
+  "evolutions": [],
+  "lore": "Mega não exibida na 1ª temporada: canônica da franquia, reservada para o pós-jogo.",
+  "franchise": "DGM"
+ },
+ {
+  "id": 687,
+  "name": "Woodmon",
+  "internalName": "WOODMON",
+  "type1": "GRASS",
+  "type2": "DARK",
+  "attribute": "Virus",
+  "stage": "Champion",
+  "stats": {
+   "hp": 92,
+   "atk": 98,
+   "def": 86,
+   "spe": 42,
+   "spa": 64,
+   "spd": 62
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 155,
+  "evYield": {
+   "hp": 0,
+   "atk": 2,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 70,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "SCRATCH"
+   },
+   {
+    "level": 1,
+    "move": "HARDEN"
+   },
+   {
+    "level": 20,
+    "move": "WOODYSMASHER"
+   },
+   {
+    "level": 24,
+    "move": "MEGADRAIN"
+   },
+   {
+    "level": 28,
+    "move": "FEINTATTACK"
+   },
+   {
+    "level": 32,
+    "move": "SEEDBOMB"
+   },
+   {
+    "level": 36,
+    "move": "WOODHAMMER"
+   },
+   {
+    "level": 40,
+    "move": "DARKPULSE"
+   }
+  ],
+  "height": 2.4,
+  "weight": 160,
+  "color": "Brown",
+  "habitat": "Forest",
+  "category": "Árvore",
+  "entry": "Tronco velho que se cansou de ficar parado. Finge ser árvore até o viajante passar bem debaixo dos galhos.",
+  "evolutions": [
+   {
+    "into": "CHERRYMON",
+    "method": "Level",
+    "param": "30"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 688,
+  "name": "Cherrymon",
+  "internalName": "CHERRYMON",
+  "type1": "GRASS",
+  "type2": "GHOST",
+  "attribute": "Virus",
+  "stage": "Ultimate",
+  "stats": {
+   "hp": 104,
+   "atk": 96,
+   "def": 108,
+   "spe": 40,
+   "spa": 112,
+   "spd": 100
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 200,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 3,
+   "spd": 0
+  },
+  "catchRate": 30,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "ABSORB"
+   },
+   {
+    "level": 1,
+    "move": "CONFUSERAY"
+   },
+   {
+    "level": 30,
+    "move": "ILLUSIONMIST"
+   },
+   {
+    "level": 34,
+    "move": "GIGADRAIN"
+   },
+   {
+    "level": 38,
+    "move": "SHADOWBALL"
+   },
+   {
+    "level": 42,
+    "move": "ENERGYBALL"
+   },
+   {
+    "level": 46,
+    "move": "HEX"
+   },
+   {
+    "level": 50,
+    "move": "SOLARBEAM"
+   }
+  ],
+  "height": 4,
+  "weight": 300,
+  "color": "Green",
+  "habitat": "Forest",
+  "category": "Árvore Anciã",
+  "entry": "Cerejeira antiga que fala como um mestre sábio — e usa essa sabedoria para envenenar corações jovens.",
+  "evolutions": [],
+  "franchise": "DGM"
+ },
+ {
+  "id": 689,
+  "name": "Pichimon",
+  "internalName": "PICHIMON",
+  "type1": "WATER",
+  "type2": null,
+  "attribute": "Data",
+  "stage": "Baby I",
+  "stats": {
+   "hp": 32,
+   "atk": 18,
+   "def": 20,
+   "spe": 16,
+   "spa": 24,
+   "spd": 22
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 40,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 1,
+   "spd": 0
+  },
+  "catchRate": 200,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "TACKLE"
+   },
+   {
+    "level": 4,
+    "move": "BUBBLE"
+   }
+  ],
+  "height": 0.2,
+  "weight": 1,
+  "color": "White",
+  "habitat": "WatersEdge",
+  "category": "Bolha",
+  "entry": "Bolinha branca que flutua na água como uma boia. Cospe um jatinho fino quando quer atenção.",
+  "evolutions": [
+   {
+    "into": "BUKAMON",
+    "method": "Level",
+    "param": "6"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 690,
+  "name": "Bukamon",
+  "internalName": "BUKAMON",
+  "type1": "WATER",
+  "type2": null,
+  "attribute": "Data",
+  "stage": "Baby II",
+  "stats": {
+   "hp": 44,
+   "atk": 32,
+   "def": 30,
+   "spe": 34,
+   "spa": 34,
+   "spd": 32
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 62,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 1,
+   "spd": 0
+  },
+  "catchRate": 170,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "TACKLE"
+   },
+   {
+    "level": 1,
+    "move": "BUBBLE"
+   },
+   {
+    "level": 8,
+    "move": "WATERGUN"
+   },
+   {
+    "level": 12,
+    "move": "BITE"
+   }
+  ],
+  "height": 0.4,
+  "weight": 3.4,
+  "color": "Yellow",
+  "habitat": "WatersEdge",
+  "category": "Foca",
+  "entry": "Focinha voadora de bom humor incurável. Ri até de perigo — e isso costuma irritar quem está por perto.",
+  "evolutions": [
+   {
+    "into": "GOMAMON",
+    "method": "Level",
+    "param": "14"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 691,
+  "name": "Gomamon",
+  "internalName": "GOMAMON",
+  "type1": "WATER",
+  "type2": null,
+  "attribute": "Vaccine",
+  "stage": "Rookie",
+  "stats": {
+   "hp": 64,
+   "atk": 54,
+   "def": 52,
+   "spe": 52,
+   "spa": 62,
+   "spd": 58
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 95,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 1,
+   "spd": 0
+  },
+  "catchRate": 130,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "TACKLE"
+   },
+   {
+    "level": 1,
+    "move": "GROWL"
+   },
+   {
+    "level": 14,
+    "move": "MARCHINGFISHES"
+   },
+   {
+    "level": 17,
+    "move": "WATERGUN"
+   },
+   {
+    "level": 20,
+    "move": "BITE"
+   },
+   {
+    "level": 24,
+    "move": "AQUAJET"
+   },
+   {
+    "level": 28,
+    "move": "ICYWIND"
+   },
+   {
+    "level": 32,
+    "move": "SURF"
+   }
+  ],
+  "height": 0.9,
+  "weight": 18,
+  "color": "White",
+  "habitat": "WatersEdge",
+  "category": "Foca",
+  "entry": "Foca de juba vermelha e piada pronta. Chama cardumes inteiros só assobiando — e usa isso para salvar o parceiro nervoso.",
+  "evolutions": [
+   {
+    "into": "IKKAKUMON",
+    "method": "Level",
+    "param": "20"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 692,
+  "name": "Ikkakumon",
+  "internalName": "IKKAKUMON",
+  "type1": "WATER",
+  "type2": "ICE",
+  "attribute": "Vaccine",
+  "stage": "Champion",
+  "stats": {
+   "hp": 104,
+   "atk": 92,
+   "def": 80,
+   "spe": 50,
+   "spa": 78,
+   "spd": 74
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 155,
+  "evYield": {
+   "hp": 0,
+   "atk": 2,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 70,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "TACKLE"
+   },
+   {
+    "level": 1,
+    "move": "HARDEN"
+   },
+   {
+    "level": 20,
+    "move": "HARPOONTORPEDO"
+   },
+   {
+    "level": 24,
+    "move": "ICYWIND"
+   },
+   {
+    "level": 28,
+    "move": "WATERPULSE"
+   },
+   {
+    "level": 32,
+    "move": "HORNATTACK"
+   },
+   {
+    "level": 36,
+    "move": "AURORABEAM"
+   },
+   {
+    "level": 40,
+    "move": "SURF"
+   }
+  ],
+  "height": 3.5,
+  "weight": 200,
+  "color": "Brown",
+  "habitat": "Sea",
+  "category": "Morsa",
+  "entry": "Morsa peluda com um chifre lançável nas costas. Atravessa mar congelado sem sequer diminuir o passo.",
+  "evolutions": [
+   {
+    "into": "ZUDOMON",
+    "method": "Level",
+    "param": "30"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 693,
+  "name": "Zudomon",
+  "internalName": "ZUDOMON",
+  "type1": "WATER",
+  "type2": "STEEL",
+  "attribute": "Vaccine",
+  "stage": "Ultimate",
+  "stats": {
+   "hp": 118,
+   "atk": 118,
+   "def": 116,
+   "spe": 52,
+   "spa": 82,
+   "spd": 92
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 200,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 30,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "HORNATTACK"
+   },
+   {
+    "level": 1,
+    "move": "IRONDEFENSE"
+   },
+   {
+    "level": 30,
+    "move": "VULCANSHAMMER"
+   },
+   {
+    "level": 34,
+    "move": "WATERFALL"
+   },
+   {
+    "level": 38,
+    "move": "IRONHEAD"
+   },
+   {
+    "level": 42,
+    "move": "AQUATAIL"
+   },
+   {
+    "level": 46,
+    "move": "SURF"
+   },
+   {
+    "level": 50,
+    "move": "HYDROPUMP"
+   }
+  ],
+  "height": 4.5,
+  "weight": 380,
+  "color": "Brown",
+  "habitat": "Sea",
+  "category": "Titã Marinho",
+  "entry": "Carapaça de aço e um martelo de trovão na mão. Cada passo abre uma cratera — e cada martelada, um caminho.",
+  "evolutions": [
+   {
+    "into": "VIKEMON",
+    "method": "Level",
+    "param": "44",
+    "condition": {
+     "hasItem": "DIGILINKOMEGA"
+    }
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 694,
+  "name": "Vikemon",
+  "internalName": "VIKEMON",
+  "type1": "ICE",
+  "type2": "FIGHTING",
+  "attribute": "Vaccine",
+  "stage": "Mega",
+  "stats": {
+   "hp": 130,
+   "atk": 128,
+   "def": 118,
+   "spe": 70,
+   "spa": 96,
+   "spd": 108
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 255,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 8,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "ICEPUNCH"
+   },
+   {
+    "level": 1,
+    "move": "BULKUP"
+   },
+   {
+    "level": 44,
+    "move": "ARCTICBLIZZARD"
+   },
+   {
+    "level": 48,
+    "move": "CLOSECOMBAT"
+   },
+   {
+    "level": 52,
+    "move": "ICEBEAM"
+   },
+   {
+    "level": 56,
+    "move": "SUPERPOWER"
+   },
+   {
+    "level": 60,
+    "move": "BLIZZARD"
+   }
+  ],
+  "height": 3.2,
+  "weight": 420,
+  "color": "Blue",
+  "habitat": "Rare",
+  "category": "Viking",
+  "entry": "Guerreiro dos mares gelados, coberto de pelo e cicatrizes. Levanta nevasca girando os dois braços de uma vez.",
+  "evolutions": [],
+  "lore": "Mega não exibida na 1ª temporada: canônica da franquia, reservada para o pós-jogo.",
+  "franchise": "DGM"
+ },
+ {
+  "id": 695,
+  "name": "Poyomon",
+  "internalName": "POYOMON",
+  "type1": "NORMAL",
+  "type2": null,
+  "attribute": "Data",
+  "stage": "Baby I",
+  "stats": {
+   "hp": 30,
+   "atk": 16,
+   "def": 20,
+   "spe": 16,
+   "spa": 26,
+   "spd": 24
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 40,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 1,
+   "spd": 0
+  },
+  "catchRate": 200,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "TACKLE"
+   },
+   {
+    "level": 4,
+    "move": "CONFUSION"
+   }
+  ],
+  "height": 0.2,
+  "weight": 0.8,
+  "color": "White",
+  "habitat": "Urban",
+  "category": "Bolha",
+  "entry": "Gota translúcida que flutua devagar. Emite uma luz fraquinha no escuro, como se pedisse companhia.",
+  "evolutions": [
+   {
+    "into": "TOKOMON",
+    "method": "Level",
+    "param": "6"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 696,
+  "name": "Tokomon",
+  "internalName": "TOKOMON",
+  "type1": "NORMAL",
+  "type2": null,
+  "attribute": "Data",
+  "stage": "Baby II",
+  "stats": {
+   "hp": 40,
+   "atk": 34,
+   "def": 30,
+   "spe": 32,
+   "spa": 36,
+   "spd": 34
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 62,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 1,
+   "spd": 0
+  },
+  "catchRate": 170,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "TACKLE"
+   },
+   {
+    "level": 1,
+    "move": "CONFUSION"
+   },
+   {
+    "level": 8,
+    "move": "BITE"
+   },
+   {
+    "level": 12,
+    "move": "GUST"
+   }
+  ],
+  "height": 0.4,
+  "weight": 2.6,
+  "color": "White",
+  "habitat": "Urban",
+  "category": "Dentinho",
+  "entry": "Toda boca e nenhum medo. Morde quem ameaça o parceiro mesmo sabendo que não vai machucar ninguém.",
+  "evolutions": [
+   {
+    "into": "PATAMON",
+    "method": "Level",
+    "param": "14"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 697,
+  "name": "Patamon",
+  "internalName": "PATAMON",
+  "type1": "FLYING",
+  "type2": null,
+  "attribute": "Data",
+  "stage": "Rookie",
+  "stats": {
+   "hp": 58,
+   "atk": 52,
+   "def": 52,
+   "spe": 54,
+   "spa": 66,
+   "spd": 62
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 95,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 1,
+   "spd": 0
+  },
+  "catchRate": 130,
   "abilities": [],
   "levelMoves": [
    {
@@ -1095,26 +3416,26 @@
    },
    {
     "level": 28,
-    "move": "AIRSLASH"
+    "move": "EXTRASENSORY"
    },
    {
     "level": 32,
-    "move": "ZENHEADBUTT"
+    "move": "AIRSLASH"
    }
   ],
   "height": 0.6,
-  "weight": 8,
+  "weight": 9,
   "color": "Yellow",
-  "habitat": "Forest",
-  "category": "Mamífero",
-  "entry": "Estágio Rookie. Voa com as próprias orelhas. Vira arauto sagrado ou fera alada conforme o dom que o parceiro cultiva nele.",
+  "habitat": "Urban",
+  "category": "Mamífero Alado",
+  "entry": "Voa com as orelhas e dorme na cabeça do parceiro. Guarda o brasão da Esperança sem ter a menor ideia disso.",
   "evolutions": [
    {
     "into": "ANGEMON",
     "method": "Level",
     "param": "22",
     "condition": {
-     "highestStat": "spa"
+     "friendshipAbove": 84
     }
    },
    {
@@ -1126,22 +3447,23 @@
   "franchise": "DGM"
  },
  {
-  "id": 666,
+  "id": 698,
   "name": "Angemon",
   "internalName": "ANGEMON",
   "type1": "PSYCHIC",
   "type2": "FLYING",
   "attribute": "Vaccine",
+  "stage": "Champion",
   "stats": {
-   "hp": 70,
-   "atk": 65,
-   "def": 70,
-   "spe": 75,
-   "spa": 100,
-   "spd": 80
+   "hp": 82,
+   "atk": 88,
+   "def": 74,
+   "spe": 88,
+   "spa": 106,
+   "spd": 92
   },
   "genderRate": "Genderless",
-  "growthRate": "Medium",
+  "growthRate": "Parabolic",
   "baseExp": 155,
   "evYield": {
    "hp": 0,
@@ -1151,16 +3473,16 @@
    "spa": 2,
    "spd": 0
   },
-  "catchRate": 45,
+  "catchRate": 70,
   "abilities": [],
   "levelMoves": [
    {
     "level": 1,
-    "move": "PECK"
+    "move": "GUST"
    },
    {
     "level": 1,
-    "move": "CONFUSION"
+    "move": "SAFEGUARD"
    },
    {
     "level": 22,
@@ -1168,51 +3490,208 @@
    },
    {
     "level": 26,
-    "move": "AIRSLASH"
+    "move": "PSYBEAM"
    },
    {
     "level": 30,
-    "move": "PSYCHIC"
+    "move": "AERIALACE"
    },
    {
     "level": 34,
-    "move": "ZENHEADBUTT"
+    "move": "EXTRASENSORY"
    },
    {
     "level": 38,
-    "move": "DRILLPECK"
+    "move": "AIRSLASH"
    },
    {
     "level": 42,
-    "move": "CALMMIND"
+    "move": "PSYCHIC"
    }
   ],
-  "height": 1.8,
-  "weight": 52,
+  "height": 2,
+  "weight": 65,
   "color": "White",
   "habitat": "Rare",
   "category": "Anjo",
-  "entry": "Estágio Champion. Seis asas e um cajado de luz. Só aparece quando o parceiro precisa dele mais do que quer ganhar.",
-  "evolutions": [],
+  "entry": "Seis asas e um cajado de luz. Só aparece quando a esperança de alguém é maior que o próprio medo.",
+  "evolutions": [
+   {
+    "into": "MAGNAANGEMON",
+    "method": "Level",
+    "param": "32"
+   }
+  ],
   "franchise": "DGM"
  },
  {
-  "id": 667,
+  "id": 699,
+  "name": "MagnaAngemon",
+  "internalName": "MAGNAANGEMON",
+  "type1": "PSYCHIC",
+  "type2": "STEEL",
+  "attribute": "Vaccine",
+  "stage": "Ultimate",
+  "stats": {
+   "hp": 96,
+   "atk": 104,
+   "def": 100,
+   "spe": 96,
+   "spa": 122,
+   "spd": 108
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 200,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 3,
+   "spd": 0
+  },
+  "catchRate": 30,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "AERIALACE"
+   },
+   {
+    "level": 1,
+    "move": "LIGHTSCREEN"
+   },
+   {
+    "level": 32,
+    "move": "GATEOFDESTINY"
+   },
+   {
+    "level": 36,
+    "move": "PSYCHIC"
+   },
+   {
+    "level": 40,
+    "move": "IRONHEAD"
+   },
+   {
+    "level": 44,
+    "move": "FLASHCANNON"
+   },
+   {
+    "level": 48,
+    "move": "AIRSLASH"
+   },
+   {
+    "level": 52,
+    "move": "PSYSHOCK"
+   }
+  ],
+  "height": 2.6,
+  "weight": 88,
+  "color": "White",
+  "habitat": "Rare",
+  "category": "Arcanjo",
+  "entry": "Oito asas e a Espada do Destino. O portão que abre não devolve nada — nem os que mereciam voltar.",
+  "evolutions": [
+   {
+    "into": "SERAPHIMON",
+    "method": "Level",
+    "param": "45",
+    "condition": {
+     "hasItem": "DIGILINKOMEGA"
+    }
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 700,
+  "name": "Seraphimon",
+  "internalName": "SERAPHIMON",
+  "type1": "PSYCHIC",
+  "type2": "STEEL",
+  "attribute": "Vaccine",
+  "stage": "Mega",
+  "stats": {
+   "hp": 112,
+   "atk": 112,
+   "def": 120,
+   "spe": 106,
+   "spa": 138,
+   "spd": 122
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 255,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 3,
+   "spd": 0
+  },
+  "catchRate": 8,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "PSYCHIC"
+   },
+   {
+    "level": 1,
+    "move": "LIGHTSCREEN"
+   },
+   {
+    "level": 45,
+    "move": "SEVENSTARS"
+   },
+   {
+    "level": 49,
+    "move": "FLASHCANNON"
+   },
+   {
+    "level": 53,
+    "move": "PSYSHOCK"
+   },
+   {
+    "level": 57,
+    "move": "AURASPHERE"
+   },
+   {
+    "level": 62,
+    "move": "HYPERBEAM"
+   }
+  ],
+  "height": 3,
+  "weight": 130,
+  "color": "White",
+  "habitat": "Rare",
+  "category": "Anjo Supremo",
+  "entry": "Um dos Três Grandes Anjos. A armadura dourada guarda o mesmo Patamon que dormia na cabeça de um menino.",
+  "evolutions": [],
+  "lore": "Mega não exibida na 1ª temporada: canônica da franquia, reservada para o pós-jogo.",
+  "franchise": "DGM"
+ },
+ {
+  "id": 701,
   "name": "Unimon",
   "internalName": "UNIMON",
   "type1": "FLYING",
   "type2": "FIGHTING",
   "attribute": "Vaccine",
+  "stage": "Champion",
   "stats": {
-   "hp": 75,
-   "atk": 95,
-   "def": 70,
-   "spe": 85,
-   "spa": 70,
-   "spd": 65
+   "hp": 86,
+   "atk": 94,
+   "def": 76,
+   "spe": 90,
+   "spa": 84,
+   "spd": 72
   },
   "genderRate": "Genderless",
-  "growthRate": "Medium",
+  "growthRate": "Parabolic",
   "baseExp": 155,
   "evYield": {
    "hp": 0,
@@ -1222,7 +3701,7 @@
    "spa": 0,
    "spd": 0
   },
-  "catchRate": 45,
+  "catchRate": 70,
   "abilities": [],
   "levelMoves": [
    {
@@ -1231,7 +3710,7 @@
    },
    {
     "level": 1,
-    "move": "LEER"
+    "move": "GROWL"
    },
    {
     "level": 22,
@@ -1239,7 +3718,7 @@
    },
    {
     "level": 26,
-    "move": "HORNATTACK"
+    "move": "STOMP"
    },
    {
     "level": 30,
@@ -1247,39 +3726,3662 @@
    },
    {
     "level": 34,
-    "move": "BULKUP"
+    "move": "BRICKBREAK"
    },
    {
     "level": 38,
-    "move": "DRILLPECK"
+    "move": "AIRSLASH"
    },
    {
     "level": 42,
-    "move": "MEGAHORN"
+    "move": "CLOSECOMBAT"
    }
   ],
-  "height": 2,
-  "weight": 98,
+  "height": 2.8,
+  "weight": 175,
   "color": "White",
   "habitat": "Mountain",
-  "category": "Bestial",
-  "entry": "Estágio Champion. Cavalo alado de máscara de ferro. Nasce do Rookie treinado no corpo, não no espírito.",
+  "category": "Pégaso",
+  "entry": "Cavalo alado de chifre único, orgulhoso e arisco. Um Anel Negro basta para transformar essa nobreza em fúria cega.",
   "evolutions": [],
   "franchise": "DGM"
  },
  {
-  "id": 700,
+  "id": 702,
+  "name": "YukimiBotamon",
+  "internalName": "YUKIMIBOTAMON",
+  "type1": "ICE",
+  "type2": null,
+  "attribute": "Data",
+  "stage": "Baby I",
+  "stats": {
+   "hp": 30,
+   "atk": 18,
+   "def": 22,
+   "spe": 16,
+   "spa": 22,
+   "spd": 24
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 40,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 1
+  },
+  "catchRate": 200,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "TACKLE"
+   },
+   {
+    "level": 4,
+    "move": "POWDERSNOW"
+   }
+  ],
+  "height": 0.2,
+  "weight": 0.9,
+  "color": "White",
+  "habitat": "Cave",
+  "category": "Bolha",
+  "entry": "Bolinha de penugem branca como neve. Chora ao menor sinal de frio — e ela mesma é feita de frio.",
+  "evolutions": [
+   {
+    "into": "NYAROMON",
+    "method": "Level",
+    "param": "6"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 703,
+  "name": "Nyaromon",
+  "internalName": "NYAROMON",
+  "type1": "NORMAL",
+  "type2": null,
+  "attribute": "Data",
+  "stage": "Baby II",
+  "stats": {
+   "hp": 40,
+   "atk": 34,
+   "def": 30,
+   "spe": 36,
+   "spa": 34,
+   "spd": 34
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 62,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 1,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 170,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "SCRATCH"
+   },
+   {
+    "level": 1,
+    "move": "GROWL"
+   },
+   {
+    "level": 8,
+    "move": "QUICKATTACK"
+   },
+   {
+    "level": 12,
+    "move": "BITE"
+   }
+  ],
+  "height": 0.4,
+  "weight": 2.4,
+  "color": "Yellow",
+  "habitat": "Cave",
+  "category": "Gatinho",
+  "entry": "Bolinha com orelhas e cauda de gato. Não fica quieta um segundo e caça a própria cauda por horas.",
+  "evolutions": [
+   {
+    "into": "SALAMON",
+    "method": "Level",
+    "param": "14"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 704,
+  "name": "Salamon",
+  "internalName": "SALAMON",
+  "type1": "NORMAL",
+  "type2": null,
+  "attribute": "Data",
+  "stage": "Rookie",
+  "stats": {
+   "hp": 56,
+   "atk": 58,
+   "def": 52,
+   "spe": 66,
+   "spa": 64,
+   "spd": 58
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 95,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 1,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 130,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "SCRATCH"
+   },
+   {
+    "level": 1,
+    "move": "GROWL"
+   },
+   {
+    "level": 14,
+    "move": "QUICKATTACK"
+   },
+   {
+    "level": 17,
+    "move": "BITE"
+   },
+   {
+    "level": 20,
+    "move": "SWIFT"
+   },
+   {
+    "level": 24,
+    "move": "FEINTATTACK"
+   },
+   {
+    "level": 28,
+    "move": "SLASH"
+   },
+   {
+    "level": 32,
+    "move": "EXTRASENSORY"
+   }
+  ],
+  "height": 0.5,
+  "weight": 8,
+  "color": "White",
+  "habitat": "Urban",
+  "category": "Cãozinho Sagrado",
+  "entry": "Cachorrinha de coleira sagrada, escondida do inimigo desde que nasceu. Desconfia de todo mundo — com razão.",
+  "evolutions": [
+   {
+    "into": "GATOMON",
+    "method": "Level",
+    "param": "20",
+    "condition": {
+     "friendshipAbove": 84
+    }
+   },
+   {
+    "into": "BLACKGATOMON",
+    "method": "Level",
+    "param": "20"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 705,
+  "name": "Gatomon",
+  "internalName": "GATOMON",
+  "type1": "NORMAL",
+  "type2": "FIGHTING",
+  "attribute": "Vaccine",
+  "stage": "Champion",
+  "stats": {
+   "hp": 76,
+   "atk": 96,
+   "def": 70,
+   "spe": 116,
+   "spa": 88,
+   "spd": 80
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 155,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 2,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 70,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "SCRATCH"
+   },
+   {
+    "level": 1,
+    "move": "SANDATTACK"
+   },
+   {
+    "level": 20,
+    "move": "LIGHTNINGPAW"
+   },
+   {
+    "level": 24,
+    "move": "AERIALACE"
+   },
+   {
+    "level": 28,
+    "move": "SLASH"
+   },
+   {
+    "level": 32,
+    "move": "EXTRASENSORY"
+   },
+   {
+    "level": 36,
+    "move": "CLOSECOMBAT"
+   },
+   {
+    "level": 40,
+    "move": "PSYCHIC"
+   }
+  ],
+  "height": 0.6,
+  "weight": 12,
+  "color": "White",
+  "habitat": "Urban",
+  "category": "Gato Sagrado",
+  "entry": "Do tamanho de um gato comum, com a força de um Ultimate. As Luvas Sagradas seguram um poder que ela levou anos para reconhecer.",
+  "evolutions": [
+   {
+    "into": "ANGEWOMON",
+    "method": "Level",
+    "param": "30"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 706,
+  "name": "Angewomon",
+  "internalName": "ANGEWOMON",
+  "type1": "PSYCHIC",
+  "type2": "FLYING",
+  "attribute": "Vaccine",
+  "stage": "Ultimate",
+  "stats": {
+   "hp": 92,
+   "atk": 96,
+   "def": 88,
+   "spe": 104,
+   "spa": 128,
+   "spd": 110
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 200,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 3,
+   "spd": 0
+  },
+  "catchRate": 30,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "AERIALACE"
+   },
+   {
+    "level": 1,
+    "move": "SAFEGUARD"
+   },
+   {
+    "level": 30,
+    "move": "CELESTIALARROW"
+   },
+   {
+    "level": 34,
+    "move": "PSYCHIC"
+   },
+   {
+    "level": 38,
+    "move": "AIRSLASH"
+   },
+   {
+    "level": 42,
+    "move": "MOONLIGHT"
+   },
+   {
+    "level": 46,
+    "move": "PSYSHOCK"
+   },
+   {
+    "level": 50,
+    "move": "HURRICANE"
+   }
+  ],
+  "height": 1.8,
+  "weight": 45,
+  "color": "White",
+  "habitat": "Rare",
+  "category": "Anjo",
+  "entry": "Oito asas e uma flecha que nunca erra. Empresta a própria luz aos aliados antes de disparar.",
+  "evolutions": [
+   {
+    "into": "OPHANIMON",
+    "method": "Level",
+    "param": "45",
+    "condition": {
+     "hasItem": "DIGILINKOMEGA"
+    }
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 707,
+  "name": "Ophanimon",
+  "internalName": "OPHANIMON",
+  "type1": "PSYCHIC",
+  "type2": "FLYING",
+  "attribute": "Vaccine",
+  "stage": "Mega",
+  "stats": {
+   "hp": 116,
+   "atk": 108,
+   "def": 112,
+   "spe": 108,
+   "spa": 138,
+   "spd": 128
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 255,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 3,
+   "spd": 0
+  },
+  "catchRate": 8,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "PSYCHIC"
+   },
+   {
+    "level": 1,
+    "move": "LIGHTSCREEN"
+   },
+   {
+    "level": 45,
+    "move": "EDENSJAVELIN"
+   },
+   {
+    "level": 49,
+    "move": "PSYSHOCK"
+   },
+   {
+    "level": 53,
+    "move": "AURASPHERE"
+   },
+   {
+    "level": 57,
+    "move": "MOONLIGHT"
+   },
+   {
+    "level": 62,
+    "move": "HYPERBEAM"
+   }
+  ],
+  "height": 3,
+  "weight": 120,
+  "color": "White",
+  "habitat": "Rare",
+  "category": "Anjo Supremo",
+  "entry": "Uma das Três Grandes Anjos. Carrega a Lança de Éden numa mão e a proteção do Mundo Digital na outra.",
+  "evolutions": [],
+  "lore": "Mega não exibida na 1ª temporada: canônica da franquia, reservada para o pós-jogo.",
+  "franchise": "DGM"
+ },
+ {
+  "id": 708,
+  "name": "BlackGatomon",
+  "internalName": "BLACKGATOMON",
+  "type1": "DARK",
+  "type2": null,
+  "attribute": "Virus",
+  "stage": "Champion",
+  "stats": {
+   "hp": 74,
+   "atk": 92,
+   "def": 68,
+   "spe": 112,
+   "spa": 84,
+   "spd": 70
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 155,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 2,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 70,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "SCRATCH"
+   },
+   {
+    "level": 1,
+    "move": "SANDATTACK"
+   },
+   {
+    "level": 20,
+    "move": "CATSEYE"
+   },
+   {
+    "level": 24,
+    "move": "FEINTATTACK"
+   },
+   {
+    "level": 28,
+    "move": "SLASH"
+   },
+   {
+    "level": 32,
+    "move": "PURSUIT"
+   },
+   {
+    "level": 36,
+    "move": "DARKPULSE"
+   },
+   {
+    "level": 40,
+    "move": "SUCKERPUNCH"
+   }
+  ],
+  "height": 0.6,
+  "weight": 12,
+  "color": "Black",
+  "habitat": "Urban",
+  "category": "Gato Sombrio",
+  "entry": "A gata que aceitou servir ao invés de esperar. Hipnotiza com o olhar e sorri enquanto obedece a um mestre cruel.",
+  "evolutions": [
+   {
+    "into": "LADYDEVIMON",
+    "method": "Level",
+    "param": "30"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 709,
+  "name": "LadyDevimon",
+  "internalName": "LADYDEVIMON",
+  "type1": "DARK",
+  "type2": "FLYING",
+  "attribute": "Virus",
+  "stage": "Ultimate",
+  "stats": {
+   "hp": 90,
+   "atk": 116,
+   "def": 82,
+   "spe": 112,
+   "spa": 118,
+   "spd": 84
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 200,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 3,
+   "spd": 0
+  },
+  "catchRate": 30,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "FEINTATTACK"
+   },
+   {
+    "level": 1,
+    "move": "SCARYFACE"
+   },
+   {
+    "level": 30,
+    "move": "DARKNESSWAVE"
+   },
+   {
+    "level": 34,
+    "move": "SHADOWCLAW"
+   },
+   {
+    "level": 38,
+    "move": "AIRSLASH"
+   },
+   {
+    "level": 42,
+    "move": "DARKPULSE"
+   },
+   {
+    "level": 46,
+    "move": "NASTYPLOT"
+   },
+   {
+    "level": 50,
+    "move": "HURRICANE"
+   }
+  ],
+  "height": 1.9,
+  "weight": 48,
+  "color": "Black",
+  "habitat": "Rare",
+  "category": "Anjo Caído",
+  "entry": "O espelho invertido de Angewomon, e serva fiel de Piedmon. Debocha do inimigo antes, durante e depois de vencer.",
+  "evolutions": [],
+  "franchise": "DGM"
+ },
+ {
+  "id": 710,
+  "name": "DemiDevimon",
+  "internalName": "DEMIDEVIMON",
+  "type1": "POISON",
+  "type2": "FLYING",
+  "attribute": "Virus",
+  "stage": "Rookie",
+  "stats": {
+   "hp": 52,
+   "atk": 56,
+   "def": 48,
+   "spe": 68,
+   "spa": 68,
+   "spd": 52
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 95,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 1,
+   "spd": 0
+  },
+  "catchRate": 130,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "ASTONISH"
+   },
+   {
+    "level": 1,
+    "move": "SUPERSONIC"
+   },
+   {
+    "level": 14,
+    "move": "DEMIDART"
+   },
+   {
+    "level": 17,
+    "move": "WINGATTACK"
+   },
+   {
+    "level": 20,
+    "move": "CONFUSERAY"
+   },
+   {
+    "level": 24,
+    "move": "FEINTATTACK"
+   },
+   {
+    "level": 28,
+    "move": "TOXIC"
+   },
+   {
+    "level": 32,
+    "move": "SLUDGEBOMB"
+   }
+  ],
+  "height": 0.6,
+  "weight": 7,
+  "color": "Blue",
+  "habitat": "Urban",
+  "category": "Morcego",
+  "entry": "Pequeno, covarde e mentiroso profissional. Não vence ninguém na força — vence convencendo o inimigo a errar.",
+  "evolutions": [
+   {
+    "into": "DEVIMON",
+    "method": "Level",
+    "param": "22",
+    "condition": {
+     "winsAtLeast": 12
+    }
+   },
+   {
+    "into": "BAKEMON",
+    "method": "Level",
+    "param": "22"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 711,
+  "name": "Devimon",
+  "internalName": "DEVIMON",
+  "type1": "DARK",
+  "type2": "FLYING",
+  "attribute": "Virus",
+  "stage": "Champion",
+  "stats": {
+   "hp": 90,
+   "atk": 110,
+   "def": 80,
+   "spe": 92,
+   "spa": 108,
+   "spd": 78
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 210,
+  "evYield": {
+   "hp": 0,
+   "atk": 2,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 20,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "FEINTATTACK"
+   },
+   {
+    "level": 1,
+    "move": "SCARYFACE"
+   },
+   {
+    "level": 22,
+    "move": "TOUCHOFEVIL"
+   },
+   {
+    "level": 26,
+    "move": "SHADOWCLAW"
+   },
+   {
+    "level": 30,
+    "move": "WINGATTACK"
+   },
+   {
+    "level": 34,
+    "move": "DARKPULSE"
+   },
+   {
+    "level": 38,
+    "move": "AIRSLASH"
+   },
+   {
+    "level": 42,
+    "move": "NIGHTSLASH"
+   }
+  ],
+  "height": 3.2,
+  "weight": 120,
+  "color": "Black",
+  "habitat": "Rare",
+  "category": "Demônio",
+  "entry": "O senhor dos Anéis Negros, primeiro inimigo real da Ilha File. Quebra a montanha em pedaços só para separar as crianças.",
+  "evolutions": [],
+  "lore": "Chefe do Marco 1 da Dimensão Digital.",
+  "franchise": "DGM"
+ },
+ {
+  "id": 712,
+  "name": "Bakemon",
+  "internalName": "BAKEMON",
+  "type1": "GHOST",
+  "type2": null,
+  "attribute": "Virus",
+  "stage": "Champion",
+  "stats": {
+   "hp": 82,
+   "atk": 78,
+   "def": 66,
+   "spe": 68,
+   "spa": 96,
+   "spd": 78
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 155,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 2,
+   "spd": 0
+  },
+  "catchRate": 70,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "ASTONISH"
+   },
+   {
+    "level": 1,
+    "move": "CONFUSERAY"
+   },
+   {
+    "level": 22,
+    "move": "ZOMBIECLAW"
+   },
+   {
+    "level": 26,
+    "move": "NIGHTSHADE"
+   },
+   {
+    "level": 30,
+    "move": "HEX"
+   },
+   {
+    "level": 34,
+    "move": "SHADOWBALL"
+   },
+   {
+    "level": 38,
+    "move": "DESTINYBOND"
+   },
+   {
+    "level": 42,
+    "move": "SHADOWCLAW"
+   }
+  ],
+  "height": 2,
+  "weight": 30,
+  "color": "White",
+  "habitat": "Cave",
+  "category": "Fantasma",
+  "entry": "Lençol velho com garras por baixo. Aparece em bando e finge ser cerimônia religiosa antes de atacar.",
+  "evolutions": [
+   {
+    "into": "PHANTOMON",
+    "method": "Level",
+    "param": "32"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 713,
+  "name": "Phantomon",
+  "internalName": "PHANTOMON",
+  "type1": "GHOST",
+  "type2": "DARK",
+  "attribute": "Virus",
+  "stage": "Ultimate",
+  "stats": {
+   "hp": 92,
+   "atk": 112,
+   "def": 84,
+   "spe": 94,
+   "spa": 108,
+   "spd": 88
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 200,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 30,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "ZOMBIECLAW"
+   },
+   {
+    "level": 1,
+    "move": "CONFUSERAY"
+   },
+   {
+    "level": 32,
+    "move": "SHADOWSCYTHE"
+   },
+   {
+    "level": 36,
+    "move": "SHADOWBALL"
+   },
+   {
+    "level": 40,
+    "move": "DARKPULSE"
+   },
+   {
+    "level": 44,
+    "move": "HEX"
+   },
+   {
+    "level": 48,
+    "move": "NIGHTSLASH"
+   },
+   {
+    "level": 52,
+    "move": "DESTINYBOND"
+   }
+  ],
+  "height": 2.6,
+  "weight": 55,
+  "color": "Black",
+  "habitat": "Rare",
+  "category": "Ceifador",
+  "entry": "Carrega foice e corrente e obedece só a Myotismon. Diz o número de segundos que falta para o alvo — e acerta.",
+  "evolutions": [],
+  "franchise": "DGM"
+ },
+ {
+  "id": 714,
+  "name": "Vilemon",
+  "internalName": "VILEMON",
+  "type1": "DARK",
+  "type2": "FLYING",
+  "attribute": "Virus",
+  "stage": "Champion",
+  "stats": {
+   "hp": 70,
+   "atk": 88,
+   "def": 62,
+   "spe": 96,
+   "spa": 78,
+   "spd": 60
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 155,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 2,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 70,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "SCRATCH"
+   },
+   {
+    "level": 1,
+    "move": "SCREECH"
+   },
+   {
+    "level": 22,
+    "move": "NAILSCREAM"
+   },
+   {
+    "level": 26,
+    "move": "WINGATTACK"
+   },
+   {
+    "level": 30,
+    "move": "FEINTATTACK"
+   },
+   {
+    "level": 34,
+    "move": "AERIALACE"
+   },
+   {
+    "level": 38,
+    "move": "DARKPULSE"
+   },
+   {
+    "level": 42,
+    "move": "SLASH"
+   }
+  ],
+  "height": 1.1,
+  "weight": 21,
+  "color": "Purple",
+  "habitat": "Rare",
+  "category": "Diabrete",
+  "entry": "Nunca aparece sozinho: chega às centenas, gritando. Piedmon os usa como cortina de fumaça viva.",
+  "evolutions": [],
+  "franchise": "DGM"
+ },
+ {
+  "id": 715,
+  "name": "Etemon",
+  "internalName": "ETEMON",
+  "type1": "DARK",
+  "type2": "NORMAL",
+  "attribute": "Virus",
+  "stage": "Ultimate",
+  "stats": {
+   "hp": 104,
+   "atk": 112,
+   "def": 92,
+   "spe": 84,
+   "spa": 116,
+   "spd": 88
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 240,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 3,
+   "spd": 0
+  },
+  "catchRate": 15,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "SCRATCH"
+   },
+   {
+    "level": 1,
+    "move": "SCREECH"
+   },
+   {
+    "level": 32,
+    "move": "DARKNETWORK"
+   },
+   {
+    "level": 36,
+    "move": "HYPERVOICE"
+   },
+   {
+    "level": 40,
+    "move": "FEINTATTACK"
+   },
+   {
+    "level": 44,
+    "move": "DARKPULSE"
+   },
+   {
+    "level": 48,
+    "move": "MEGAPUNCH"
+   },
+   {
+    "level": 52,
+    "move": "NASTYPLOT"
+   }
+  ],
+  "height": 2.6,
+  "weight": 155,
+  "color": "Brown",
+  "habitat": "RoughTerrain",
+  "category": "Macaco",
+  "entry": "Macaco de óculos escuros, jaqueta e microfone. Canta horrivelmente e controla um continente inteiro pela Rede Negra.",
+  "evolutions": [
+   {
+    "into": "METALETEMON",
+    "method": "Level",
+    "param": "45"
+   }
+  ],
+  "lore": "Chefe do Marco 2 da Dimensão Digital.",
+  "franchise": "DGM"
+ },
+ {
+  "id": 716,
+  "name": "MetalEtemon",
+  "internalName": "METALETEMON",
+  "type1": "STEEL",
+  "type2": "DARK",
+  "attribute": "Virus",
+  "stage": "Mega",
+  "stats": {
+   "hp": 118,
+   "atk": 132,
+   "def": 130,
+   "spe": 82,
+   "spa": 108,
+   "spd": 104
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 300,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 3,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "METALCLAW"
+   },
+   {
+    "level": 1,
+    "move": "SCREECH"
+   },
+   {
+    "level": 45,
+    "move": "METALPUNCH"
+   },
+   {
+    "level": 49,
+    "move": "IRONHEAD"
+   },
+   {
+    "level": 53,
+    "move": "DARKPULSE"
+   },
+   {
+    "level": 57,
+    "move": "FLASHCANNON"
+   },
+   {
+    "level": 62,
+    "move": "GIGAIMPACT"
+   }
+  ],
+  "height": 3,
+  "weight": 320,
+  "color": "Gray",
+  "habitat": "Rare",
+  "category": "Macaco de Aço",
+  "entry": "Voltou coberto de Chrome Digizoid e ainda mais convencido. A armadura resiste a quase tudo — o ego, a nada.",
+  "evolutions": [],
+  "franchise": "DGM"
+ },
+ {
+  "id": 717,
+  "name": "Myotismon",
+  "internalName": "MYOTISMON",
+  "type1": "DARK",
+  "type2": "GHOST",
+  "attribute": "Virus",
+  "stage": "Ultimate",
+  "stats": {
+   "hp": 98,
+   "atk": 112,
+   "def": 92,
+   "spe": 106,
+   "spa": 132,
+   "spd": 96
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 250,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 3,
+   "spd": 0
+  },
+  "catchRate": 12,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "FEINTATTACK"
+   },
+   {
+    "level": 1,
+    "move": "CONFUSERAY"
+   },
+   {
+    "level": 32,
+    "move": "CRIMSONLIGHTNING"
+   },
+   {
+    "level": 36,
+    "move": "GRISLYWING"
+   },
+   {
+    "level": 40,
+    "move": "SHADOWBALL"
+   },
+   {
+    "level": 44,
+    "move": "DARKPULSE"
+   },
+   {
+    "level": 48,
+    "move": "NASTYPLOT"
+   },
+   {
+    "level": 52,
+    "move": "HEX"
+   }
+  ],
+  "height": 2.2,
+  "weight": 75,
+  "color": "Blue",
+  "habitat": "Rare",
+  "category": "Vampiro",
+  "entry": "Vampiro metódico e paciente. Levou o cerco ao mundo humano só para encontrar uma criança — e quase conseguiu.",
+  "evolutions": [
+   {
+    "into": "VENOMMYOTISMON",
+    "method": "Level",
+    "param": "45"
+   }
+  ],
+  "lore": "Chefe do Marco 3 da Dimensão Digital.",
+  "franchise": "DGM"
+ },
+ {
+  "id": 718,
+  "name": "VenomMyotismon",
+  "internalName": "VENOMMYOTISMON",
+  "type1": "DARK",
+  "type2": "POISON",
+  "attribute": "Virus",
+  "stage": "Mega",
+  "stats": {
+   "hp": 150,
+   "atk": 148,
+   "def": 118,
+   "spe": 62,
+   "spa": 118,
+   "spd": 100
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 300,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 3,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "CRUNCH"
+   },
+   {
+    "level": 1,
+    "move": "SCARYFACE"
+   },
+   {
+    "level": 45,
+    "move": "NIGHTMARECLAW"
+   },
+   {
+    "level": 49,
+    "move": "SLUDGEBOMB"
+   },
+   {
+    "level": 53,
+    "move": "DARKPULSE"
+   },
+   {
+    "level": 57,
+    "move": "POISONJAB"
+   },
+   {
+    "level": 62,
+    "move": "GIGAIMPACT"
+   }
+  ],
+  "height": 20,
+  "weight": 900,
+  "color": "Purple",
+  "habitat": "Rare",
+  "category": "Besta Demoníaca",
+  "entry": "Myotismon sem elegância nenhuma: puro apetite. Perdeu a inteligência ao ganhar o tamanho de um prédio.",
+  "evolutions": [],
+  "franchise": "DGM"
+ },
+ {
+  "id": 719,
+  "name": "MetalSeadramon",
+  "internalName": "METALSEADRAMON",
+  "type1": "WATER",
+  "type2": "STEEL",
+  "attribute": "Data",
+  "stage": "Mega",
+  "stats": {
+   "hp": 128,
+   "atk": 130,
+   "def": 138,
+   "spe": 108,
+   "spa": 128,
+   "spd": 108
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 300,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 3,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 3,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "AQUATAIL"
+   },
+   {
+    "level": 1,
+    "move": "IRONDEFENSE"
+   },
+   {
+    "level": 45,
+    "move": "RIVEROFPOWER"
+   },
+   {
+    "level": 49,
+    "move": "FLASHCANNON"
+   },
+   {
+    "level": 53,
+    "move": "HYDROPUMP"
+   },
+   {
+    "level": 57,
+    "move": "IRONHEAD"
+   },
+   {
+    "level": 62,
+    "move": "SURF"
+   }
+  ],
+  "height": 12,
+  "weight": 800,
+  "color": "Gray",
+  "habitat": "Sea",
+  "category": "Mestre das Trevas",
+  "entry": "Dark Master dos mares, coberto de Chrome Digizoid. Reivindica toda a água do Mundo Digital como propriedade privada.",
+  "evolutions": [],
+  "lore": "Dark Master — um dos quatro chefes do Ato 3.",
+  "franchise": "DGM"
+ },
+ {
+  "id": 720,
+  "name": "Puppetmon",
+  "internalName": "PUPPETMON",
+  "type1": "GRASS",
+  "type2": "DARK",
+  "attribute": "Virus",
+  "stage": "Mega",
+  "stats": {
+   "hp": 120,
+   "atk": 138,
+   "def": 108,
+   "spe": 118,
+   "spa": 132,
+   "spd": 104
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 300,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 3,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "WOODYSMASHER"
+   },
+   {
+    "level": 1,
+    "move": "CONFUSERAY"
+   },
+   {
+    "level": 45,
+    "move": "PUPPETPUMMEL"
+   },
+   {
+    "level": 49,
+    "move": "WOODHAMMER"
+   },
+   {
+    "level": 53,
+    "move": "DARKPULSE"
+   },
+   {
+    "level": 57,
+    "move": "ENERGYBALL"
+   },
+   {
+    "level": 62,
+    "move": "TRICK"
+   }
+  ],
+  "height": 2.4,
+  "weight": 90,
+  "color": "Brown",
+  "habitat": "Forest",
+  "category": "Mestre das Trevas",
+  "entry": "Dark Master das florestas. Trata a guerra como brincadeira e as crianças como bonecos — até perceber que ninguém quer brincar com ele.",
+  "evolutions": [],
+  "lore": "Dark Master — um dos quatro chefes do Ato 3.",
+  "franchise": "DGM"
+ },
+ {
+  "id": 721,
+  "name": "Machinedramon",
+  "internalName": "MACHINEDRAMON",
+  "type1": "STEEL",
+  "type2": "DRAGON",
+  "attribute": "Virus",
+  "stage": "Mega",
+  "stats": {
+   "hp": 138,
+   "atk": 148,
+   "def": 148,
+   "spe": 66,
+   "spa": 132,
+   "spd": 112
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 300,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 3,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "METALCLAW"
+   },
+   {
+    "level": 1,
+    "move": "LOCKON"
+   },
+   {
+    "level": 45,
+    "move": "GIGACANNON"
+   },
+   {
+    "level": 49,
+    "move": "FLASHCANNON"
+   },
+   {
+    "level": 53,
+    "move": "IRONHEAD"
+   },
+   {
+    "level": 57,
+    "move": "DRAGONCLAW"
+   },
+   {
+    "level": 62,
+    "move": "HYPERBEAM"
+   }
+  ],
+  "height": 15,
+  "weight": 1200,
+  "color": "Gray",
+  "habitat": "Urban",
+  "category": "Mestre das Trevas",
+  "entry": "Dark Master das máquinas. Uma cidade inteira construída como corpo, sem uma única emoção no circuito.",
+  "evolutions": [],
+  "lore": "Dark Master — um dos quatro chefes do Ato 3.",
+  "franchise": "DGM"
+ },
+ {
+  "id": 722,
+  "name": "Piedmon",
+  "internalName": "PIEDMON",
+  "type1": "DARK",
+  "type2": "PSYCHIC",
+  "attribute": "Virus",
+  "stage": "Mega",
+  "stats": {
+   "hp": 122,
+   "atk": 138,
+   "def": 112,
+   "spe": 138,
+   "spa": 148,
+   "spd": 118
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 300,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 3,
+   "spd": 0
+  },
+  "catchRate": 3,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "FEINTATTACK"
+   },
+   {
+    "level": 1,
+    "move": "CONFUSERAY"
+   },
+   {
+    "level": 45,
+    "move": "TRUMPSWORD"
+   },
+   {
+    "level": 49,
+    "move": "PSYCHIC"
+   },
+   {
+    "level": 53,
+    "move": "DARKPULSE"
+   },
+   {
+    "level": 57,
+    "move": "NIGHTSLASH"
+   },
+   {
+    "level": 62,
+    "move": "TRICK"
+   }
+  ],
+  "height": 2.4,
+  "weight": 100,
+  "color": "White",
+  "habitat": "Rare",
+  "category": "Mestre das Trevas",
+  "entry": "Dark Master mais forte dos quatro e o mais cruel. Transforma quem perde em chaveiro e ri como se fosse mágica de festa.",
+  "evolutions": [],
+  "lore": "Dark Master — um dos quatro chefes do Ato 3.",
+  "franchise": "DGM"
+ },
+ {
+  "id": 723,
+  "name": "Apocalymon",
+  "internalName": "APOCALYMON",
+  "type1": "DARK",
+  "type2": "GHOST",
+  "attribute": "Virus",
+  "stage": "Unknown",
+  "stats": {
+   "hp": 160,
+   "atk": 142,
+   "def": 132,
+   "spe": 92,
+   "spa": 152,
+   "spd": 132
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 340,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 3,
+   "spd": 0
+  },
+  "catchRate": 3,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "SHADOWBALL"
+   },
+   {
+    "level": 1,
+    "move": "SCARYFACE"
+   },
+   {
+    "level": 50,
+    "move": "DARKNESSZONE"
+   },
+   {
+    "level": 54,
+    "move": "DARKPULSE"
+   },
+   {
+    "level": 58,
+    "move": "HEX"
+   },
+   {
+    "level": 62,
+    "move": "PSYCHIC"
+   },
+   {
+    "level": 66,
+    "move": "HYPERBEAM"
+   }
+  ],
+  "height": 9,
+  "weight": 999,
+  "color": "Black",
+  "habitat": "Rare",
+  "category": "Desespero",
+  "entry": "Nasceu de todos os Digimon que não conseguiram digievoluir. É o rancor do Mundo Digital tomando forma e cobrando a conta.",
+  "evolutions": [],
+  "lore": "Chefe final da Dimensão Digital.",
+  "franchise": "DGM"
+ },
+ {
+  "id": 724,
+  "name": "Betamon",
+  "internalName": "BETAMON",
+  "type1": "WATER",
+  "type2": null,
+  "attribute": "Virus",
+  "stage": "Rookie",
+  "stats": {
+   "hp": 62,
+   "atk": 56,
+   "def": 58,
+   "spe": 40,
+   "spa": 62,
+   "spd": 54
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 95,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 1,
+   "spd": 0
+  },
+  "catchRate": 130,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "TACKLE"
+   },
+   {
+    "level": 1,
+    "move": "LEER"
+   },
+   {
+    "level": 14,
+    "move": "THUNDERSHOCK"
+   },
+   {
+    "level": 17,
+    "move": "WATERGUN"
+   },
+   {
+    "level": 20,
+    "move": "BITE"
+   },
+   {
+    "level": 24,
+    "move": "SPARK"
+   },
+   {
+    "level": 28,
+    "move": "WATERPULSE"
+   },
+   {
+    "level": 32,
+    "move": "DISCHARGE"
+   }
+  ],
+  "height": 0.9,
+  "weight": 17,
+  "color": "Green",
+  "habitat": "WatersEdge",
+  "category": "Anfíbio",
+  "entry": "Anfíbio verde de barbatana nas costas. Fica imóvel na água rasa até alguém pisar bem ao lado.",
+  "evolutions": [
+   {
+    "into": "SEADRAMON",
+    "method": "Level",
+    "param": "20"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 725,
+  "name": "Seadramon",
+  "internalName": "SEADRAMON",
+  "type1": "WATER",
+  "type2": "ICE",
+  "attribute": "Data",
+  "stage": "Champion",
+  "stats": {
+   "hp": 88,
+   "atk": 88,
+   "def": 74,
+   "spe": 76,
+   "spa": 88,
+   "spd": 70
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 155,
+  "evYield": {
+   "hp": 0,
+   "atk": 2,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 70,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "WRAP"
+   },
+   {
+    "level": 1,
+    "move": "LEER"
+   },
+   {
+    "level": 20,
+    "move": "ICEBLAST"
+   },
+   {
+    "level": 24,
+    "move": "AQUATAIL"
+   },
+   {
+    "level": 28,
+    "move": "BIND"
+   },
+   {
+    "level": 32,
+    "move": "ICYWIND"
+   },
+   {
+    "level": 36,
+    "move": "SURF"
+   },
+   {
+    "level": 40,
+    "move": "AURORABEAM"
+   }
+  ],
+  "height": 8,
+  "weight": 250,
+  "color": "Blue",
+  "habitat": "Sea",
+  "category": "Serpente Marinha",
+  "entry": "Serpente de mar que enrola o alvo e mergulha. Um sopro seu congela um lago inteiro em segundos.",
+  "evolutions": [
+   {
+    "into": "MEGASEADRAMON",
+    "method": "Level",
+    "param": "32"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 726,
+  "name": "MegaSeadramon",
+  "internalName": "MEGASEADRAMON",
+  "type1": "WATER",
+  "type2": "ELECTRIC",
+  "attribute": "Data",
+  "stage": "Ultimate",
+  "stats": {
+   "hp": 104,
+   "atk": 108,
+   "def": 92,
+   "spe": 96,
+   "spa": 112,
+   "spd": 88
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 200,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 3,
+   "spd": 0
+  },
+  "catchRate": 30,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "AQUATAIL"
+   },
+   {
+    "level": 1,
+    "move": "IRONDEFENSE"
+   },
+   {
+    "level": 32,
+    "move": "THUNDERJAVELIN"
+   },
+   {
+    "level": 36,
+    "move": "DISCHARGE"
+   },
+   {
+    "level": 40,
+    "move": "SURF"
+   },
+   {
+    "level": 44,
+    "move": "ICEBEAM"
+   },
+   {
+    "level": 48,
+    "move": "THUNDER"
+   },
+   {
+    "level": 52,
+    "move": "HYDROPUMP"
+   }
+  ],
+  "height": 10,
+  "weight": 400,
+  "color": "Blue",
+  "habitat": "Sea",
+  "category": "Serpente Marinha",
+  "entry": "O chifre da cabeça conduz raios do céu direto para a água. Manda no oceano — até MetalSeadramon aparecer.",
+  "evolutions": [
+   {
+    "into": "METALSEADRAMON",
+    "method": "Level",
+    "param": "46",
+    "condition": {
+     "hasItem": "DIGILINKOMEGA"
+    }
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 727,
+  "name": "Whamon",
+  "internalName": "WHAMON",
+  "type1": "WATER",
+  "type2": null,
+  "attribute": "Data",
+  "stage": "Champion",
+  "stats": {
+   "hp": 132,
+   "atk": 82,
+   "def": 92,
+   "spe": 44,
+   "spa": 84,
+   "spd": 82
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 155,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 2,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 70,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "WATERGUN"
+   },
+   {
+    "level": 1,
+    "move": "HARDEN"
+   },
+   {
+    "level": 20,
+    "move": "BLASTINGSPOUT"
+   },
+   {
+    "level": 24,
+    "move": "WATERPULSE"
+   },
+   {
+    "level": 28,
+    "move": "BODYSLAM"
+   },
+   {
+    "level": 32,
+    "move": "BRINE"
+   },
+   {
+    "level": 36,
+    "move": "SURF"
+   },
+   {
+    "level": 40,
+    "move": "HYDROPUMP"
+   }
+  ],
+  "height": 12,
+  "weight": 850,
+  "color": "Blue",
+  "habitat": "Sea",
+  "category": "Baleia",
+  "entry": "Baleia gigante de coração enorme. Engole quem pede carona e leva de graça até o outro lado do mar.",
+  "evolutions": [],
+  "franchise": "DGM"
+ },
+ {
+  "id": 728,
+  "name": "Shellmon",
+  "internalName": "SHELLMON",
+  "type1": "WATER",
+  "type2": "ROCK",
+  "attribute": "Data",
+  "stage": "Champion",
+  "stats": {
+   "hp": 96,
+   "atk": 88,
+   "def": 106,
+   "spe": 40,
+   "spa": 82,
+   "spd": 76
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 155,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 2,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 70,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "WATERGUN"
+   },
+   {
+    "level": 1,
+    "move": "HARDEN"
+   },
+   {
+    "level": 20,
+    "move": "HYDROPRESSURE"
+   },
+   {
+    "level": 24,
+    "move": "ROCKTHROW"
+   },
+   {
+    "level": 28,
+    "move": "WATERPULSE"
+   },
+   {
+    "level": 32,
+    "move": "ROCKSLIDE"
+   },
+   {
+    "level": 36,
+    "move": "SURF"
+   },
+   {
+    "level": 40,
+    "move": "STONEEDGE"
+   }
+  ],
+  "height": 2.4,
+  "weight": 250,
+  "color": "Pink",
+  "habitat": "WatersEdge",
+  "category": "Molusco",
+  "entry": "Concha ambulante de mau humor crônico. Ataca qualquer coisa que apareça na praia e não pede desculpa.",
+  "evolutions": [],
+  "franchise": "DGM"
+ },
+ {
+  "id": 729,
+  "name": "Hagurumon",
+  "internalName": "HAGURUMON",
+  "type1": "STEEL",
+  "type2": null,
+  "attribute": "Virus",
+  "stage": "Rookie",
+  "stats": {
+   "hp": 50,
+   "atk": 52,
+   "def": 70,
+   "spe": 46,
+   "spa": 62,
+   "spd": 58
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 95,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 1,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 130,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "TACKLE"
+   },
+   {
+    "level": 1,
+    "move": "METALSOUND"
+   },
+   {
+    "level": 14,
+    "move": "COGCRUSHER"
+   },
+   {
+    "level": 17,
+    "move": "METALCLAW"
+   },
+   {
+    "level": 20,
+    "move": "GYROBALL"
+   },
+   {
+    "level": 24,
+    "move": "MIRRORSHOT"
+   },
+   {
+    "level": 28,
+    "move": "IRONDEFENSE"
+   },
+   {
+    "level": 32,
+    "move": "FLASHCANNON"
+   }
+  ],
+  "height": 0.6,
+  "weight": 24,
+  "color": "Gray",
+  "habitat": "Urban",
+  "category": "Máquina",
+  "entry": "Engrenagem viva que se infiltra no maquinário alheio. Onde entra um Hagurumon, a fábrica muda de dono.",
+  "evolutions": [
+   {
+    "into": "GUARDROMON",
+    "method": "Level",
+    "param": "20"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 730,
+  "name": "Guardromon",
+  "internalName": "GUARDROMON",
+  "type1": "STEEL",
+  "type2": null,
+  "attribute": "Virus",
+  "stage": "Champion",
+  "stats": {
+   "hp": 88,
+   "atk": 92,
+   "def": 112,
+   "spe": 44,
+   "spa": 78,
+   "spd": 76
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 155,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 2,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 70,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "METALCLAW"
+   },
+   {
+    "level": 1,
+    "move": "IRONDEFENSE"
+   },
+   {
+    "level": 20,
+    "move": "GUARDIANBARRAGE"
+   },
+   {
+    "level": 24,
+    "move": "GYROBALL"
+   },
+   {
+    "level": 28,
+    "move": "MIRRORSHOT"
+   },
+   {
+    "level": 32,
+    "move": "IRONHEAD"
+   },
+   {
+    "level": 36,
+    "move": "FLASHCANNON"
+   },
+   {
+    "level": 40,
+    "move": "METEORMASH"
+   }
+  ],
+  "height": 2.2,
+  "weight": 280,
+  "color": "Gray",
+  "habitat": "Urban",
+  "category": "Máquina",
+  "entry": "Guarda enferrujado e lento, mas incansável. Dispara foguetes dos ombros sem nunca perguntar o motivo da ordem.",
+  "evolutions": [
+   {
+    "into": "ANDROMON",
+    "method": "Level",
+    "param": "32"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 731,
+  "name": "Andromon",
+  "internalName": "ANDROMON",
+  "type1": "STEEL",
+  "type2": "ELECTRIC",
+  "attribute": "Vaccine",
+  "stage": "Ultimate",
+  "stats": {
+   "hp": 104,
+   "atk": 118,
+   "def": 118,
+   "spe": 92,
+   "spa": 108,
+   "spd": 94
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 200,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 30,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "METALCLAW"
+   },
+   {
+    "level": 1,
+    "move": "LOCKON"
+   },
+   {
+    "level": 32,
+    "move": "LIGHTNINGBLADE"
+   },
+   {
+    "level": 36,
+    "move": "IRONHEAD"
+   },
+   {
+    "level": 40,
+    "move": "DISCHARGE"
+   },
+   {
+    "level": 44,
+    "move": "FLASHCANNON"
+   },
+   {
+    "level": 48,
+    "move": "METEORMASH"
+   },
+   {
+    "level": 52,
+    "move": "THUNDER"
+   }
+  ],
+  "height": 3,
+  "weight": 350,
+  "color": "Gray",
+  "habitat": "Urban",
+  "category": "Androide",
+  "entry": "Androide perfeito arruinado por um único engrenagem podre. Quando volta a si, é o aliado mais confiável da fábrica.",
+  "evolutions": [],
+  "lore": "A série não mostrou a Mega de Andromon; a linha termina aqui de propósito.",
+  "franchise": "DGM"
+ },
+ {
+  "id": 732,
+  "name": "Datamon",
+  "internalName": "DATAMON",
+  "type1": "STEEL",
+  "type2": "PSYCHIC",
+  "attribute": "Virus",
+  "stage": "Ultimate",
+  "stats": {
+   "hp": 88,
+   "atk": 92,
+   "def": 104,
+   "spe": 88,
+   "spa": 128,
+   "spd": 100
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 200,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 3,
+   "spd": 0
+  },
+  "catchRate": 30,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "METALCLAW"
+   },
+   {
+    "level": 1,
+    "move": "LOCKON"
+   },
+   {
+    "level": 32,
+    "move": "DIGITALBOMB"
+   },
+   {
+    "level": 36,
+    "move": "PSYBEAM"
+   },
+   {
+    "level": 40,
+    "move": "FLASHCANNON"
+   },
+   {
+    "level": 44,
+    "move": "PSYCHIC"
+   },
+   {
+    "level": 48,
+    "move": "MIRRORSHOT"
+   },
+   {
+    "level": 52,
+    "move": "PSYSHOCK"
+   }
+  ],
+  "height": 1.4,
+  "weight": 70,
+  "color": "Red",
+  "habitat": "Urban",
+  "category": "Máquina",
+  "entry": "Cientista digital preso numa pirâmide por Etemon. Copia e reescreve dados alheios — inclusive os de um parceiro.",
+  "evolutions": [],
+  "franchise": "DGM"
+ },
+ {
+  "id": 733,
+  "name": "Elecmon",
+  "internalName": "ELECMON",
+  "type1": "ELECTRIC",
+  "type2": null,
+  "attribute": "Data",
+  "stage": "Rookie",
+  "stats": {
+   "hp": 58,
+   "atk": 62,
+   "def": 50,
+   "spe": 66,
+   "spa": 64,
+   "spd": 54
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 95,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 1,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 130,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "TACKLE"
+   },
+   {
+    "level": 1,
+    "move": "TAILWHIP"
+   },
+   {
+    "level": 14,
+    "move": "SUPERTHUNDERSTRIKE"
+   },
+   {
+    "level": 17,
+    "move": "THUNDERSHOCK"
+   },
+   {
+    "level": 20,
+    "move": "QUICKATTACK"
+   },
+   {
+    "level": 24,
+    "move": "SPARK"
+   },
+   {
+    "level": 28,
+    "move": "CHARGEBEAM"
+   },
+   {
+    "level": 32,
+    "move": "DISCHARGE"
+   }
+  ],
+  "height": 0.8,
+  "weight": 14,
+  "color": "Red",
+  "habitat": "Grassland",
+  "category": "Mamífero",
+  "entry": "Cuida sozinho de toda a Vila do Recomeço. Briga com quem chega perto dos filhotes e chora quando eles digievoluem.",
+  "evolutions": [
+   {
+    "into": "LEOMON",
+    "method": "Level",
+    "param": "20"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 734,
+  "name": "Leomon",
+  "internalName": "LEOMON",
+  "type1": "FIGHTING",
+  "type2": null,
+  "attribute": "Vaccine",
+  "stage": "Champion",
+  "stats": {
+   "hp": 90,
+   "atk": 112,
+   "def": 82,
+   "spe": 88,
+   "spa": 84,
+   "spd": 78
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 155,
+  "evYield": {
+   "hp": 0,
+   "atk": 2,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 70,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "KARATECHOP"
+   },
+   {
+    "level": 1,
+    "move": "LEER"
+   },
+   {
+    "level": 20,
+    "move": "FISTOFTHEBEASTKING"
+   },
+   {
+    "level": 24,
+    "move": "SLASH"
+   },
+   {
+    "level": 28,
+    "move": "BRICKBREAK"
+   },
+   {
+    "level": 32,
+    "move": "CROSSCHOP"
+   },
+   {
+    "level": 36,
+    "move": "CLOSECOMBAT"
+   },
+   {
+    "level": 40,
+    "move": "SUPERPOWER"
+   }
+  ],
+  "height": 2.4,
+  "weight": 130,
+  "color": "Yellow",
+  "habitat": "Grassland",
+  "category": "Homem-Leão",
+  "entry": "O guerreiro mais justo da Ilha File. Mesmo sob controle de um Anel Negro, resiste mais que qualquer outro.",
+  "evolutions": [
+   {
+    "into": "SABERLEOMON",
+    "method": "Level",
+    "param": "32"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 735,
+  "name": "SaberLeomon",
+  "internalName": "SABERLEOMON",
+  "type1": "FIGHTING",
+  "type2": "GROUND",
+  "attribute": "Data",
+  "stage": "Ultimate",
+  "stats": {
+   "hp": 104,
+   "atk": 132,
+   "def": 88,
+   "spe": 126,
+   "spa": 104,
+   "spd": 88
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 200,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 30,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "SLASH"
+   },
+   {
+    "level": 1,
+    "move": "SCARYFACE"
+   },
+   {
+    "level": 32,
+    "move": "INFINITYARROW"
+   },
+   {
+    "level": 36,
+    "move": "CLOSECOMBAT"
+   },
+   {
+    "level": 40,
+    "move": "EARTHQUAKE"
+   },
+   {
+    "level": 44,
+    "move": "CRUNCH"
+   },
+   {
+    "level": 48,
+    "move": "SUPERPOWER"
+   },
+   {
+    "level": 52,
+    "move": "GIGAIMPACT"
+   }
+  ],
+  "height": 3.6,
+  "weight": 260,
+  "color": "Yellow",
+  "habitat": "Grassland",
+  "category": "Fera Anciã",
+  "entry": "Leomon em quatro patas, presas de sabre e velocidade absurda. A nobreza continua intacta debaixo da fúria.",
+  "evolutions": [],
+  "franchise": "DGM"
+ },
+ {
+  "id": 736,
+  "name": "Ogremon",
+  "internalName": "OGREMON",
+  "type1": "FIGHTING",
+  "type2": "DARK",
+  "attribute": "Virus",
+  "stage": "Champion",
+  "stats": {
+   "hp": 88,
+   "atk": 108,
+   "def": 78,
+   "spe": 82,
+   "spa": 82,
+   "spd": 70
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 155,
+  "evYield": {
+   "hp": 0,
+   "atk": 2,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 70,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "KARATECHOP"
+   },
+   {
+    "level": 1,
+    "move": "SCARYFACE"
+   },
+   {
+    "level": 20,
+    "move": "PUMMELWHACK"
+   },
+   {
+    "level": 24,
+    "move": "FEINTATTACK"
+   },
+   {
+    "level": 28,
+    "move": "BRICKBREAK"
+   },
+   {
+    "level": 32,
+    "move": "CRUNCH"
+   },
+   {
+    "level": 36,
+    "move": "DARKPULSE"
+   },
+   {
+    "level": 40,
+    "move": "CLOSECOMBAT"
+   }
+  ],
+  "height": 2.3,
+  "weight": 125,
+  "color": "Green",
+  "habitat": "RoughTerrain",
+  "category": "Ogro",
+  "entry": "Rival eterno de Leomon, com um porrete de osso e nenhum plano. Odeia perder mais do que odeia o inimigo.",
+  "evolutions": [],
+  "franchise": "DGM"
+ },
+ {
+  "id": 737,
+  "name": "Centarumon",
+  "internalName": "CENTARUMON",
+  "type1": "FIGHTING",
+  "type2": "FIRE",
+  "attribute": "Data",
+  "stage": "Champion",
+  "stats": {
+   "hp": 86,
+   "atk": 92,
+   "def": 84,
+   "spe": 86,
+   "spa": 96,
+   "spd": 76
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 155,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 2,
+   "spd": 0
+  },
+  "catchRate": 70,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "STOMP"
+   },
+   {
+    "level": 1,
+    "move": "LOCKON"
+   },
+   {
+    "level": 20,
+    "move": "SOLARRAY"
+   },
+   {
+    "level": 24,
+    "move": "FLAMECHARGE"
+   },
+   {
+    "level": 28,
+    "move": "BRICKBREAK"
+   },
+   {
+    "level": 32,
+    "move": "FLAMETHROWER"
+   },
+   {
+    "level": 36,
+    "move": "CLOSECOMBAT"
+   },
+   {
+    "level": 40,
+    "move": "FIREBLAST"
+   }
+  ],
+  "height": 2.6,
+  "weight": 180,
+  "color": "Brown",
+  "habitat": "Cave",
+  "category": "Centauro",
+  "entry": "Guardião do templo dos Digivices, meio homem meio cavalo. O braço direito é um canhão de calor que ele evita usar.",
+  "evolutions": [],
+  "franchise": "DGM"
+ },
+ {
+  "id": 738,
+  "name": "Frigimon",
+  "internalName": "FRIGIMON",
+  "type1": "ICE",
+  "type2": null,
+  "attribute": "Vaccine",
+  "stage": "Champion",
+  "stats": {
+   "hp": 108,
+   "atk": 96,
+   "def": 92,
+   "spe": 50,
+   "spa": 82,
+   "spd": 88
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 155,
+  "evYield": {
+   "hp": 0,
+   "atk": 2,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 70,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "POWDERSNOW"
+   },
+   {
+    "level": 1,
+    "move": "HARDEN"
+   },
+   {
+    "level": 20,
+    "move": "SUBZEROICEPUNCH"
+   },
+   {
+    "level": 24,
+    "move": "ICYWIND"
+   },
+   {
+    "level": 28,
+    "move": "ICEPUNCH"
+   },
+   {
+    "level": 32,
+    "move": "AURORABEAM"
+   },
+   {
+    "level": 36,
+    "move": "ICEBEAM"
+   },
+   {
+    "level": 40,
+    "move": "BLIZZARD"
+   }
+  ],
+  "height": 2.4,
+  "weight": 220,
+  "color": "White",
+  "habitat": "Mountain",
+  "category": "Boneco de Neve",
+  "entry": "Boneco de neve gigante e gentil. Só vira ameaça com um Anel Negro no braço — e sofre por isso depois.",
+  "evolutions": [],
+  "franchise": "DGM"
+ },
+ {
+  "id": 739,
+  "name": "Mojyamon",
+  "internalName": "MOJYAMON",
+  "type1": "ICE",
+  "type2": "GROUND",
+  "attribute": "Data",
+  "stage": "Champion",
+  "stats": {
+   "hp": 92,
+   "atk": 100,
+   "def": 82,
+   "spe": 72,
+   "spa": 76,
+   "spd": 74
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 155,
+  "evYield": {
+   "hp": 0,
+   "atk": 2,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 70,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "POWDERSNOW"
+   },
+   {
+    "level": 1,
+    "move": "LEER"
+   },
+   {
+    "level": 20,
+    "move": "BONEBOOMERANG"
+   },
+   {
+    "level": 24,
+    "move": "ICYWIND"
+   },
+   {
+    "level": 28,
+    "move": "BONECLUB"
+   },
+   {
+    "level": 32,
+    "move": "ICEFANG"
+   },
+   {
+    "level": 36,
+    "move": "ICEBEAM"
+   },
+   {
+    "level": 40,
+    "move": "EARTHQUAKE"
+   }
+  ],
+  "height": 2.5,
+  "weight": 200,
+  "color": "White",
+  "habitat": "Mountain",
+  "category": "Abominável",
+  "entry": "Yeti das montanhas geladas que arremessa ossos como bumerangue. Territorial, mas não cruel.",
+  "evolutions": [],
+  "franchise": "DGM"
+ },
+ {
+  "id": 740,
+  "name": "Drimogemon",
+  "internalName": "DRIMOGEMON",
+  "type1": "GROUND",
+  "type2": null,
+  "attribute": "Data",
+  "stage": "Champion",
+  "stats": {
+   "hp": 92,
+   "atk": 104,
+   "def": 86,
+   "spe": 68,
+   "spa": 70,
+   "spd": 70
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 155,
+  "evYield": {
+   "hp": 0,
+   "atk": 2,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 70,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "SCRATCH"
+   },
+   {
+    "level": 1,
+    "move": "SANDATTACK"
+   },
+   {
+    "level": 20,
+    "move": "DRILLSPIN"
+   },
+   {
+    "level": 24,
+    "move": "DIG"
+   },
+   {
+    "level": 28,
+    "move": "MUDSHOT"
+   },
+   {
+    "level": 32,
+    "move": "BULLDOZE"
+   },
+   {
+    "level": 36,
+    "move": "SLASH"
+   },
+   {
+    "level": 40,
+    "move": "EARTHQUAKE"
+   }
+  ],
+  "height": 2.3,
+  "weight": 190,
+  "color": "Brown",
+  "habitat": "Cave",
+  "category": "Perfurador",
+  "entry": "Toupeira gigante com uma broca no lugar do focinho. Cava túneis a quilômetros de profundidade sem se perder.",
+  "evolutions": [],
+  "franchise": "DGM"
+ },
+ {
+  "id": 741,
+  "name": "Candlemon",
+  "internalName": "CANDLEMON",
+  "type1": "FIRE",
+  "type2": null,
+  "attribute": "Data",
+  "stage": "Rookie",
+  "stats": {
+   "hp": 50,
+   "atk": 52,
+   "def": 48,
+   "spe": 54,
+   "spa": 74,
+   "spd": 58
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 95,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 1,
+   "spd": 0
+  },
+  "catchRate": 130,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "EMBER"
+   },
+   {
+    "level": 1,
+    "move": "SMOKESCREEN"
+   },
+   {
+    "level": 14,
+    "move": "LAVALOOGIE"
+   },
+   {
+    "level": 17,
+    "move": "WILLOWISP"
+   },
+   {
+    "level": 20,
+    "move": "FLAMECHARGE"
+   },
+   {
+    "level": 24,
+    "move": "FIRESPIN"
+   },
+   {
+    "level": 28,
+    "move": "LAVAPLUME"
+   },
+   {
+    "level": 32,
+    "move": "FLAMETHROWER"
+   }
+  ],
+  "height": 0.8,
+  "weight": 6,
+  "color": "Yellow",
+  "habitat": "Cave",
+  "category": "Vela",
+  "entry": "Vela viva cuja chama nunca apaga. Ilumina caverna escura de graça — e derrete o que encostar demais.",
+  "evolutions": [
+   {
+    "into": "MERAMON",
+    "method": "Level",
+    "param": "20"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 742,
+  "name": "Meramon",
+  "internalName": "MERAMON",
+  "type1": "FIRE",
+  "type2": null,
+  "attribute": "Data",
+  "stage": "Champion",
+  "stats": {
+   "hp": 84,
+   "atk": 100,
+   "def": 68,
+   "spe": 88,
+   "spa": 100,
+   "spd": 68
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 155,
+  "evYield": {
+   "hp": 0,
+   "atk": 2,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 70,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "EMBER"
+   },
+   {
+    "level": 1,
+    "move": "SMOKESCREEN"
+   },
+   {
+    "level": 20,
+    "move": "BURNINGFIST"
+   },
+   {
+    "level": 24,
+    "move": "FLAMEWHEEL"
+   },
+   {
+    "level": 28,
+    "move": "FIREPUNCH"
+   },
+   {
+    "level": 32,
+    "move": "LAVAPLUME"
+   },
+   {
+    "level": 36,
+    "move": "FLAMETHROWER"
+   },
+   {
+    "level": 40,
+    "move": "FIREBLAST"
+   }
+  ],
+  "height": 2.4,
+  "weight": 100,
+  "color": "Red",
+  "habitat": "Mountain",
+  "category": "Chama",
+  "entry": "Homem feito inteiramente de fogo. Desce a montanha em chamas quando algo aumenta o calor da própria alma.",
+  "evolutions": [
+   {
+    "into": "SKULLMERAMON",
+    "method": "Level",
+    "param": "32"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 743,
+  "name": "SkullMeramon",
+  "internalName": "SKULLMERAMON",
+  "type1": "FIRE",
+  "type2": "STEEL",
+  "attribute": "Data",
+  "stage": "Ultimate",
+  "stats": {
+   "hp": 98,
+   "atk": 118,
+   "def": 96,
+   "spe": 92,
+   "spa": 112,
+   "spd": 84
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 200,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 30,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "FIREPUNCH"
+   },
+   {
+    "level": 1,
+    "move": "SCARYFACE"
+   },
+   {
+    "level": 32,
+    "move": "METALFIREBALL"
+   },
+   {
+    "level": 36,
+    "move": "LAVAPLUME"
+   },
+   {
+    "level": 40,
+    "move": "IRONHEAD"
+   },
+   {
+    "level": 44,
+    "move": "FLASHCANNON"
+   },
+   {
+    "level": 48,
+    "move": "FLAMETHROWER"
+   },
+   {
+    "level": 52,
+    "move": "FIREBLAST"
+   }
+  ],
+  "height": 2.9,
+  "weight": 180,
+  "color": "Blue",
+  "habitat": "Mountain",
+  "category": "Chama Azul",
+  "entry": "Chama azul quente demais para ter cor de fogo. Amarra o inimigo com uma corrente de metal derretido.",
+  "evolutions": [],
+  "franchise": "DGM"
+ },
+ {
+  "id": 744,
+  "name": "Piximon",
+  "internalName": "PIXIMON",
+  "type1": "PSYCHIC",
+  "type2": "FLYING",
+  "attribute": "Data",
+  "stage": "Ultimate",
+  "stats": {
+   "hp": 82,
+   "atk": 88,
+   "def": 88,
+   "spe": 122,
+   "spa": 128,
+   "spd": 112
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 200,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 3,
+   "spd": 0
+  },
+  "catchRate": 30,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "CONFUSION"
+   },
+   {
+    "level": 1,
+    "move": "SAFEGUARD"
+   },
+   {
+    "level": 32,
+    "move": "PITBOMB"
+   },
+   {
+    "level": 36,
+    "move": "PSYBEAM"
+   },
+   {
+    "level": 40,
+    "move": "AIRSLASH"
+   },
+   {
+    "level": 44,
+    "move": "PSYCHIC"
+   },
+   {
+    "level": 48,
+    "move": "LIGHTSCREEN"
+   },
+   {
+    "level": 52,
+    "move": "PSYSHOCK"
+   }
+  ],
+  "height": 0.4,
+  "weight": 5,
+  "color": "Pink",
+  "habitat": "Rare",
+  "category": "Fada",
+  "entry": "Do tamanho de um brinquedo e mais forte que quase todo mundo. Treina quem chega até ele — e cobra caro em suor.",
+  "evolutions": [],
+  "franchise": "DGM"
+ },
+ {
+  "id": 745,
+  "name": "Numemon",
+  "internalName": "NUMEMON",
+  "type1": "POISON",
+  "type2": null,
+  "attribute": "Virus",
+  "stage": "Champion",
+  "stats": {
+   "hp": 80,
+   "atk": 72,
+   "def": 60,
+   "spe": 66,
+   "spa": 84,
+   "spd": 62
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 155,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 2,
+   "spd": 0
+  },
+  "catchRate": 70,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "POUND"
+   },
+   {
+    "level": 1,
+    "move": "ACID"
+   },
+   {
+    "level": 20,
+    "move": "NUMESLUDGE"
+   },
+   {
+    "level": 24,
+    "move": "SLUDGEBOMB"
+   },
+   {
+    "level": 28,
+    "move": "TOXIC"
+   },
+   {
+    "level": 32,
+    "move": "ACIDARMOR"
+   },
+   {
+    "level": 36,
+    "move": "POISONJAB"
+   },
+   {
+    "level": 40,
+    "move": "GUNKSHOT"
+   }
+  ],
+  "height": 1.2,
+  "weight": 40,
+  "color": "Green",
+  "habitat": "Cave",
+  "category": "Lodo",
+  "entry": "O que nasce de um Rookie criado sem carinho nenhum. Fedido, ridicularizado — e capaz de morrer por um amigo.",
+  "evolutions": [
+   {
+    "into": "MONZAEMON",
+    "method": "Level",
+    "param": "32",
+    "condition": {
+     "friendshipAbove": 90
+    }
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 746,
+  "name": "Monzaemon",
+  "internalName": "MONZAEMON",
+  "type1": "NORMAL",
+  "type2": "PSYCHIC",
+  "attribute": "Vaccine",
+  "stage": "Ultimate",
+  "stats": {
+   "hp": 126,
+   "atk": 104,
+   "def": 104,
+   "spe": 54,
+   "spa": 118,
+   "spd": 108
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 200,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 3,
+   "spd": 0
+  },
+  "catchRate": 30,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "POUND"
+   },
+   {
+    "level": 1,
+    "move": "CHARM"
+   },
+   {
+    "level": 32,
+    "move": "HEARTSATTACK"
+   },
+   {
+    "level": 36,
+    "move": "PSYBEAM"
+   },
+   {
+    "level": 40,
+    "move": "BODYSLAM"
+   },
+   {
+    "level": 44,
+    "move": "PSYCHIC"
+   },
+   {
+    "level": 48,
+    "move": "HYPERVOICE"
+   },
+   {
+    "level": 52,
+    "move": "GIGAIMPACT"
+   }
+  ],
+  "height": 3,
+  "weight": 220,
+  "color": "Yellow",
+  "habitat": "Urban",
+  "category": "Urso de Pelúcia",
+  "entry": "Urso de pelúcia gigante da Cidade dos Brinquedos. O abraço dele é sincero — o problema é a força do abraço.",
+  "evolutions": [],
+  "franchise": "DGM"
+ },
+ {
+  "id": 747,
+  "name": "Otamamon",
+  "internalName": "OTAMAMON",
+  "type1": "WATER",
+  "type2": null,
+  "attribute": "Data",
+  "stage": "Rookie",
+  "stats": {
+   "hp": 58,
+   "atk": 52,
+   "def": 54,
+   "spe": 52,
+   "spa": 62,
+   "spd": 56
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 95,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 1,
+   "spd": 0
+  },
+  "catchRate": 130,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "TACKLE"
+   },
+   {
+    "level": 1,
+    "move": "SING"
+   },
+   {
+    "level": 14,
+    "move": "LULLABYBUBBLE"
+   },
+   {
+    "level": 17,
+    "move": "WATERGUN"
+   },
+   {
+    "level": 20,
+    "move": "ECHOEDVOICE"
+   },
+   {
+    "level": 24,
+    "move": "AQUAJET"
+   },
+   {
+    "level": 28,
+    "move": "WATERPULSE"
+   },
+   {
+    "level": 32,
+    "move": "HYPERVOICE"
+   }
+  ],
+  "height": 0.7,
+  "weight": 12,
+  "color": "Green",
+  "habitat": "WatersEdge",
+  "category": "Girino",
+  "entry": "Girino cantor que nunca anda sozinho. Serve ao castelo de ShogunGekomon e reclama do chefe pelas costas.",
+  "evolutions": [
+   {
+    "into": "GEKOMON",
+    "method": "Level",
+    "param": "20"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 748,
+  "name": "Gekomon",
+  "internalName": "GEKOMON",
+  "type1": "WATER",
+  "type2": "NORMAL",
+  "attribute": "Data",
+  "stage": "Champion",
+  "stats": {
+   "hp": 86,
+   "atk": 82,
+   "def": 76,
+   "spe": 62,
+   "spa": 98,
+   "spd": 82
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 155,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 2,
+   "spd": 0
+  },
+  "catchRate": 70,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "WATERGUN"
+   },
+   {
+    "level": 1,
+    "move": "SING"
+   },
+   {
+    "level": 20,
+    "move": "SYMPHONYCRUSHER"
+   },
+   {
+    "level": 24,
+    "move": "ECHOEDVOICE"
+   },
+   {
+    "level": 28,
+    "move": "WATERPULSE"
+   },
+   {
+    "level": 32,
+    "move": "HYPERVOICE"
+   },
+   {
+    "level": 36,
+    "move": "SURF"
+   },
+   {
+    "level": 40,
+    "move": "PERISHSONG"
+   }
+  ],
+  "height": 1.5,
+  "weight": 45,
+  "color": "Green",
+  "habitat": "WatersEdge",
+  "category": "Sapo Trombeta",
+  "entry": "Sapo com duas trombetas nos ombros. Vive procurando uma voz bonita o bastante para acordar o próprio rei.",
+  "evolutions": [
+   {
+    "into": "SHOGUNGEKOMON",
+    "method": "Level",
+    "param": "32"
+   }
+  ],
+  "franchise": "DGM"
+ },
+ {
+  "id": 749,
+  "name": "ShogunGekomon",
+  "internalName": "SHOGUNGEKOMON",
+  "type1": "WATER",
+  "type2": "NORMAL",
+  "attribute": "Data",
+  "stage": "Ultimate",
+  "stats": {
+   "hp": 132,
+   "atk": 108,
+   "def": 108,
+   "spe": 40,
+   "spa": 112,
+   "spd": 92
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 200,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 3,
+   "spd": 0
+  },
+  "catchRate": 30,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "SYMPHONYCRUSHER"
+   },
+   {
+    "level": 1,
+    "move": "YAWN"
+   },
+   {
+    "level": 32,
+    "move": "HORNBLAST"
+   },
+   {
+    "level": 36,
+    "move": "SURF"
+   },
+   {
+    "level": 40,
+    "move": "HYPERVOICE"
+   },
+   {
+    "level": 44,
+    "move": "BODYSLAM"
+   },
+   {
+    "level": 48,
+    "move": "HYDROPUMP"
+   },
+   {
+    "level": 52,
+    "move": "PERISHSONG"
+   }
+  ],
+  "height": 5,
+  "weight": 500,
+  "color": "Purple",
+  "habitat": "WatersEdge",
+  "category": "Rei Sapo",
+  "entry": "Dorme por séculos e acorda de péssimo humor. As trombetas gigantes das costas racham pedra com uma nota só.",
+  "evolutions": [],
+  "franchise": "DGM"
+ },
+ {
+  "id": 750,
+  "name": "Airdramon",
+  "internalName": "AIRDRAMON",
+  "type1": "FLYING",
+  "type2": "DRAGON",
+  "attribute": "Vaccine",
+  "stage": "Champion",
+  "stats": {
+   "hp": 84,
+   "atk": 96,
+   "def": 74,
+   "spe": 104,
+   "spa": 98,
+   "spd": 74
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Parabolic",
+  "baseExp": 155,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 2,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 70,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "GUST"
+   },
+   {
+    "level": 1,
+    "move": "LEER"
+   },
+   {
+    "level": 20,
+    "move": "SPINNINGNEEDLE"
+   },
+   {
+    "level": 24,
+    "move": "DRAGONBREATH"
+   },
+   {
+    "level": 28,
+    "move": "AERIALACE"
+   },
+   {
+    "level": 32,
+    "move": "AIRSLASH"
+   },
+   {
+    "level": 36,
+    "move": "DRAGONCLAW"
+   },
+   {
+    "level": 40,
+    "move": "HURRICANE"
+   }
+  ],
+  "height": 5,
+  "weight": 220,
+  "color": "Blue",
+  "habitat": "Mountain",
+  "category": "Dragão",
+  "entry": "Dragão de vento que serve a quem for mais forte. Levanta um redemoinho só de bater as asas uma vez.",
+  "evolutions": [],
+  "franchise": "DGM"
+ },
+ {
+  "id": 800,
   "name": "Metabee",
   "internalName": "METABEE",
   "type1": "STEEL",
   "type2": "ELECTRIC",
   "stats": {
-   "hp": 55,
-   "atk": 50,
-   "def": 45,
-   "spe": 55,
-   "spa": 50,
-   "spd": 45
+   "hp": 75,
+   "atk": 65,
+   "def": 60,
+   "spe": 75,
+   "spa": 65,
+   "spd": 60
   },
   "genderRate": "Genderless",
   "growthRate": "Medium",
@@ -1340,18 +7442,18 @@
   "franchise": "MDB"
  },
  {
-  "id": 701,
+  "id": 801,
   "name": "Rokusho",
   "internalName": "ROKUSHO",
   "type1": "STEEL",
   "type2": "ICE",
   "stats": {
-   "hp": 50,
-   "atk": 55,
-   "def": 50,
-   "spe": 60,
-   "spa": 40,
-   "spd": 50
+   "hp": 65,
+   "atk": 75,
+   "def": 65,
+   "spe": 80,
+   "spa": 55,
+   "spd": 65
   },
   "genderRate": "Genderless",
   "growthRate": "Parabolic",
@@ -1408,18 +7510,18 @@
   "franchise": "MDB"
  },
  {
-  "id": 702,
+  "id": 802,
   "name": "Sumilidon",
   "internalName": "SUMILIDON",
   "type1": "STEEL",
   "type2": "FIGHTING",
   "stats": {
-   "hp": 60,
-   "atk": 60,
-   "def": 55,
-   "spe": 40,
-   "spa": 30,
-   "spd": 45
+   "hp": 80,
+   "atk": 80,
+   "def": 75,
+   "spe": 55,
+   "spa": 40,
+   "spd": 60
   },
   "genderRate": "Genderless",
   "growthRate": "Slow",
@@ -1476,18 +7578,18 @@
   "franchise": "MDB"
  },
  {
-  "id": 703,
+  "id": 803,
   "name": "Krosserdog",
   "internalName": "KROSSERDOG",
   "type1": "STEEL",
   "type2": "NORMAL",
   "stats": {
-   "hp": 50,
-   "atk": 45,
-   "def": 40,
-   "spe": 70,
-   "spa": 40,
-   "spd": 40
+   "hp": 65,
+   "atk": 60,
+   "def": 55,
+   "spe": 95,
+   "spa": 55,
+   "spd": 55
   },
   "genderRate": "Genderless",
   "growthRate": "Fast",
@@ -1544,18 +7646,18 @@
   "franchise": "MDB"
  },
  {
-  "id": 704,
+  "id": 804,
   "name": "Brass",
   "internalName": "BRASS",
   "type1": "STEEL",
   "type2": "FLYING",
   "stats": {
-   "hp": 50,
-   "atk": 35,
-   "def": 45,
-   "spe": 55,
-   "spa": 55,
-   "spd": 60
+   "hp": 65,
+   "atk": 45,
+   "def": 60,
+   "spe": 70,
+   "spa": 70,
+   "spd": 80
   },
   "genderRate": "Genderless",
   "growthRate": "Medium",
@@ -1612,18 +7714,18 @@
   "franchise": "MDB"
  },
  {
-  "id": 705,
+  "id": 805,
   "name": "Peppercat",
   "internalName": "PEPPERCAT",
   "type1": "STEEL",
   "type2": "DARK",
   "stats": {
-   "hp": 45,
-   "atk": 50,
-   "def": 40,
-   "spe": 65,
-   "spa": 50,
-   "spd": 45
+   "hp": 60,
+   "atk": 65,
+   "def": 50,
+   "spe": 85,
+   "spa": 65,
+   "spd": 60
   },
   "genderRate": "Genderless",
   "growthRate": "Fast",
@@ -1680,18 +7782,18 @@
   "franchise": "MDB"
  },
  {
-  "id": 706,
+  "id": 806,
   "name": "Neutranurse",
   "internalName": "NEUTRANURSE",
   "type1": "STEEL",
   "type2": "PSYCHIC",
   "stats": {
-   "hp": 65,
-   "atk": 30,
-   "def": 50,
-   "spe": 45,
-   "spa": 55,
-   "spd": 65
+   "hp": 80,
+   "atk": 40,
+   "def": 65,
+   "spe": 55,
+   "spa": 70,
+   "spd": 80
   },
   "genderRate": "Genderless",
   "growthRate": "Parabolic",
@@ -1748,18 +7850,18 @@
   "franchise": "MDB"
  },
  {
-  "id": 707,
+  "id": 807,
   "name": "Arcbeetle",
   "internalName": "ARCBEETLE",
   "type1": "STEEL",
   "type2": "FIRE",
   "stats": {
-   "hp": 60,
-   "atk": 50,
-   "def": 55,
-   "spe": 45,
-   "spa": 65,
-   "spd": 55
+   "hp": 75,
+   "atk": 65,
+   "def": 70,
+   "spe": 55,
+   "spa": 85,
+   "spd": 70
   },
   "genderRate": "Genderless",
   "growthRate": "Slow",
@@ -1816,18 +7918,18 @@
   "franchise": "MDB"
  },
  {
-  "id": 708,
+  "id": 808,
   "name": "Belzelga",
   "internalName": "BELZELGA",
   "type1": "STEEL",
   "type2": "GHOST",
   "stats": {
-   "hp": 65,
-   "atk": 60,
-   "def": 65,
-   "spe": 30,
-   "spa": 45,
-   "spd": 55
+   "hp": 85,
+   "atk": 80,
+   "def": 85,
+   "spe": 40,
+   "spa": 60,
+   "spd": 65
   },
   "genderRate": "Genderless",
   "growthRate": "Slow",
@@ -1884,18 +7986,18 @@
   "franchise": "MDB"
  },
  {
-  "id": 709,
+  "id": 809,
   "name": "Warbandit",
   "internalName": "WARBANDIT",
   "type1": "STEEL",
   "type2": "GROUND",
   "stats": {
-   "hp": 55,
-   "atk": 55,
-   "def": 50,
-   "spe": 45,
-   "spa": 45,
-   "spd": 45
+   "hp": 70,
+   "atk": 70,
+   "def": 65,
+   "spe": 60,
+   "spa": 60,
+   "spd": 60
   },
   "genderRate": "Genderless",
   "growthRate": "Medium",
@@ -1952,7 +8054,7 @@
   "franchise": "MDB"
  },
  {
-  "id": 740,
+  "id": 850,
   "name": "Suezo",
   "internalName": "SUEZO",
   "type1": "PSYCHIC",
@@ -2028,7 +8130,7 @@
   "franchise": "MRA"
  },
  {
-  "id": 741,
+  "id": 851,
   "name": "Tiger",
   "internalName": "TIGER",
   "type1": "ELECTRIC",
@@ -2105,7 +8207,7 @@
   "franchise": "MRA"
  },
  {
-  "id": 742,
+  "id": 852,
   "name": "Golem",
   "internalName": "GOLEM_MRA",
   "type1": "ROCK",
@@ -2181,7 +8283,7 @@
   "franchise": "MRA"
  },
  {
-  "id": 743,
+  "id": 853,
   "name": "Hare",
   "internalName": "HARE",
   "type1": "NORMAL",
@@ -2258,7 +8360,7 @@
   "franchise": "MRA"
  },
  {
-  "id": 744,
+  "id": 854,
   "name": "Pixie",
   "internalName": "PIXIE",
   "type1": "PSYCHIC",
@@ -2335,7 +8437,7 @@
   "franchise": "MRA"
  },
  {
-  "id": 745,
+  "id": 855,
   "name": "Mocchi",
   "internalName": "MOCCHI",
   "type1": "NORMAL",
@@ -2412,7 +8514,7 @@
   "franchise": "MRA"
  },
  {
-  "id": 746,
+  "id": 856,
   "name": "Zuum",
   "internalName": "ZUUM",
   "type1": "DRAGON",
@@ -2489,7 +8591,7 @@
   "franchise": "MRA"
  },
  {
-  "id": 747,
+  "id": 857,
   "name": "Plant",
   "internalName": "PLANT",
   "type1": "GRASS",
@@ -2566,7 +8668,7 @@
   "franchise": "MRA"
  },
  {
-  "id": 748,
+  "id": 858,
   "name": "Gali",
   "internalName": "GALI",
   "type1": "GHOST",
@@ -2643,7 +8745,7 @@
   "franchise": "MRA"
  },
  {
-  "id": 749,
+  "id": 859,
   "name": "Jell",
   "internalName": "JELL",
   "type1": "WATER",
@@ -2720,7 +8822,7 @@
   "franchise": "MRA"
  },
  {
-  "id": 750,
+  "id": 860,
   "name": "Durahan",
   "internalName": "DURAHAN",
   "type1": "STEEL",
@@ -2797,7 +8899,7 @@
   "franchise": "MRA"
  },
  {
-  "id": 751,
+  "id": 861,
   "name": "Dragon",
   "internalName": "DRAGON",
   "type1": "DRAGON",
@@ -2874,7 +8976,7 @@
   "franchise": "MRA"
  },
  {
-  "id": 752,
+  "id": 862,
   "name": "Joker",
   "internalName": "JOKER",
   "type1": "DARK",
@@ -2951,7 +9053,7 @@
   "franchise": "MRA"
  },
  {
-  "id": 780,
+  "id": 900,
   "name": "Jibac",
   "internalName": "JIBAC",
   "type1": "FIRE",
@@ -2975,7 +9077,7 @@
    "spa": 0,
    "spd": 0
   },
-  "catchRate": 3,
+  "catchRate": 5,
   "abilities": [],
   "levelMoves": [
    {
@@ -2995,15 +9097,15 @@
     "move": "FLAMETHROWER"
    },
    {
-    "level": 48,
+    "level": 42,
     "move": "JIBAKUSEAL"
    },
    {
-    "level": 60,
+    "level": 48,
     "move": "JIBAKUCHAIN"
    },
    {
-    "level": 70,
+    "level": 50,
     "move": "JIBAKU"
    }
   ],
@@ -3014,12 +9116,12 @@
   "category": "Espírito",
   "entry": "Espírito do Mundo da Chama. Rola em silêncio até escolher alguém — e então explode de alegria. Só firma pacto com quem já provou ser uma Grande Criança.",
   "evolutions": [],
-  "pactBadge": "GC_01",
+  "pactMark": "GC_01",
   "world": "Mundo da Chama",
   "franchise": "BKY"
  },
  {
-  "id": 781,
+  "id": 901,
   "name": "Bambi",
   "internalName": "BAMBI",
   "type1": "PSYCHIC",
@@ -3043,7 +9145,7 @@
    "spa": 3,
    "spd": 0
   },
-  "catchRate": 3,
+  "catchRate": 5,
   "abilities": [],
   "levelMoves": [
    {
@@ -3063,15 +9165,15 @@
     "move": "PSYCHIC"
    },
    {
-    "level": 48,
+    "level": 42,
     "move": "JIBAKUSEAL"
    },
    {
-    "level": 60,
+    "level": 48,
     "move": "EXTRASENSORY"
    },
    {
-    "level": 70,
+    "level": 50,
     "move": "JIBAKU"
    }
   ],
@@ -3082,12 +9184,12 @@
   "category": "Espírito",
   "entry": "Espírito do Mundo do Sonho e parceiro da Pinky. Lê a intenção de quem se aproxima antes de decidir se vale explodir por essa pessoa.",
   "evolutions": [],
-  "pactBadge": "GC_02",
+  "pactMark": "GC_02",
   "world": "Mundo do Sonho",
   "franchise": "BKY"
  },
  {
-  "id": 782,
+  "id": 902,
   "name": "Aquac",
   "internalName": "AQUAC",
   "type1": "WATER",
@@ -3111,7 +9213,7 @@
    "spa": 0,
    "spd": 0
   },
-  "catchRate": 3,
+  "catchRate": 5,
   "abilities": [],
   "levelMoves": [
    {
@@ -3131,15 +9233,15 @@
     "move": "SURF"
    },
    {
-    "level": 48,
+    "level": 42,
     "move": "JIBAKUSEAL"
    },
    {
-    "level": 60,
+    "level": 48,
     "move": "JIBAKUCHAIN"
    },
    {
-    "level": 70,
+    "level": 50,
     "move": "JIBAKU"
    }
   ],
@@ -3150,12 +9252,12 @@
   "category": "Espírito",
   "entry": "Espírito do Mundo da Maré. Sua explosão não queima: arrebenta como uma onda que arrasta tudo o que estava errado no mundo.",
   "evolutions": [],
-  "pactBadge": "GC_03",
+  "pactMark": "GC_03",
   "world": "Mundo da Maré",
   "franchise": "BKY"
  },
  {
-  "id": 783,
+  "id": 903,
   "name": "Verdac",
   "internalName": "VERDAC",
   "type1": "GRASS",
@@ -3179,7 +9281,7 @@
    "spa": 0,
    "spd": 0
   },
-  "catchRate": 3,
+  "catchRate": 5,
   "abilities": [],
   "levelMoves": [
    {
@@ -3199,15 +9301,15 @@
     "move": "ENERGYBALL"
    },
    {
-    "level": 48,
+    "level": 42,
     "move": "JIBAKUSEAL"
    },
    {
-    "level": 60,
+    "level": 48,
     "move": "SOLARBEAM"
    },
    {
-    "level": 70,
+    "level": 50,
     "move": "JIBAKU"
    }
   ],
@@ -3218,12 +9320,12 @@
   "category": "Espírito",
   "entry": "Espírito do Mundo da Seiva. Ao se autodestruir espalha sementes; onde havia cratera, no dia seguinte há floresta.",
   "evolutions": [],
-  "pactBadge": "GC_04",
+  "pactMark": "GC_04",
   "world": "Mundo da Seiva",
   "franchise": "BKY"
  },
  {
-  "id": 784,
+  "id": 904,
   "name": "Voltac",
   "internalName": "VOLTAC",
   "type1": "ELECTRIC",
@@ -3247,7 +9349,7 @@
    "spa": 0,
    "spd": 0
   },
-  "catchRate": 3,
+  "catchRate": 5,
   "abilities": [],
   "levelMoves": [
    {
@@ -3267,15 +9369,15 @@
     "move": "THUNDERBOLT"
    },
    {
-    "level": 48,
+    "level": 42,
     "move": "JIBAKUSEAL"
    },
    {
-    "level": 60,
+    "level": 48,
     "move": "WILDCHARGE"
    },
    {
-    "level": 70,
+    "level": 50,
     "move": "JIBAKU"
    }
   ],
@@ -3286,12 +9388,12 @@
   "category": "Espírito",
   "entry": "Espírito do Mundo da Tempestade. É o mais impaciente dos doze: carrega a explosão antes mesmo de ouvir o pedido da sua Grande Criança.",
   "evolutions": [],
-  "pactBadge": "GC_05",
+  "pactMark": "GC_05",
   "world": "Mundo da Tempestade",
   "franchise": "BKY"
  },
  {
-  "id": 785,
+  "id": 905,
   "name": "Gelac",
   "internalName": "GELAC",
   "type1": "ICE",
@@ -3315,7 +9417,7 @@
    "spa": 0,
    "spd": 3
   },
-  "catchRate": 3,
+  "catchRate": 5,
   "abilities": [],
   "levelMoves": [
    {
@@ -3335,15 +9437,15 @@
     "move": "ICEBEAM"
    },
    {
-    "level": 48,
+    "level": 42,
     "move": "JIBAKUSEAL"
    },
    {
-    "level": 60,
+    "level": 48,
     "move": "JIBAKUCHAIN"
    },
    {
-    "level": 70,
+    "level": 50,
     "move": "JIBAKU"
    }
   ],
@@ -3354,12 +9456,12 @@
   "category": "Espírito",
   "entry": "Espírito do Mundo do Gelo. Fala pouco e explode em estilhaços que ficam brilhando no ar por horas depois do combate.",
   "evolutions": [],
-  "pactBadge": "GC_06",
+  "pactMark": "GC_06",
   "world": "Mundo do Gelo",
   "franchise": "BKY"
  },
  {
-  "id": 786,
+  "id": 906,
   "name": "Terrac",
   "internalName": "TERRAC",
   "type1": "GROUND",
@@ -3383,7 +9485,7 @@
    "spa": 0,
    "spd": 0
   },
-  "catchRate": 3,
+  "catchRate": 5,
   "abilities": [],
   "levelMoves": [
    {
@@ -3403,15 +9505,15 @@
     "move": "EARTHQUAKE"
    },
    {
-    "level": 48,
+    "level": 42,
     "move": "JIBAKUSEAL"
    },
    {
-    "level": 60,
+    "level": 48,
     "move": "SANDSTORM"
    },
    {
-    "level": 70,
+    "level": 50,
     "move": "JIBAKU"
    }
   ],
@@ -3422,12 +9524,12 @@
   "category": "Espírito",
   "entry": "Espírito do Mundo das Dunas. Enterra-se por semanas esperando a Grande Criança certa passar por cima dele.",
   "evolutions": [],
-  "pactBadge": "GC_07",
+  "pactMark": "GC_07",
   "world": "Mundo das Dunas",
   "franchise": "BKY"
  },
  {
-  "id": 787,
+  "id": 907,
   "name": "Petrac",
   "internalName": "PETRAC",
   "type1": "ROCK",
@@ -3451,7 +9553,7 @@
    "spa": 0,
    "spd": 0
   },
-  "catchRate": 3,
+  "catchRate": 5,
   "abilities": [],
   "levelMoves": [
    {
@@ -3471,15 +9573,15 @@
     "move": "STONEEDGE"
    },
    {
-    "level": 48,
+    "level": 42,
     "move": "JIBAKUSEAL"
    },
    {
-    "level": 60,
+    "level": 48,
     "move": "JIBAKUCHAIN"
    },
    {
-    "level": 70,
+    "level": 50,
     "move": "JIBAKU"
    }
   ],
@@ -3490,12 +9592,12 @@
   "category": "Espírito",
   "entry": "Espírito do Mundo da Pedra. Dizem que ele é o pedaço que sobrou do primeiro mundo, e que sua explosão é o barulho de uma promessa cumprida.",
   "evolutions": [],
-  "pactBadge": "GC_08",
+  "pactMark": "GC_08",
   "world": "Mundo da Pedra",
   "franchise": "BKY"
  },
  {
-  "id": 788,
+  "id": 908,
   "name": "Ferrac",
   "internalName": "FERRAC",
   "type1": "STEEL",
@@ -3519,7 +9621,7 @@
    "spa": 0,
    "spd": 0
   },
-  "catchRate": 3,
+  "catchRate": 5,
   "abilities": [],
   "levelMoves": [
    {
@@ -3539,15 +9641,15 @@
     "move": "IRONHEAD"
    },
    {
-    "level": 48,
+    "level": 42,
     "move": "JIBAKUSEAL"
    },
    {
-    "level": 60,
+    "level": 48,
     "move": "FLASHCANNON"
    },
    {
-    "level": 70,
+    "level": 50,
     "move": "JIBAKU"
    }
   ],
@@ -3558,12 +9660,12 @@
   "category": "Espírito",
   "entry": "Espírito do Mundo da Forja. Foi martelado até virar esfera perfeita; a cada pacto recusado ele volta sozinho para a bigorna.",
   "evolutions": [],
-  "pactBadge": "GC_09",
+  "pactMark": "GC_09",
   "world": "Mundo da Forja",
   "franchise": "BKY"
  },
  {
-  "id": 789,
+  "id": 909,
   "name": "Fantac",
   "internalName": "FANTAC",
   "type1": "GHOST",
@@ -3587,7 +9689,7 @@
    "spa": 3,
    "spd": 0
   },
-  "catchRate": 3,
+  "catchRate": 5,
   "abilities": [],
   "levelMoves": [
    {
@@ -3607,15 +9709,15 @@
     "move": "SHADOWBALL"
    },
    {
-    "level": 48,
+    "level": 42,
     "move": "JIBAKUSEAL"
    },
    {
-    "level": 60,
+    "level": 48,
     "move": "JIBAKUCHAIN"
    },
    {
-    "level": 70,
+    "level": 50,
     "move": "JIBAKU"
    }
   ],
@@ -3626,12 +9728,12 @@
   "category": "Espírito",
   "entry": "Espírito do Mundo do Véu. É o único dos doze que já explodiu antes: voltou porque o pacto anterior ficou sem terminar.",
   "evolutions": [],
-  "pactBadge": "GC_10",
+  "pactMark": "GC_10",
   "world": "Mundo do Véu",
   "franchise": "BKY"
  },
  {
-  "id": 790,
+  "id": 910,
   "name": "Umbrac",
   "internalName": "UMBRAC",
   "type1": "DARK",
@@ -3655,7 +9757,7 @@
    "spa": 0,
    "spd": 0
   },
-  "catchRate": 3,
+  "catchRate": 5,
   "abilities": [],
   "levelMoves": [
    {
@@ -3675,15 +9777,15 @@
     "move": "CRUNCH"
    },
    {
-    "level": 48,
+    "level": 42,
     "move": "JIBAKUSEAL"
    },
    {
-    "level": 60,
+    "level": 48,
     "move": "DARKPULSE"
    },
    {
-    "level": 70,
+    "level": 50,
     "move": "JIBAKU"
    }
   ],
@@ -3694,12 +9796,12 @@
   "category": "Espírito",
   "entry": "Espírito do Mundo da Sombra. Guarda o mundo que ninguém quis; aceita pacto só de quem entra lá sem lanterna.",
   "evolutions": [],
-  "pactBadge": "GC_11",
+  "pactMark": "GC_11",
   "world": "Mundo da Sombra",
   "franchise": "BKY"
  },
  {
-  "id": 791,
+  "id": 911,
   "name": "Dragac",
   "internalName": "DRAGAC",
   "type1": "DRAGON",
@@ -3743,15 +9845,15 @@
     "move": "DRAGONPULSE"
    },
    {
-    "level": 48,
+    "level": 42,
     "move": "JIBAKUSEAL"
    },
    {
-    "level": 60,
+    "level": 48,
     "move": "JIBAKUCHAIN"
    },
    {
-    "level": 70,
+    "level": 50,
     "move": "JIBAKU"
    }
   ],
@@ -3762,8 +9864,521 @@
   "category": "Espírito",
   "entry": "Espírito do Mundo Zero, onde os doze mundos se encostam. Só desperta quando os outros onze pactos já foram firmados.",
   "evolutions": [],
-  "pactBadge": "GC_12",
+  "pactMark": "GC_12",
   "world": "Mundo Zero",
+  "requiresAllPacts": true,
+  "franchise": "BKY"
+ },
+ {
+  "id": 912,
+  "name": "Greymon Turvo",
+  "internalName": "TRBGREYMON",
+  "type1": "FIRE",
+  "type2": "DARK",
+  "stats": {
+   "hp": 95,
+   "atk": 113,
+   "def": 83,
+   "spe": 77,
+   "spa": 95,
+   "spd": 77
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Medium",
+  "baseExp": 190,
+  "evYield": {
+   "hp": 0,
+   "atk": 2,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 45,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "EMBER"
+   },
+   {
+    "level": 14,
+    "move": "BITE"
+   },
+   {
+    "level": 26,
+    "move": "FLAMEWHEEL"
+   },
+   {
+    "level": 34,
+    "move": "CRUNCH"
+   },
+   {
+    "level": 40,
+    "move": "FLAMETHROWER"
+   },
+   {
+    "level": 44,
+    "move": "FIREBLAST"
+   }
+  ],
+  "height": 2.6,
+  "weight": 166.8,
+  "color": "Red",
+  "habitat": "Cave",
+  "category": "Troublemonster",
+  "entry": "Greymon arrastado por uma fenda e devolvido errado. A chama saiu preta e ele não reconhece mais ninguém.",
+  "evolutions": [],
+  "troublemonster": true,
+  "corruptedFrom": "GREYMON",
+  "franchise": "BKY"
+ },
+ {
+  "id": 913,
+  "name": "Garurumon Turvo",
+  "internalName": "TRBGARURUMON",
+  "type1": "ICE",
+  "type2": "GHOST",
+  "stats": {
+   "hp": 86,
+   "atk": 92,
+   "def": 80,
+   "spe": 109,
+   "spa": 98,
+   "spd": 75
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Medium",
+  "baseExp": 190,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 2,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 45,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "ICESHARD"
+   },
+   {
+    "level": 14,
+    "move": "LICK"
+   },
+   {
+    "level": 26,
+    "move": "ICEFANG"
+   },
+   {
+    "level": 34,
+    "move": "SHADOWCLAW"
+   },
+   {
+    "level": 40,
+    "move": "ICEBEAM"
+   },
+   {
+    "level": 44,
+    "move": "SHADOWBALL"
+   }
+  ],
+  "height": 2.5,
+  "weight": 149.5,
+  "color": "White",
+  "habitat": "Cave",
+  "category": "Troublemonster",
+  "entry": "Corre em bando com sombras que não são dele. Uiva no altar até alguém responder — e ninguém responde.",
+  "evolutions": [],
+  "troublemonster": true,
+  "corruptedFrom": "GARURUMON",
+  "franchise": "BKY"
+ },
+ {
+  "id": 914,
+  "name": "Metabee Turvo",
+  "internalName": "TRBMETABEE",
+  "type1": "STEEL",
+  "type2": "POISON",
+  "stats": {
+   "hp": 101,
+   "atk": 88,
+   "def": 81,
+   "spe": 101,
+   "spa": 88,
+   "spd": 81
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Medium",
+  "baseExp": 190,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 2,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 45,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "METALCLAW"
+   },
+   {
+    "level": 14,
+    "move": "POISONSTING"
+   },
+   {
+    "level": 26,
+    "move": "IRONHEAD"
+   },
+   {
+    "level": 34,
+    "move": "POISONJAB"
+   },
+   {
+    "level": 40,
+    "move": "FLASHCANNON"
+   },
+   {
+    "level": 44,
+    "move": "GUNKSHOT"
+   }
+  ],
+  "height": 1.3,
+  "weight": 59.8,
+  "color": "Yellow",
+  "habitat": "Cave",
+  "category": "Troublemonster",
+  "entry": "A medalha vazou. O casco enferrujou de dentro para fora e ele dispara em quem quer que se mova.",
+  "evolutions": [],
+  "troublemonster": true,
+  "corruptedFrom": "METABEE",
+  "franchise": "BKY"
+ },
+ {
+  "id": 915,
+  "name": "Suezo Turvo",
+  "internalName": "TRBSUEZO",
+  "type1": "PSYCHIC",
+  "type2": "DARK",
+  "stats": {
+   "hp": 92,
+   "atk": 86,
+   "def": 66,
+   "spe": 79,
+   "spa": 125,
+   "spd": 92
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Medium",
+  "baseExp": 190,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 2,
+   "spd": 0
+  },
+  "catchRate": 45,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "CONFUSION"
+   },
+   {
+    "level": 14,
+    "move": "BITE"
+   },
+   {
+    "level": 26,
+    "move": "PSYBEAM"
+   },
+   {
+    "level": 34,
+    "move": "CRUNCH"
+   },
+   {
+    "level": 40,
+    "move": "PSYCHIC"
+   },
+   {
+    "level": 44,
+    "move": "DARKPULSE"
+   }
+  ],
+  "height": 1.2,
+  "weight": 36.8,
+  "color": "Yellow",
+  "habitat": "Cave",
+  "category": "Troublemonster",
+  "entry": "O olho único ficou fosco e agora enxerga só o pior de quem olha de volta.",
+  "evolutions": [],
+  "troublemonster": true,
+  "corruptedFrom": "SUEZO",
+  "franchise": "BKY"
+ },
+ {
+  "id": 916,
+  "name": "Golem Turvo",
+  "internalName": "TRBGOLEM",
+  "type1": "ROCK",
+  "type2": "GHOST",
+  "stats": {
+   "hp": 119,
+   "atk": 119,
+   "def": 140,
+   "spe": 27,
+   "spa": 49,
+   "spd": 86
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Medium",
+  "baseExp": 190,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 2,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 45,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "ROCKTHROW"
+   },
+   {
+    "level": 14,
+    "move": "ASTONISH"
+   },
+   {
+    "level": 26,
+    "move": "ROCKSLIDE"
+   },
+   {
+    "level": 34,
+    "move": "SHADOWCLAW"
+   },
+   {
+    "level": 40,
+    "move": "STONEEDGE"
+   },
+   {
+    "level": 44,
+    "move": "SHADOWBALL"
+   }
+  ],
+  "height": 3.7,
+  "weight": 713,
+  "color": "Brown",
+  "habitat": "Cave",
+  "category": "Troublemonster",
+  "entry": "Pedra de outro mundo com um vazio dentro. Guarda a câmara errada há tempo demais para lembrar do quê.",
+  "evolutions": [],
+  "troublemonster": true,
+  "corruptedFrom": "GOLEM_MRA",
+  "franchise": "BKY"
+ },
+ {
+  "id": 917,
+  "name": "Gengar Turvo",
+  "internalName": "TRBGENGAR",
+  "type1": "GHOST",
+  "type2": "DARK",
+  "stats": {
+   "hp": 65,
+   "atk": 70,
+   "def": 65,
+   "spe": 119,
+   "spa": 140,
+   "spd": 81
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Medium",
+  "baseExp": 190,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 2,
+   "spd": 0
+  },
+  "catchRate": 45,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "LICK"
+   },
+   {
+    "level": 14,
+    "move": "CONFUSERAY"
+   },
+   {
+    "level": 26,
+    "move": "HEX"
+   },
+   {
+    "level": 34,
+    "move": "SUCKERPUNCH"
+   },
+   {
+    "level": 40,
+    "move": "SHADOWBALL"
+   },
+   {
+    "level": 44,
+    "move": "DARKPULSE"
+   }
+  ],
+  "height": 1.7,
+  "weight": 46.6,
+  "color": "Purple",
+  "habitat": "Cave",
+  "category": "Troublemonster",
+  "entry": "Perdeu a piada e ficou só o riso. Copia a sombra da Grande Criança que passou por último.",
+  "evolutions": [],
+  "troublemonster": true,
+  "corruptedFrom": "GENGAR",
+  "franchise": "BKY"
+ },
+ {
+  "id": 918,
+  "name": "Gyarados Turvo",
+  "internalName": "TRBGYARADOS",
+  "type1": "WATER",
+  "type2": "POISON",
+  "stats": {
+   "hp": 106,
+   "atk": 139,
+   "def": 88,
+   "spe": 90,
+   "spa": 67,
+   "spd": 111
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Medium",
+  "baseExp": 235,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 45,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "WATERGUN"
+   },
+   {
+    "level": 14,
+    "move": "ACID"
+   },
+   {
+    "level": 26,
+    "move": "AQUATAIL"
+   },
+   {
+    "level": 34,
+    "move": "POISONJAB"
+   },
+   {
+    "level": 40,
+    "move": "WATERFALL"
+   },
+   {
+    "level": 44,
+    "move": "SLUDGEBOMB"
+   }
+  ],
+  "height": 7.2,
+  "weight": 270.2,
+  "color": "Blue",
+  "habitat": "Cave",
+  "category": "Troublemonster",
+  "entry": "Subiu pela fenda da Maré e trouxe a água apodrecida junto. Chefe recorrente das câmaras baixas.",
+  "evolutions": [],
+  "troublemonster": true,
+  "corruptedFrom": "GYARADOS",
+  "franchise": "BKY"
+ },
+ {
+  "id": 919,
+  "name": "Dragon Turvo",
+  "internalName": "TRBDRAGON",
+  "type1": "DRAGON",
+  "type2": "DARK",
+  "stats": {
+   "hp": 95,
+   "atk": 116,
+   "def": 89,
+   "spe": 95,
+   "spa": 116,
+   "spd": 89
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Medium",
+  "baseExp": 235,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 45,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "DRAGONBREATH"
+   },
+   {
+    "level": 14,
+    "move": "BITE"
+   },
+   {
+    "level": 26,
+    "move": "DRAGONCLAW"
+   },
+   {
+    "level": 34,
+    "move": "CRUNCH"
+   },
+   {
+    "level": 40,
+    "move": "DRAGONPULSE"
+   },
+   {
+    "level": 44,
+    "move": "DARKPULSE"
+   }
+  ],
+  "height": 4.6,
+  "weight": 391,
+  "color": "Black",
+  "habitat": "Cave",
+  "category": "Troublemonster",
+  "entry": "O maior dos Troublemonsters. Enrosca-se no altar do Mundo Zero e cospe o escuro que sobrou da fusão.",
+  "evolutions": [],
+  "troublemonster": true,
+  "corruptedFrom": "DRAGON",
   "franchise": "BKY"
  }
 ]

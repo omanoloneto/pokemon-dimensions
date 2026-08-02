@@ -70,11 +70,14 @@ var PKM = PKM || {};
     Game_Pokemon.prototype._resolveSpecies = function(species) {
         if (typeof species === "number") return PKM.Core.species(species);
         if (typeof species === "string") {
+            // comparação sem caixa: NIDORANfE/NIDORANmA são os únicos internalName
+            // não-maiúsculos do banco e caíam calados no fallback (viravam Bulbasaur)
             const up = species.toUpperCase();
             const list = $dataPokemon || [];
             for (let i = 1; i < list.length; i++) {
-                if (list[i] && list[i].internalName === up) return list[i];
+                if (list[i] && list[i].internalName.toUpperCase() === up) return list[i];
             }
+            console.warn("PKM: espécie desconhecida '" + species + "' — usando o padrão.");
         }
         return PKM.Core.species(1);
     };

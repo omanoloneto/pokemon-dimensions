@@ -13,7 +13,7 @@
  * @help PKM_Franchise.js
  *
  * Cada franquia ocupa uma faixa contígua de IDs de espécie (data/Franchises.json):
- *   PKM 1-649 | DGM 650-699 | MDB 700-739 | MRA 740-779 | BKY 780-791
+ *   PKM 1-649 | DGM 650-799 | MDB 800-849 | MRA 850-899 | BKY 900-919
  *
  * Funde em runtime os arquivos "Extra" nos bancos base, para que os monstros de
  * todas as franquias vivam no mesmo $dataPokemon/$dataMoves/$dataItems2 e usem o

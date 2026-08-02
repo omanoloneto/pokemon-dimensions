@@ -6,7 +6,9 @@ Estado de referência: **o engine está pronto; o jogo ainda não existe.** Este
 
 **Engine (✅ — [roadmap-port-mz.md](roadmap-port-mz.md)):** 10 plugins PKM_* (~2.9k linhas), batalha 1v1 completa (status, estágios, precisão, troca, fuga), captura, EXP/evolução por nível, treinadores+insígnias, PC 16×30, mochila, Pokédex, áudio. 56 testes headless.
 
-**Dados:** 649 espécies (Gen 1–5), 559 golpes (**57 com efeito implementado — ~10%**), 18 tipos, 527 itens, 29 tabelas de encontro (órfãs — chaveadas por mapId do XP), 60 treinadores definidos e não usados em mapa nenhum.
+**Franquias (✅ — [02](02-franquias.md), [06](06-arquitetura-franquias.md)):** camada multi-franquia + os 5 sistemas de dimensão. **793 espécies** (649 Pokémon + 101 Digimon de *Adventure* + 10 Medabots + 13 Monster Rancher + 20 Bucky), 659 golpes, 40 Medapeças, 3 discos, dex de Kanto recortada. 412 testes headless.
+
+**Dados:** 559 golpes base + 100 novos; **~77 com efeito implementado** (recuo/dreno/autodestruição incluídos); 18 tipos, 538 itens. Encontros religados para a D1 (4 tabelas), mas **nenhum dispara ainda** — Map001/Map002 estão com a camada de região zerada e `PKM_Encounters` exige a Região 1 pintada. 60 treinadores definidos e não usados em mapa nenhum.
 
 **Conteúdo real:** 2 mapas — Map001 (hub de testes, 8 eventos debug) e Map002 (Coral Town, tiles reais, **zero gameplay**). Sprites: só Pokémon (front/back/shiny/icons/footprints/alt). Áudio: 655 cries + RTP padrão do MZ.
 
@@ -21,14 +23,18 @@ Estado de referência: **o engine está pronto; o jogo ainda não existe.** Este
 | `schemaVersion` no save + export/import manual | P | M1 | Antes de qualquer release |
 | Limpeza de cache de bitmaps (batalha/Pokédex) | P | M1 | iOS mata aba ~1.5GB |
 | Smoke E2E Playwright no build web | M | M2 | Boot→captura→save→reload |
-| Evolução ramificada com condição (Digimon) | M | M3 | Colunas + 1 `if` no hook |
+| ~~Evolução ramificada com condição (Digimon)~~ | — | ✅ | mais Item/Happiness/HasMove/Trade/Location |
+| **Pintar a Região 1 nos mapas** — sem isso nenhum encontro dispara | P | M2 | bloqueador da vertical slice |
+| **UI de montagem de Medapeças** (só há comando de plugin) | M | M5 | jogador não troca peça pelo menu |
+| **Eventos que concedam os emblemas G.C.** | P | M7 | API pronta, ninguém chama |
+| Fonte de discos no mundo (baús, NPCs, drops) | P | M6 | Santuário sem entrada de discos |
 | Encontros Water/Rod (dados já existem) | P | M4 | Engine só rola "Land" |
 | TM ensina golpe (campo `machine` já existe) | M | M4 | |
 | `priority` no turn order (campo existe, ignorado) | P | M4 | |
 | Shiny nas cenas de batalha (pastas *_shiny) | P | M4 | Verificar uso real |
-| Peças como equips nativos + drop pós-vitória (Medabots) | M | M5 | |
-| Santuário de Discos (Monster Rancher) | P | M6 | Common event + 1 tela |
-| Emblemas G.C. como gate de pacto (Bucky) | P | M7 | Reusa insígnias |
+| ~~Peças + drop pós-vitória (Medabots)~~ | — | ✅ | |
+| ~~Santuário de Discos (Monster Rancher)~~ | — | ✅ | falta o mapa/evento |
+| ~~Emblemas G.C. como gate de pacto (Bucky)~~ | — | ✅ | |
 | MOVE_EFFECTS dos golpes usados pelas espécies obtíveis | contínuo | M2+ | Nunca os 559; só o que entra em jogo |
 
 Tam.: P = dias, M = ~1 semana, G = mais que isso.

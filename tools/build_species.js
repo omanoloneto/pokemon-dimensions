@@ -11,6 +11,14 @@ const readJson = (p) => JSON.parse(fs.readFileSync(p, "utf8"));
 
 const franchises = readJson(path.join(DATA, "Franchises.json"));
 const baseMoves = readJson(path.join(DATA, "Moves.json"));
+const types = readJson(path.join(DATA, "Types.json"));
+
+const VALID_TYPES = new Set(Object.keys(types.chart || {}));
+const VALID_CONDITIONS = new Set([
+    "faintsBelow", "faintsAtLeast", "winsAtLeast", "friendshipAbove",
+    "friendshipBelow", "highestStat", "hasItem", "gender"
+]);
+const VALID_STATS = new Set(["hp", "atk", "def", "spe", "spa", "spd"]);
 
 function collect(dirName) {
     const dir = path.join(DATA, dirName);
@@ -57,6 +65,31 @@ for (const sp of species) {
         if (!byInternal.has(ev.into) && !ev.external) {
             errors.push(`${sp.internalName}: evolui para "${ev.into}", que não existe`);
         }
+        for (const key of Object.keys(ev.condition || {})) {
+            if (!VALID_CONDITIONS.has(key)) {
+                errors.push(`${sp.internalName}: condição de evolução desconhecida "${key}"`);
+            }
+            if (key === "highestStat" && !VALID_STATS.has(ev.condition[key])) {
+                errors.push(`${sp.internalName}: highestStat inválido "${ev.condition[key]}"`);
+            }
+        }
+    }
+    for (const t of [sp.type1, sp.type2]) {
+        if (t && !VALID_TYPES.has(t)) errors.push(`${sp.internalName}: tipo inválido "${t}"`);
+    }
+    if (!sp.type1) errors.push(`${sp.internalName}: sem type1`);
+    if (!(sp.catchRate >= 0 && sp.catchRate <= 255)) {
+        errors.push(`${sp.internalName}: catchRate fora de 0-255 (${sp.catchRate})`);
+    }
+    for (const k of VALID_STATS) {
+        if (!(sp.stats && sp.stats[k] > 0)) errors.push(`${sp.internalName}: stat "${k}" ausente ou <= 0`);
+    }
+}
+
+// golpes novos não podem sobrescrever os do banco base (Object.assign é silencioso)
+for (const [key, list] of Object.entries(moveFiles)) {
+    for (const name of Object.keys(list)) {
+        if (baseMoves[name]) errors.push(`moves/${key}.json: "${name}" já existe em Moves.json`);
     }
 }
 

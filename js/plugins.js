@@ -17,6 +17,7 @@ var $plugins =
 {"name":"PKM_Parts","status":true,"description":"[PKM v0.3] Medabots: medalha + 4 slots de peças trocáveis e drop de peça pós-vitória.","parameters":{}},
 {"name":"PKM_Sanctuary","status":true,"description":"[PKM v0.3] Monster Rancher: Santuário de Discos e treino de fazenda.","parameters":{}},
 {"name":"PKM_Pacts","status":true,"description":"[PKM v0.3] Bucky: emblemas de Grande Criança e pacto com os 12 espíritos.","parameters":{}},
+{"name":"PKM_Dex","status":true,"description":"[PKM v0.4] Dex regional por dimensão: recorte ordenado de espécies,\nnúmero regional, forma de obtenção e progresso de vistos/capturados.","parameters":{}},
 {"name":"PKM_Pokedex","status":true,"description":"[PKM v0.1] Sistema de Pokédex: lista navegável + ficha de detalhes\n(tipos, categoria, altura/peso, descrição), com estado visto/capturado.","parameters":{}},
 {"name":"PKM_Audio","status":true,"description":"[PKM v0.5] Áudio: cries dos Pokémon, BGM de batalha e fanfarra de\nvitória. Integra-se à batalha automaticamente (opcional).","parameters":{"cryFolder":"Cries/","crySuffix":"Cry","wildBgm":"Battle1","trainerBgm":"Battle2","victoryWildMe":"Victory1","victoryTrainerMe":"Victory2"}}
 ];
