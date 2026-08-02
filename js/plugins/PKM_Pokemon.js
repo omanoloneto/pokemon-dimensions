@@ -265,9 +265,42 @@ var PKM = PKM || {};
     Game_Pokemon.prototype.evolveInto = function(internalName) {
         const target = this._resolveSpecies(internalName);
         if (!target) return false;
+        if (!this._evoHistory) this._evoHistory = [];
+        this._evoHistory.push(this._speciesId);
         this._speciesId = target.id;
         this._hp = Math.min(this._hp, this.maxHp);   // clampa ao novo máximo
         return true;
+    };
+    // desfaz a evolução mais recente (Digimemória, na dimensão Digital)
+    Game_Pokemon.prototype.devolve = function() {
+        if (!this._evoHistory || this._evoHistory.length === 0) return false;
+        this._speciesId = this._evoHistory.pop();
+        this._hp = Math.min(this._hp, this.maxHp);
+        return true;
+    };
+
+    //--- histórico de batalha (condições de evolução ramificada) -------------
+    Game_Pokemon.prototype.record = function() {
+        if (!this._record) this._record = { wins: 0, faints: 0, friendship: 70 };
+        return this._record;
+    };
+    Game_Pokemon.prototype.recordWin = function() {
+        const r = this.record();
+        r.wins++;
+        r.friendship = Math.min(255, r.friendship + 1);
+    };
+    Game_Pokemon.prototype.recordFaint = function() {
+        const r = this.record();
+        r.faints++;
+        r.friendship = Math.max(0, r.friendship - 5);
+    };
+    Object.defineProperty(Game_Pokemon.prototype, "wins", { get() { return this.record().wins; }, configurable: true });
+    Object.defineProperty(Game_Pokemon.prototype, "faints", { get() { return this.record().faints; }, configurable: true });
+    Object.defineProperty(Game_Pokemon.prototype, "friendship", { get() { return this.record().friendship; }, configurable: true });
+    // maior stat de combate — condição comum de digievolução
+    Game_Pokemon.prototype.highestStat = function() {
+        return ["atk", "def", "spa", "spd", "spe"]
+            .reduce((best, k) => (this.stat(k) > this.stat(best) ? k : best), "atk");
     };
 
     //--- estado de batalha: estágios de stat / velocidade (Fase 5b) ----------

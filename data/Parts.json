@@ -1,0 +1,51 @@
+[
+  { "id": "MB_HEAD_METABEE", "name": "Seeker Missile", "model": "METABEE", "slot": "head", "type": "STEEL", "stats": { "atk": 8, "spa": 12, "def": 4 }, "move": "SEEKERMISSILE", "rarity": 1 },
+  { "id": "MB_RARM_METABEE", "name": "Revolver", "model": "METABEE", "slot": "rArm", "type": "STEEL", "stats": { "atk": 14, "spe": 2 }, "move": "SUBMACHINEGUN", "rarity": 1 },
+  { "id": "MB_LARM_METABEE", "name": "Stun Vulcan", "model": "METABEE", "slot": "lArm", "type": "ELECTRIC", "stats": { "atk": 10, "spe": 4 }, "move": "STUNVULCAN", "rarity": 1 },
+  { "id": "MB_LEGS_METABEE", "name": "Bipedal Frame", "model": "METABEE", "slot": "legs", "type": "STEEL", "stats": { "spe": 12, "def": 4 }, "move": null, "rarity": 1 },
+
+  { "id": "MB_HEAD_ROKUSHO", "name": "Blizzard Horn", "model": "ROKUSHO", "slot": "head", "type": "ICE", "stats": { "spa": 14, "spd": 5 }, "move": "ICYWIND", "rarity": 2 },
+  { "id": "MB_RARM_ROKUSHO", "name": "Cyclone Sword", "model": "ROKUSHO", "slot": "rArm", "type": "STEEL", "stats": { "atk": 16, "spe": 3 }, "move": "MEDABLADE", "rarity": 2 },
+  { "id": "MB_LARM_ROKUSHO", "name": "Frost Saber", "model": "ROKUSHO", "slot": "lArm", "type": "ICE", "stats": { "atk": 13, "spd": 4 }, "move": "FROSTSABER", "rarity": 2 },
+  { "id": "MB_LEGS_ROKUSHO", "name": "Silent Stride", "model": "ROKUSHO", "slot": "legs", "type": "STEEL", "stats": { "spe": 15, "spd": 3 }, "move": null, "rarity": 2 },
+
+  { "id": "MB_HEAD_SUMILIDON", "name": "Saber Fang", "model": "SUMILIDON", "slot": "head", "type": "FIGHTING", "stats": { "atk": 15, "def": 3 }, "move": "CRUNCH", "rarity": 2 },
+  { "id": "MB_RARM_SUMILIDON", "name": "Grapple Claw", "model": "SUMILIDON", "slot": "rArm", "type": "FIGHTING", "stats": { "atk": 17, "def": 4, "spe": -3 }, "move": "GRAPPLECLAW", "rarity": 2 },
+  { "id": "MB_LARM_SUMILIDON", "name": "Bear Hug", "model": "SUMILIDON", "slot": "lArm", "type": "FIGHTING", "stats": { "atk": 14, "hp": 6, "spe": -2 }, "move": "SUBMISSION", "rarity": 2 },
+  { "id": "MB_LEGS_SUMILIDON", "name": "Beast Legs", "model": "SUMILIDON", "slot": "legs", "type": "FIGHTING", "stats": { "spe": 9, "atk": 5 }, "move": null, "rarity": 2 },
+
+  { "id": "MB_HEAD_KROSSERDOG", "name": "Scope Eye", "model": "KROSSERDOG", "slot": "head", "type": "STEEL", "stats": { "spa": 10, "spe": 6 }, "move": "SCOPESHOT", "rarity": 1 },
+  { "id": "MB_RARM_KROSSERDOG", "name": "Rescue Claw", "model": "KROSSERDOG", "slot": "rArm", "type": "NORMAL", "stats": { "atk": 11, "def": 5 }, "move": "SLASH", "rarity": 1 },
+  { "id": "MB_LARM_KROSSERDOG", "name": "Siren Speaker", "model": "KROSSERDOG", "slot": "lArm", "type": "NORMAL", "stats": { "spa": 9, "spd": 6 }, "move": "SCREECH", "rarity": 1 },
+  { "id": "MB_LEGS_KROSSERDOG", "name": "Rover Wheels", "model": "KROSSERDOG", "slot": "legs", "type": "STEEL", "stats": { "spe": 18 }, "move": null, "rarity": 1 },
+
+  { "id": "MB_HEAD_BRASS", "name": "Signal Beacon", "model": "BRASS", "slot": "head", "type": "FLYING", "stats": { "spa": 11, "spd": 6 }, "move": "SIGNALBEAM", "rarity": 1 },
+  { "id": "MB_RARM_BRASS", "name": "Wing Blade", "model": "BRASS", "slot": "rArm", "type": "FLYING", "stats": { "atk": 12, "spe": 4 }, "move": "AERIALACE", "rarity": 1 },
+  { "id": "MB_LARM_BRASS", "name": "Guard Feather", "model": "BRASS", "slot": "lArm", "type": "STEEL", "stats": { "def": 12, "spd": 8, "atk": -4 }, "move": "IRONDEFENSE", "rarity": 1 },
+  { "id": "MB_LEGS_BRASS", "name": "Hover Jets", "model": "BRASS", "slot": "legs", "type": "FLYING", "stats": { "spe": 16, "def": -2 }, "move": null, "rarity": 1 },
+
+  { "id": "MB_HEAD_PEPPERCAT", "name": "Static Whisker", "model": "PEPPERCAT", "slot": "head", "type": "ELECTRIC", "stats": { "spa": 13, "spe": 5 }, "move": "CHARGEBEAM", "rarity": 2 },
+  { "id": "MB_RARM_PEPPERCAT", "name": "Shock Claw", "model": "PEPPERCAT", "slot": "rArm", "type": "ELECTRIC", "stats": { "atk": 13, "spe": 4 }, "move": "SPARK", "rarity": 2 },
+  { "id": "MB_LARM_PEPPERCAT", "name": "Prowl Claw", "model": "PEPPERCAT", "slot": "lArm", "type": "DARK", "stats": { "atk": 12, "spe": 5 }, "move": "FEINTATTACK", "rarity": 2 },
+  { "id": "MB_LEGS_PEPPERCAT", "name": "Feline Legs", "model": "PEPPERCAT", "slot": "legs", "type": "DARK", "stats": { "spe": 17, "def": -3 }, "move": null, "rarity": 2 },
+
+  { "id": "MB_HEAD_NEUTRANURSE", "name": "Care Visor", "model": "NEUTRANURSE", "slot": "head", "type": "PSYCHIC", "stats": { "spa": 12, "spd": 9 }, "move": "PSYBEAM", "rarity": 3 },
+  { "id": "MB_RARM_NEUTRANURSE", "name": "Repair Arm", "model": "NEUTRANURSE", "slot": "rArm", "type": "PSYCHIC", "stats": { "hp": 10, "spd": 10, "atk": -4 }, "move": "RECOVER", "rarity": 3 },
+  { "id": "MB_LARM_NEUTRANURSE", "name": "Shield Emitter", "model": "NEUTRANURSE", "slot": "lArm", "type": "STEEL", "stats": { "def": 14, "spd": 7, "spe": -5 }, "move": "LIGHTSCREEN", "rarity": 3 },
+  { "id": "MB_LEGS_NEUTRANURSE", "name": "Medic Treads", "model": "NEUTRANURSE", "slot": "legs", "type": "STEEL", "stats": { "spe": 8, "hp": 8 }, "move": null, "rarity": 3 },
+
+  { "id": "MB_HEAD_ARCBEETLE", "name": "Prominence", "model": "ARCBEETLE", "slot": "head", "type": "FIRE", "stats": { "spa": 20, "spd": 6 }, "move": "LASERCANNON", "rarity": 4 },
+  { "id": "MB_RARM_ARCBEETLE", "name": "Solar Cannon", "model": "ARCBEETLE", "slot": "rArm", "type": "FIRE", "stats": { "spa": 18, "atk": 6 }, "move": "FLAMETHROWER", "rarity": 4 },
+  { "id": "MB_LARM_ARCBEETLE", "name": "Beam Shield", "model": "ARCBEETLE", "slot": "lArm", "type": "STEEL", "stats": { "def": 16, "spd": 8, "spe": -5 }, "move": "FLASHCANNON", "rarity": 4 },
+  { "id": "MB_LEGS_ARCBEETLE", "name": "Gold Frame", "model": "ARCBEETLE", "slot": "legs", "type": "STEEL", "stats": { "spe": 12, "def": 8 }, "move": null, "rarity": 4 },
+
+  { "id": "MB_HEAD_BELZELGA", "name": "Doom Visor", "model": "BELZELGA", "slot": "head", "type": "GHOST", "stats": { "spa": 17, "atk": 8, "spe": -4 }, "move": "SHADOWBALL", "rarity": 4 },
+  { "id": "MB_RARM_BELZELGA", "name": "Shadow Saber", "model": "BELZELGA", "slot": "rArm", "type": "GHOST", "stats": { "atk": 20, "def": 5, "spe": -5 }, "move": "SHADOWSABER", "rarity": 4 },
+  { "id": "MB_LARM_BELZELGA", "name": "Bulk Shield", "model": "BELZELGA", "slot": "lArm", "type": "STEEL", "stats": { "def": 18, "hp": 8, "spe": -6 }, "move": "IRONDEFENSE", "rarity": 4 },
+  { "id": "MB_LEGS_BELZELGA", "name": "Siege Anchors", "model": "BELZELGA", "slot": "legs", "type": "STEEL", "stats": { "spe": 6, "def": 12 }, "move": null, "rarity": 4 },
+
+  { "id": "MB_HEAD_WARBANDIT", "name": "Bandit Mask", "model": "WARBANDIT", "slot": "head", "type": "GROUND", "stats": { "atk": 14, "spe": 4 }, "move": "MUDSLAP", "rarity": 3 },
+  { "id": "MB_RARM_WARBANDIT", "name": "Quake Drill", "model": "WARBANDIT", "slot": "rArm", "type": "GROUND", "stats": { "atk": 18, "def": 4, "spe": -3 }, "move": "QUAKEDRILL", "rarity": 3 },
+  { "id": "MB_LARM_WARBANDIT", "name": "Loot Hook", "model": "WARBANDIT", "slot": "lArm", "type": "DARK", "stats": { "atk": 12, "spe": 6 }, "move": "PURSUIT", "rarity": 3 },
+  { "id": "MB_LEGS_WARBANDIT", "name": "Crawler Tracks", "model": "WARBANDIT", "slot": "legs", "type": "GROUND", "stats": { "spe": 10, "def": 7 }, "move": null, "rarity": 3 }
+]

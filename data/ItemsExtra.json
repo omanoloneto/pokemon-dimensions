@@ -1,0 +1,13 @@
+{
+  "DIGILINK": { "name": "Digi-Link", "pocket": 3, "price": 200, "description": "Estabelece conexão com um Digimon selvagem e firma parceria." },
+  "DIGILINKPLUS": { "name": "Digi-Link+", "pocket": 3, "price": 600, "description": "Digivice aprimorado: conexão bem mais estável." },
+  "DIGILINKOMEGA": { "name": "Digi-Link Ω", "pocket": 3, "price": 1200, "description": "Protótipo do Nexus: conexão quase infalível." },
+  "DIGIMEMORY": { "name": "Digimemória", "pocket": 1, "price": 3000, "description": "Reverte a digievolução mais recente de um Digimon." },
+  "MEDALCASE": { "name": "Estojo de Medalha", "pocket": 3, "price": 300, "description": "Ejeta a medalha de um Medabot muito danificado." },
+  "MEDALCASEPRO": { "name": "Estojo Pro", "pocket": 3, "price": 900, "description": "Estojo de torneio: ejeção bem mais confiável." },
+  "GCEMBLEM": { "name": "Emblema G.C.", "pocket": 4, "price": 0, "description": "Prova de Grande Criança. Permite firmar pacto com o espírito de um mundo." },
+  "DISCCOMMON": { "name": "Disco Comum", "pocket": 4, "price": 500, "description": "Disco gasto. Gera um monstro no Santuário." },
+  "DISCRARE": { "name": "Disco Raro", "pocket": 4, "price": 2000, "description": "Disco bem conservado. Gera monstros melhores no Santuário." },
+  "DISCLEGEND": { "name": "Disco Lendário", "pocket": 4, "price": 0, "description": "Disco único. Guarda algo que ninguém viu há muito tempo." },
+  "FARMTICKET": { "name": "Passe da Fazenda", "pocket": 4, "price": 0, "description": "Inscreve sua equipe no Circuito da Fazenda." }
+}

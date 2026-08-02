@@ -9,6 +9,7 @@ Fangame monster collector multi-franquia (RPG Maker MZ). Documentos na ordem de 
 | [03-mundo-e-narrativa.md](03-mundo-e-narrativa.md) | Estrutura do mundo, arco em 3 atos, progressão, templates de produção |
 | [04-producao-mobile.md](04-producao-mobile.md) | Release web/mobile, adaptação touch, assets, realidade legal, QA |
 | [05-roadmap.md](05-roadmap.md) | **Roadmap mestre** — estado atual, marcos M1–M8, riscos |
+| [06-arquitetura-franquias.md](06-arquitetura-franquias.md) | Referência técnica: como o doc 02 vira código (faixas de ID, ganchos, pipeline de dados) |
 | [roadmap-port-mz.md](roadmap-port-mz.md) | Histórico: port do engine XP→MZ (concluído) |
 
 Regra de manutenção: decisão de design mudou → atualiza o doc correspondente no mesmo commit da mudança.

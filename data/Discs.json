@@ -1,0 +1,30 @@
+{
+ "DISCCOMMON": {
+  "name": "Disco Comum",
+  "pool": [
+   { "species": "SUEZO", "weight": 30, "levelRange": [32, 35] },
+   { "species": "MOCCHI", "weight": 25, "levelRange": [32, 35] },
+   { "species": "HARE", "weight": 20, "levelRange": [32, 36] },
+   { "species": "JELL", "weight": 15, "levelRange": [33, 36] },
+   { "species": "PLANT", "weight": 10, "levelRange": [33, 36] }
+  ]
+ },
+ "DISCRARE": {
+  "name": "Disco Raro",
+  "pool": [
+   { "species": "TIGER", "weight": 25, "levelRange": [36, 39] },
+   { "species": "ZUUM", "weight": 25, "levelRange": [36, 39] },
+   { "species": "GALI", "weight": 20, "levelRange": [37, 40] },
+   { "species": "PIXIE", "weight": 15, "levelRange": [37, 41] },
+   { "species": "GOLEM_MRA", "weight": 10, "levelRange": [38, 41] },
+   { "species": "DURAHAN", "weight": 5, "levelRange": [38, 42] }
+  ]
+ },
+ "DISCLEGEND": {
+  "name": "Disco Lendário",
+  "pool": [
+   { "species": "DRAGON", "weight": 60, "levelRange": [42, 44] },
+   { "species": "JOKER", "weight": 40, "levelRange": [43, 44] }
+  ]
+ }
+}

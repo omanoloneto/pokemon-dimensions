@@ -1,0 +1,78 @@
+{
+  "order": ["PKM", "DGM", "MDB", "MRA", "BKY"],
+  "list": {
+    "PKM": {
+      "id": "PKM",
+      "name": "Pokémon",
+      "dimension": "Dimensão Pokémon",
+      "speciesFrom": 1,
+      "speciesTo": 649,
+      "capture": {
+        "inField": true,
+        "items": [],
+        "verb": "capturado",
+        "throwText": "Você jogou uma {item}!",
+        "successText": "Gotcha! {target} foi capturado!"
+      }
+    },
+    "DGM": {
+      "id": "DGM",
+      "name": "Digimon",
+      "dimension": "Dimensão Digital",
+      "speciesFrom": 650,
+      "speciesTo": 699,
+      "capture": {
+        "inField": true,
+        "items": ["DIGILINK", "DIGILINKPLUS", "DIGILINKOMEGA"],
+        "verb": "conectado",
+        "throwText": "Você ativou o {item}!",
+        "successText": "Conexão estabelecida! {target} virou seu parceiro!"
+      }
+    },
+    "MDB": {
+      "id": "MDB",
+      "name": "Medabots",
+      "dimension": "Dimensão Medabots",
+      "speciesFrom": 700,
+      "speciesTo": 739,
+      "capture": {
+        "inField": true,
+        "items": ["MEDALCASE", "MEDALCASEPRO"],
+        "maxHpRate": 0.34,
+        "verb": "recuperada",
+        "throwText": "Você abriu o {item}!",
+        "successText": "Medalha ejetada! {target} entrou para a sua equipe!",
+        "deniedText": "A medalha de {target} só ejeta com o Medabot muito danificado!"
+      }
+    },
+    "MRA": {
+      "id": "MRA",
+      "name": "Monster Rancher",
+      "dimension": "Dimensão Fazenda",
+      "speciesFrom": 740,
+      "speciesTo": 779,
+      "capture": {
+        "inField": false,
+        "items": [],
+        "verb": "gerado",
+        "deniedText": "Monstros daqui não se capturam — eles nascem de discos no Santuário!"
+      }
+    },
+    "BKY": {
+      "id": "BKY",
+      "name": "Bucky",
+      "dimension": "Dimensão dos Doze Mundos",
+      "speciesFrom": 780,
+      "speciesTo": 791,
+      "capture": {
+        "inField": true,
+        "items": ["GCEMBLEM"],
+        "requiresBadge": true,
+        "verb": "pactuado",
+        "throwText": "Você ergueu o {item}!",
+        "successText": "Pacto firmado! {target} aceitou você como Grande Criança!",
+        "deniedText": "{target} não reconhece você — falta o emblema deste mundo."
+      }
+    }
+  }
+}

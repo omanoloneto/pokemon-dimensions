@@ -56,8 +56,7 @@ var PKM = PKM || {};
     Window_PokedexList.prototype.initialize = function(rect) {
         Window_Selectable.prototype.initialize.call(this, rect);
         this._detailWindow = null;
-        this._order = [];
-        for (let i = 1; i <= PKM.Core.maxSpecies(); i++) this._order.push(i);
+        this._order = PKM.Core.allSpeciesIds();
         this.refresh();
         this.select(0);
         this.activate();
@@ -131,8 +130,8 @@ var PKM = PKM || {};
     Window_PokedexDetail.prototype.loadSprite = function() {
         this._bitmap = null;
         if (!$gameSystem.pkmIsSeen(this._id)) return;
-        const bmp = ImageManager.loadBitmap(FRONT_DIR, num3(this._id));
-        bmp.addLoadListener(() => { this._bitmap = bmp; this.refresh(); });
+        const bmp = PKM.Core.loadSprite(FRONT_DIR, num3(this._id));
+        if (bmp) bmp.addLoadListener(() => { this._bitmap = bmp; this.refresh(); });
     };
     Window_PokedexDetail.prototype.refresh = function() {
         this.contents.clear();

@@ -86,6 +86,23 @@ PKM.PLUGIN_NAME = "PKM_Core";
     PKM.Core.maxSpecies = function() {
         return $dataPokemon ? $dataPokemon.length - 1 : 0;
     };
+    // ids realmente preenchidos (as faixas de franquia deixam buracos)
+    PKM.Core.allSpeciesIds = function() {
+        const out = [];
+        for (let i = 1; i <= PKM.Core.maxSpecies(); i++) {
+            if ($dataPokemon[i]) out.push(i);
+        }
+        return out;
+    };
+
+    // Carrega sprite FORA do cache do ImageManager: monstro sem imagem ainda não
+    // instalada não pode derrubar a cena via ImageManager.throwLoadError.
+    PKM.Core.loadSprite = function(folder, filename) {
+        if (typeof Bitmap === "undefined") return null;
+        const url = folder + (typeof Utils !== "undefined" ? Utils.encodeURI(filename) : filename) + ".png";
+        return Bitmap.load(url);
+    };
+
     PKM.Core.speciesByInternal = function(internalName) {
         if (!$dataPokemon || !internalName) return null;
         const up = internalName.toUpperCase();

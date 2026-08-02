@@ -22,6 +22,10 @@ const ctx = {
     $dataItems2: load("PkmItems.json"),
     $dataEncounters: load("Encounters.json"),
     $dataTrainers: load("Trainers.json"),
+    $dataFranchises: load("Franchises.json"),
+    $dataSpeciesExtra: load("SpeciesExtra.json"),
+    $dataMovesExtra: load("MovesExtra.json"),
+    $dataItemsExtra: load("ItemsExtra.json"),
     $gameTemp: {},
     DataManager: { _databaseFiles: [] },
     PluginManager: { registerCommand() {} },
@@ -47,10 +51,14 @@ vm.runInContext(`
 `, ctx);
 
 // carrega plugins de lógica (não os de cena — esses usam render)
-for (const f of ["PKM_Core.js", "PKM_Pokemon.js", "PKM_Battle.js", "PKM_Bag.js", "PKM_Trainers.js", "PKM_Party.js", "PKM_Storage.js"]) {
+for (const f of ["PKM_Core.js", "PKM_Franchise.js", "PKM_Pokemon.js", "PKM_Battle.js", "PKM_Bag.js",
+                 "PKM_Trainers.js", "PKM_Party.js", "PKM_Storage.js",
+                 "PKM_Evolution.js", "PKM_Parts.js", "PKM_Sanctuary.js", "PKM_Pacts.js"]) {
     const p = path.join(ROOT, "js/plugins", f);
     if (fs.existsSync(p)) vm.runInContext(fs.readFileSync(p, "utf8"), ctx, { filename: f });
 }
+// sem Scene_Boot no headless: funde os bancos multi-franquia na mão
+if (ctx.PKM.Franchise) ctx.PKM.Franchise.install();
 
 // --- mini framework de asserts ---
 let pass = 0, fail = 0;
@@ -252,6 +260,90 @@ console.log("== Polimento (10) ==");
     ok(sp && sp.name === "Charizard", "speciesByInternal acha Charizard");
     eq(ctx.PKM.Core.speciesByInternal("NAOEXISTE"), null, "espécie inexistente retorna null");
     ok(!!ctx.PKM.Audio || true, "PKM.Audio é opcional (não carregado no harness)");
+}
+
+// camada multi-franquia (core)
+console.log("== Multi-franquia (core) ==");
+{
+    const F = ctx.PKM.Franchise;
+    eq(F.ofSpecies(1).id, "PKM", "id 1 pertence a Pokémon");
+    eq(F.ofSpecies(650).id, "DGM", "id 650 pertence a Digimon");
+    eq(F.ofSpecies(700).id, "MDB", "id 700 pertence a Medabots");
+    eq(F.ofSpecies(740).id, "MRA", "id 740 pertence a Monster Rancher");
+    eq(F.ofSpecies(780).id, "BKY", "id 780 pertence a Bucky");
+    ok(F.all().length === 5, "5 franquias registradas");
+
+    // itens de captura são exclusivos da franquia dona
+    const mockOf = (id) => ({ speciesId: id, name: "Alvo", species: () => null, hpRate: () => 1 });
+    ok(F.itemWorksOn("POKEBALL", mockOf(1)), "Poké Ball funciona em Pokémon");
+    ok(!F.itemWorksOn("POKEBALL", mockOf(650)), "Poké Ball não funciona em Digimon");
+    ok(F.itemWorksOn("DIGILINK", mockOf(650)), "Digi-Link funciona em Digimon");
+    ok(!F.itemWorksOn("DIGILINK", mockOf(1)), "Digi-Link não funciona em Pokémon");
+
+    // Monster Rancher nunca é capturável em campo
+    eq(F.captureRule(mockOf(740), null).allowed, false, "Monster Rancher bloqueia captura em campo");
+    // Medabot exige HP baixo
+    eq(F.captureRule(mockOf(700), "MEDALCASE").allowed, false, "Medabot com HP cheio recusa o estojo");
+    const hurt = { speciesId: 700, name: "Alvo", species: () => null, hpRate: () => 0.2 };
+    eq(F.captureRule(hurt, "MEDALCASE").allowed, true, "Medabot danificado aceita o estojo");
+
+    // itens extras entraram no banco de itens
+    ok(!!ctx.PKM.Core.item("DIGILINK"), "ItemsExtra fundido em $dataItems2");
+}
+
+// recuo, dreno e autodestruição (base do golpe Jibaku)
+console.log("== Efeitos sobre o próprio atacante ==");
+{
+    const B = ctx.PKM.Battle;
+    const mon = new G("MACHOP", 50);
+    mon.hp = mon.maxHp;
+    B.applySelfEffect(mon, { recoil: 0.5 }, 40);
+    eq(mon.hp, mon.maxHp - 20, "recuo tira metade do dano causado");
+
+    const drainer = new G("ODDISH", 50);
+    drainer.hp = drainer.maxHp - 30;
+    B.applySelfEffect(drainer, { drain: 0.5 }, 20);
+    eq(drainer.hp, drainer.maxHp - 20, "dreno cura metade do dano causado");
+
+    const bomber = new G("GEODUDE", 50);
+    const msgs = B.applySelfEffect(bomber, { selfKO: true }, 100);
+    ok(bomber.isFainted(), "autodestruição derruba o próprio atacante");
+    ok(msgs.some(m => m.includes("desmaiou")), "autodestruição anuncia o desmaio");
+    ok(B.MOVE_EFFECTS.EXPLOSION && B.MOVE_EFFECTS.EXPLOSION.selfKO, "Explosion registrado como selfKO");
+    ok(B.MOVE_EFFECTS.DOUBLEEDGE.recoil > 0, "Double-Edge registrado com recuo");
+}
+
+// histórico do monstro (condições de digievolução)
+console.log("== Histórico de batalha ==");
+{
+    const p = new G("EEVEE", 20);
+    eq(p.wins, 0, "começa sem vitórias");
+    p.recordWin(); p.recordWin();
+    eq(p.wins, 2, "vitórias acumulam");
+    const before = p.friendship;
+    p.recordFaint();
+    eq(p.faints, 1, "desmaios acumulam");
+    ok(p.friendship < before, "desmaio reduz amizade");
+    ok(["atk", "def", "spa", "spd", "spe"].includes(p.highestStat()), "highestStat retorna um stat válido");
+
+    // evolução guarda histórico e pode ser desfeita
+    const d = new G("BULBASAUR", 16);
+    d.evolveInto("IVYSAUR");
+    eq(d.speciesName, "Ivysaur", "evoluiu para Ivysaur");
+    ok(d.devolve(), "devolve desfaz a evolução");
+    eq(d.speciesName, "Bulbasaur", "voltou a ser Bulbasaur");
+    eq(d.devolve(), false, "sem histórico, devolve falha");
+}
+
+// suítes por franquia: tools/tests/*.js exportam function({ctx, ok, eq, G, section})
+{
+    const testsDir = path.join(__dirname, "tests");
+    if (fs.existsSync(testsDir)) {
+        const api = { ctx, ok, eq, G, section: (t) => console.log("== " + t + " ==") };
+        for (const f of fs.readdirSync(testsDir).filter(f => f.endsWith(".js")).sort()) {
+            require(path.join(testsDir, f))(api);
+        }
+    }
 }
 
 console.log(`\nResultado: ${pass} passou, ${fail} falhou`);

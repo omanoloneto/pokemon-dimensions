@@ -137,7 +137,17 @@ PKM.Battle = PKM.Battle || {};
         CRUNCH: { secondary: { stats: { def: -1 }, target: "foe" }, chance: 20 },
         ROCKTOMB: { secondary: { stats: { spe: -1 }, target: "foe" }, chance: 100 },
         BUBBLE: { secondary: { stats: { spe: -1 }, target: "foe" }, chance: 10 },
-        AURORABEAM: { secondary: { stats: { atk: -1 }, target: "foe" }, chance: 10 }
+        AURORABEAM: { secondary: { stats: { atk: -1 }, target: "foe" }, chance: 10 },
+        // --- recuo (recoil): o atacante toma parte do dano causado ---
+        TAKEDOWN: { recoil: 0.25 }, SUBMISSION: { recoil: 0.25 }, DOUBLEEDGE: { recoil: 0.33 },
+        FLAREBLITZ: { recoil: 0.33, secondary: { status: "BRN" }, chance: 10 },
+        VOLTTACKLE: { recoil: 0.33, secondary: { status: "PAR" }, chance: 10 },
+        BRAVEBIRD: { recoil: 0.33 }, WOODHAMMER: { recoil: 0.33 }, HEADSMASH: { recoil: 0.5 },
+        // --- dreno: o atacante recupera parte do dano causado ---
+        ABSORB: { drain: 0.5 }, MEGADRAIN: { drain: 0.5 }, GIGADRAIN: { drain: 0.5 },
+        LEECHLIFE: { drain: 0.5 }, DRAINPUNCH: { drain: 0.5 }, DRAININGKISS: { drain: 0.75 },
+        // --- autodestruição: o atacante desmaia após acertar ---
+        SELFDESTRUCT: { selfKO: true }, EXPLOSION: { selfKO: true }
     };
 
     const STAT_LABEL = { atk: "Ataque", def: "Defesa", spa: "At. Esp.", spd: "Def. Esp.", spe: "Velocidade", acc: "Precisão", eva: "Evasão" };
@@ -211,6 +221,44 @@ PKM.Battle = PKM.Battle || {};
             msgs.push(mon.name + " sofreu com a queimadura!");
         }
         if (mon.isFainted()) msgs.push(mon.name + " desmaiou!");
+        return msgs;
+    };
+
+    // ganchos de vitória: plugins de franquia penduram recompensas aqui
+    // (ex.: PKM_Parts dropa uma peça do Medabot derrotado). fn -> [mensagens]
+    PKM.Battle._victoryHooks = [];
+    PKM.Battle.registerVictoryHook = function(fn) {
+        if (typeof fn === "function") PKM.Battle._victoryHooks.push(fn);
+    };
+    PKM.Battle.runVictoryHooks = function(winner, defeated, isTrainer) {
+        const msgs = [];
+        for (const fn of PKM.Battle._victoryHooks) {
+            const out = fn(winner, defeated, isTrainer);
+            if (Array.isArray(out)) msgs.push(...out);
+            else if (typeof out === "string") msgs.push(out);
+        }
+        return msgs;
+    };
+
+    // efeitos que recaem sobre o próprio atacante: dreno, recuo, autodestruição.
+    // Usado pelos golpes "Jibaku" da dimensão Bucky sem motor novo.
+    PKM.Battle.applySelfEffect = function(attacker, eff, damageDealt) {
+        const msgs = [];
+        if (!eff || attacker.isFainted()) return msgs;
+        if (eff.drain && damageDealt > 0) {
+            const heal = Math.max(1, Math.floor(damageDealt * eff.drain));
+            attacker.hp = Math.min(attacker.maxHp, attacker.hp + heal);
+            msgs.push(attacker.name + " absorveu energia!");
+        }
+        if (eff.recoil && damageDealt > 0) {
+            attacker.takeDamage(Math.max(1, Math.floor(damageDealt * eff.recoil)));
+            msgs.push(attacker.name + " se feriu com o impacto!");
+        }
+        if (eff.selfKO) {
+            attacker.takeDamage(attacker.maxHp);
+            msgs.push(attacker.name + " se autodestruiu!");
+        }
+        if (attacker.isFainted()) msgs.push(attacker.name + " desmaiou!");
         return msgs;
     };
 
@@ -448,11 +496,22 @@ PKM.Battle = PKM.Battle || {};
                 this.startInput.bind(this));
             return;
         }
+        // regra da franquia do alvo (ex.: Monster Rancher não se captura em campo)
+        if (PKM.Franchise) {
+            const rule = PKM.Franchise.captureRule(this._enemy, null);
+            if (!rule.allowed) {
+                this.showSteps([{ text: rule.reason }], this.startInput.bind(this));
+                return;
+            }
+        }
         // se a mochila (PKM_Bag) existir, escolhe entre as bolas que você possui
         if ($gameParty.pkmBalls) {
-            const balls = $gameParty.pkmBalls();
+            let balls = $gameParty.pkmBalls();
+            if (PKM.Franchise) balls = balls.filter(b => PKM.Franchise.itemWorksOn(b.name, this._enemy));
             if (balls.length === 0) {
-                this.showSteps([{ text: "Você não tem nenhuma Poké Bola!" }], this.startInput.bind(this));
+                const f = PKM.Franchise ? PKM.Franchise.of(this._enemy) : null;
+                const what = f && f.capture && f.capture.items.length ? "o item de captura desta dimensão" : "nenhuma Poké Bola";
+                this.showSteps([{ text: "Você não tem " + what + "!" }], this.startInput.bind(this));
                 return;
             }
             this._ballWindow.setBalls(balls);
@@ -538,11 +597,15 @@ PKM.Battle = PKM.Battle || {};
         if (calc.crit) msgs.push("Um acerto crítico!");
         if (calc.effectiveness > 1) msgs.push("Foi super eficaz!");
         else if (calc.effectiveness < 1) msgs.push("Não foi muito eficaz…");
+
+        const selfMsgs = PKM.Battle.applySelfEffect(attacker, eff, calc.damage);
         if (defender.isFainted()) {
             const dt = defender === this._enemy ? this.foeTag() : "";
             msgs.push(defender.name + dt + " desmaiou!");
-            return msgs;
+            return msgs.concat(selfMsgs);
         }
+        msgs.push(...selfMsgs);
+        if (attacker.isFainted()) return msgs;
         // efeito secundário (por chance)
         if (eff && eff.secondary) {
             const chance = eff.chance || (md ? md.effectChance : 0) || 0;
@@ -574,8 +637,10 @@ PKM.Battle = PKM.Battle || {};
 
     Scene_PkmBattle.prototype.settleTurn = function() {
         if (this._enemy.isFainted()) {
+            if (this._player.recordWin) this._player.recordWin(this._enemy);
             this.awardExpAndFinish(() => this.onEnemyDefeated());
         } else if (this._player.isFainted()) {
+            if (this._player.recordFaint) this._player.recordFaint();
             if ($gameParty.pkmAllFainted()) {
                 this.showSteps([{ text: this._player.name + " desmaiou!" },
                                 { text: "Você não tem mais Pokémon em pé…" }],
@@ -603,10 +668,19 @@ PKM.Battle = PKM.Battle || {};
     };
 
     Scene_PkmBattle.prototype.doBallThrow = function(ballName, bonus, consume) {
+        if (PKM.Franchise) {
+            const rule = PKM.Franchise.captureRule(this._enemy, ballName);
+            if (!rule.allowed) {
+                this.showSteps([{ text: rule.reason }], this.startInput.bind(this));
+                return;
+            }
+        }
         const res = PKM.Battle.tryCapture(this._enemy, bonus, 1);
-        const ballLabel = (PKM.Core.item && PKM.Core.item(ballName) && PKM.Core.item(ballName).name) || "Poké Ball";
+        const throwText = PKM.Franchise
+            ? PKM.Franchise.throwText(this._enemy, ballName)
+            : "Você jogou uma " + ((PKM.Core.item(ballName) || {}).name || "Poké Ball") + "!";
         const steps = [{
-            text: "Você jogou uma " + ballLabel + "!",
+            text: throwText,
             fn: () => { if (consume && $gameParty.pkmLoseItem) $gameParty.pkmLoseItem(ballName, 1); }
         }];
         const shakes = res.success ? 3 : res.shakes;
@@ -614,7 +688,9 @@ PKM.Battle = PKM.Battle || {};
         if (res.success) {
             const dest = { v: null };
             steps.push({
-                text: "Gotcha! " + this._enemy.name + " foi capturado!",
+                text: PKM.Franchise
+                    ? PKM.Franchise.successText(this._enemy, ballName)
+                    : "Gotcha! " + this._enemy.name + " foi capturado!",
                 fn: () => {
                     $gameSystem.pkmSetCaught(this._enemy.dexNumber);
                     this._enemy.healStatusOnly && this._enemy.healStatusOnly();
@@ -679,6 +755,8 @@ PKM.Battle = PKM.Battle || {};
         const res = winner.addExp(exp);
         const steps = [{ text: winner.name + " ganhou " + res.gained + " de Exp.!" }];
         res.levels.forEach(lv => steps.push({ text: winner.name + " subiu para o nível " + lv.level + "!" }));
+        PKM.Battle.runVictoryHooks(winner, this._enemy, this._isTrainer)
+            .forEach(text => steps.push({ text }));
         this._learnQueue = res.levels.reduce((a, lv) => a.concat(lv.learnable), []);
         this.showSteps(steps, () => this.processNextLearn());
     };
