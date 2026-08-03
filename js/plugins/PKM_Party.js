@@ -83,6 +83,10 @@ var PKM = PKM || {};
     Game_Party.prototype.pkmHealAll = function() {
         this.pkmEnsure();
         this._pkmParty.forEach(p => p.healFully());
+        // o avatar humano nao mora em _pkmParty: sem isto ele cai numa batalha
+        // vencida e nao ha caminho no jogo para revive-lo
+        const avatar = this.pkmAvatar ? this.pkmAvatar() : null;
+        if (avatar && avatar.healFully) avatar.healFully();
     };
 
     PluginManager.registerCommand("PKM_Party", "give", args => {

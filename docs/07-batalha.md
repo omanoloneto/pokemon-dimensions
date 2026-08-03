@@ -57,6 +57,14 @@ Não existem sprites de costas neste layout, e o repositório só tem `img/pokem
 
 Carregamento **obrigatoriamente** por `PKM.Core.loadSprite()`, que usa `Bitmap.load()` fora do cache do `ImageManager`: as classes humanas e as franquias novas ainda não têm arte, e um bitmap ausente no cache derrubaria a cena inteira via `ImageManager.throwLoadError` (a mesma classe do crash de áudio corrigido em `3fb6a23`).
 
+## Regras que a revisão adversarial fixou
+
+- **O avatar do jogador é criado sozinho** se nenhum evento chamar `PKM_Human → Definir Avatar`. Sem isso o humano nunca apareceria em campo e o pedido não seria observável rodando o jogo.
+- **O humano é curado pelo Centro e alcançável por itens** (`pkmHealAll` e `pkmBattleRoster`). Ele não mora em `pkmParty()`, então cair numa batalha *vencida* o deixava morto para sempre, sem caminho de recuperação.
+- **Struggle para o jogador**: sem PP em nenhum golpe, com reserva vazia e sem itens, numa batalha de treinador (onde Bola e Fugir são bloqueados) a UI travava sem ação possível.
+- **Uma tentativa de captura por turno** — com 3 aliados eram 3 rolagens no mesmo alvo.
+- **`catchRate: 0` significa incapturável** (era tratado como 45 pelo `||`), e franquia com `roster: false` fica fora da Pokédex.
+
 ## O que foi preservado do motor antigo
 
 Nada disso podia regredir na virada para times: EXP, nível, aprender golpe e evolução no fim da batalha; `runVictoryHooks` (drop de peça Medabot); `recordWin`/`recordFaint` (condições de digievolução dependem deles); captura com as regras por franquia (`PKM.Franchise.captureRule`, item-chave não consumido); prêmio em dinheiro, texto de derrota, insígnias e áudio.

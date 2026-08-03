@@ -87,10 +87,15 @@ PKM.PLUGIN_NAME = "PKM_Core";
         return $dataPokemon ? $dataPokemon.length - 1 : 0;
     };
     // ids realmente preenchidos (as faixas de franquia deixam buracos)
+    // franquia com "roster: false" (humanos) fica fora da Pokedex: inflaria o
+    // total com entradas que nunca podem ser vistas
     PKM.Core.allSpeciesIds = function() {
         const out = [];
         for (let i = 1; i <= PKM.Core.maxSpecies(); i++) {
-            if ($dataPokemon[i]) out.push(i);
+            if (!$dataPokemon[i]) continue;
+            const fr = PKM.Franchise && PKM.Franchise.ofSpecies(i);
+            if (fr && fr.roster === false) continue;
+            out.push(i);
         }
         return out;
     };

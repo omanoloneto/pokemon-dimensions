@@ -304,9 +304,13 @@ var PKM = PKM || {};
     function Window_BagTarget() { this.initialize(...arguments); }
     Window_BagTarget.prototype = Object.create(Window_Selectable.prototype);
     Window_BagTarget.prototype.constructor = Window_BagTarget;
-    Window_BagTarget.prototype.maxItems = function() { return $gameParty.pkmCount(); };
+    // inclui o avatar humano: ele luta em campo, entao precisa receber cura e revive
+    Window_BagTarget.prototype.targets = function() {
+        return $gameParty.pkmBattleRoster ? $gameParty.pkmBattleRoster() : $gameParty.pkmParty();
+    };
+    Window_BagTarget.prototype.maxItems = function() { return this.targets().length; };
     Window_BagTarget.prototype.itemHeight = function() { return Math.floor(this.innerHeight / 6); };
-    Window_BagTarget.prototype.pokemon = function(i) { return $gameParty.pkmParty()[i]; };
+    Window_BagTarget.prototype.pokemon = function(i) { return this.targets()[i]; };
     Window_BagTarget.prototype.currentPokemon = function() { return this.pokemon(this.index()); };
     Window_BagTarget.prototype.drawItem = function(index) {
         const p = this.pokemon(index);

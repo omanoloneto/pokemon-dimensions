@@ -102,7 +102,11 @@ PKM.Human = PKM.Human || {};
         this._pkmAvatar = human || null;
         return this._pkmAvatar;
     };
+    // o jogador SEMPRE luta em campo: sem avatar definido por evento, cria o padrao
     Game_Party.prototype.pkmAvatar = function() {
+        if (!this._pkmAvatar && PKM.Human.classes().length) {
+            this._pkmAvatar = new Game_Human(DEFAULT_CLASS, 5, { name: defaultAvatarName() });
+        }
         return this._pkmAvatar || null;
     };
     Game_Party.prototype.pkmBattleTeam = function() {
@@ -110,6 +114,46 @@ PKM.Human = PKM.Human || {};
         const avatar = this.pkmAvatar();
         return avatar && !avatar.isFainted() ? [avatar].concat(monsters) : monsters;
     };
+    // tudo que o jogador pode curar/reviver, inclusive o humano
+    Game_Party.prototype.pkmBattleRoster = function() {
+        const monsters = this.pkmParty ? this.pkmParty().slice() : [];
+        const avatar = this.pkmAvatar();
+        return avatar ? [avatar].concat(monsters) : monsters;
+    };
+
+    function defaultAvatarName() {
+        const actor = typeof $gameActors !== "undefined" && $gameActors.actor(1);
+        return (actor && actor.name()) || "Você";
+    }
+
+    //=========================================================================
+    // Efeitos das ações humanas
+    //=========================================================================
+    const HUMAN_EFFECTS = {
+        TACTICALCALL: { stats: { atk: -1, spa: -1 }, target: "foe" },
+        READTHEFIELD: { stats: { spe: -2 }, target: "foe" },
+        INTIMIDATIONSTARE: { stats: { def: -1, spd: -1 }, target: "foe" },
+        FLASHGRENADE: { stats: { acc: -2 }, target: "foe" },
+        ROBATTLESUBMIT: { stats: { atk: -2 }, target: "foe" },
+        BRACEFORIMPACT: { stats: { def: 1, spd: 1 }, target: "self" },
+        WARCRY: { stats: { atk: 1, spe: 1 }, target: "self" },
+        COLDREAD: { stats: { spa: 1, spd: 1 }, target: "self" }
+    };
+
+    // PKM_Battle carrega DEPOIS deste plugin no jogo (e antes, no harness):
+    // registra assim que o registry existir, sem depender da ordem.
+    PKM.Human.installEffects = function() {
+        if (!PKM.Battle || !PKM.Battle.MOVE_EFFECTS) return false;
+        Object.assign(PKM.Battle.MOVE_EFFECTS, HUMAN_EFFECTS);
+        return true;
+    };
+    if (!PKM.Human.installEffects() && typeof Scene_Boot !== "undefined") {
+        const _onDatabaseLoaded = Scene_Boot.prototype.onDatabaseLoaded;
+        Scene_Boot.prototype.onDatabaseLoaded = function() {
+            PKM.Human.installEffects();
+            _onDatabaseLoaded.call(this);
+        };
+    }
 
     //=========================================================================
     // Comandos de plugin

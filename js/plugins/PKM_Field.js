@@ -127,15 +127,19 @@ PKM.Field = PKM.Field || {};
         return unit.battleSpeed ? unit.battleSpeed() : unit.stat("spe");
     };
 
+    // o desempate sorteia UMA chave por ação antes de ordenar; sortear dentro do
+    // comparador torna a ordenação inconsistente e enviesa as permutações
     PKM.Field.turnOrder = function(actions) {
-        return actions.filter(a => a && a.unit).map((a, i) => ({ a, i })).sort((x, y) => {
-            const pd = PKM.Field.actionPriority(y.a) - PKM.Field.actionPriority(x.a);
-            if (pd !== 0) return pd;
-            const sd = PKM.Field.unitSpeed(y.a.unit) - PKM.Field.unitSpeed(x.a.unit);
-            if (sd !== 0) return sd;
-            const coin = Math.randomInt(2) ? 1 : -1;      // empate real: moeda
-            return coin;
-        }).map(e => e.a);
+        return actions.filter(a => a && a.unit)
+            .map(a => ({ a, tie: Math.random() }))
+            .sort((x, y) => {
+                const pd = PKM.Field.actionPriority(y.a) - PKM.Field.actionPriority(x.a);
+                if (pd !== 0) return pd;
+                const sd = PKM.Field.unitSpeed(y.a.unit) - PKM.Field.unitSpeed(x.a.unit);
+                if (sd !== 0) return sd;
+                return x.tie - y.tie;
+            })
+            .map(e => e.a);
     };
 
     //=========================================================================

@@ -203,7 +203,11 @@ module.exports = function({ ctx, ok, eq, G, section }) {
         const pika = new G("PIKACHU", 10), bulba = new G("BULBASAUR", 10);
         party.pkmAdd(pika);
         party.pkmAdd(bulba);
-        eq(party.pkmBattleTeam().length, 2, "sem avatar, o time são só os monstros");
+        // o jogador sempre entra em campo: sem avatar definido, cria o padrão
+        eq(party.pkmBattleTeam().length, 3, "sem avatar definido, o padrão entra no time");
+        ok(party.pkmBattleTeam()[0].isHuman(), "o avatar padrão ocupa o slot 0");
+        ok(party.pkmBattleRoster().includes(party.pkmAvatar()),
+            "o avatar é alvo válido de item/cura fora de batalha");
 
         party.pkmSetAvatar(you);
         eq(party.pkmAvatar(), you, "pkmAvatar devolve o humano definido");

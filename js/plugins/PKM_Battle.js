@@ -75,7 +75,8 @@ PKM.Battle = PKM.Battle || {};
     // tentativa de captura. ballBonus: PokeBall=1, Great=1.5, Ultra=2, Master=255.
     PKM.Battle.tryCapture = function(wild, ballBonus = 1, statusBonus = 1) {
         const sp = wild.species();
-        const catchRate = (sp && sp.catchRate) || 45;
+        const catchRate = sp && sp.catchRate !== undefined ? sp.catchRate : 45;
+        if (catchRate <= 0) return { success: false, shakes: 0 };
         const maxHp = wild.maxHp;
         const curHp = Math.max(1, wild.hp);
         let a = ((3 * maxHp - 2 * curHp) * catchRate * ballBonus) / (3 * maxHp);
@@ -414,7 +415,8 @@ PKM.Battle = PKM.Battle || {};
             : $gameParty.pkmParty().filter(p => p && !p.isFainted());
         let foes;
         if (trainer) {
-            foes = (trainer.avatar ? [trainer.avatar] : []).concat(trainer.party || []);
+            const rival = trainer.avatar || trainer.human;
+            foes = (rival ? [rival] : []).concat(trainer.party || []);
         } else if (Array.isArray($gameTemp.pkmFoes) && $gameTemp.pkmFoes.length) {
             foes = $gameTemp.pkmFoes.slice();
         } else {
@@ -794,7 +796,14 @@ PKM.Battle = PKM.Battle || {};
     Scene_PkmBattle.prototype.onFight = function() {
         this._cmdWindow.hide();
         this._cmdWindow.deactivate();
-        this._moveWindow.setUnit(this.actor());
+        const unit = this.actor();
+        // sem PP em nenhum golpe o jogador nao teria acao para commitar e a
+        // batalha travaria: Struggle e a saida, igual a IA
+        if (!unit.moves.some(m => m.pp === undefined || m.pp > 0)) {
+            const struggle = { id: "STRUGGLE", pp: 1, ppMax: 1 };
+            return this.openTargets(target => this.commit({ unit, kind: "move", move: struggle, target }));
+        }
+        this._moveWindow.setUnit(unit);
         this._moveWindow.show();
         this._moveWindow.activate();
         this._moveWindow.select(0);
@@ -818,6 +827,10 @@ PKM.Battle = PKM.Battle || {};
         this._cmdWindow.hide();
         this._cmdWindow.deactivate();
         if (this._field.isTrainer) return this.warn("Não dá para capturar o monstro de outro treinador!");
+        // uma tentativa por turno: com 3 aliados seriam 3 rolagens no mesmo alvo
+        if (this._actions.some(a => a && a.kind === "capture")) {
+            return this.warn("Já foi arremessado algo neste turno!");
+        }
         if (!$gameParty.pkmBalls) return this.chooseCaptureTarget("POKEBALL", false);
         const targets = PKM.Field.validTargets(this._field, this.actor());
         let balls = $gameParty.pkmBalls();
