@@ -4,7 +4,8 @@
     "DGM",
     "MDB",
     "MRA",
-    "BKY"
+    "BKY",
+    "HUM"
   ],
   "list": {
     "PKM": {
@@ -87,6 +88,20 @@
         "throwText": "Você ergueu o {item}!",
         "successText": "Pacto firmado! {target} aceitou você como Grande Criança!",
         "deniedText": "{target} não reconhece você — falta o emblema deste mundo."
+      }
+    },
+    "HUM": {
+      "id": "HUM",
+      "name": "Humanos",
+      "dimension": "Grandes Crianças e treinadores",
+      "speciesFrom": 920,
+      "speciesTo": 969,
+      "roster": false,
+      "capture": {
+        "inField": false,
+        "items": [],
+        "verb": "recrutado",
+        "deniedText": "{target} é uma pessoa — não dá para capturar!"
       }
     }
   }

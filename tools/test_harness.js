@@ -28,7 +28,7 @@ const ctx = {
     $dataItemsExtra: load("ItemsExtra.json"),
     $gameTemp: {},
     DataManager: { _databaseFiles: [] },
-    PluginManager: { registerCommand() {} },
+    PluginManager: { registerCommand() {}, parameters() { return {}; } },
     SceneManager: { push() {}, _scene: {} },
     ImageManager: { loadBitmap() { return { width: 0, height: 0, addLoadListener() {} }; } },
     ColorManager: { normalColor: () => "#fff", systemColor: () => "#9cf" },
@@ -36,6 +36,8 @@ const ctx = {
     Game_System: function() {},
     Game_Party: (function() { function GP() {} GP.prototype.initialize = function() {}; return GP; })(),
     Scene_MenuBase: function() {}, Scene_Base: function() {}, Scene_Message: function() {},
+    Game_Player: (function() { function GP() {} GP.prototype.increaseSteps = function() {}; return GP; })(),
+    Game_Map: (function() { function GM() {} GM.prototype.regionId = function() { return 0; }; return GM; })(),
     Window_Base: function() {}, Window_Selectable: function() {}, Window_Command: function() {},
     Input: { isTriggered() { return false; } }, TouchInput: {},
 };
@@ -53,7 +55,8 @@ vm.runInContext(`
 // carrega plugins de lógica (não os de cena — esses usam render)
 for (const f of ["PKM_Core.js", "PKM_Franchise.js", "PKM_Pokemon.js", "PKM_Battle.js", "PKM_Bag.js",
                  "PKM_Trainers.js", "PKM_Party.js", "PKM_Storage.js",
-                 "PKM_Evolution.js", "PKM_Parts.js", "PKM_Sanctuary.js", "PKM_Pacts.js"]) {
+                 "PKM_Evolution.js", "PKM_Parts.js", "PKM_Sanctuary.js", "PKM_Pacts.js",
+                 "PKM_Human.js", "PKM_Field.js", "PKM_Encounters.js"]) {
     const p = path.join(ROOT, "js/plugins", f);
     if (fs.existsSync(p)) vm.runInContext(fs.readFileSync(p, "utf8"), ctx, { filename: f });
 }
@@ -271,7 +274,8 @@ console.log("== Multi-franquia (core) ==");
     eq(F.ofSpecies(800).id, "MDB", "id 700 pertence a Medabots");
     eq(F.ofSpecies(850).id, "MRA", "id 740 pertence a Monster Rancher");
     eq(F.ofSpecies(900).id, "BKY", "id 780 pertence a Bucky");
-    ok(F.all().length === 5, "5 franquias registradas");
+    eq(F.ofSpecies(920).id, "HUM", "id 920 pertence aos Humanos");
+    ok(F.all().length === 6, "6 franquias registradas (5 dimensões + humanos)");
 
     // itens de captura são exclusivos da franquia dona
     const mockOf = (id) => ({ speciesId: id, name: "Alvo", species: () => null, hpRate: () => 1 });

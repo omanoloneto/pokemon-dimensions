@@ -1,26 +1,35 @@
 //=============================================================================
-// PKM_Battle.js  — Fases 5a (batalha) + 6 (captura)
+// PKM_Battle.js  — fórmulas de batalha/captura + cena 3v3 lado a lado
 //=============================================================================
 /*:
  * @target MZ
- * @plugindesc [PKM v0.2] Batalha selvagem 1v1: turnos, dano por tipo/STAB/crítico,
- * troca, fuga e CAPTURA (Poké Ball). Fórmulas puras em PKM.Battle.
+ * @plugindesc [PKM v0.5] Batalha em times de até 3v3 lado a lado: dano por tipo/
+ * STAB/crítico, status, troca, fuga e CAPTURA. Fórmulas puras em PKM.Battle.
  * @author Pokémon Dimensions (port MZ)
  * @base PKM_Core
  * @base PKM_Pokemon
+ * @base PKM_Human
+ * @base PKM_Field
  * @orderAfter PKM_Encounters
  *
  * @help PKM_Battle.js
  *
- * Cena Scene_PkmBattle. Lê o selvagem de $gameTemp.pkmWild (definido por
- * PKM_Encounters) e usa $gameParty.pkmParty() como sua equipe.
+ * Duas camadas independentes:
+ *   1. PKM.Battle.* — fórmulas puras (dano, status, captura, EXP, executeMove).
+ *      Rodam headless e são consumidas por outros plugins e pelos testes.
+ *   2. Scene_PkmBattle — casca de render e input. Toda a regra de campo vem de
+ *      PKM.Field e a resolução de golpe de PKM.Battle.executeMove.
  *
- * Implementado nesta fase:
- *   - Ordem por prioridade > velocidade; cálculo de dano (STAB, tipos, crítico,
- *     variação aleatória); precisão/erro; desmaio; vitória/derrota.
- *   - Trocar de Pokémon e Fugir.
- *   - Captura com fórmula de chacoalhadas (4 shakes).
- * Fica para a Fase 5b: efeitos de status, golpes de status, clima, IA melhor.
+ * Layout da cena: time do jogador à ESQUERDA, adversário à DIREITA, até 3
+ * unidades por lado empilhadas verticalmente. Não existe arte de costas — os
+ * dois lados usam img/pokemon/front/ e o lado aliado é espelhado no Sprite.
+ * O humano do jogador ocupa o slot 0 e aparece destacado no HUD.
+ *
+ * Entrada da cena:
+ *   $gameTemp.pkmTrainer = {name, party, avatar?, money, introText, defeatText}
+ *   $gameTemp.pkmFoes    = [unidades]   (time selvagem de 1 a 3)
+ *   $gameTemp.pkmWild    = unidade      (encontro selvagem simples)
+ * O time do jogador vem de $gameParty.pkmBattleTeam() (avatar + monstros).
  */
 
 var PKM = PKM || {};
@@ -262,6 +271,71 @@ PKM.Battle = PKM.Battle || {};
         return msgs;
     };
 
+    // aplica efeito de status/stat de um golpe. Retorna mensagens.
+    PKM.Battle.applyMoveEffect = function(eff, attacker, defender) {
+        const out = [];
+        const tgt = eff.target === "self" ? attacker : defender;
+        if (eff.status) {
+            const r = PKM.Battle.applyStatus(tgt, eff.status);
+            out.push(...(r.messages.length ? r.messages : ["Mas não teve efeito em " + tgt.name + "."]));
+        }
+        if (eff.stats) {
+            for (const k in eff.stats) out.push(...PKM.Battle.applyStatChange(tgt, k, eff.stats[k]));
+        }
+        return out;
+    };
+
+    // Executa um golpe de ponta a ponta e devolve as mensagens. É pura (não usa
+    // cena), então o campo em times consegue resolver 6 unidades sem duplicar regra.
+    // tags: {attacker, defender} — sufixos de nome, ex.: " selvagem".
+    PKM.Battle.executeMove = function(attacker, defender, move, tags = {}) {
+        const md = PKM.Core.move(move.id);
+        const name = md ? md.name : move.id;
+        const atkTag = tags.attacker || "";
+        const defTag = tags.defender || "";
+        const msgs = [];
+
+        const ca = PKM.Battle.canAct(attacker);
+        msgs.push(...ca.messages);
+        if (!ca.act) return msgs.length ? msgs : [attacker.name + " não pode agir."];
+
+        msgs.push(attacker.name + atkTag + " usou " + name + "!");
+        if (move.pp !== undefined && move.pp > 0) move.pp--;
+        if (!defender || defender.isFainted()) { msgs.push("Mas não há alvo!"); return msgs; }
+        if (!PKM.Battle.accuracyCheck(attacker, defender, move)) { msgs.push("Mas o ataque errou!"); return msgs; }
+
+        const eff = PKM.Battle.MOVE_EFFECTS[move.id];
+        const isStatus = !md || md.category === "Status" || md.power <= 0;
+        if (isStatus) {
+            if (eff) msgs.push(...PKM.Battle.applyMoveEffect(eff, attacker, defender));
+            else msgs.push("…mas o golpe ainda não tem efeito implementado.");
+            return msgs;
+        }
+
+        const calc = PKM.Battle.calcDamage(attacker, defender, move.id);
+        if (calc.effectiveness === 0) { msgs.push("Não afeta " + defender.name + "…"); return msgs; }
+        defender.takeDamage(calc.damage);
+        if (calc.crit) msgs.push("Um acerto crítico!");
+        if (calc.effectiveness > 1) msgs.push("Foi super eficaz!");
+        else if (calc.effectiveness < 1) msgs.push("Não foi muito eficaz…");
+
+        const selfMsgs = PKM.Battle.applySelfEffect(attacker, eff, calc.damage);
+        if (defender.isFainted()) {
+            msgs.push(defender.name + defTag + " desmaiou!");
+            return msgs.concat(selfMsgs);
+        }
+        msgs.push(...selfMsgs);
+        if (attacker.isFainted()) return msgs;
+        if (eff && eff.secondary) {
+            const chance = eff.chance || (md ? md.effectChance : 0) || 0;
+            if (chance > 0 && Math.randomInt(100) < chance) {
+                const sec = Object.assign({ target: "foe" }, eff.secondary);
+                msgs.push(...PKM.Battle.applyMoveEffect(sec, attacker, defender));
+            }
+        }
+        return msgs;
+    };
+
     // chance de fuga (true = fugiu)
     PKM.Battle.canEscape = function(playerSpe, enemySpe, attempts = 0) {
         if (playerSpe > enemySpe) return true;
@@ -285,29 +359,68 @@ PKM.Battle = PKM.Battle || {};
         return;
     }
 
+    const ALLY = PKM.Field.ALLY;
+    const FOE = PKM.Field.FOE;
+    const FRONT_DIR = "img/pokemon/front/";
+    const SHINY_DIR = "img/pokemon/front_shiny/";
+
+    // Layout: aliados à esquerda, inimigos à direita, 3 faixas empilhadas.
+    const SLOT_TOP = 6;
+    const SLOT_H = 108;
+    const FIELD_H = SLOT_TOP + SLOT_H * 3;
+    const PANEL_W = 250;
+    const PANEL_H = 88;
+    const ART_BOX = 96;
+    const BAND_Y = 336;
+    const BAND_H = 144;
+    const MSG_Y = 480;
+    const MSG_H = 144;
+
+    const STATUS_COLOR = {
+        PSN: "#a040a0", TOX: "#a040a0", BRN: "#f08030",
+        PAR: "#f8d030", SLP: "#8888a0", FRZ: "#98d8d8"
+    };
+
+    const isHuman = (unit) => !!(PKM.Human && PKM.Human.isHuman(unit));
+
     window.Scene_PkmBattle = function() { this.initialize(...arguments); };
     Scene_PkmBattle.prototype = Object.create(Scene_Base.prototype);
     Scene_PkmBattle.prototype.constructor = Scene_PkmBattle;
 
+    //--- construção -----------------------------------------------------------
     Scene_PkmBattle.prototype.create = function() {
         Scene_Base.prototype.create.call(this);
-        this._trainer = $gameTemp.pkmTrainer || null;
-        this._isTrainer = !!this._trainer;
-        if (this._isTrainer) {
-            this._enemyParty = this._trainer.party;
-            this._enemyIndex = 0;
-            this._enemy = this._enemyParty[0];
-        } else {
-            this._enemy = $gameTemp.pkmWild;
-        }
-        this._player = $gameParty.pkmFirstAble();
-        this._runAttempts = 0;
-        if (this._enemy.resetBattleState) this._enemy.resetBattleState();
-        if (this._player && this._player.resetBattleState) this._player.resetBattleState();
+        this._field = this.buildField();
+        this._participants = [];
+        this._defeated = [];
+        this._down = [];
+        this._endReason = null;
+        this._focusUnit = null;
+        this._hoverUnit = null;
+        PKM.Field.activeUnits(this._field, ALLY).forEach(u => this.notePartaker(u));
         this.createBackground();
+        this.createFieldSprites();
+        this.createFlash();
         this.createWindowLayer();
         this.createAllWindows();
         this.startBattle();
+    };
+
+    // $gameTemp.pkmFoes (time) tem precedência; pkmWild mantém o encontro 1x1.
+    Scene_PkmBattle.prototype.buildField = function() {
+        const trainer = $gameTemp.pkmTrainer || null;
+        const allies = $gameParty.pkmBattleTeam
+            ? $gameParty.pkmBattleTeam()
+            : $gameParty.pkmParty().filter(p => p && !p.isFainted());
+        let foes;
+        if (trainer) {
+            foes = (trainer.avatar ? [trainer.avatar] : []).concat(trainer.party || []);
+        } else if (Array.isArray($gameTemp.pkmFoes) && $gameTemp.pkmFoes.length) {
+            foes = $gameTemp.pkmFoes.slice();
+        } else {
+            foes = [$gameTemp.pkmWild];
+        }
+        return PKM.Field.create({ allies, foes, isTrainer: !!trainer, trainer });
     };
 
     Scene_PkmBattle.prototype.createBackground = function() {
@@ -315,100 +428,217 @@ PKM.Battle = PKM.Battle || {};
         bmp.gradientFillRect(0, 0, Graphics.width, Graphics.height, "#bfe9ff", "#7fb24d", true);
         this._bg = new Sprite(bmp);
         this.addChild(this._bg);
-        // flash branco de entrada de batalha
-        const fb = new Bitmap(Graphics.width, Graphics.height);
-        fb.fillRect(0, 0, Graphics.width, Graphics.height, "#ffffff");
-        this._flash = new Sprite(fb);
-        this._flash.opacity = 255;
+    };
+
+    Scene_PkmBattle.prototype.createFlash = function() {
+        const bmp = new Bitmap(Graphics.width, Graphics.height);
+        bmp.fillRect(0, 0, Graphics.width, Graphics.height, "#ffffff");
+        this._flash = new Sprite(bmp);
         this.addChild(this._flash);
     };
 
+    Scene_PkmBattle.prototype.createFieldSprites = function() {
+        this._views = [];
+        for (const side of [ALLY, FOE]) {
+            for (let i = 0; i < PKM.Field.MAX_ACTIVE; i++) {
+                const sprite = new Sprite();
+                sprite.anchor.x = 0.5;
+                sprite.anchor.y = 1;
+                sprite.visible = false;
+                this.addChild(sprite);
+                this._views.push({ side, index: i, sprite, unit: null, ready: false, frames: 1, size: 0, tick: 0 });
+            }
+        }
+        this._hud = new Sprite(new Bitmap(Graphics.width, FIELD_H));
+        this.addChild(this._hud);
+    };
+
     Scene_PkmBattle.prototype.createAllWindows = function() {
-        this._enemyWindow = new Window_Base(new Rectangle(16, 24, 380, 110));
-        this._playerWindow = new Window_Base(new Rectangle(420, 300, 380, 120));
-        this._msgWindow = new Window_Base(new Rectangle(0, 480, Graphics.boxWidth, 144));
-        this.addWindow(this._enemyWindow);
-        this.addWindow(this._playerWindow);
+        this._msgWindow = new Window_Base(new Rectangle(0, MSG_Y, Graphics.boxWidth, MSG_H));
         this.addWindow(this._msgWindow);
 
-        this._commandWindow = new Window_BattleCmd(new Rectangle(456, 480, 360, 144));
-        this._commandWindow.setHandler("fight", this.onFight.bind(this));
-        this._commandWindow.setHandler("ball", this.onBall.bind(this));
-        this._commandWindow.setHandler("pokemon", this.onPokemonCmd.bind(this));
-        this._commandWindow.setHandler("run", this.onRun.bind(this));
-        this.addWindow(this._commandWindow);
+        this._cmdWindow = new Window_BattleCmd(new Rectangle(456, BAND_Y, 360, BAND_H));
+        this._cmdWindow.setHandler("fight", this.onFight.bind(this));
+        this._cmdWindow.setHandler("ball", this.onBall.bind(this));
+        this._cmdWindow.setHandler("item", this.onItem.bind(this));
+        this._cmdWindow.setHandler("switch", this.onSwitch.bind(this));
+        this._cmdWindow.setHandler("run", this.onRun.bind(this));
+        this._cmdWindow.setHandler("cancel", this.onCommandCancel.bind(this));
+        this.addWindow(this._cmdWindow);
 
-        this._moveWindow = new Window_BattleMoves(new Rectangle(0, 480, Graphics.boxWidth, 144));
+        this._moveWindow = new Window_BattleMoves(new Rectangle(0, BAND_Y, 456, BAND_H));
         this._moveWindow.setHandler("ok", this.onMoveOk.bind(this));
         this._moveWindow.setHandler("cancel", this.onMoveCancel.bind(this));
-        this._moveWindow.hide();
         this.addWindow(this._moveWindow);
 
-        const sr = new Rectangle(0, this.buttonAreaBottom ? this.buttonAreaBottom() : 0,
-            Graphics.boxWidth, 470);
-        this._switchWindow = new Window_BattleSwitch(sr);
-        this._switchWindow.setHandler("ok", this.onSwitchOk.bind(this));
-        this._switchWindow.setHandler("cancel", this.onSwitchCancel.bind(this));
-        this._switchWindow.hide();
-        this._switchWindow.deactivate();
-        this.addWindow(this._switchWindow);
+        this._targetWindow = new Window_BattleUnits(new Rectangle(456, BAND_Y, 360, BAND_H));
+        this.addWindow(this._targetWindow);
 
-        this._ballWindow = new Window_BattleBalls(new Rectangle(0, 480, Graphics.boxWidth, 144));
-        this._ballWindow.setHandler("ok", this.onBallOk.bind(this));
-        this._ballWindow.setHandler("cancel", this.onBallCancel.bind(this));
-        this._ballWindow.hide(); this._ballWindow.deactivate();
-        this.addWindow(this._ballWindow);
+        this._listWindow = new Window_BattleUnits(new Rectangle(0, BAND_Y, Graphics.boxWidth, BAND_H));
+        this.addWindow(this._listWindow);
 
-        // aprender golpe (Fase 7): sim/não + seleção do golpe a esquecer
-        this._yesnoWindow = new Window_BattleYesNo(new Rectangle(Graphics.boxWidth - 240, 336, 240, 144));
+        this._entryWindow = new Window_BattleEntries(new Rectangle(0, BAND_Y, 456, BAND_H));
+        this.addWindow(this._entryWindow);
+
+        this._yesnoWindow = new Window_BattleYesNo(new Rectangle(Graphics.boxWidth - 240, BAND_Y, 240, BAND_H));
         this._yesnoWindow.setHandler("yes", this.onForgetYes.bind(this));
         this._yesnoWindow.setHandler("no", this.onForgetNo.bind(this));
-        this._yesnoWindow.hide(); this._yesnoWindow.deactivate();
         this.addWindow(this._yesnoWindow);
 
-        this._forgetWindow = new Window_BattleMoves(new Rectangle(0, 480, Graphics.boxWidth, 144));
+        this._forgetWindow = new Window_BattleMoves(new Rectangle(0, BAND_Y, 456, BAND_H));
         this._forgetWindow.setHandler("ok", this.onForgetOk.bind(this));
         this._forgetWindow.setHandler("cancel", this.onForgetCancel.bind(this));
-        this._forgetWindow.hide(); this._forgetWindow.deactivate();
         this.addWindow(this._forgetWindow);
 
-        this.refreshStatus();
+        this.hideMenus();
+        this.refreshField();
     };
 
-    //--- status / mensagens ---------------------------------------------------
-    Scene_PkmBattle.prototype.foeTag = function() { return this._isTrainer ? "" : " selvagem"; };
-    Scene_PkmBattle.prototype.refreshStatus = function() {
-        this.drawBattler(this._enemyWindow, this._enemy, this._isTrainer ? "" : " (selvagem)", false);
-        this.drawBattler(this._playerWindow, this._player, "", true);
-    };
-    Scene_PkmBattle.prototype.drawBattler = function(win, p, tag, hpText) {
-        const c = win.contents; c.clear();
-        if (!p) return;
-        win.resetFontSettings();
-        win.changeTextColor(ColorManager.normalColor());
-        c.drawText(p.name + p.genderSymbol() + tag, 8, 0, win.innerWidth - 90, win.lineHeight(), "left");
-        c.drawText("Nv." + p.level, win.innerWidth - 80, 0, 72, win.lineHeight(), "right");
-        const y = win.lineHeight() + 8, w = win.innerWidth - 16, h = 12;
-        const rate = p.hpRate();
-        const col = rate > 0.5 ? "#78c850" : rate > 0.2 ? "#f8d030" : "#f85038";
-        c.fillRect(8, y, w, h, "#303030");
-        c.fillRect(9, y + 1, Math.floor((w - 2) * rate), h - 2, col);
-        if (p.status) {
-            const sc = { PSN: "#a040a0", TOX: "#a040a0", BRN: "#f08030", PAR: "#f8d030", SLP: "#8888a0", FRZ: "#98d8d8" }[p.status] || "#888";
-            c.fillRect(8, y + h + 4, 56, 22, sc);
-            win.changeTextColor("#ffffff");
-            c.drawText(p.status, 8, y + h + 2, 56, win.lineHeight(), "center");
-            win.resetTextColor();
+    Scene_PkmBattle.prototype.hideMenus = function() {
+        for (const win of [this._cmdWindow, this._moveWindow, this._targetWindow, this._listWindow,
+            this._entryWindow, this._yesnoWindow, this._forgetWindow]) {
+            if (win) { win.hide(); win.deactivate(); }
         }
-        if (hpText) c.drawText(p.hp + " / " + p.maxHp, 72, y + h + 2, w - 72, win.lineHeight(), "right");
     };
+
+    //--- render do campo ------------------------------------------------------
+    Scene_PkmBattle.prototype.slotY = function(i) { return SLOT_TOP + i * SLOT_H; };
+    Scene_PkmBattle.prototype.panelX = function(side) {
+        return side === ALLY ? 8 : Graphics.boxWidth - 8 - PANEL_W;
+    };
+    // faixas mais ao fundo recuam um pouco para dar sensação de formação
+    Scene_PkmBattle.prototype.artX = function(side, i) {
+        const inner = 16 + PANEL_W + ART_BOX / 2;
+        return side === ALLY ? inner + i * 16 : Graphics.boxWidth - inner - i * 16;
+    };
+
+    Scene_PkmBattle.prototype.refreshField = function() {
+        for (const view of this._views) {
+            const unit = PKM.Field.slots(this._field, view.side)[view.index] || null;
+            if (view.unit !== unit) this.loadArt(view, unit);
+            view.sprite.visible = !!unit;
+            view.sprite.opacity = unit && unit.isFainted() ? 90 : 255;
+        }
+        this.drawHud();
+    };
+
+    // Bitmap.blt não espelha: o lado aliado usa scale.x negativo com anchor 0.5,
+    // assim os dois times se encaram reaproveitando a arte de frente.
+    Scene_PkmBattle.prototype.loadArt = function(view, unit) {
+        const sprite = view.sprite;
+        view.unit = unit;
+        view.ready = false;
+        view.tick = 0;
+        if (!unit) { sprite.bitmap = null; return; }
+        sprite.bitmap = PKM.Core.loadSprite(unit.shiny ? SHINY_DIR : FRONT_DIR, unit.frontImageName());
+        sprite.setFrame(0, 0, 0, 0);
+        sprite.x = this.artX(view.side, view.index);
+        sprite.y = this.slotY(view.index) + SLOT_H - 8;
+    };
+
+    Scene_PkmBattle.prototype.updateArt = function() {
+        for (const view of this._views) {
+            if (!view.unit || !view.sprite.bitmap) continue;
+            if (!view.ready) {
+                if (view.sprite.bitmap.isError()) view.sprite.bitmap = this.placeholderBitmap(view.unit);
+                else if (!view.sprite.bitmap.isReady()) continue;
+                this.settleArt(view);
+            } else if (view.frames > 1) {
+                view.tick++;
+                if (view.tick % 8 === 0) {
+                    const frame = Math.floor(view.tick / 8) % view.frames;
+                    view.sprite.setFrame(frame * view.size, 0, view.size, view.size);
+                }
+            }
+        }
+    };
+
+    // as folhas de sprite do repo são tiras horizontais de quadros quadrados
+    Scene_PkmBattle.prototype.settleArt = function(view) {
+        const bmp = view.sprite.bitmap;
+        const size = bmp.height || 1;
+        const scale = Math.min(1, ART_BOX / size);
+        view.size = size;
+        view.frames = Math.max(1, Math.round(bmp.width / size));
+        view.ready = true;
+        view.sprite.setFrame(0, 0, size, size);
+        view.sprite.scale.y = scale;
+        view.sprite.scale.x = view.side === ALLY ? -scale : scale;
+    };
+
+    Scene_PkmBattle.prototype.placeholderBitmap = function(unit) {
+        const size = 88;
+        const bmp = new Bitmap(size, size);
+        const human = isHuman(unit);
+        bmp.fillRect(0, 0, size, size, human ? "#4a3d73" : "#33506b");
+        bmp.fillRect(3, 3, size - 6, size - 6, human ? "#8b78c4" : "#6d90b5");
+        bmp.fontFace = $gameSystem.mainFontFace();
+        bmp.fontSize = 34;
+        bmp.textColor = "#ffffff";
+        bmp.outlineColor = "rgba(0,0,0,0.7)";
+        bmp.outlineWidth = 4;
+        bmp.drawText(String(unit.name || "?").substring(0, 2).toUpperCase(), 0, size / 2 - 22, size, 44, "center");
+        return bmp;
+    };
+
+    Scene_PkmBattle.prototype.drawHud = function() {
+        const bmp = this._hud.bitmap;
+        bmp.clear();
+        bmp.fontFace = $gameSystem.mainFontFace();
+        for (const side of [ALLY, FOE]) {
+            const slots = PKM.Field.slots(this._field, side);
+            for (let i = 0; i < PKM.Field.MAX_ACTIVE; i++) {
+                if (slots[i]) this.drawUnitPanel(bmp, slots[i], this.panelX(side), this.slotY(i) + 10, side);
+            }
+        }
+    };
+
+    Scene_PkmBattle.prototype.strokeRect = function(bmp, x, y, w, h, color) {
+        bmp.fillRect(x, y, w, 2, color);
+        bmp.fillRect(x, y + h - 2, w, 2, color);
+        bmp.fillRect(x, y, 2, h, color);
+        bmp.fillRect(x + w - 2, y, 2, h, color);
+    };
+
+    // o humano ganha cor de destaque e a classe escrita: é a unidade que você é
+    Scene_PkmBattle.prototype.drawUnitPanel = function(bmp, unit, x, y, side) {
+        const human = isHuman(unit);
+        const accent = human ? "#ffd75e" : side === ALLY ? "#8fd0ff" : "#ff9a8f";
+        const rate = unit.hpRate();
+        const bx = x + 10;
+        const bw = PANEL_W - 20;
+        bmp.paintOpacity = unit.isFainted() ? 110 : 255;
+        bmp.fillRect(x, y, PANEL_W, PANEL_H, "rgba(10,16,30,0.74)");
+        bmp.fillRect(x, y, PANEL_W, 4, accent);
+        if (unit === this._focusUnit) this.strokeRect(bmp, x - 3, y - 3, PANEL_W + 6, PANEL_H + 6, "#ffffff");
+        if (unit === this._hoverUnit) this.strokeRect(bmp, x - 3, y - 3, PANEL_W + 6, PANEL_H + 6, "#ff5a5a");
+        bmp.outlineColor = "rgba(0,0,0,0.85)";
+        bmp.outlineWidth = 4;
+        bmp.fontSize = 20;
+        bmp.textColor = human ? accent : "#ffffff";
+        bmp.drawText(unit.name + unit.genderSymbol(), bx, y + 6, bw - 74, 26, "left");
+        bmp.textColor = "#ffffff";
+        bmp.drawText("Nv." + unit.level, x + PANEL_W - 82, y + 6, 72, 26, "right");
+        bmp.fillRect(bx, y + 38, bw, 12, "#202430");
+        bmp.fillRect(bx + 1, y + 39, Math.floor((bw - 2) * rate), 10,
+            rate > 0.5 ? "#78c850" : rate > 0.2 ? "#f8d030" : "#f85038");
+        bmp.fontSize = 16;
+        let fx = bx;
+        if (unit.status) {
+            bmp.fillRect(fx, y + 56, 48, 20, STATUS_COLOR[unit.status] || "#888888");
+            bmp.drawText(unit.status, fx, y + 55, 48, 22, "center");
+            fx += 54;
+        }
+        if (human) bmp.drawText(unit.className, fx, y + 55, 100, 22, "left");
+        if (side === ALLY) bmp.drawText(unit.hp + " / " + unit.maxHp, bx + bw - 96, y + 55, 96, 22, "right");
+        bmp.paintOpacity = 255;
+    };
+
+    //--- mensagens ------------------------------------------------------------
     Scene_PkmBattle.prototype._drawMessage = function(text) {
-        const c = this._msgWindow.contents; c.clear();
+        this._msgWindow.contents.clear();
         this._msgWindow.resetFontSettings();
         this._msgWindow.drawTextEx(text, 12, 8, this._msgWindow.innerWidth - 24);
-    };
-    Scene_PkmBattle.prototype._drawPrompt = function() {
-        this._drawMessage("O que " + (this._player ? this._player.name : "?") + " fará?");
     };
 
     // fila de passos: cada passo = {text, fn?}
@@ -419,362 +649,506 @@ PKM.Battle = PKM.Battle || {};
         this.hideMenus();
         this._playNextStep();
     };
+    Scene_PkmBattle.prototype.queueStep = function(text) {
+        if (this._stepQueue) this._stepQueue.push({ text });
+    };
     Scene_PkmBattle.prototype._playNextStep = function() {
         if (this._stepQueue.length === 0) {
-            const cb = this._afterSteps; this._afterSteps = null;
-            this._phase = "settle"; cb();
+            const cb = this._afterSteps;
+            this._afterSteps = null;
+            this._phase = "settle";
+            cb();
             return;
         }
-        const s = this._stepQueue.shift();
-        if (s.fn) s.fn();
-        this.refreshStatus();
-        this._drawMessage(s.text || "");
-    };
-    Scene_PkmBattle.prototype.hideMenus = function() {
-        this._commandWindow.hide(); this._commandWindow.deactivate();
-        this._moveWindow.hide(); this._moveWindow.deactivate();
-        this._switchWindow.hide(); this._switchWindow.deactivate();
-        if (this._ballWindow) { this._ballWindow.hide(); this._ballWindow.deactivate(); }
-        if (this._yesnoWindow) { this._yesnoWindow.hide(); this._yesnoWindow.deactivate(); }
-        if (this._forgetWindow) { this._forgetWindow.hide(); this._forgetWindow.deactivate(); }
-    };
-
-    //--- ciclo ----------------------------------------------------------------
-    Scene_PkmBattle.prototype.startBattle = function() {
-        if ($gameSystem.pkmSetSeen) $gameSystem.pkmSetSeen(this._enemy.dexNumber);
-        if (PKM.Audio) { PKM.Audio.playBattleBgm(this._isTrainer); PKM.Audio.playCry(this._enemy.dexNumber); }
-        let intro;
-        if (this._isTrainer) {
-            intro = [{ text: this._trainer.name + " quer batalhar!" }];
-            if (this._trainer.introText) intro.push({ text: this._trainer.introText });
-            intro.push({ text: this._trainer.name + " enviou " + this._enemy.name + "!" });
-            intro.push({ text: "Vai, " + this._player.name + "!" });
-        } else {
-            intro = [{ text: "Um " + this._enemy.name + " selvagem apareceu!" },
-                     { text: "Vai, " + this._player.name + "!" }];
-        }
-        this.showSteps(intro, this.startInput.bind(this));
-    };
-    Scene_PkmBattle.prototype.startInput = function() {
-        this._phase = "input";
-        this.hideMenus();
-        this._commandWindow.show(); this._commandWindow.activate(); this._commandWindow.select(0);
-        this._drawPrompt();
+        const step = this._stepQueue.shift();
+        if (step.fn) step.fn();
+        this.refreshField();
+        this._drawMessage(step.text || "");
     };
 
     Scene_PkmBattle.prototype.update = function() {
         Scene_Base.prototype.update.call(this);
-        if (this._flash && this._flash.opacity > 0) this._flash.opacity -= 16;  // fade do flash de entrada
-        if (this._phase === "message") {
-            if (Input.isTriggered("ok") || Input.isTriggered("cancel") || TouchInput.isTriggered()) {
-                this._playNextStep();
-            }
+        if (this._flash && this._flash.opacity > 0) this._flash.opacity -= 16;
+        this.updateArt();
+        if (this._phase === "message" &&
+            (Input.isTriggered("ok") || Input.isTriggered("cancel") || TouchInput.isTriggered())) {
+            this._playNextStep();
         }
+    };
+
+    //--- abertura -------------------------------------------------------------
+    Scene_PkmBattle.prototype.foeTag = function() { return this._field.isTrainer ? "" : " selvagem"; };
+    Scene_PkmBattle.prototype.tagOf = function(unit) {
+        return PKM.Field.sideOf(this._field, unit) === FOE ? this.foeTag() : "";
+    };
+    Scene_PkmBattle.prototype.notePartaker = function(unit) {
+        if (unit && !this._participants.includes(unit)) this._participants.push(unit);
+    };
+    // humano não entra na Pokédex nem tem cry
+    Scene_PkmBattle.prototype.noteFoeSeen = function(unit) {
+        if (!isHuman(unit) && $gameSystem.pkmSetSeen) $gameSystem.pkmSetSeen(unit.dexNumber);
+    };
+
+    Scene_PkmBattle.prototype.startBattle = function() {
+        const foes = PKM.Field.activeUnits(this._field, FOE);
+        foes.forEach(f => this.noteFoeSeen(f));
+        if (PKM.Audio) {
+            PKM.Audio.playBattleBgm(this._field.isTrainer);
+            const criable = foes.find(f => !isHuman(f));
+            if (criable) PKM.Audio.playCry(criable.dexNumber);
+        }
+        const foeNames = foes.map(u => u.name).join(", ");
+        const allyNames = PKM.Field.activeUnits(this._field, ALLY).map(u => u.name).join(", ");
+        const steps = [];
+        if (this._field.isTrainer) {
+            const trainer = this._field.trainer;
+            steps.push({ text: trainer.name + " quer batalhar!" });
+            if (trainer.introText) steps.push({ text: trainer.introText });
+            steps.push({ text: trainer.name + " enviou " + foeNames + "!" });
+        } else {
+            steps.push({
+                text: foes.length > 1
+                    ? "Monstros selvagens apareceram: " + foeNames + "!"
+                    : "Um " + foeNames + " selvagem apareceu!"
+            });
+        }
+        steps.push({ text: "Vai, " + allyNames + "!" });
+        this.showSteps(steps, () => this.startInput());
+    };
+
+    //--- entrada de ações (uma por unidade viva do jogador) --------------------
+    Scene_PkmBattle.prototype.startInput = function() {
+        if (PKM.Field.outcome(this._field)) return this.concludeByOutcome();
+        this._inputUnits = PKM.Field.activeUnits(this._field, ALLY);
+        this._actions = [];
+        this._inputIndex = 0;
+        this.nextInput();
+    };
+    Scene_PkmBattle.prototype.actor = function() { return this._inputUnits[this._inputIndex] || null; };
+
+    Scene_PkmBattle.prototype.nextInput = function() {
+        if (this._inputIndex >= this._inputUnits.length) return this.beginResolve();
+        this._cmdWindow.setBackEnabled(this._inputIndex > 0);
+        this.openCommand();
+    };
+
+    Scene_PkmBattle.prototype.openCommand = function() {
+        this._phase = "input";
+        this.hideMenus();
+        this._focusUnit = this.actor();
+        this._hoverUnit = null;
+        this._cmdWindow.show();
+        this._cmdWindow.activate();
+        this._cmdWindow.select(0);
+        this.refreshField();
+        this._drawMessage("O que " + this.actor().name + " fará?");
+    };
+
+    Scene_PkmBattle.prototype.commit = function(action) {
+        this._actions[this._inputIndex] = action;
+        this._inputIndex++;
+        this._focusUnit = null;
+        this.nextInput();
+    };
+
+    // voltar atrás: refaz a escolha da unidade anterior
+    Scene_PkmBattle.prototype.onCommandCancel = function() {
+        if (this._inputIndex <= 0) { SoundManager.playBuzzer(); this._cmdWindow.activate(); return; }
+        this._inputIndex--;
+        this._actions.length = this._inputIndex;
+        this._cmdWindow.setBackEnabled(this._inputIndex > 0);
+        this.openCommand();
+    };
+
+    Scene_PkmBattle.prototype.warn = function(text) {
+        this.showSteps([{ text }], () => this.openCommand());
+    };
+
+    //--- seleção de alvo ------------------------------------------------------
+    Scene_PkmBattle.prototype.openTargets = function(onOk, onCancel) {
+        const targets = PKM.Field.validTargets(this._field, this.actor());
+        const back = onCancel || (() => this.openCommand());
+        if (!targets.length) { SoundManager.playBuzzer(); back(); return; }
+        if (targets.length === 1) { onOk(targets[0]); return; }
+        const close = () => {
+            this._hoverUnit = null;
+            this._targetWindow.hide();
+            this._targetWindow.deactivate();
+        };
+        this._targetWindow.setUnits(targets);
+        this._targetWindow.setCursorCallback(unit => { this._hoverUnit = unit; this.drawHud(); });
+        this._targetWindow.setHandler("ok", () => {
+            const target = this._targetWindow.currentUnit();
+            close();
+            onOk(target);
+        });
+        this._targetWindow.setHandler("cancel", () => { close(); back(); });
+        this._targetWindow.show();
+        this._targetWindow.activate();
+        this._targetWindow.select(0);
+        this._phase = "selectTarget";
+        this._drawMessage("Alvo de " + this.actor().name + "?");
     };
 
     //--- comandos -------------------------------------------------------------
     Scene_PkmBattle.prototype.onFight = function() {
-        this._commandWindow.hide(); this._commandWindow.deactivate();
-        this._moveWindow.setPokemon(this._player);
-        this._moveWindow.show(); this._moveWindow.activate(); this._moveWindow.select(0);
+        this._cmdWindow.hide();
+        this._cmdWindow.deactivate();
+        this._moveWindow.setUnit(this.actor());
+        this._moveWindow.show();
+        this._moveWindow.activate();
+        this._moveWindow.select(0);
         this._phase = "selectMove";
     };
     Scene_PkmBattle.prototype.onMoveCancel = function() {
-        this._moveWindow.hide(); this._moveWindow.deactivate();
-        this.startInput();
+        this._moveWindow.hide();
+        this._moveWindow.deactivate();
+        this.openCommand();
     };
     Scene_PkmBattle.prototype.onMoveOk = function() {
-        const mv = this._player.moves[this._moveWindow.index()];
-        if (!mv || mv.pp <= 0) { SoundManager.playBuzzer(); this._moveWindow.activate(); return; }
-        this._moveWindow.hide(); this._moveWindow.deactivate();
-        this.executeMoveTurn(mv);
+        const unit = this.actor();
+        const move = unit.moves[this._moveWindow.index()];
+        if (!move || move.pp <= 0) { SoundManager.playBuzzer(); this._moveWindow.activate(); return; }
+        this._moveWindow.hide();
+        this._moveWindow.deactivate();
+        this.openTargets(target => this.commit({ unit, kind: "move", move, target }));
     };
+
     Scene_PkmBattle.prototype.onBall = function() {
-        this._commandWindow.hide(); this._commandWindow.deactivate();
-        if (this._isTrainer) {
-            this.showSteps([{ text: "Não dá para capturar o Pokémon de outro treinador!" }],
-                this.startInput.bind(this));
-            return;
-        }
-        // regra da franquia do alvo (ex.: Monster Rancher não se captura em campo)
+        this._cmdWindow.hide();
+        this._cmdWindow.deactivate();
+        if (this._field.isTrainer) return this.warn("Não dá para capturar o monstro de outro treinador!");
+        if (!$gameParty.pkmBalls) return this.chooseCaptureTarget("POKEBALL", false);
+        const targets = PKM.Field.validTargets(this._field, this.actor());
+        let balls = $gameParty.pkmBalls();
         if (PKM.Franchise) {
-            const rule = PKM.Franchise.captureRule(this._enemy, null);
-            if (!rule.allowed) {
-                this.showSteps([{ text: rule.reason }], this.startInput.bind(this));
-                return;
-            }
+            balls = balls.filter(b => targets.some(t => PKM.Franchise.itemWorksOn(b.name, t)));
         }
-        // se a mochila (PKM_Bag) existir, escolhe entre as bolas que você possui
-        if ($gameParty.pkmBalls) {
-            let balls = $gameParty.pkmBalls();
-            if (PKM.Franchise) balls = balls.filter(b => PKM.Franchise.itemWorksOn(b.name, this._enemy));
-            if (balls.length === 0) {
-                const f = PKM.Franchise ? PKM.Franchise.of(this._enemy) : null;
-                const what = f && f.capture && f.capture.items.length ? "o item de captura desta dimensão" : "nenhuma Poké Bola";
-                this.showSteps([{ text: "Você não tem " + what + "!" }], this.startInput.bind(this));
-                return;
-            }
-            this._ballWindow.setBalls(balls);
-            this._ballWindow.show(); this._ballWindow.activate(); this._ballWindow.select(0);
-            this._phase = "selectBall";
-            return;
-        }
-        // sem PKM_Bag: usa uma Poké Ball comum (modo autônomo)
-        this.doBallThrow("POKEBALL", 1, false);
+        if (!balls.length) return this.warn("Você não tem um item de captura que sirva aqui!");
+        this._entryWindow.setEntries(balls);
+        this._entryWindow.setHandler("ok", this.onBallOk.bind(this));
+        this._entryWindow.setHandler("cancel", this.onEntryCancel.bind(this));
+        this._entryWindow.show();
+        this._entryWindow.activate();
+        this._entryWindow.select(0);
+        this._phase = "selectBall";
+        this._drawMessage("Qual item de captura usar?");
     };
     Scene_PkmBattle.prototype.onBallOk = function() {
-        const e = this._ballWindow.currentBall();
-        this._ballWindow.hide(); this._ballWindow.deactivate();
-        if (!e) { this.startInput(); return; }
-        this.doBallThrow(e.name, PKM.Items.ballBonus(e.name), true);
+        const entry = this._entryWindow.currentEntry();
+        this._entryWindow.hide();
+        this._entryWindow.deactivate();
+        if (!entry) return this.openCommand();
+        this.chooseCaptureTarget(entry.name, true);
     };
-    Scene_PkmBattle.prototype.onBallCancel = function() {
-        this._ballWindow.hide(); this._ballWindow.deactivate();
-        this.startInput();
+    Scene_PkmBattle.prototype.onEntryCancel = function() {
+        this._entryWindow.hide();
+        this._entryWindow.deactivate();
+        this.openCommand();
     };
+    Scene_PkmBattle.prototype.chooseCaptureTarget = function(ball, consume) {
+        const unit = this.actor();
+        this.openTargets(target => {
+            const rule = PKM.Franchise ? PKM.Franchise.captureRule(target, ball) : { allowed: true };
+            if (!rule.allowed) return this.warn(rule.reason);
+            this.commit({ unit, kind: "capture", ball, consume, target });
+        }, () => this.onBall());
+    };
+
+    Scene_PkmBattle.prototype.onItem = function() {
+        this._cmdWindow.hide();
+        this._cmdWindow.deactivate();
+        const meds = $gameParty.pkmPocket ? $gameParty.pkmPocket(2) : [];
+        if (!meds.length) return this.warn("Você não tem remédios!");
+        this._entryWindow.setEntries(meds);
+        this._entryWindow.setHandler("ok", this.onItemOk.bind(this));
+        this._entryWindow.setHandler("cancel", this.onEntryCancel.bind(this));
+        this._entryWindow.show();
+        this._entryWindow.activate();
+        this._entryWindow.select(0);
+        this._phase = "selectItem";
+        this._drawMessage("Qual item usar?");
+    };
+    Scene_PkmBattle.prototype.onItemOk = function() {
+        const entry = this._entryWindow.currentEntry();
+        this._entryWindow.hide();
+        this._entryWindow.deactivate();
+        if (!entry) return this.openCommand();
+        const unit = this.actor();
+        const side = PKM.Field.side(this._field, ALLY);
+        this.openUnitList(side.active.filter(Boolean).concat(side.bench),
+            target => this.commit({ unit, kind: "item", item: entry.name, target }),
+            () => this.onItem(),
+            "Usar " + entry.data.name + " em quem?");
+    };
+
+    Scene_PkmBattle.prototype.onSwitch = function() {
+        this._cmdWindow.hide();
+        this._cmdWindow.deactivate();
+        const bench = PKM.Field.benchReady(this._field, ALLY);
+        if (!bench.length) return this.warn("Não há ninguém na reserva!");
+        const unit = this.actor();
+        this.openUnitList(bench,
+            replacement => this.commit({ unit, kind: "switch", replacement }),
+            () => this.openCommand(),
+            "Quem entra no lugar de " + unit.name + "?");
+    };
+
     Scene_PkmBattle.prototype.onRun = function() {
-        this._commandWindow.hide(); this._commandWindow.deactivate();
-        if (this._isTrainer) {
-            this.showSteps([{ text: "Não dá para fugir de uma batalha de treinador!" }],
-                this.startInput.bind(this));
-            return;
-        }
-        this.doRun();
-    };
-    Scene_PkmBattle.prototype.onPokemonCmd = function() {
-        this._commandWindow.hide(); this._commandWindow.deactivate();
-        this._forcedSwitch = false;
-        this.openSwitch();
+        this._cmdWindow.hide();
+        this._cmdWindow.deactivate();
+        if (this._field.isTrainer) return this.warn("Não dá para fugir de uma batalha de treinador!");
+        this.commit({ unit: this.actor(), kind: "run" });
     };
 
-    //--- ações ----------------------------------------------------------------
-    Scene_PkmBattle.prototype.pickEnemyMove = function() {
-        const usable = (this._enemy.moves || []).filter(m => m.pp > 0);
-        if (usable.length === 0) return { id: "TACKLE", pp: 1, ppMax: 1 };
-        return usable[Math.randomInt(usable.length)];
+    Scene_PkmBattle.prototype.openUnitList = function(units, onOk, onCancel, prompt) {
+        const close = () => { this._listWindow.hide(); this._listWindow.deactivate(); };
+        this._listWindow.setUnits(units);
+        this._listWindow.setCursorCallback(null);
+        this._listWindow.setHandler("ok", () => {
+            const unit = this._listWindow.currentUnit();
+            close();
+            if (unit) onOk(unit); else onCancel();
+        });
+        this._listWindow.setHandler("cancel", () => { close(); onCancel(); });
+        this._listWindow.show();
+        this._listWindow.activate();
+        this._listWindow.select(0);
+        this._phase = "selectUnit";
+        this._drawMessage(prompt);
     };
 
-    // aplica efeito de status/stat de um golpe. Retorna mensagens.
-    Scene_PkmBattle.prototype.applyMoveEffect = function(eff, attacker, defender) {
-        const out = [];
-        const tgt = eff.target === "self" ? attacker : defender;
-        if (eff.status) {
-            const r = PKM.Battle.applyStatus(tgt, eff.status);
-            out.push(...(r.messages.length ? r.messages : ["Mas não teve efeito em " + tgt.name + "."]));
-        }
-        if (eff.stats) {
-            for (const k in eff.stats) out.push(...PKM.Battle.applyStatChange(tgt, k, eff.stats[k]));
-        }
-        return out;
+    //--- resolução do turno ---------------------------------------------------
+    Scene_PkmBattle.prototype.beginResolve = function() {
+        this._focusUnit = null;
+        this.hideMenus();
+        const foeActions = PKM.Field.activeUnits(this._field, FOE)
+            .map(unit => PKM.Field.pickAction(this._field, unit))
+            .filter(Boolean);
+        this._order = PKM.Field.turnOrder(this._actions.filter(Boolean).concat(foeActions));
+        this._phase = "resolve";
+        this.resolveNext();
     };
 
-    Scene_PkmBattle.prototype.buildMoveMessages = function(attacker, defender, move) {
-        const md = PKM.Core.move(move.id);
-        const name = md ? md.name : move.id;
-        const tag = attacker === this._enemy ? this.foeTag() : "";
-        const msgs = [];
-
-        // pré-ação: dorme/congela/paralisia
-        const ca = PKM.Battle.canAct(attacker);
-        msgs.push(...ca.messages);
-        if (!ca.act) return msgs.length ? msgs : [attacker.name + " não pode agir."];
-
-        msgs.push(attacker.name + tag + " usou " + name + "!");
-        if (move.pp !== undefined && move.pp > 0) move.pp--;
-        if (!PKM.Battle.accuracyCheck(attacker, defender, move)) { msgs.push("Mas o ataque errou!"); return msgs; }
-
-        const eff = PKM.Battle.MOVE_EFFECTS[move.id];
-        const isStatus = !md || md.category === "Status" || md.power <= 0;
-        if (isStatus) {
-            if (eff) msgs.push(...this.applyMoveEffect(eff, attacker, defender));
-            else msgs.push("…mas o golpe ainda não tem efeito implementado.");
-            return msgs;
-        }
-
-        const calc = PKM.Battle.calcDamage(attacker, defender, move.id);
-        if (calc.effectiveness === 0) { msgs.push("Não afeta " + defender.name + "…"); return msgs; }
-        defender.takeDamage(calc.damage);
-        if (calc.crit) msgs.push("Um acerto crítico!");
-        if (calc.effectiveness > 1) msgs.push("Foi super eficaz!");
-        else if (calc.effectiveness < 1) msgs.push("Não foi muito eficaz…");
-
-        const selfMsgs = PKM.Battle.applySelfEffect(attacker, eff, calc.damage);
-        if (defender.isFainted()) {
-            const dt = defender === this._enemy ? this.foeTag() : "";
-            msgs.push(defender.name + dt + " desmaiou!");
-            return msgs.concat(selfMsgs);
-        }
-        msgs.push(...selfMsgs);
-        if (attacker.isFainted()) return msgs;
-        // efeito secundário (por chance)
-        if (eff && eff.secondary) {
-            const chance = eff.chance || (md ? md.effectChance : 0) || 0;
-            if (chance > 0 && Math.randomInt(100) < chance) {
-                const sec = Object.assign({ target: "foe" }, eff.secondary);
-                msgs.push(...this.applyMoveEffect(sec, attacker, defender));
-            }
-        }
-        return msgs;
+    Scene_PkmBattle.prototype.onField = function(unit) {
+        const side = PKM.Field.sideOf(this._field, unit);
+        return !!side && PKM.Field.slots(this._field, side).includes(unit);
     };
 
-    Scene_PkmBattle.prototype.executeMoveTurn = function(playerMove) {
-        const enemyMove = this.pickEnemyMove();
-        const playerFirst = PKM.Battle.fasterFirst(this._player, playerMove, this._enemy, enemyMove);
-        const order = playerFirst
-            ? [[this._player, this._enemy, playerMove], [this._enemy, this._player, enemyMove]]
-            : [[this._enemy, this._player, enemyMove], [this._player, this._enemy, playerMove]];
-        let msgs = this.buildMoveMessages(order[0][0], order[0][1], order[0][2]);
-        // o segundo atacante (= alvo do primeiro) só age se não desmaiou
-        if (!order[1][0].isFainted()) {
-            msgs = msgs.concat(this.buildMoveMessages(order[1][0], order[1][1], order[1][2]));
-        }
-        // dano residual de fim de turno (veneno/queimadura), na ordem de velocidade
-        const resOrder = playerFirst ? [this._player, this._enemy] : [this._enemy, this._player];
-        for (const mon of resOrder) msgs = msgs.concat(PKM.Battle.endOfTurnResidual(mon));
-
-        this.showSteps(msgs.map(t => ({ text: t })), this.settleTurn.bind(this));
+    Scene_PkmBattle.prototype.resolveNext = function() {
+        if (this._endReason) return this.endBattle();
+        if (PKM.Field.outcome(this._field)) return this.endOfTurn();
+        const action = this._order.shift();
+        if (!action) return this.endOfTurn();
+        if (action.unit.isFainted() || !this.onField(action.unit)) return this.resolveNext();
+        const steps = this.performAction(action);
+        if (!steps.length) return this.resolveNext();
+        this.showSteps(steps, () => this.resolveNext());
     };
 
-    Scene_PkmBattle.prototype.settleTurn = function() {
-        if (this._enemy.isFainted()) {
-            if (this._player.recordWin) this._player.recordWin(this._enemy);
-            this.awardExpAndFinish(() => this.onEnemyDefeated());
-        } else if (this._player.isFainted()) {
-            if (this._player.recordFaint) this._player.recordFaint();
-            if ($gameParty.pkmAllFainted()) {
-                this.showSteps([{ text: this._player.name + " desmaiou!" },
-                                { text: "Você não tem mais Pokémon em pé…" }],
-                    () => { $gameParty.pkmHealAll(); this.endBattle(); });
-            } else {
-                this.showSteps([{ text: this._player.name + " desmaiou!" }],
-                    () => { this._forcedSwitch = true; this.openSwitch(); });
-            }
-        } else {
-            this.startInput();
-        }
+    Scene_PkmBattle.prototype.performAction = function(action) {
+        const unit = action.unit;
+        let steps = [];
+        if (action.kind === "capture") steps = this.captureSteps(action);
+        else if (action.kind === "item") steps = this.itemSteps(action);
+        else if (action.kind === "switch") steps = this.switchSteps(action);
+        else if (action.kind === "run") steps = this.runSteps(action);
+        else steps = this.moveSteps(action);
+        this.noteCasualties(unit);
+        return steps;
     };
 
-    Scene_PkmBattle.prototype.doRun = function() {
-        const escaped = PKM.Battle.canEscape(this._player.spe, this._enemy.spe, this._runAttempts);
-        this._runAttempts++;
-        if (escaped) {
-            this.showSteps([{ text: "Você fugiu em segurança!" }], () => this.endBattle());
-        } else {
-            const em = this.pickEnemyMove();
-            const msgs = [{ text: "Não conseguiu fugir!" }]
-                .concat(this.buildMoveMessages(this._enemy, this._player, em).map(t => ({ text: t })));
-            this.showSteps(msgs, this.settleTurn.bind(this));
-        }
+    Scene_PkmBattle.prototype.moveSteps = function(action) {
+        const unit = action.unit;
+        const target = PKM.Field.resolveTarget(this._field, unit, action.target);
+        if (!target) return [{ text: unit.name + " não encontrou um alvo." }];
+        return PKM.Battle.executeMove(unit, target, action.move, {
+            attacker: this.tagOf(unit), defender: this.tagOf(target)
+        }).map(text => ({ text }));
     };
 
-    Scene_PkmBattle.prototype.doBallThrow = function(ballName, bonus, consume) {
+    Scene_PkmBattle.prototype.itemSteps = function(action) {
+        const label = (PKM.Core.item(action.item) || {}).name || action.item;
+        const res = PKM.Items.useOnPokemon(action.item, action.target);
+        if (res.ok && $gameParty.pkmLoseItem) $gameParty.pkmLoseItem(action.item, 1);
+        return [{ text: action.unit.name + " usou " + label + "." }, { text: res.message }];
+    };
+
+    Scene_PkmBattle.prototype.switchSteps = function(action) {
+        if (!PKM.Field.switchUnit(this._field, ALLY, action.unit, action.replacement)) {
+            return [{ text: action.replacement.name + " não pode entrar agora." }];
+        }
+        this.notePartaker(action.replacement);
+        return [{ text: action.unit.name + ", volte!" }, { text: "Vai, " + action.replacement.name + "!" }];
+    };
+
+    Scene_PkmBattle.prototype.runSteps = function(action) {
+        const foes = PKM.Field.activeUnits(this._field, FOE);
+        const fastest = foes.reduce((mx, f) => Math.max(mx, PKM.Field.unitSpeed(f)), 0);
+        const escaped = PKM.Battle.canEscape(PKM.Field.unitSpeed(action.unit), fastest, this._field.runAttempts);
+        this._field.runAttempts++;
+        if (!escaped) return [{ text: "Não conseguiu fugir!" }];
+        this._endReason = "escape";
+        return [{ text: "Você fugiu em segurança!" }];
+    };
+
+    Scene_PkmBattle.prototype.captureSteps = function(action) {
+        const target = PKM.Field.resolveTarget(this._field, action.unit, action.target);
+        if (!target) return [{ text: "Não há alvo para capturar." }];
         if (PKM.Franchise) {
-            const rule = PKM.Franchise.captureRule(this._enemy, ballName);
-            if (!rule.allowed) {
-                this.showSteps([{ text: rule.reason }], this.startInput.bind(this));
-                return;
-            }
+            const rule = PKM.Franchise.captureRule(target, action.ball);
+            if (!rule.allowed) return [{ text: rule.reason }];
         }
-        const res = PKM.Battle.tryCapture(this._enemy, bonus, 1);
-        const throwText = PKM.Franchise
-            ? PKM.Franchise.throwText(this._enemy, ballName)
-            : "Você jogou uma " + ((PKM.Core.item(ballName) || {}).name || "Poké Ball") + "!";
-        const spend = consume && (!PKM.Items || !PKM.Items.isConsumedOnThrow || PKM.Items.isConsumedOnThrow(ballName));
+        const bonus = PKM.Items ? PKM.Items.ballBonus(action.ball) : 1;
+        const res = PKM.Battle.tryCapture(target, bonus, 1);
+        const spend = action.consume &&
+            (!PKM.Items || !PKM.Items.isConsumedOnThrow || PKM.Items.isConsumedOnThrow(action.ball));
         const steps = [{
-            text: throwText,
-            fn: () => { if (spend && $gameParty.pkmLoseItem) $gameParty.pkmLoseItem(ballName, 1); }
+            text: PKM.Franchise
+                ? PKM.Franchise.throwText(target, action.ball)
+                : "Você jogou uma " + ((PKM.Core.item(action.ball) || {}).name || "Poké Ball") + "!",
+            fn: () => { if (spend && $gameParty.pkmLoseItem) $gameParty.pkmLoseItem(action.ball, 1); }
         }];
         const shakes = res.success ? 3 : res.shakes;
         for (let i = 0; i < shakes; i++) steps.push({ text: "…" });
-        if (res.success) {
-            const dest = { v: null };
-            steps.push({
-                text: PKM.Franchise
-                    ? PKM.Franchise.successText(this._enemy, ballName)
-                    : "Gotcha! " + this._enemy.name + " foi capturado!",
-                fn: () => {
-                    $gameSystem.pkmSetCaught(this._enemy.dexNumber);
-                    this._enemy.healStatusOnly && this._enemy.healStatusOnly();
-                    dest.v = $gameParty.pkmAdd(this._enemy);
-                }
-            });
-            this.showSteps(steps, () => {
-                if (dest.v === "storage") {
-                    this.showSteps([{ text: this._enemy.name + " foi enviado ao PC." }],
-                        () => this.endBattle());
-                } else {
-                    this.endBattle();
-                }
-            });
-        } else {
-            const em = this.pickEnemyMove();
-            const fail = res.shakes >= 3 ? "Ah! Quase! Faltou pouco!" : "Oh não! O Pokémon escapou!";
-            steps.push({ text: fail });
-            this.showSteps(steps.concat(this.buildMoveMessages(this._enemy, this._player, em).map(t => ({ text: t }))),
-                this.settleTurn.bind(this));
+        if (!res.success) {
+            steps.push({ text: res.shakes >= 3 ? "Ah! Quase! Faltou pouco!" : "Oh não! O monstro escapou!" });
+            return steps;
+        }
+        steps.push({
+            text: PKM.Franchise
+                ? PKM.Franchise.successText(target, action.ball)
+                : "Gotcha! " + target.name + " foi capturado!",
+            fn: () => {
+                $gameSystem.pkmSetCaught(target.dexNumber);
+                if (target.healStatusOnly) target.healStatusOnly();
+                this.removeFromField(target);
+                if ($gameParty.pkmAdd(target) === "storage") this.queueStep(target.name + " foi enviado ao PC.");
+            }
+        });
+        return steps;
+    };
+
+    // capturado sai do campo sem desmaiar: não vale EXP nem conta como derrota
+    Scene_PkmBattle.prototype.removeFromField = function(unit) {
+        const sideId = PKM.Field.sideOf(this._field, unit);
+        if (!sideId) return;
+        const side = PKM.Field.side(this._field, sideId);
+        const slot = side.active.indexOf(unit);
+        if (slot >= 0) side.active[slot] = null;
+        const benched = side.bench.indexOf(unit);
+        if (benched >= 0) side.bench.splice(benched, 1);
+    };
+
+    // registra quem caiu: vitórias/derrotas alimentam as condições de evolução
+    Scene_PkmBattle.prototype.noteCasualties = function(actor) {
+        for (const unit of PKM.Field.allUnits(this._field)) {
+            const index = this._down.indexOf(unit);
+            if (!unit.isFainted()) {
+                if (index >= 0) this._down.splice(index, 1);
+                continue;
+            }
+            if (index >= 0) continue;
+            this._down.push(unit);
+            if (PKM.Field.sideOf(this._field, unit) === FOE) {
+                const killer = actor && PKM.Field.sideOf(this._field, actor) === ALLY ? actor : null;
+                this._defeated.push({ unit, killer });
+                if (killer && killer.recordWin) killer.recordWin(unit);
+            } else if (unit.recordFaint) {
+                unit.recordFaint();
+            }
         }
     };
 
-    //--- troca ----------------------------------------------------------------
-    Scene_PkmBattle.prototype.openSwitch = function() {
-        this._phase = "switch";
-        this._switchWindow.refresh();
-        this._switchWindow.show(); this._switchWindow.activate(); this._switchWindow.select(0);
-    };
-    Scene_PkmBattle.prototype.onSwitchOk = function() {
-        const p = this._switchWindow.currentPokemon();
-        if (!p || p.isFainted() || (p === this._player && !this._forcedSwitch)) {
-            SoundManager.playBuzzer(); this._switchWindow.activate(); return;
+    //--- fim de turno ---------------------------------------------------------
+    Scene_PkmBattle.prototype.endOfTurn = function() {
+        const living = PKM.Field.activeUnits(this._field, ALLY)
+            .concat(PKM.Field.activeUnits(this._field, FOE))
+            .sort((a, b) => PKM.Field.unitSpeed(b) - PKM.Field.unitSpeed(a));
+        const steps = [];
+        for (const unit of living) {
+            PKM.Battle.endOfTurnResidual(unit).forEach(text => steps.push({ text }));
         }
-        this._switchWindow.hide(); this._switchWindow.deactivate();
-        const forced = this._forcedSwitch;
-        this._player = p;
-        if (p.resetBattleState) p.resetBattleState();   // trocar zera os estágios de stat
-        this.refreshStatus();
-        if (forced) {
-            this._forcedSwitch = false;
-            this.showSteps([{ text: "Vai, " + p.name + "!" }], this.startInput.bind(this));
-        } else {
-            const em = this.pickEnemyMove();
-            const msgs = [{ text: "Vai, " + p.name + "!" }]
-                .concat(this.buildMoveMessages(this._enemy, this._player, em).map(t => ({ text: t })));
-            this.showSteps(msgs, this.settleTurn.bind(this));
-        }
+        this.noteCasualties(null);
+        this._field.turn++;
+        this.showSteps(steps, () => this.fillSlots());
     };
-    Scene_PkmBattle.prototype.onSwitchCancel = function() {
-        if (this._forcedSwitch) { SoundManager.playBuzzer(); this._switchWindow.activate(); return; }
-        this._switchWindow.hide(); this._switchWindow.deactivate();
+
+    Scene_PkmBattle.prototype.fillSlots = function() {
+        if (PKM.Field.outcome(this._field)) return this.concludeByOutcome();
+        const steps = [];
+        for (const side of [ALLY, FOE]) {
+            for (const change of PKM.Field.fillEmptySlots(this._field, side)) {
+                const unit = change.in;
+                if (side === ALLY) {
+                    this.notePartaker(unit);
+                    steps.push({ text: "Vai, " + unit.name + "!" });
+                } else {
+                    this.noteFoeSeen(unit);
+                    steps.push({
+                        text: this._field.isTrainer
+                            ? this._field.trainer.name + " enviou " + unit.name + "!"
+                            : "Outro " + unit.name + " selvagem entrou na luta!"
+                    });
+                }
+            }
+        }
+        this.showSteps(steps, () => this.concludeByOutcome());
+    };
+
+    Scene_PkmBattle.prototype.concludeByOutcome = function() {
+        const outcome = PKM.Field.outcome(this._field);
+        if (outcome === "win") return this.onVictory();
+        if (outcome === "lose") return this.onDefeat();
         this.startInput();
     };
 
-    //--- crescimento: EXP, nível, golpes, evolução (Fase 7) ------------------
-    Scene_PkmBattle.prototype.awardExpAndFinish = function(onDone) {
-        const winner = this._player;
-        this._afterGrowth = onDone;
-        this._expWinner = winner;
-        const exp = PKM.Battle.expGain(this._enemy, 1, this._isTrainer ? 1.5 : 1);
-        const res = winner.addExp(exp);
-        const steps = [{ text: winner.name + " ganhou " + res.gained + " de Exp.!" }];
-        res.levels.forEach(lv => steps.push({ text: winner.name + " subiu para o nível " + lv.level + "!" }));
-        PKM.Battle.runVictoryHooks(winner, this._enemy, this._isTrainer)
-            .forEach(text => steps.push({ text }));
-        this._learnQueue = res.levels.reduce((a, lv) => a.concat(lv.learnable), []);
+    //--- vitória: EXP, golpes e evolução de todos os participantes vivos -------
+    Scene_PkmBattle.prototype.onVictory = function() {
+        if (PKM.Audio) PKM.Audio.playVictory(this._field.isTrainer);
+        const winners = this._participants.filter(u => !u.isFainted());
+        const bonus = this._field.isTrainer ? 1.5 : 1;
+        const share = Math.max(1, winners.length);
+        const exp = this._defeated.reduce((sum, e) => sum + PKM.Battle.expGain(e.unit, share, bonus), 0);
+        const steps = [];
+        for (const entry of this._defeated) {
+            PKM.Battle.runVictoryHooks(entry.killer || winners[0] || null, entry.unit, this._field.isTrainer)
+                .forEach(text => steps.push({ text }));
+        }
+        this._growthQueue = exp > 0 ? winners.map(unit => ({ unit, exp })) : [];
+        this._afterGrowth = () => (this._field.isTrainer ? this.trainerDefeated() : this.endBattle());
+        this.showSteps(steps, () => this.processGrowth());
+    };
+
+    Scene_PkmBattle.prototype.processGrowth = function() {
+        if (!this._growthQueue.length) {
+            const cb = this._afterGrowth;
+            this._afterGrowth = null;
+            return cb();
+        }
+        const job = this._growthQueue.shift();
+        const unit = job.unit;
+        this._expWinner = unit;
+        const res = unit.addExp(job.exp);
+        const steps = [{ text: unit.name + " ganhou " + res.gained + " de Exp.!" }];
+        res.levels.forEach(lv => steps.push({ text: unit.name + " subiu para o nível " + lv.level + "!" }));
+        this._learnQueue = res.levels.reduce((acc, lv) => acc.concat(lv.learnable), []);
         this.showSteps(steps, () => this.processNextLearn());
     };
 
     Scene_PkmBattle.prototype.processNextLearn = function() {
-        const w = this._expWinner;
+        const winner = this._expWinner;
         if (!this._learnQueue || this._learnQueue.length === 0) return this.evolutionStep();
         const moveId = this._learnQueue.shift();
-        if (w.knowsMove(moveId)) return this.processNextLearn();
+        if (winner.knowsMove(moveId)) return this.processNextLearn();
         const md = PKM.Core.move(moveId);
-        const nm = md ? md.name : moveId;
-        if (w.moves.length < 4) {
-            w.learnMove(moveId);
-            this.showSteps([{ text: w.name + " aprendeu " + nm + "!" }], () => this.processNextLearn());
+        const name = md ? md.name : moveId;
+        if (winner.moves.length < 4) {
+            winner.learnMove(moveId);
+            this.showSteps([{ text: winner.name + " aprendeu " + name + "!" }], () => this.processNextLearn());
         } else {
-            this._pendingLearn = { moveId, name: nm };
-            this.showSteps([{ text: w.name + " quer aprender " + nm + ", mas já conhece 4 golpes." }],
+            this._pendingLearn = { moveId, name };
+            this.showSteps([{ text: winner.name + " quer aprender " + name + ", mas já conhece 4 golpes." }],
                 () => this.openForgetPrompt());
         }
     };
@@ -783,79 +1157,64 @@ PKM.Battle = PKM.Battle || {};
         this._phase = "learn";
         this.hideMenus();
         this._drawMessage("Esquecer um golpe para aprender " + this._pendingLearn.name + "?");
-        this._yesnoWindow.show(); this._yesnoWindow.activate(); this._yesnoWindow.select(0);
+        this._yesnoWindow.show();
+        this._yesnoWindow.activate();
+        this._yesnoWindow.select(0);
     };
     Scene_PkmBattle.prototype.onForgetYes = function() {
-        this._yesnoWindow.hide(); this._yesnoWindow.deactivate();
-        this._forgetWindow.setPokemon(this._expWinner);
-        this._forgetWindow.show(); this._forgetWindow.activate(); this._forgetWindow.select(0);
+        this._yesnoWindow.hide();
+        this._yesnoWindow.deactivate();
+        this._forgetWindow.setUnit(this._expWinner);
+        this._forgetWindow.show();
+        this._forgetWindow.activate();
+        this._forgetWindow.select(0);
         this._phase = "learn";
         this._drawMessage("Qual golpe deve ser esquecido?");
     };
     Scene_PkmBattle.prototype.onForgetNo = function() {
-        this._yesnoWindow.hide(); this._yesnoWindow.deactivate();
+        this._yesnoWindow.hide();
+        this._yesnoWindow.deactivate();
         this.showSteps([{ text: this._expWinner.name + " não aprendeu " + this._pendingLearn.name + "." }],
             () => this.processNextLearn());
     };
     Scene_PkmBattle.prototype.onForgetOk = function() {
-        const idx = this._forgetWindow.index();
-        const oldMv = PKM.Core.move(this._expWinner.moves[idx].id);
-        const oldName = oldMv ? oldMv.name : this._expWinner.moves[idx].id;
-        this._expWinner.replaceMove(idx, this._pendingLearn.moveId);
-        this._forgetWindow.hide(); this._forgetWindow.deactivate();
+        const winner = this._expWinner;
+        const index = this._forgetWindow.index();
+        const old = PKM.Core.move(winner.moves[index].id);
+        const oldName = old ? old.name : winner.moves[index].id;
+        winner.replaceMove(index, this._pendingLearn.moveId);
+        this._forgetWindow.hide();
+        this._forgetWindow.deactivate();
         this.showSteps([
             { text: "1, 2 e… pof!" },
-            { text: this._expWinner.name + " esqueceu " + oldName + " e aprendeu " + this._pendingLearn.name + "!" }
+            { text: winner.name + " esqueceu " + oldName + " e aprendeu " + this._pendingLearn.name + "!" }
         ], () => this.processNextLearn());
     };
     Scene_PkmBattle.prototype.onForgetCancel = function() {
-        this._forgetWindow.hide(); this._forgetWindow.deactivate();
+        this._forgetWindow.hide();
+        this._forgetWindow.deactivate();
         this.showSteps([{ text: this._expWinner.name + " não aprendeu " + this._pendingLearn.name + "." }],
             () => this.processNextLearn());
     };
 
     Scene_PkmBattle.prototype.evolutionStep = function() {
-        const w = this._expWinner;
-        const into = w.evolutionByLevel ? w.evolutionByLevel() : null;
-        if (!into) return this.finishGrowth();
-        const oldName = w.name;
+        const winner = this._expWinner;
+        const into = winner.evolutionByLevel ? winner.evolutionByLevel() : null;
+        if (!into) return this.processGrowth();
+        const oldName = winner.name;
         this.showSteps([{ text: "O quê? " + oldName + " está evoluindo!" }], () => {
-            w.evolveInto(into);
-            this.refreshStatus();
-            this.showSteps([{ text: oldName + " evoluiu em " + w.speciesName + "!" }],
-                () => this.finishGrowth());
+            winner.evolveInto(into);
+            this.refreshField();
+            this.showSteps([{ text: oldName + " evoluiu em " + winner.speciesName + "!" }],
+                () => this.processGrowth());
         });
     };
-    Scene_PkmBattle.prototype.finishGrowth = function() {
-        const cb = this._afterGrowth; this._afterGrowth = null;
-        cb();
-    };
 
-    // após derrotar um Pokémon inimigo: próximo do treinador ou fim
-    Scene_PkmBattle.prototype.onEnemyDefeated = function() {
-        if (this._isTrainer) {
-            this._enemyIndex++;
-            if (this._enemyIndex < this._enemyParty.length) {
-                this._enemy = this._enemyParty[this._enemyIndex];
-                if (this._enemy.resetBattleState) this._enemy.resetBattleState();
-                if ($gameSystem.pkmSetSeen) $gameSystem.pkmSetSeen(this._enemy.dexNumber);
-                if (PKM.Audio) PKM.Audio.playCry(this._enemy.dexNumber);
-                this.refreshStatus();
-                this.showSteps([{ text: this._trainer.name + " enviou " + this._enemy.name + "!" }],
-                    this.startInput.bind(this));
-            } else {
-                this.trainerDefeated();
-            }
-        } else {
-            if (PKM.Audio) PKM.Audio.playVictory(false);
-            this.endBattle();
-        }
-    };
     Scene_PkmBattle.prototype.trainerDefeated = function() {
-        if (PKM.Audio) PKM.Audio.playVictory(true);
-        const reward = this._trainer.money || 0;
-        const steps = [{ text: "Você derrotou " + this._trainer.name + "!" }];
-        if (this._trainer.defeatText) steps.push({ text: this._trainer.defeatText });
+        const trainer = this._field.trainer;
+        const reward = trainer.money || 0;
+        const steps = [{ text: "Você derrotou " + trainer.name + "!" }];
+        if (trainer.defeatText) steps.push({ text: trainer.defeatText });
         steps.push({
             text: "Você recebeu $" + reward + " de prêmio!",
             fn: () => { if ($gameParty.pkmGainMoney) $gameParty.pkmGainMoney(reward); }
@@ -863,9 +1222,23 @@ PKM.Battle = PKM.Battle || {};
         this.showSteps(steps, () => this.endBattle());
     };
 
+    Scene_PkmBattle.prototype.onDefeat = function() {
+        this.showSteps([
+            { text: "Sua equipe inteira foi derrotada…" },
+            { text: "Você voltou correndo para o centro de cura." }
+        ], () => { this.healTeam(); this.endBattle(); });
+    };
+
+    Scene_PkmBattle.prototype.healTeam = function() {
+        if ($gameParty.pkmHealAll) $gameParty.pkmHealAll();
+        const avatar = $gameParty.pkmAvatar ? $gameParty.pkmAvatar() : null;
+        if (avatar && avatar.healFully) avatar.healFully();
+    };
+
     //--- fim ------------------------------------------------------------------
     Scene_PkmBattle.prototype.endBattle = function() {
         $gameTemp.pkmWild = null;
+        $gameTemp.pkmFoes = null;
         $gameTemp.pkmTrainer = null;
         if (PKM.Audio) PKM.Audio.restoreBgm();
         this.popScene();
@@ -880,67 +1253,89 @@ PKM.Battle = PKM.Battle || {};
     Window_BattleCmd.prototype.makeCommandList = function() {
         this.addCommand("Lutar", "fight");
         this.addCommand("Bola", "ball");
-        this.addCommand("Pokémon", "pokemon");
+        this.addCommand("Item", "item");
+        this.addCommand("Trocar", "switch");
         this.addCommand("Fugir", "run");
     };
     Window_BattleCmd.prototype.maxCols = function() { return 2; };
+    Window_BattleCmd.prototype.setBackEnabled = function(enabled) { this._backEnabled = enabled; };
+    Window_BattleCmd.prototype.isCancelEnabled = function() { return !!this._backEnabled; };
 
     function Window_BattleMoves() { this.initialize(...arguments); }
     Window_BattleMoves.prototype = Object.create(Window_Selectable.prototype);
     Window_BattleMoves.prototype.constructor = Window_BattleMoves;
     Window_BattleMoves.prototype.initialize = function(rect) {
         Window_Selectable.prototype.initialize.call(this, rect);
-        this._pkm = null;
+        this._unit = null;
     };
-    Window_BattleMoves.prototype.setPokemon = function(p) { this._pkm = p; this.refresh(); };
+    Window_BattleMoves.prototype.setUnit = function(unit) { this._unit = unit; this.refresh(); };
     Window_BattleMoves.prototype.maxCols = function() { return 2; };
-    Window_BattleMoves.prototype.maxItems = function() { return this._pkm ? this._pkm.moves.length : 0; };
+    Window_BattleMoves.prototype.maxItems = function() { return this._unit ? this._unit.moves.length : 0; };
     Window_BattleMoves.prototype.drawItem = function(index) {
-        const mv = this._pkm.moves[index];
-        if (!mv) return;
-        const md = PKM.Core.move(mv.id);
-        const r = this.itemLineRect(index);
-        this.changePaintOpacity(mv.pp > 0);
-        this.drawText(md ? md.name : mv.id, r.x, r.y, r.width - 90, "left");
-        this.drawText("PP " + mv.pp + "/" + mv.ppMax, r.x + r.width - 100, r.y, 100, "right");
+        const move = this._unit.moves[index];
+        if (!move) return;
+        const md = PKM.Core.move(move.id);
+        const rect = this.itemLineRect(index);
+        this.changePaintOpacity(move.pp > 0);
+        this.drawText(md ? md.name : move.id, rect.x, rect.y, rect.width - 90, "left");
+        this.drawText("PP " + move.pp + "/" + move.ppMax, rect.x + rect.width - 90, rect.y, 90, "right");
         this.changePaintOpacity(true);
     };
 
-    function Window_BattleSwitch() { this.initialize(...arguments); }
-    Window_BattleSwitch.prototype = Object.create(Window_Selectable.prototype);
-    Window_BattleSwitch.prototype.constructor = Window_BattleSwitch;
-    Window_BattleSwitch.prototype.maxItems = function() { return $gameParty.pkmCount(); };
-    Window_BattleSwitch.prototype.itemHeight = function() { return Math.floor(this.innerHeight / 6); };
-    Window_BattleSwitch.prototype.pokemon = function(i) { return $gameParty.pkmParty()[i]; };
-    Window_BattleSwitch.prototype.currentPokemon = function() { return this.pokemon(this.index()); };
-    Window_BattleSwitch.prototype.drawItem = function(index) {
-        const p = this.pokemon(index);
-        if (!p) return;
-        const r = this.itemRect(index);
-        this.changePaintOpacity(!p.isFainted());
-        this.drawText(p.name + " " + p.genderSymbol(), r.x + 8, r.y + 4, 260, "left");
-        this.drawText("Nv." + p.level, r.x + 280, r.y + 4, 80, "left");
-        this.drawText("HP " + p.hp + "/" + p.maxHp, r.x + 380, r.y + 4, 160, "left");
-        this.changePaintOpacity(true);
-    };
-
-    function Window_BattleBalls() { this.initialize(...arguments); }
-    Window_BattleBalls.prototype = Object.create(Window_Selectable.prototype);
-    Window_BattleBalls.prototype.constructor = Window_BattleBalls;
-    Window_BattleBalls.prototype.initialize = function(rect) {
+    // lista genérica de unidades: alvos, reserva e alvo de item
+    function Window_BattleUnits() { this.initialize(...arguments); }
+    Window_BattleUnits.prototype = Object.create(Window_Selectable.prototype);
+    Window_BattleUnits.prototype.constructor = Window_BattleUnits;
+    Window_BattleUnits.prototype.initialize = function(rect) {
         Window_Selectable.prototype.initialize.call(this, rect);
-        this._balls = [];
+        this._units = [];
+        this._onCursor = null;
     };
-    Window_BattleBalls.prototype.setBalls = function(balls) { this._balls = balls; this.refresh(); this.select(0); };
-    Window_BattleBalls.prototype.maxCols = function() { return 2; };
-    Window_BattleBalls.prototype.maxItems = function() { return this._balls.length; };
-    Window_BattleBalls.prototype.currentBall = function() { return this._balls[this.index()]; };
-    Window_BattleBalls.prototype.drawItem = function(index) {
-        const e = this._balls[index];
-        if (!e) return;
-        const r = this.itemLineRect(index);
-        this.drawText(e.data.name, r.x, r.y, r.width - 80, "left");
-        this.drawText("×" + e.qty, r.x + r.width - 80, r.y, 80, "right");
+    Window_BattleUnits.prototype.setUnits = function(units) {
+        this._units = units || [];
+        this.scrollTo(0, 0);
+        this.refresh();
+    };
+    Window_BattleUnits.prototype.setCursorCallback = function(fn) { this._onCursor = fn; };
+    Window_BattleUnits.prototype.maxItems = function() { return this._units.length; };
+    Window_BattleUnits.prototype.currentUnit = function() { return this._units[this.index()] || null; };
+    Window_BattleUnits.prototype.callUpdateHelp = function() {
+        if (this._onCursor && this.active) this._onCursor(this.currentUnit());
+    };
+    Window_BattleUnits.prototype.drawItem = function(index) {
+        const unit = this._units[index];
+        if (!unit) return;
+        const rect = this.itemLineRect(index);
+        this.changePaintOpacity(!unit.isFainted());
+        this.drawText(unit.name + unit.genderSymbol(), rect.x, rect.y, rect.width - 210, "left");
+        this.drawText("Nv." + unit.level, rect.x + rect.width - 210, rect.y, 70, "left");
+        this.drawText(unit.hp + "/" + unit.maxHp + (unit.status ? " " + unit.status : ""),
+            rect.x + rect.width - 140, rect.y, 140, "right");
+        this.changePaintOpacity(true);
+    };
+
+    // lista de itens da mochila: bolas de captura e remédios
+    function Window_BattleEntries() { this.initialize(...arguments); }
+    Window_BattleEntries.prototype = Object.create(Window_Selectable.prototype);
+    Window_BattleEntries.prototype.constructor = Window_BattleEntries;
+    Window_BattleEntries.prototype.initialize = function(rect) {
+        Window_Selectable.prototype.initialize.call(this, rect);
+        this._entries = [];
+    };
+    Window_BattleEntries.prototype.setEntries = function(entries) {
+        this._entries = entries || [];
+        this.scrollTo(0, 0);
+        this.refresh();
+    };
+    Window_BattleEntries.prototype.maxCols = function() { return 2; };
+    Window_BattleEntries.prototype.maxItems = function() { return this._entries.length; };
+    Window_BattleEntries.prototype.currentEntry = function() { return this._entries[this.index()] || null; };
+    Window_BattleEntries.prototype.drawItem = function(index) {
+        const entry = this._entries[index];
+        if (!entry) return;
+        const rect = this.itemLineRect(index);
+        this.drawText(entry.data.name, rect.x, rect.y, rect.width - 70, "left");
+        this.drawText("×" + entry.qty, rect.x + rect.width - 70, rect.y, 70, "right");
     };
 
     function Window_BattleYesNo() { this.initialize(...arguments); }

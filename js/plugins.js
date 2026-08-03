@@ -8,6 +8,8 @@ var $plugins =
 {"name":"PKM_Franchise","status":true,"description":"[PKM v0.3] Camada multi-franquia: registro de dimensões, merge dos\ndados extras (espécies, golpes, itens) e regras de captura por franquia.","parameters":{}},
 {"name":"PKM_Pokemon","status":true,"description":"[PKM v0.2] Modelo do Pokémon individual (Game_Pokemon): natureza,\nIVs/EVs, stats calculados, golpes, gênero, HP/status. Base de party e batalha.","parameters":{}},
 {"name":"PKM_Evolution","status":true,"description":"[PKM v0.3] Evolução ramificada com condição (digievolução) e Digimemória.","parameters":{}},
+{"name":"PKM_Human","status":true,"description":"[PKM v0.5] Humanos em campo: Game_Human luta lado a lado com os monstros.","parameters":{}},
+{"name":"PKM_Field","status":true,"description":"[PKM v0.5] Campo de batalha em times (até 3v3): posições, ordem de turno, alvos e substituição.","parameters":{}},
 {"name":"PKM_Party","status":true,"description":"[PKM v0.2] Party de até 6 Pokémon + telas de equipe e resumo.","parameters":{}},
 {"name":"PKM_Encounters","status":true,"description":"[PKM v0.2] Encontros selvagens no overworld a partir de Encounters.json.","parameters":{"grassRegionId":"1","stepDivisor":"250"}},
 {"name":"PKM_Battle","status":true,"description":"[PKM v0.2] Batalha selvagem 1v1: turnos, dano por tipo/STAB/crítico,\ntroca, fuga e CAPTURA (Poké Ball). Fórmulas puras em PKM.Battle.","parameters":{}},

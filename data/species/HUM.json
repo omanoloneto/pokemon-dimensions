@@ -1,0 +1,704 @@
+[
+ {
+  "id": 920,
+  "name": "Treinador",
+  "internalName": "TRAINER",
+  "type1": "NORMAL",
+  "type2": null,
+  "stats": {
+   "hp": 65,
+   "atk": 45,
+   "def": 45,
+   "spe": 70,
+   "spa": 50,
+   "spd": 65
+  },
+  "genderRate": "Female50Percent",
+  "growthRate": "Medium",
+  "baseExp": 85,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 1,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 0,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "POUND"
+   },
+   {
+    "level": 1,
+    "move": "TACTICALCALL"
+   },
+   {
+    "level": 6,
+    "move": "THROWNBALL"
+   },
+   {
+    "level": 10,
+    "move": "READTHEFIELD"
+   },
+   {
+    "level": 14,
+    "move": "FLASHGRENADE"
+   },
+   {
+    "level": 18,
+    "move": "STUNBATON"
+   },
+   {
+    "level": 22,
+    "move": "BRACEFORIMPACT"
+   },
+   {
+    "level": 26,
+    "move": "CAPTURENET"
+   },
+   {
+    "level": 32,
+    "move": "SIGNALFLARE"
+   },
+   {
+    "level": 38,
+    "move": "WARCRY"
+   }
+  ],
+  "height": 1.5,
+  "weight": 42,
+  "color": "Red",
+  "habitat": "Urban",
+  "category": "Estrategista",
+  "entry": "Classe inicial da Dimensão Pokémon. Não bate forte nem aguenta pancada, mas lê o campo antes de todo mundo e transforma o time em algo maior que a soma das partes.",
+  "evolutions": []
+ },
+ {
+  "id": 921,
+  "name": "DigiEscolhido",
+  "internalName": "DIGIDESTINED",
+  "type1": "NORMAL",
+  "type2": null,
+  "stats": {
+   "hp": 70,
+   "atk": 45,
+   "def": 50,
+   "spe": 80,
+   "spa": 80,
+   "spd": 75
+  },
+  "genderRate": "Female50Percent",
+  "growthRate": "Medium",
+  "baseExp": 100,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 1,
+   "spd": 1
+  },
+  "catchRate": 0,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "POUND"
+   },
+   {
+    "level": 1,
+    "move": "COLDREAD"
+   },
+   {
+    "level": 8,
+    "move": "FLASHGRENADE"
+   },
+   {
+    "level": 14,
+    "move": "DIGIVICELIGHT"
+   },
+   {
+    "level": 20,
+    "move": "TACTICALCALL"
+   },
+   {
+    "level": 26,
+    "move": "BRACEFORIMPACT"
+   },
+   {
+    "level": 32,
+    "move": "READTHEFIELD"
+   },
+   {
+    "level": 40,
+    "move": "SIGNALFLARE"
+   }
+  ],
+  "height": 1.45,
+  "weight": 38,
+  "color": "Blue",
+  "habitat": "Urban",
+  "category": "Portador",
+  "entry": "Criança marcada por um Digivice. O aparelho converte a convicção dela em luz, então quanto mais o DigiEscolhido acredita no parceiro, mais o campo inteiro reage.",
+  "evolutions": []
+ },
+ {
+  "id": 922,
+  "name": "Medafighter",
+  "internalName": "MEDAFIGHTER",
+  "type1": "NORMAL",
+  "type2": null,
+  "stats": {
+   "hp": 75,
+   "atk": 70,
+   "def": 65,
+   "spe": 75,
+   "spa": 55,
+   "spd": 55
+  },
+  "genderRate": "Female50Percent",
+  "growthRate": "Medium",
+  "baseExp": 99,
+  "evYield": {
+   "hp": 0,
+   "atk": 1,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 0,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "POUND"
+   },
+   {
+    "level": 1,
+    "move": "TACTICALCALL"
+   },
+   {
+    "level": 8,
+    "move": "WRENCHSWING"
+   },
+   {
+    "level": 14,
+    "move": "WARCRY"
+   },
+   {
+    "level": 20,
+    "move": "STUNBATON"
+   },
+   {
+    "level": 26,
+    "move": "ROBATTLESUBMIT"
+   },
+   {
+    "level": 32,
+    "move": "BRACEFORIMPACT"
+   },
+   {
+    "level": 40,
+    "move": "SIGNALFLARE"
+   }
+  ],
+  "height": 1.5,
+  "weight": 45,
+  "color": "Yellow",
+  "habitat": "Urban",
+  "category": "Mecânico",
+  "entry": "Quem monta o Medabot também entra na Robattle. Anda com a caixa de ferramentas a tiracolo e resolve no braço o que o parceiro não alcança — a chave inglesa vale por uma Medapeça.",
+  "evolutions": []
+ },
+ {
+  "id": 923,
+  "name": "Criador",
+  "internalName": "BREEDER",
+  "type1": "NORMAL",
+  "type2": null,
+  "stats": {
+   "hp": 95,
+   "atk": 75,
+   "def": 80,
+   "spe": 60,
+   "spa": 65,
+   "spd": 80
+  },
+  "genderRate": "Female50Percent",
+  "growthRate": "Medium",
+  "baseExp": 114,
+  "evYield": {
+   "hp": 2,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 0,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "POUND"
+   },
+   {
+    "level": 1,
+    "move": "BRACEFORIMPACT"
+   },
+   {
+    "level": 8,
+    "move": "CAPTURENET"
+   },
+   {
+    "level": 14,
+    "move": "TACTICALCALL"
+   },
+   {
+    "level": 20,
+    "move": "READTHEFIELD"
+   },
+   {
+    "level": 26,
+    "move": "WRENCHSWING"
+   },
+   {
+    "level": 32,
+    "move": "WARCRY"
+   },
+   {
+    "level": 40,
+    "move": "BODYSLAM"
+   }
+  ],
+  "height": 1.75,
+  "weight": 78,
+  "color": "Brown",
+  "habitat": "Urban",
+  "category": "Fazendeiro",
+  "entry": "Passa o dia erguendo cercas e contendo monstros recém-saídos do disco. Lento no campo, mas é a unidade que mais aguenta apanhar — e a única que consegue segurar uma investida no lugar do time.",
+  "evolutions": []
+ },
+ {
+  "id": 924,
+  "name": "Grande Criança",
+  "internalName": "GREATCHILD",
+  "type1": "NORMAL",
+  "type2": null,
+  "stats": {
+   "hp": 95,
+   "atk": 80,
+   "def": 80,
+   "spe": 100,
+   "spa": 90,
+   "spd": 95
+  },
+  "genderRate": "Female50Percent",
+  "growthRate": "Parabolic",
+  "baseExp": 135,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 2,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 0,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "POUND"
+   },
+   {
+    "level": 1,
+    "move": "BRACEFORIMPACT"
+   },
+   {
+    "level": 10,
+    "move": "TACTICALCALL"
+   },
+   {
+    "level": 18,
+    "move": "SIGNALFLARE"
+   },
+   {
+    "level": 26,
+    "move": "EMBLEMFLASH"
+   },
+   {
+    "level": 34,
+    "move": "COLDREAD"
+   },
+   {
+    "level": 42,
+    "move": "READTHEFIELD"
+   },
+   {
+    "level": 50,
+    "move": "WARCRY"
+   }
+  ],
+  "height": 1.55,
+  "weight": 46,
+  "color": "White",
+  "habitat": "Urban",
+  "category": "Guardiã",
+  "entry": "Reconhecida por um mundo inteiro como digna de um espírito. O emblema no peito responde à coragem dela e libera a energia do mundo que a escolheu — o humano mais completo em campo, ainda assim abaixo de um espírito.",
+  "evolutions": []
+ },
+ {
+  "id": 925,
+  "name": "Rival",
+  "internalName": "RIVAL",
+  "type1": "NORMAL",
+  "type2": null,
+  "stats": {
+   "hp": 60,
+   "atk": 60,
+   "def": 45,
+   "spe": 80,
+   "spa": 60,
+   "spd": 55
+  },
+  "genderRate": "Female50Percent",
+  "growthRate": "Medium",
+  "baseExp": 90,
+  "evYield": {
+   "hp": 0,
+   "atk": 1,
+   "def": 0,
+   "spe": 1,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 0,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "POUND"
+   },
+   {
+    "level": 1,
+    "move": "WARCRY"
+   },
+   {
+    "level": 6,
+    "move": "THROWNBALL"
+   },
+   {
+    "level": 10,
+    "move": "TACTICALCALL"
+   },
+   {
+    "level": 16,
+    "move": "STUNBATON"
+   },
+   {
+    "level": 22,
+    "move": "INTIMIDATIONSTARE"
+   },
+   {
+    "level": 28,
+    "move": "CAPTURENET"
+   },
+   {
+    "level": 34,
+    "move": "READTHEFIELD"
+   },
+   {
+    "level": 42,
+    "move": "SIGNALFLARE"
+   }
+  ],
+  "height": 1.52,
+  "weight": 44,
+  "color": "Green",
+  "habitat": "Urban",
+  "category": "Provocador",
+  "entry": "Começou junto com você e escolheu o caminho oposto: pressa no lugar de leitura. Abre a batalha adiantando o próprio ritmo e desmonta quando o combate passa dos primeiros turnos.",
+  "evolutions": []
+ },
+ {
+  "id": 926,
+  "name": "Líder de Marco",
+  "internalName": "MARKLEADER",
+  "type1": "NORMAL",
+  "type2": null,
+  "stats": {
+   "hp": 85,
+   "atk": 70,
+   "def": 75,
+   "spe": 75,
+   "spa": 80,
+   "spd": 85
+  },
+  "genderRate": "Female50Percent",
+  "growthRate": "Medium",
+  "baseExp": 118,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 2
+  },
+  "catchRate": 0,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "POUND"
+   },
+   {
+    "level": 1,
+    "move": "TACTICALCALL"
+   },
+   {
+    "level": 10,
+    "move": "BRACEFORIMPACT"
+   },
+   {
+    "level": 18,
+    "move": "STUNBATON"
+   },
+   {
+    "level": 26,
+    "move": "READTHEFIELD"
+   },
+   {
+    "level": 34,
+    "move": "SIGNALFLARE"
+   },
+   {
+    "level": 42,
+    "move": "INTIMIDATIONSTARE"
+   },
+   {
+    "level": 48,
+    "move": "EMBLEMFLASH"
+   }
+  ],
+  "height": 1.72,
+  "weight": 70,
+  "color": "Purple",
+  "habitat": "Urban",
+  "category": "Examinadora",
+  "entry": "Guarda uma das doze Chaves Dimensionais. Testa o desafiante em vez de destruí-lo: segura o campo, expõe cada furo da estratégia e só entrega a Chave quando o time inteiro provou valor.",
+  "evolutions": []
+ },
+ {
+  "id": 927,
+  "name": "Guardião do Nexus",
+  "internalName": "NEXUSKEEPER",
+  "type1": "NORMAL",
+  "type2": null,
+  "stats": {
+   "hp": 80,
+   "atk": 40,
+   "def": 70,
+   "spe": 65,
+   "spa": 85,
+   "spd": 90
+  },
+  "genderRate": "Female50Percent",
+  "growthRate": "Medium",
+  "baseExp": 108,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 2
+  },
+  "catchRate": 0,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "POUND"
+   },
+   {
+    "level": 1,
+    "move": "COLDREAD"
+   },
+   {
+    "level": 10,
+    "move": "FLASHGRENADE"
+   },
+   {
+    "level": 18,
+    "move": "TACTICALCALL"
+   },
+   {
+    "level": 26,
+    "move": "STUNBATON"
+   },
+   {
+    "level": 34,
+    "move": "BRACEFORIMPACT"
+   },
+   {
+    "level": 42,
+    "move": "RIFTPULSE"
+   },
+   {
+    "level": 48,
+    "move": "READTHEFIELD"
+   }
+  ],
+  "height": 1.68,
+  "weight": 62,
+  "color": "Blue",
+  "habitat": "Urban",
+  "category": "Zelador",
+  "entry": "Ficou no hub abandonado costurando fendas enquanto ninguém olhava. Ofensiva quase nula: existe para manter o resto do time de pé e para canalizar a energia crua dos portais.",
+  "evolutions": []
+ },
+ {
+  "id": 928,
+  "name": "Arauto",
+  "internalName": "HERALD",
+  "type1": "NORMAL",
+  "type2": "DARK",
+  "stats": {
+   "hp": 85,
+   "atk": 85,
+   "def": 70,
+   "spe": 95,
+   "spa": 85,
+   "spd": 80
+  },
+  "genderRate": "Female50Percent",
+  "growthRate": "Slow",
+  "baseExp": 160,
+  "evYield": {
+   "hp": 0,
+   "atk": 1,
+   "def": 0,
+   "spe": 2,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 0,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "POUND"
+   },
+   {
+    "level": 1,
+    "move": "INTIMIDATIONSTARE"
+   },
+   {
+    "level": 12,
+    "move": "WARCRY"
+   },
+   {
+    "level": 20,
+    "move": "STUNBATON"
+   },
+   {
+    "level": 28,
+    "move": "TACTICALCALL"
+   },
+   {
+    "level": 36,
+    "move": "RIFTPULSE"
+   },
+   {
+    "level": 44,
+    "move": "READTHEFIELD"
+   },
+   {
+    "level": 50,
+    "move": "SIGNALFLARE"
+   }
+  ],
+  "height": 1.8,
+  "weight": 74,
+  "color": "Black",
+  "habitat": "Urban",
+  "category": "Espelho",
+  "entry": "Pessoa reescrita pelo Unificador para pregar a fusão. Usa equipe mista como você, luta como você e é o motivo do segundo tipo: sobrou pouca coisa humana ali dentro.",
+  "evolutions": []
+ },
+ {
+  "id": 929,
+  "name": "O Unificador",
+  "internalName": "UNIFIER",
+  "type1": "NORMAL",
+  "type2": "PSYCHIC",
+  "stats": {
+   "hp": 100,
+   "atk": 85,
+   "def": 90,
+   "spe": 105,
+   "spa": 120,
+   "spd": 100
+  },
+  "genderRate": "AlwaysMale",
+  "growthRate": "Slow",
+  "baseExp": 220,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 3,
+   "spd": 0
+  },
+  "catchRate": 0,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "POUND"
+   },
+   {
+    "level": 1,
+    "move": "COLDREAD"
+   },
+   {
+    "level": 15,
+    "move": "INTIMIDATIONSTARE"
+   },
+   {
+    "level": 25,
+    "move": "TACTICALCALL"
+   },
+   {
+    "level": 35,
+    "move": "RIFTPULSE"
+   },
+   {
+    "level": 42,
+    "move": "BRACEFORIMPACT"
+   },
+   {
+    "level": 48,
+    "move": "READTHEFIELD"
+   },
+   {
+    "level": 55,
+    "move": "PSYCHIC"
+   }
+  ],
+  "height": 1.86,
+  "weight": 80,
+  "color": "Purple",
+  "habitat": "Urban",
+  "category": "Pesquisador",
+  "entry": "Ex-pesquisador do Nexus convencido de que fronteira é prisão. Anos manipulando as fendas deixaram marca: a mente dele move energia dimensional sozinha, e é isso que o torna o único humano no nível de um chefe.",
+  "evolutions": []
+ }
+]
