@@ -275,7 +275,8 @@ console.log("== Multi-franquia (core) ==");
     eq(F.ofSpecies(850).id, "MRA", "id 740 pertence a Monster Rancher");
     eq(F.ofSpecies(900).id, "BKY", "id 780 pertence a Bucky");
     eq(F.ofSpecies(920).id, "HUM", "id 920 pertence aos Humanos");
-    ok(F.all().length === 6, "6 franquias registradas (5 dimensões + humanos)");
+    eq(F.ofSpecies(970).id, "VMO", "id 970 pertence a V-Monsters");
+    ok(F.all().length === 7, "7 franquias registradas (6 dimensões + humanos)");
 
     // itens de captura são exclusivos da franquia dona
     const mockOf = (id) => ({ speciesId: id, name: "Alvo", species: () => null, hpRate: () => 1 });

@@ -240,6 +240,21 @@ MON.Battle = MON.Battle || {};
     MON.Battle.registerVictoryHook = function(fn) {
         if (typeof fn === "function") MON.Battle._victoryHooks.push(fn);
     };
+    // ganchos de dano: a barra de elo dos V-Monsters enche apanhando e batendo
+    MON.Battle._damageHooks = [];
+    MON.Battle.registerDamageHook = function(fn) {
+        if (typeof fn === "function") MON.Battle._damageHooks.push(fn);
+    };
+    MON.Battle.runDamageHooks = function(info) {
+        const msgs = [];
+        for (const fn of MON.Battle._damageHooks) {
+            const out = fn(info);
+            if (Array.isArray(out)) msgs.push(...out);
+            else if (typeof out === "string") msgs.push(out);
+        }
+        return msgs;
+    };
+
     MON.Battle.runVictoryHooks = function(winner, defeated, isTrainer) {
         const msgs = [];
         for (const fn of MON.Battle._victoryHooks) {
@@ -320,6 +335,9 @@ MON.Battle = MON.Battle || {};
         if (calc.effectiveness > 1) msgs.push("Foi super eficaz!");
         else if (calc.effectiveness < 1) msgs.push("Não foi muito eficaz…");
 
+        msgs.push(...MON.Battle.runDamageHooks({
+            attacker, defender, damage: calc.damage, crit: calc.crit, moveId: move.id
+        }));
         const selfMsgs = MON.Battle.applySelfEffect(attacker, eff, calc.damage);
         if (defender.isFainted()) {
             msgs.push(defender.name + defTag + " desmaiou!");

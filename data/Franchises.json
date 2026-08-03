@@ -5,6 +5,7 @@
     "MDB",
     "MRA",
     "BKY",
+    "VMO",
     "HUM"
   ],
   "list": {
@@ -88,6 +89,20 @@
         "throwText": "Você ergueu o {item}!",
         "successText": "Pacto firmado! {target} aceitou você como Grande Criança!",
         "deniedText": "{target} não reconhece você — falta o emblema deste mundo."
+      }
+    },
+    "VMO": {
+      "id": "VMO",
+      "name": "V-Monsters",
+      "dimension": "Folklora",
+      "speciesFrom": 970,
+      "speciesTo": 1069,
+      "capture": {
+        "inField": true,
+        "items": ["VLINK", "VLINKPRO", "VLINKMAX"],
+        "verb": "vinculado",
+        "throwText": "Você apontou o {item}!",
+        "successText": "Elo estabelecido! {target} aceitou o vínculo!"
       }
     },
     "HUM": {
