@@ -44,7 +44,7 @@ module.exports = function({ ctx, ok, eq, G, section }) {
     const E = ctx.MON.Encounters;
     const T = ctx.MON.Trainers;
     const F = ctx.MON.Field;
-    const MAP_ID = 3;                       // rota de grama densa (densidade 25)
+    const MAP_ID = 5;                       // rota de grama densa (densidade 25)
 
     // estado global do jogo só para este bloco. O Math é o do contexto do vm —
     // é ele que os plugins usam para sortear.

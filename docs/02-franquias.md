@@ -48,15 +48,82 @@ Regra: **reusar o engine existente** (batalha 1v1, fórmula de dano/captura, evo
 - Encontros selvagens nesta dimensão dão XP/dinheiro/discos — **nunca captura**. Treino de fazenda = NPC que aplica itens de stat (Protein/Iron já suportados). Torneio = "Circuito da Fazenda", 4 lutas de treinador em sequência.
 - **Não fazer:** lifespan/morte de monstro, fusão/combinação, calendário de semanas.
 
-## 5. Bucky (Jibaku-kun) — camada de meta-progressão
+## 5. Doze Mundos (Bucky/Jibaku-kun) — camada de meta-progressão
 
-Lore (confirmada): 12 mundos + o Mundo Zero; cada mundo guardado por uma **Grande Criança (G.C.)** com um **espírito** parceiro esférico e explosivo ("jibaku" = autodestruição), usado contra **Troublemonsters** — fauna enlouquecida que se combate, não se coleciona.
+> **Fonte canônica:** [`referencias/biblia-doze-mundos-v0.11.md`](referencias/biblia-doze-mundos-v0.11.md), documento de direção do dono. Continuidade do mangá, **Ano 7 da Nova Árvore**.
+> Abaixo, **[bíblia]** marca o que vem do documento e **[expansão]** o que o fangame inventou para caber no motor.
 
+### 5.1 O que a bíblia fixou (e o que isso invalidou)
+
+- **[bíblia 2, 12]** Os Doze Mundos **não são uma dimensão entre outras**: são doze países de um mesmo continente circular, o **mundo-base** do jogo. Pokémon, Digimon, Medabots, Monster Rancher e V-Monsters são **Dimensões Externas**, que chegam por **fendas**. A primeira fenda abre em Primas, durante a sucessão de Bucky.
+- **[bíblia 5]** No centro, onde havia a Torre Pontiaguda (Mundo Zero), hoje está a **Árvore de Amano**. **Mundo Zero não existe mais como lugar visitável** — existe a Clareira do Novo Zero, sobre as ruínas.
+- **[bíblia 1.2, 8]** **Jibaku absorveu os outros onze Espíritos e é o único Espírito remanescente.** O modelo "uma Grande Criança + um Espírito por mundo" tornou-se inviável. ⚠️ Isso **invalidou a premissa antiga de colecionar 12 espíritos**.
+- **[bíblia 8]** O jogador é o **sucessor direto de Bucky**, reconhecido como nova Grande Criança de Primas. Herda Jibaku, o Relógio GC e a responsabilidade — não um título eterno.
+- **[bíblia 9.4]** **Monstro Encrenqueiro é estado, não espécie**: criatura alterada pela antiga toxina da Árvore do Zero, hoje rara, e **curável**. ⚠️ Isso invalidou "Troublemonster = espécie própria e permanente".
+- **[bíblia 10]** O **Relógio GC** é o aparelho herdado, convertido por Undicus: registra criaturas, mostra mapas e **identifica resíduo de toxina**. Ele **não consegue classificar** as criaturas das fendas — é assim que o jogo estabelece que elas são externas.
+
+### 5.2 Ecos de Raiz — o que sobrou dos onze Espíritos
+
+**[expansão]** Os onze Espíritos absorvidos não sumiram sem deixar rastro: a energia deles escoou pelas **doze raízes de Amano** ([bíblia 4]) e cada mundo que perdeu o seu ficou com um **Eco de Raiz** — um lendário alojado na raiz que atravessa aquele país.
+
+Por que essa saída e não "Monstros-Guia lendários" ou "guardiões das raízes" puros: ela é a única que **explica a ausência em vez de ignorá-la**. O eco existe *porque* houve fusão, e **Primas não tem eco** — o Espírito dele continua vivo e anda com o jogador. A geografia do relógio vira a estrutura de coleção sem recriar o sistema que a bíblia declarou inviável.
+
+- **Jibaku é único e não-capturável.** O gate barra a captura dele em qualquer situação, mesmo com os doze Selos. Ele é herdado por evento, não pactuado.
+- Onze ecos, um por mundo, na ordem do relógio. O **Selo é a posição do mundo**: `GC_01` Primas … `GC_12` Doidicus.
+
+| id | espécie | tipo | mundo | selo | por que ali |
+|---|---|---|---|---|---|
+| 900 | **Jibaku** | Fogo | Primas | — (herdado) | terra natal de Bucky [bíblia 13.1] |
+| 901 | Bambi | Psíquico | Secandas | `GC_02` | tradição psíquica [bíblia 13.2] |
+| 907 | Petrac | Pedra | Trios | `GC_03` | montanhas e escadarias esculpidas [bíblia 13.3] |
+| 905 | Gelac | Gelo | Tetras | `GC_04` | o eco que se recusou a derreter: o país mais resistente às reformas [bíblia 13.4] |
+| 906 | Terrac | Terra | Pentas | `GC_05` | desertos e irrigação [bíblia 13.5] |
+| 904 | Voltac | Elétrico | Hexas | `GC_06` | amplificadores e tecnologia sonora [bíblia 10] |
+| 910 | Umbrac | Sombrio | Seteras | `GC_07` | ninjutsu e a sombra da obediência cega [bíblia 13.7] |
+| 902 | Aquac | Água | Octas | `GC_08` | potência marítima [bíblia 13.8] |
+| 909 | Fantac | Fantasma | Novas | `GC_09` | identidade contemplativa e de memória [bíblia 13.9] |
+| 903 | Verdac | Planta | Dicas | `GC_10` | floresta tropical, raízes visíveis [bíblia 13.10] |
+| 908 | Ferrac | Aço | Undicus | `GC_11` | fábricas, robôs, motores [bíblia 13.11] |
+| 911 | **Dragac** | Dragão | Doidicus | `GC_12` | o eco mais antigo, sob o gelo, com o povo perdido [bíblia 13.12] |
+
+Stats, curvas e golpes das doze espécies são os mesmos de antes — mudou só a lore. **Dragac continua o endgame**: dorme até os outros **dez** pactos estarem firmados (era "onze"; o número agora sai de `echoes().length - 1`, não de constante).
+
+### 5.3 Sistema novo único: o pacto
+
+- **Selo de Raiz** (`GC_01`..`GC_12`) — insígnia reusada 1:1, guardada em `$gameSystem`, registrada no Relógio GC. É o reconhecimento daquele país: sem ele o eco local recusa. `GC_01` vem da cerimônia de sucessão em Primas; os outros onze, de cada mundo. **[expansão]** quem concede é o antigo Grande Criança / conselho local ([bíblia 7, 8]), não um chefe a derrotar — por isso a API é `recognizeInWorld()`, não mais `defeatGreatChild()`.
+- **Relógio GC** — o item `GCEMBLEM` (pocket 3, `catchBonus` 12, `keepOnUse`). É o aparelho que se ergue para firmar o pacto e não se gasta no arremesso.
+- **Economia:** eco a 1 de HP = 23% por arremesso; 35% com paralisia; 47% dormindo; intacto ~8%. Preparado sai em ~2 arremessos, despreparado passa de 9 — o pacto é desafio de **preparo**, não de repetição. Dragac (`catchRate` 3) é metade disso.
 - **Fantasia:** vínculo único e vitalício — o oposto do "gotta catch 'em all".
-- **Mapeamento:** os espíritos são **12 lendários** na tabela existente (stats altos, sem linha evolutiva). Golpe assinatura Jibaku = dano altíssimo + recoil pesado ou autodesmaio (Double-Edge/Explosion) — só linhas de skill, zero código.
-- **Sistema novo:** **Emblema de G.C.** — derrotar o guardião de cada dimensão dá um emblema (insígnia reusada 1:1); só com o emblema daquele mundo o espírito aceita o pacto (fórmula de captura + catch rate baixíssimo). Os 12 espíritos são o **endgame que costura o multiverso**; o Mundo Zero é a "Elite Four".
-- Bucky é UMA dimensão-hub com câmaras/altares, não 12 overworlds. Troublemonsters = espécies das outras franquias com palette swap "corrompido" + boost de stats (chefes baratos).
-- **Não fazer:** companheiro fora da party, dupla G.C.+espírito em batalha, dezenas de Troublemonsters originais.
+- Golpe assinatura **Jibaku** = dano altíssimo + recuo pesado ou autodesmaio, só linhas de skill sobre `recoil`/`drain`/`selfKO` já existentes. Os auto-destrutivos ficam acima do nível 47 de propósito: eco selvagem com `selfKO` se derrubaria sozinho e tornaria o pacto impossível.
+
+### 5.4 Encrenqueiros: estado curável — e o desvio de implementação
+
+**[bíblia 9.4]** "Uma criatura que se torna Encrenqueira pode ser curada; ela não constitui uma espécie diferente."
+
+**Desvio assumido:** o MZ não tem *estado de espécie*, e mudar a espécie em tempo de execução já é uma operação suportada (`evolveInto`). Então as 8 linhas `912-919` continuam existindo na tabela, mas **deixaram de ser espécies e passaram a ser o estado corrompido de outra criatura**:
+
+- o campo `corruptedFrom` é o **caminho de volta** — ele aponta a criatura de verdade que está por baixo da toxina;
+- `MON.Pacts.purify(monster)` faz esse caminho reusando o mesmo `evolveInto` da evolução, **sem motor novo**: mesmo indivíduo, mesmo nível, espécie de volta ao normal;
+- o gate de captura **nega** a captura de Encrenqueiro com o motivo canônico — *"isso não se captura, se cura"* — e o desfecho de campo é a cura, não a coleção;
+- curado, o monstro volta a seguir as regras da **própria franquia** (um Greymon curado é capturável com Digi-Link).
+
+**[expansão]** Os 8 casos catalogados são criaturas de Dimensões Externas que caíram em ruínas lacradas onde o resíduo ainda existe ([bíblia 23.3]: resíduo só em cavernas profundas e áreas seladas). A bíblia previa que moradores *confundissem* uma criatura estrangeira com um Encrenqueiro ([bíblia 25.6]); aqui a confusão às vezes é verdade.
+
+### 5.5 Não fazer
+
+- **Não** recriar "uma Grande Criança + um Espírito por mundo": a bíblia declarou o modelo inviável.
+- **Não** tornar Jibaku capturável, duplicável ou opcional. Um só, herdado.
+- **Não** tratar Encrenqueiro como troféu de Dex nem criar dezenas deles: a bíblia diz que **novos casos são raros**.
+- **Não** ressuscitar o Mundo Zero como área jogável; o centro é a Clareira do Novo Zero.
+- **Não** colocar companheiro fora da party nem dupla G.C.+espírito em batalha.
+
+### 5.6 Pendências de cânone (fora do escopo deste documento)
+
+1. **`docs/03-mundo-e-narrativa.md`** já foi reescrito contra a bíblia e a §6.2 dele deixa em aberto exatamente o conflito que esta seção resolve ("os dados têm doze espíritos e o plugin gira em torno deles"). Falta trocar lá: *espírito de cada mundo* → **Eco de Raiz**, *Marca de Grande Criança* → **Selo de Raiz**, 12 → **11 ecos + Jibaku herdado**, e registrar que a cura do Encrenqueiro já está implementada (`MON.Pacts.purify`).
+2. **`docs/05-roadmap.md`, marco M7** ainda descreve "6 mapas (dimensão-hub com câmaras), Templo Elemental (Chaves 11–12), 12 espíritos lendários com gate de Emblema G.C." — tudo pré-bíblia. Reordenação de produção pendente (Primas é a primeira região jogável, não um hub de câmaras).
+3. **A linha de Bucky no resumo executivo** (topo deste documento) ainda diz "Emblemas G.C. como gate de 12 espíritos lendários"; o correto é "Selo de Raiz + Relógio GC como gate de 11 Ecos de Raiz".
+4. **`data/ItemsExtra.json`**: `GCEMBLEM` ainda se chama "Emblema G.C." e sua descrição fala em "espírito de um mundo". Deveria virar "Relógio GC" / "eco de um mundo".
+5. **`data/Franchises.json`**: o `deniedText` de BKY ("falta o emblema deste mundo") e o `successText` ("aceitou você como Grande Criança") precisam do vocabulário novo; e `dimension: "Dimensão dos Doze Mundos"` contradiz a bíblia, que faz dos Doze Mundos o mundo-base, não uma dimensão.
 
 ## 6. V-Monsters — Barra de Elo
 

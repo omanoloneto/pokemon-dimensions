@@ -2,17 +2,27 @@
 
 Estado de referência: **o engine está pronto; o jogo ainda não existe.** Este roadmap leva do hub de testes atual à v1.0 mobile.
 
+> **Realinhado com a [Bíblia dos Doze Mundos v0.11](referencias/biblia-doze-mundos-v0.11.md).**
+> O mundo-base do jogo passou a ser o Continente dos Doze Mundos; Pokémon, Digimon,
+> Medabots, Monster Rancher e V-Monsters são **Dimensões Externas** ([03](03-mundo-e-narrativa.md)).
+> A vertical slice deixou de ser "Coral Town + Rota 1" e passou a ser
+> **Vila Primeiro Passo + Campos do Primeiro Sol + Cidade dos Porcos**.
+
 ## Estado atual (medido no repo)
 
-**Engine (✅ — [roadmap-port-mz.md](roadmap-port-mz.md)):** 10 plugins MON_* (~2.9k linhas), batalha 1v1 completa (status, estágios, precisão, troca, fuga), captura, EXP/evolução por nível, treinadores+insígnias, PC 16×30, mochila, Pokédex, áudio. 56 testes headless.
+**Engine (✅ — [roadmap-port-mz.md](roadmap-port-mz.md)):** 19 plugins MON_* (~6.4k linhas), batalha 1v1 completa (status, estágios, precisão, troca, fuga), captura, EXP/evolução por nível e ramificada, treinadores+insígnias, PC 16×30, mochila, Pokédex, áudio, humano como combatente.
 
-**Franquias (✅ — [02](02-franquias.md), [06](06-arquitetura-franquias.md)):** camada multi-franquia + os 5 sistemas de dimensão. **793 espécies** (649 Pokémon + 101 Digimon de *Adventure* + 10 Medabots + 13 Monster Rancher + 20 Bucky), 659 golpes, 40 Medapeças, 3 discos, dex de Kanto recortada. 412 testes headless.
+**Franquias (✅ — [02](02-franquias.md), [06](06-arquitetura-franquias.md)):** camada multi-franquia + os **6** sistemas de dimensão, incluindo a **Barra de Elo** (`MON_Link.js`, entregue). **838 espécies** (649 Pokémon + 101 Digimon + 10 Medabots + 13 Monster Rancher + 20 Bucky + 35 V-Monsters + 10 humanos), 723 golpes, 40 Medapeças, 3 discos, dex de Kanto recortada. Baseline: **953 asserts, 0 falhas** — piso, não teto: a suíte cresce junto com o conteúdo.
 
-**V-Monsters (⏳ parcial — [02](02-franquias.md)):** a 6ª dimensão, **IP própria do dono**. Já no repo: franquia **VMO** em `data/Franchises.json` (faixa **970–1069**, dimensão Folklora), os 3 V-Link em `data/ItemsExtra.json` e o gancho `MON.Battle.registerDamageHook(fn)` em `MON_Battle.js` — a fundação da Barra de Elo. Falta todo o conteúdo: `data/species/VMO.json` (**0 espécies**), `MON_Link.js`, suíte de teste, sprites convertidos e os 6 mapas. Baseline atual: **709 asserts, 0 falhas**.
+**V-Monsters (✅ dados e arte):** IP própria do dono. `data/species/VMO.json` com 35 espécies na faixa 970–1069, `MON_Link.js` com a barra de elo, 3 V-Links em `data/ItemsExtra.json` e **sprites já convertidos** (`img/monsters/vmo` + entradas em `front`). Falta só o conteúdo de mapa (os 6 mapas de Folklora).
 
-**Dados:** 559 golpes base + 100 novos; **~77 com efeito implementado** (recuo/dreno/autodestruição incluídos); 18 tipos, 538 itens. Encontros religados para a D1 (4 tabelas), mas **nenhum dispara ainda** — Map001/Map002 estão com a camada de região zerada e `MON_Encounters` exige a Região 1 pintada. 60 treinadores definidos e não usados em mapa nenhum.
+**Mundo-base (❌ — o buraco novo):** a faixa `BKY` (900–919) tem **12 espíritos + 8 Encrenqueiros "Turvo"** e **nenhuma criatura comum**. Primas precisa de ~10–12 nativos jogáveis (Chicky, Drago Rock, Fadas do Vaso e os papéis ecológicos da bíblia §23.2) com dados e sprites. Sem isso a vertical slice não existe.
 
-**Conteúdo real:** 2 mapas — Map001 (hub de testes, 8 eventos debug) e Map002 (Coral Town, tiles reais, **zero gameplay**). Sprites: só Pokémon (front/back/shiny/icons/footprints/alt). Áudio: 655 cries + RTP padrão do MZ.
+**Dados:** 559 golpes base + 164 extras; **~77 com efeito implementado**; 18 tipos, 542 itens. 4 tabelas de encontro definidas e **nenhuma dispara** — Map001/Map002 estão com a camada de região zerada e `MON_Encounters` exige a Região 1 pintada. 60 treinadores definidos e não usados em mapa nenhum.
+
+**Conteúdo real:** 2 mapas — Map001 (hub de testes, 8 eventos debug) e Map002 (**Coral Town**, tiles reais, zero gameplay). Com a virada, Coral Town deixa de ser a cidade inicial e passa a ser a **cidade de entrada da Dimensão Externa Pokémon** ([03](03-mundo-e-narrativa.md) §6.3) — o asset não se perde, muda de endereço e de faixa de nível (3–16 → 14–24).
+
+**Sprites:** só Pokémon (front/back/shiny/icons/footprints/alt) e V-Monsters. **Digimon, Medabots, Monster Rancher e todo o mundo-base continuam sem arte.** Áudio: 655 cries + RTP padrão do MZ.
 
 **Lacunas conscientes** (decidido NÃO fazer na v1 — ver [01](01-visao-geral.md)): breeding, day/night, clima, duplas, held items, habilidades em batalha, multiplayer.
 
@@ -20,85 +30,93 @@ Estado de referência: **o engine está pronto; o jogo ainda não existe.** Este
 
 | Item | Tam. | Marco | Nota |
 |---|---|---|---|
+| **Espécies nativas dos Doze Mundos (~12) + sprites** | G | M2 | Bloqueador nº 1 da slice; ver risco 1 |
+| **Encontro não hostil** (3 saídas antes da batalha) | P | M2 | Requisito de cânone, não sabor ([03](03-mundo-e-narrativa.md) §10) |
+| **Estado pós-fenda por switch** (props/colisão numa área-base) | P | M2 | Nunca dois mapas; modelo para o resto do jogo |
+| **Pintar a Região 1 nos mapas novos** — sem isso nenhum encontro dispara | P | M2 | Herdado; agora nos mapas de Primas |
 | Touch UI: Pokédex e Storage (Q/W sem equivalente) | P | M1 | [04](04-producao-mobile.md) tem file:line |
 | Teste de integridade de assets (JSON → arquivo existe) | P | M1 | Classe de crash já ocorrida |
 | `schemaVersion` no save + export/import manual | P | M1 | Antes de qualquer release |
 | Limpeza de cache de bitmaps (batalha/Pokédex) | P | M1 | iOS mata aba ~1.5GB |
-| Smoke E2E Playwright no build web | M | M2 | Boot→captura→save→reload |
-| ~~Evolução ramificada com condição (Digimon)~~ | — | ✅ | mais Item/Happiness/HasMove/Trade/Location |
-| **Pintar a Região 1 nos mapas** — sem isso nenhum encontro dispara | P | M2 | bloqueador da vertical slice |
-| **UI de montagem de Medapeças** (só há comando de plugin) | M | M5 | jogador não troca peça pelo menu |
-| **Eventos que concedam os emblemas G.C.** | P | M7 | API pronta, ninguém chama |
-| Fonte de discos no mundo (baús, NPCs, drops) | P | M6 | Santuário sem entrada de discos |
+| Origem do jogador (12 mundos) — só diálogo + item inicial | P | M2 | Cânone §1.3; prólogo próprio está fora da v1 |
+| Smoke E2E Playwright no build web | M | M3 | Boot→captura→save→reload |
+| **Estações de raiz** (viagem rápida por destino já visitado) | P | M5 | Substitui "Nexus restaurado" |
 | Encontros Water/Rod (dados já existem) | P | M4 | Engine só rola "Land" |
 | TM ensina golpe (campo `machine` já existe) | M | M4 | |
 | `priority` no turn order (campo existe, ignorado) | P | M4 | |
 | Shiny nas cenas de batalha (pastas *_shiny) | P | M4 | Verificar uso real |
-| ~~Peças + drop pós-vitória (Medabots)~~ | — | ✅ | |
-| ~~Santuário de Discos (Monster Rancher)~~ | — | ✅ | falta o mapa/evento |
-| ~~Emblemas G.C. como gate de pacto (Bucky)~~ | — | ✅ | |
-| **Barra de Elo — `MON_Link.js`** (V-Monsters) | M | M8 | único sistema de franquia que ainda falta; gancho de dano já existe |
-| `data/species/VMO.json` + `data/moves/VMO.json` (~16 espécies com ramos de elo) | M | M8 | faixa 970–1069 vazia |
-| Conversão da arte de Folklora (PNG à mão → front 48px) | M | M3 | única dimensão com arte própria — ver risco 1 |
-| **Mapa-vitrine de Folklora** (material público) | P | M3 | única dimensão exibível — ver risco 2 |
+| **UI de montagem de Medapeças** (só há comando de plugin) | M | M6 | Jogador não troca peça pelo menu |
+| Fonte de discos no mundo (baús, NPCs, drops) | P | M7 | Santuário sem entrada de discos |
+| **Eventos que concedam Marca G.C. e Emblema** | P | M9 | API pronta (`MON_Pacts`), ninguém chama |
+| Cura de Monstro Encrenqueiro pós-vitória | P | M9 | Cânone §9.4: cura-se, não coleciona |
 | MOVE_EFFECTS dos golpes usados pelas espécies obtíveis | contínuo | M2+ | Nunca os 559; só o que entra em jogo |
+| ~~Barra de Elo — `MON_Link.js`~~ | — | ✅ | |
+| ~~`data/species/VMO.json` + conversão da arte de Folklora~~ | — | ✅ | 35 espécies, sprites convertidos |
+| ~~Evolução ramificada, peças + drop, Santuário de Discos, gate de pacto~~ | — | ✅ | |
 
 Tam.: P = dias, M = ~1 semana, G = mais que isso.
 
 ## Marcos (1 build jogável/mês; build que não roda em touch não conta)
+
+Numeração de gates conforme [03](03-mundo-e-narrativa.md) §6.1: **12 no total** — 2 em Primas, 2 por Dimensão Externa.
 
 ### M0 ✅ — Engine port XP→MZ
 Concluído ([roadmap-port-mz.md](roadmap-port-mz.md)).
 
 ### M1 — Mobile Playable + fundação de QA
 - Touch nos gaps de Pokédex/Storage; `touchUI` conferido; build **web + PWA** no ar (hospedagem própria); passe de pngquant (342→~120MB); teste de integridade de assets; `schemaVersion`; limpeza de cache de bitmaps.
-- **Aceite:** demo de teste atual jogável num Android low-end e num iPhone (PWA), save sobrevive a fechar o app, suíte headless verde (709 asserts).
+- **Aceite:** demo de teste atual jogável num Android low-end e num iPhone (PWA), save sobrevive a fechar o app, suíte headless verde (953 asserts).
 
-### M2 — Vertical Slice A: Dimensão Pokémon jogável
-- Coral Town eventada pelo template de cidade ([03](03-mundo-e-narrativa.md)); Rota 1, Ginásio de Coral (**Chave 1**), Rota 2 + Fenda; encontros religados aos mapas novos; treinadores dos 60 usados em rota; E2E Playwright rodando.
-- Dados: 18 Pokémon obtíveis balanceados (nv 3–16) + **1 Digimon capturável na Fenda** (o momento-trailer).
-- **Aceite:** 45 min de jogo contínuo no celular sem debug menu; Digimon no time antes de qualquer portal.
+### M2 — Vertical Slice A: **Primas jogável** (bíblia P0→P2)
+- Mapas: Vila Primeiro Passo + 4 interiores prioritários; Campo do Primeiro Sonho nos dois estados; Campos do Primeiro Sol; Bosque dos Vasos; núcleo da Cidade dos Porcos.
+- Dados: **~10 espécies nativas de Primas** (nv 3–14) com sprites + a primeira criatura externa capturável; encontros religados; treinadores dos 60 usados em rota.
+- Sistemas: encontro não hostil, estado pós-fenda por switch, **gate 1 = Colégio de Primas**, origem do jogador como sabor.
+- Sequência: chegada → Colégio e candidatos → Bucky/Spark/Jibaku → cerimônia → fenda → emergência → viagem à Cidade dos Porcos (bíblia §30).
+- **Aceite:** 60–90 min de jogo contínuo no celular sem debug menu; a criatura externa entra no time aos ~45 min; a missão da Cidade dos Porcos resolve-se **sem batalha obrigatória**.
 
-### M3 — Vertical Slice B: Nexus + Digimon → **DEMO**
-- Nexus (praça + interior), Vila File, Rota de Dados, Torre de Dados (**Chave 2**, boss Arauto); **evolução ramificada** implementada; 10 Digimon obtíveis; item Digi-Link; cutscene de fechamento da demo.
-- **Antecipação de Folklora:** conversão da arte de V-Monsters + 1 mapa-vitrine. Fora do fluxo da demo — existe só para haver material público antes de M8 (risco 2).
-- **Aceite:** demo 90–120 min completa no celular; um Rookie evolui pra ramos diferentes em saves diferentes; distribuição interna (URL privada) pra playtest.
+### M3 — Vertical Slice B: **a fenda de Pokémon** → **DEMO**
+- Raiz Clara em versão mínima (Posto das Fendas); passagem estabilizada; **Coral Town reaproveitada** + Rota 1 + Ginásio (**gates 3–4**); 18 Pokémon obtíveis rebalanceados para 14–24; E2E Playwright rodando; cutscene de fechamento.
+- **Antecipação de Folklora:** 1 mapa-vitrine. Fora do fluxo da demo — existe só para haver material público exibível (risco 2).
+- A demo **pula Rockside**: o gate 2 entra em M4 e passa a preceder a fenda no jogo final. Inserção prevista, não dívida.
+- **Aceite:** demo 90–120 min completa no celular; equipe mista (nativo + Pokémon) atravessando a fenda; distribuição interna (URL privada) para playtest.
 
-### M4 — D1+D2 completas + dívidas de engine
-- Mapas restantes das duas dimensões (Chaves 3–6... total 6), dex regional fechada, TMs, Water/Rod, priority, shiny visual, MOVE_EFFECTS dos golpes em uso.
-- **Aceite:** Ato 1 + começo do Ato 2 jogáveis do início, sem eventos de teste no build.
+### M4 — Primas completa (bíblia P3) + dívidas de engine
+- Trilha das Pedras Vivas, Rockside City (**gate 2 — Arena da Pedreira**), Cratera Drago Rock, Estrada da Raiz Clara, Raiz Clara completa, Passo do Degelo; saída bloqueada para Secandas visível no mapa.
+- Dívidas: TMs, Water/Rod, `priority`, shiny visual, MOVE_EFFECTS dos golpes em uso.
+- **Aceite:** Ato 1 inteiro jogável do início, sem eventos de teste no build; a bíblia §32 (critérios de aceitação de Primas) passa item a item.
 
-### M5 — D3 Medabots
-- 6 mapas, Arena Robattle (Chaves 7–8), **sistema de peças (equips) + drop**, ~10 modelos × 4 peças, Medal Case, Arauto 2. **Trânsito livre** (evento Nexus restaurado — 6ª chave).
-- **Aceite:** loop "vence Robattle → ganha peça → remonta Medabot" funcionando; viagem rápida ativa.
+### M5 — Dimensão Externa Digimon
+- 6 mapas, Torre de Dados (**gates 5–6**), 10 Digimon obtíveis, item Digi-Link, duelo com o rival de Primas. **Estações de raiz restauradas** (6º gate) = trânsito livre.
+- **Aceite:** um Rookie evolui para ramos diferentes em saves diferentes; viagem rápida ativa entre destinos visitados.
 
-### M6 — D4 Monster Rancher
-- 6 mapas, Santuário de Discos, ~20 espécies geráveis, discos espalhados nas dimensões anteriores (backtracking), Circuito da Fazenda, Santuário de Pedra (Chaves 9–10), Arauto 3.
+### M6 — Dimensão Externa Medabots
+- 5 mapas, Arena Robattle (**gates 7–8**), **UI de montagem de peças**, ~10 modelos × 4 peças, Medal Case.
+- **Aceite:** loop "vence Robattle → ganha peça → remonta Medabot" funcionando pelo menu.
+
+### M7 — Dimensão Externa Monster Rancher
+- 5 mapas, Santuário de Discos, ~20 espécies geráveis, discos espalhados nas áreas anteriores (backtracking), Circuito da Fazenda, Santuário de Pedra (**gates 9–10**).
 - **Aceite:** nenhum encontro capturável na dimensão; toda aquisição via disco; economia de discos revisada em playtest.
 
-### M7 — D5 Bucky + endgame aberto
-- 6 mapas (dimensão-hub com câmaras), Templo Elemental (Chaves 11–12), **12 espíritos lendários** com gate de Emblema G.C., golpes Jibaku (recoil/autodesmaio), Troublemonsters (reskins corrompidos como chefes).
-- **Aceite:** caçada dos 12 espíritos jogável cruzando todas as dimensões.
+### M8 — Dimensão Externa Folklora (V-Monsters)
+- 6 mapas (2 cidades de facção, fronteira, 2 rotas, Torre do V-Link — **gates 11–12**), V-Links na loja, emissário da Nova Torre (o que negocia em vez de invadir).
+- Dados, plugin e sprites já existem: este marco é **conteúdo de mapa**, não sistema.
+- **Aceite:** um V-Monster enche a barra apanhando e evolui no meio da luta escolhendo entre 2 ramos — em qualquer time, **inclusive fora de Folklora**.
 
-### M8 — D6 Folklora (V-Monsters)
-- 6 mapas (2 cidades de facção, fronteira, 2 rotas, Torre do V-Link — **Chaves 13–14**), **`MON_Link.js` com a Barra de Elo**, ~16 espécies VMO com ramos de elo, V-Links na loja, Arauto 4 (o que negocia em vez de invadir).
-- Custo de calendário: a 6ª dimensão empurra a v1.0 em **~1 mês**. Nenhum marco anterior encolhe para compensar.
-- **Aceite:** um V-Monster enche a barra apanhando, evolui no meio da luta escolhendo entre 2 ramos — em qualquer time, **inclusive fora de Folklora** (o elo segue o monstro, não o mapa).
+### M9 — Centro do continente + release 1.0
+- Clareira do Novo Zero (Conselho + anel de estações de raiz); gauntlet das antigas Grandes Crianças = **Marcas GC_01..GC_12**; Coração da Árvore (3 mapas-colagem); **12 espíritos** como ecos gated por Marca; cura de Encrenqueiro; pós-game de captura livre; passe de balanceamento da curva inteira; corte final de assets; **APK Capacitor <250MB**; página de download discreta.
+- **Aceite:** campanha 12–16h completa; caçada dos doze ecos cruzando as áreas já visitadas; device matrix ([04](04-producao-mobile.md)) verde; plano de resposta a C&D decidido e escrito.
 
-### M9 — Dimensão Zero + release 1.0
-- 3 mapas-colagem, gauntlet de Arautos, Unificador (equipe com 1 ás por franquia, agora 6), pós-game de captura livre, passe de balanceamento da curva inteira, corte final de assets, **APK Capacitor <250MB**, página de download discreta.
-- **Aceite:** campanha 10–15h completa; device matrix ([04](04-producao-mobile.md)) verde; plano de resposta a C&D decidido e escrito.
+### Efeito da virada no calendário
+A antiga dimensão Bucky (M7) **desapareceu como marco**: seus 6 mapas foram para Primas (M2/M4) e seus sistemas — Marca, Emblema, pactos, golpes Jibaku, Encrenqueiros — para o endgame (M9). O número de marcos não mudou. O custo real da virada está concentrado em **M2**, que virou o marco mais pesado do projeto: precisa de mapas do zero (não há mais Coral Town para reaproveitar na largada) **e** de um elenco nativo que não existe.
 
 ## Riscos (top 5)
 
-1. **Sprites e dados das outras franquias** — hoje só existem assets de Pokémon. Cada dimensão exige aquisição/curadoria de sprites (rips de fã dos jogos de DS/GBA), padronização 48px e dados de espécie/golpe. É o maior custo desconhecido; atacar já em M2 (o Digimon da Fenda força o pipeline inteiro cedo). Mitigação: dex pequenas por dimensão (30/10/20/12/16).
-   - **Folklora é a exceção:** a arte é do dono e já existe (**16 linhas base + 19 formas alternativas**, PNG desenhado à mão no repo Unity). O custo é conversão e padronização para 48px, não aquisição — e não há risco de o asset ser retirado depois.
-2. **Legal** — multi-franquia soma titulares; visibilidade e monetização são os gatilhos. Mitigações e plano de resposta em [04](04-producao-mobile.md).
-   - **V-Monsters é a única dimensão sem exposição a C&D** — IP do dono, arte própria, trilha original, time creditado. Consequência de produção, não só de risco: **todo material público (trailer, screenshot, página de download, eventual loja) sai de Folklora ou do Nexus**, nunca das outras cinco. Como o cronograma põe a dimensão publicável em **M8**, o único material exibível chegaria no fim — daí o mapa-vitrine antecipado para M3.
-3. **Performance mobile** — memória (cache de bitmaps) mais que peso. Budget e limpeza em M1; medir todo release.
-4. **Scope creep de sistemas** — a regra "1 sistema novo por franquia" ([02](02-franquias.md)) é o contrato. Pedido de sistema extra → corta ou troca.
-5. **Pipeline de segunda identidade visual** — tilesets Digimon na slice validam conversão/estilo; se falhar, replanejar antes de D3–D5.
+1. **Arte do mundo-base — novo risco nº 1.** Antes, o buraco de sprites começava em Digimon (M3). Agora começa na primeira tela do jogo: Primas precisa de ~10–12 criaturas nativas com front/back/ícone, e a faixa `BKY` só tem espíritos e Encrenqueiros. Não há rip de fã pronto para a fauna comum de Jibaku-kun na escala necessária. Mitigações: manter o elenco da slice em ~10; usar as três espécies já ancoradas pelo cânone (Chicky, Drago Rock, Fadas do Vaso) como âncora de estilo; tratar arte encomendada/desenhada como item de M2, não de M9. **Se o elenco nativo não fechar, M2 não sai** — é o único item do roadmap com essa propriedade.
+2. **Sprites das Dimensões Externas** — Digimon, Medabots e Monster Rancher continuam sem arte (aquisição, curadoria, padronização 48px). Mitigação inalterada: dex pequenas por dimensão (10/10/20/16). Alívio real: **V-Monsters já está resolvido** (arte do dono, convertida).
+3. **Legal — a exposição aumentou.** A porta de entrada do jogo agora é IP licenciada (Bucky/Jibaku-kun, Enoki Films), não mais um hub original. Consequência prática: **nenhum screenshot de Primas é material público seguro** — o que restringe ainda mais o material exibível a Folklora e aos elementos de arte própria, e torna o mapa-vitrine de M3 mais necessário, não menos. Mitigações e plano de resposta em [04](04-producao-mobile.md).
+4. **Performance mobile** — memória (cache de bitmaps) mais que peso. Budget e limpeza em M1; medir todo release.
+5. **Scope creep de mundo.** Doze países cabem na ficção, não no calendário. O contrato da v1 é: **um mundo jogável (Primas) + cinco Dimensões Externas + o centro**; os outros onze existem como faixa de transição, NPC no Conselho e Marca no Ato 3. Pedido de país jogável extra → vira v1.1.
 
 ## Métricas por release
 
-Testes headless (baseline **709 asserts**, nunca regride) · zero erro de console em 15 min de play · FPS no low-end de referência · peso do build e tempo até title em 4G · mapas/treinadores/espécies implementados vs. planejados · tempo até a primeira captura.
+Testes headless (piso **953 asserts**, nunca regride) · zero erro de console em 15 min de play · FPS no low-end de referência · peso do build e tempo até title em 4G · mapas/treinadores/espécies implementados vs. planejados · tempo até a primeira captura · tempo até a primeira criatura externa no time.
