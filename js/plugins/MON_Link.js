@@ -4,7 +4,7 @@
 /*:
  * @target MZ
  * @plugindesc [MON v0.6] V-Monsters: barra de elo que enche em batalha e libera
- * uma evolução TEMPORÁRIA, escolhida entre ramos e desfeita no fim da luta.
+ * uma evolução DEFINITIVA, escolhida entre ramos durante a luta.
  * @author Pokémon Dimensions
  * @base MON_Core
  * @base MON_Monster
@@ -232,21 +232,56 @@ MON.Link = MON.Link || {};
     //=========================================================================
     // Ciclo de batalha
     //=========================================================================
-    // a barra é recurso de combate e zera a cada batalha; a FORMA conquistada
-    // fica — no jogo, V-Monster que evolui pelo elo não volta atrás
-    const _resetBattleState = Game_Monster.prototype.resetBattleState;
-    Game_Monster.prototype.resetBattleState = function() {
-        _resetBattleState.call(this);
-        if (MON.Link.isLinkUser(this)) MON.Link.reset(this);
-    };
+    // a barra zera ao COMEÇAR a batalha, não em resetBattleState: este último
+    // roda também ao trocar de unidade e ao inicializar estágios, e zerar ali
+    // faria o jogador perder o elo por usar a reserva. A FORMA conquistada fica.
+    if (MON.Field && MON.Field.create) {
+        const _create = MON.Field.create;
+        MON.Field.create = function(opts) {
+            const field = _create.call(this, opts);
+            for (const unit of MON.Field.allUnits(field)) {
+                if (MON.Link.isLinkUser(unit)) MON.Link.reset(unit);
+            }
+            return field;
+        };
+    }
 
     // MON_Battle carrega ANTES deste plugin no jogo; no harness a ordem pode
     // ser outra. Registra assim que o gancho existir, sem depender da ordem.
+    // efeitos das skills assinatura convertidas de Forgotten Link
+    const VMO_EFFECTS = {
+        ELECTROSHOKK: { secondary: { status: "PAR" }, chance: 20 },
+        KAGESTORM: { secondary: { status: "PAR" }, chance: 20 },
+        DOKUSLASH: { secondary: { status: "PSN" }, chance: 35 },
+        CORROSIVESTRIKE: { secondary: { status: "PSN" }, chance: 35 },
+        GHOSTLYTALONS: { secondary: { stats: { spe: -2 }, target: "foe" }, chance: 25 },
+        WINDBEAT: { secondary: { status: "PSN" }, chance: 10 },
+        CLOUDDISPERSION: { secondary: { status: "PSN" }, chance: 35 },
+        FRIGIDWHIRLWIND: { secondary: { status: "PAR" }, chance: 20 },
+        OCEANSGIFT: { stats: { def: 1, spd: 1 }, target: "self" },
+        TIDALJAW: { secondary: { status: "PSN" }, chance: 35 },
+        DEFIANTROAR: { stats: { atk: -1 }, target: "foe" },
+        REFRESHINGBLAST: { drain: 0.5 },
+        FORESTFLICKER: { secondary: { status: "PAR" }, chance: 20 },
+        TANGLEROOTS: { secondary: { stats: { spe: -2 }, target: "foe" }, chance: 50 },
+        TANUKISPRINT: { secondary: { status: "PSN" }, chance: 35 },
+        FLARECRASH: { secondary: { stats: { spe: -2 }, target: "foe" }, chance: 35 },
+        PROTECTORSVINE: { secondary: { status: "BRN" }, chance: 35 },
+        BEATIT: { secondary: { status: "BRN" }, chance: 25 },
+        FLAMEDANCE: { stats: { atk: 1, spe: 1 }, target: "self" },
+        UNDERPRESSURE: { secondary: { status: "BRN" }, chance: 50 },
+        SCALDINBLAST: { secondary: { status: "BRN" }, chance: 30 },
+        STATICSHOCK: { secondary: { status: "PAR" }, chance: 20 },
+        JOLTSTREAM: { secondary: { status: "PAR" }, chance: 20 },
+        PULSERUSH: { recoil: 0.3 }
+    };
+
     let installed = false;
     MON.Link.install = function() {
         if (installed) return true;
         if (!MON.Battle || !MON.Battle.registerDamageHook) return false;
         MON.Battle.registerDamageHook(onDamage);
+        Object.assign(MON.Battle.MOVE_EFFECTS, VMO_EFFECTS);
         installed = true;
         return true;
     };

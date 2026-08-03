@@ -19,7 +19,7 @@ var $plugins =
 {"name":"MON_Parts","status":true,"description":"[MON v0.3] Medabots: medalha + 4 slots de peças trocáveis e drop de peça pós-vitória.","parameters":{}},
 {"name":"MON_Sanctuary","status":true,"description":"[MON v0.3] Monster Rancher: Santuário de Discos e treino de fazenda.","parameters":{}},
 {"name":"MON_Pacts","status":true,"description":"[MON v0.3] Bucky: emblemas de Grande Criança e pacto com os 12 espíritos.","parameters":{}},
-{"name":"MON_Link","status":true,"description":"[MON v0.6] V-Monsters: barra de elo (V-Link) que enche em batalha e libera uma evolução temporária entre ramos.","parameters":{}},
+{"name":"MON_Link","status":true,"description":"[MON v0.6] V-Monsters: barra de elo (V-Link) que enche em batalha e libera uma evolução definitiva escolhida entre ramos.","parameters":{}},
 {"name":"MON_Dex","status":true,"description":"[MON v0.4] Dex regional por dimensão: recorte ordenado de espécies,\nnúmero regional, forma de obtenção e progresso de vistos/capturados.","parameters":{}},
 {"name":"MON_Codex","status":true,"description":"[MON v0.1] Sistema de Pokédex: lista navegável + ficha de detalhes\n(tipos, categoria, altura/peso, descrição), com estado visto/capturado.","parameters":{}},
 {"name":"MON_Audio","status":true,"description":"[MON v0.5] Áudio: cries dos Pokémon, BGM de batalha e fanfarra de\nvitória. Integra-se à batalha automaticamente (opcional).","parameters":{"cryFolder":"Cries/","crySuffix":"Cry","wildBgm":"Battle1","trainerBgm":"Battle2","victoryWildMe":"Victory1","victoryTrainerMe":"Victory2"}}

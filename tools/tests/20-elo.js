@@ -1,5 +1,5 @@
-// Suíte da dimensão Folklora (VMO): barra de elo (V-Link), evolução temporária
-// escolhida entre ramos, reversão no fim da batalha e isolamento das franquias.
+// Suíte da dimensão Folklora (VMO): barra de elo (V-Link), evolução definitiva
+// escolhida entre ramos e isolamento das franquias.
 const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
@@ -187,7 +187,7 @@ module.exports = function({ ctx, ok, eq, G, section }) {
     }
 
     //=========================================================================
-    // Evolução temporária
+    // Evolução pelo elo (definitiva)
     //=========================================================================
     {
         const unit = vmo("TESTVMOBASE");

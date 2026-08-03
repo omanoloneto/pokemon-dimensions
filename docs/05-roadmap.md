@@ -8,7 +8,7 @@ Estado de referência: **o engine está pronto; o jogo ainda não existe.** Este
 
 **Franquias (✅ — [02](02-franquias.md), [06](06-arquitetura-franquias.md)):** camada multi-franquia + os 5 sistemas de dimensão. **793 espécies** (649 Pokémon + 101 Digimon de *Adventure* + 10 Medabots + 13 Monster Rancher + 20 Bucky), 659 golpes, 40 Medapeças, 3 discos, dex de Kanto recortada. 412 testes headless.
 
-**V-Monsters (⏳ parcial — [02](02-franquias.md)):** a 6ª dimensão, **IP própria do dono**. Já no repo: franquia **VMO** em `data/Franchises.json` (faixa **970–1069**, dimensão Folklora), os 3 V-Link em `data/ItemsExtra.json` e o gancho `MON.Battle.registerDamageHook(fn)` em `MON_Battle.js` — a fundação da Barra de Elo. Falta todo o conteúdo: `data/species/VMO.json` (**0 espécies**), `MON_Bond.js`, suíte de teste, sprites convertidos e os 6 mapas. Baseline atual: **709 asserts, 0 falhas**.
+**V-Monsters (⏳ parcial — [02](02-franquias.md)):** a 6ª dimensão, **IP própria do dono**. Já no repo: franquia **VMO** em `data/Franchises.json` (faixa **970–1069**, dimensão Folklora), os 3 V-Link em `data/ItemsExtra.json` e o gancho `MON.Battle.registerDamageHook(fn)` em `MON_Battle.js` — a fundação da Barra de Elo. Falta todo o conteúdo: `data/species/VMO.json` (**0 espécies**), `MON_Link.js`, suíte de teste, sprites convertidos e os 6 mapas. Baseline atual: **709 asserts, 0 falhas**.
 
 **Dados:** 559 golpes base + 100 novos; **~77 com efeito implementado** (recuo/dreno/autodestruição incluídos); 18 tipos, 538 itens. Encontros religados para a D1 (4 tabelas), mas **nenhum dispara ainda** — Map001/Map002 estão com a camada de região zerada e `MON_Encounters` exige a Região 1 pintada. 60 treinadores definidos e não usados em mapa nenhum.
 
@@ -37,7 +37,7 @@ Estado de referência: **o engine está pronto; o jogo ainda não existe.** Este
 | ~~Peças + drop pós-vitória (Medabots)~~ | — | ✅ | |
 | ~~Santuário de Discos (Monster Rancher)~~ | — | ✅ | falta o mapa/evento |
 | ~~Emblemas G.C. como gate de pacto (Bucky)~~ | — | ✅ | |
-| **Barra de Elo — `MON_Bond.js`** (V-Monsters) | M | M8 | único sistema de franquia que ainda falta; gancho de dano já existe |
+| **Barra de Elo — `MON_Link.js`** (V-Monsters) | M | M8 | único sistema de franquia que ainda falta; gancho de dano já existe |
 | `data/species/VMO.json` + `data/moves/VMO.json` (~16 espécies com ramos de elo) | M | M8 | faixa 970–1069 vazia |
 | Conversão da arte de Folklora (PNG à mão → front 48px) | M | M3 | única dimensão com arte própria — ver risco 1 |
 | **Mapa-vitrine de Folklora** (material público) | P | M3 | única dimensão exibível — ver risco 2 |
@@ -81,9 +81,9 @@ Concluído ([roadmap-port-mz.md](roadmap-port-mz.md)).
 - **Aceite:** caçada dos 12 espíritos jogável cruzando todas as dimensões.
 
 ### M8 — D6 Folklora (V-Monsters)
-- 6 mapas (2 cidades de facção, fronteira, 2 rotas, Torre do V-Link — **Chaves 13–14**), **`MON_Bond.js` com a Barra de Elo**, ~16 espécies VMO com ramos de elo, V-Links na loja, Arauto 4 (o que negocia em vez de invadir).
+- 6 mapas (2 cidades de facção, fronteira, 2 rotas, Torre do V-Link — **Chaves 13–14**), **`MON_Link.js` com a Barra de Elo**, ~16 espécies VMO com ramos de elo, V-Links na loja, Arauto 4 (o que negocia em vez de invadir).
 - Custo de calendário: a 6ª dimensão empurra a v1.0 em **~1 mês**. Nenhum marco anterior encolhe para compensar.
-- **Aceite:** um V-Monster enche a barra apanhando, evolui no meio da luta escolhendo entre 2 ramos e volta à forma base no fim da batalha — em qualquer time, **inclusive fora de Folklora** (o elo segue o monstro, não o mapa).
+- **Aceite:** um V-Monster enche a barra apanhando, evolui no meio da luta escolhendo entre 2 ramos — em qualquer time, **inclusive fora de Folklora** (o elo segue o monstro, não o mapa).
 
 ### M9 — Dimensão Zero + release 1.0
 - 3 mapas-colagem, gauntlet de Arautos, Unificador (equipe com 1 ás por franquia, agora 6), pós-game de captura livre, passe de balanceamento da curva inteira, corte final de assets, **APK Capacitor <250MB**, página de download discreta.

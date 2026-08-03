@@ -67,7 +67,7 @@ Lore (confirmada): 12 mundos + o Mundo Zero; cada mundo guardado por uma **Grand
 - **Captura por absorção de dados:** a fórmula existente vale sem mudança (quanto mais ferido, mais fácil), mas o flavor é outro — o V-Link puxa os dados do alvo em vez de prendê-lo numa bola. Três tiers: `V-Link`, `V-Link Pro`, `V-Link MAX`.
 - **Pontuação (números da fonte, `EvoGain`):** apanhar **+30**, atacar **+20**, crítico **+30** dos dois lados, defender **−5**. Consequência: **apanhar enche 1,5× mais rápido que bater** — a barra premia quem está segurando o turno, não quem já está ganhando. Mantido como está: é exatamente o que impede o elo de virar "quem tem vantagem evolui primeiro".
 - **Teto por espécie, não 100 fixo** (`MaxEvo`; Kagenari = 150). Quem evolui cedo tem teto baixo, quem evolui tarde tem teto alto — balanceamento em dado, sem tocar em código.
-- **Mapeamento no engine:** `MON.Battle.registerDamageHook(fn)` já existe e recebe `{attacker, defender, damage, crit, moveId}` a cada golpe que acerta. Um plugin `MON_Bond.js` (prefixo MON — a barra é infraestrutura; VMO é só quem a usa) pontua os dois lados, devolve a mensagem de elo cheio e desfaz a forma na saída da batalha. **Zero edição em `MON_Battle.js`.**
+- **Mapeamento no engine:** `MON.Battle.registerDamageHook(fn)` já existe e recebe `{attacker, defender, damage, crit, moveId}` a cada golpe que acerta. Um plugin `MON_Link.js` (prefixo MON — a barra é infraestrutura; VMO é só quem a usa) pontua os dois lados, devolve a mensagem de elo cheio e mantém a forma conquistada. **Zero edição em `MON_Battle.js`.**
 
 ### Por que isso não colide com a digievolução ramificada do Digimon
 

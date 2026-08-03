@@ -11092,5 +11092,2555 @@
   "entry": "Ex-pesquisador do Nexus convencido de que fronteira é prisão. Anos manipulando as fendas deixaram marca: a mente dele move energia dimensional sozinha, e é isso que o torna o único humano no nível de um chefe.",
   "evolutions": [],
   "franchise": "HUM"
+ },
+ {
+  "id": 970,
+  "name": "Shokkuri",
+  "internalName": "SHOKKURI",
+  "type1": "ELECTRIC",
+  "type2": null,
+  "vType": "Elétrico",
+  "stats": {
+   "hp": 72,
+   "atk": 73,
+   "def": 72,
+   "spe": 73,
+   "spa": 61,
+   "spd": 58
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 95,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 1,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 45,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "TINYJOLT"
+   },
+   {
+    "level": 1,
+    "move": "LEER"
+   },
+   {
+    "level": 10,
+    "move": "VOLTBLAST"
+   },
+   {
+    "level": 18,
+    "move": "QUICKATTACK"
+   },
+   {
+    "level": 26,
+    "move": "ELECTROSHOKK"
+   },
+   {
+    "level": 34,
+    "move": "SPARK"
+   },
+   {
+    "level": 42,
+    "move": "CRUELSHRED"
+   }
+  ],
+  "height": 0.6,
+  "weight": 9.4,
+  "color": "Black",
+  "habitat": "RoughTerrain",
+  "category": "Faísca",
+  "entry": "Um V-Monster do tipo Elétrico.\nA energia estática que emite é suficiente para paralisar vários oponentes.",
+  "evolutions": [
+   {
+    "into": "KAGENARI",
+    "method": "Level",
+    "param": "999"
+   }
+  ],
+  "franchise": "VMO"
+ },
+ {
+  "id": 971,
+  "name": "Kagenari",
+  "internalName": "KAGENARI",
+  "type1": "ELECTRIC",
+  "type2": null,
+  "vType": "Elétrico",
+  "stats": {
+   "hp": 97,
+   "atk": 98,
+   "def": 97,
+   "spe": 98,
+   "spa": 82,
+   "spd": 78
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 160,
+  "evYield": {
+   "hp": 0,
+   "atk": 2,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 25,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "VOLTBLAST"
+   },
+   {
+    "level": 1,
+    "move": "LEER"
+   },
+   {
+    "level": 14,
+    "move": "SAVAGESWEEP"
+   },
+   {
+    "level": 22,
+    "move": "ELECTROSHOKK"
+   },
+   {
+    "level": 30,
+    "move": "SLASH"
+   },
+   {
+    "level": 38,
+    "move": "DIVINEBLAST"
+   },
+   {
+    "level": 46,
+    "move": "KAGESTORM"
+   }
+  ],
+  "height": 1.4,
+  "weight": 48,
+  "color": "Black",
+  "habitat": "RoughTerrain",
+  "category": "Sombra Viva",
+  "entry": "Um V-Monster do tipo Elétrico.\nA cauda em zigue-zague descarrega antes de o corpo se mexer. Luta na penumbra porque enxerga o próprio raio como luz de sobra.",
+  "evolutions": [
+   {
+    "into": "TUPANARI",
+    "method": "Level",
+    "param": "999",
+    "condition": {
+     "winsAtLeast": 10
+    }
+   },
+   {
+    "into": "KATANARI",
+    "method": "Level",
+    "param": "999",
+    "condition": {
+     "hasItem": "VLINKPRO"
+    }
+   }
+  ],
+  "franchise": "VMO"
+ },
+ {
+  "id": 972,
+  "name": "Tupanari",
+  "internalName": "TUPANARI",
+  "type1": "ELECTRIC",
+  "type2": "FIGHTING",
+  "vType": "Elétrico",
+  "stats": {
+   "hp": 110,
+   "atk": 135,
+   "def": 105,
+   "spe": 120,
+   "spa": 97,
+   "spd": 74
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 220,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 5,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "SAVAGESWEEP"
+   },
+   {
+    "level": 1,
+    "move": "KAGESTORM"
+   },
+   {
+    "level": 24,
+    "move": "NIGHTSLASH"
+   },
+   {
+    "level": 32,
+    "move": "BRICKBREAK"
+   },
+   {
+    "level": 40,
+    "move": "WILDCHARGE"
+   },
+   {
+    "level": 48,
+    "move": "CLOSECOMBAT"
+   },
+   {
+    "level": 52,
+    "move": "THUNDER"
+   }
+  ],
+  "height": 2,
+  "weight": 92,
+  "color": "Black",
+  "habitat": "Rare",
+  "category": "Guerreiro do Trovão",
+  "entry": "Um V-Monster do tipo Elétrico.\nCarrega o nome do trovão e uma lâmina que só acende quando o elo do parceiro está inteiro.",
+  "evolutions": [],
+  "franchise": "VMO"
+ },
+ {
+  "id": 973,
+  "name": "Katanari",
+  "internalName": "KATANARI",
+  "type1": "PSYCHIC",
+  "type2": "STEEL",
+  "vType": "Divino",
+  "stats": {
+   "hp": 110,
+   "atk": 125,
+   "def": 130,
+   "spe": 100,
+   "spa": 90,
+   "spd": 91
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 220,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 3,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 5,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "DIVINEBLAST"
+   },
+   {
+    "level": 1,
+    "move": "IRONDEFENSE"
+   },
+   {
+    "level": 24,
+    "move": "METALCLAW"
+   },
+   {
+    "level": 32,
+    "move": "ZENHEADBUTT"
+   },
+   {
+    "level": 40,
+    "move": "IRONHEAD"
+   },
+   {
+    "level": 48,
+    "move": "PSYCHIC"
+   },
+   {
+    "level": 52,
+    "move": "SWORDSDANCE"
+   }
+  ],
+  "height": 1.9,
+  "weight": 138,
+  "color": "Yellow",
+  "habitat": "Rare",
+  "category": "Lâmina Sagrada",
+  "entry": "Um V-Monster do tipo Divino.\nA armadura dourada é feita do próprio elo endurecido. Desembainha uma vez por combate e não erra duas.",
+  "evolutions": [],
+  "franchise": "VMO"
+ },
+ {
+  "id": 974,
+  "name": "Dokuri",
+  "internalName": "DOKURI",
+  "type1": "DARK",
+  "type2": "POISON",
+  "vType": "Sombrio",
+  "stats": {
+   "hp": 65,
+   "atk": 85,
+   "def": 75,
+   "spe": 70,
+   "spa": 61,
+   "spd": 53
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 95,
+  "evYield": {
+   "hp": 0,
+   "atk": 1,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 45,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "CRUSHINGJAW"
+   },
+   {
+    "level": 1,
+    "move": "LEER"
+   },
+   {
+    "level": 10,
+    "move": "PHANTOMWAVE"
+   },
+   {
+    "level": 18,
+    "move": "ACID"
+   },
+   {
+    "level": 26,
+    "move": "DOKUSLASH"
+   },
+   {
+    "level": 34,
+    "move": "BITE"
+   },
+   {
+    "level": 42,
+    "move": "TOXIC"
+   }
+  ],
+  "height": 0.9,
+  "weight": 15.2,
+  "color": "Purple",
+  "habitat": "Cave",
+  "category": "Lagarto Tóxico",
+  "entry": "Um V-Monster do tipo Sombrio.\nAlguns Dokuris evitam contato com outros V-Monsters. Geralmente habitam ruínas antigas, para se manterem afastados.",
+  "evolutions": [
+   {
+    "into": "DOKANARI",
+    "method": "Level",
+    "param": "999"
+   }
+  ],
+  "franchise": "VMO"
+ },
+ {
+  "id": 975,
+  "name": "Dokanari",
+  "internalName": "DOKANARI",
+  "type1": "DARK",
+  "type2": "POISON",
+  "vType": "Sombrio",
+  "stats": {
+   "hp": 100,
+   "atk": 105,
+   "def": 90,
+   "spe": 95,
+   "spa": 75,
+   "spd": 63
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 160,
+  "evYield": {
+   "hp": 0,
+   "atk": 2,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 25,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "CRUSHINGJAW"
+   },
+   {
+    "level": 1,
+    "move": "ACID"
+   },
+   {
+    "level": 14,
+    "move": "CORROSIVESTRIKE"
+   },
+   {
+    "level": 22,
+    "move": "PHANTOMBLAST"
+   },
+   {
+    "level": 30,
+    "move": "CRUNCH"
+   },
+   {
+    "level": 38,
+    "move": "SLUDGEBOMB"
+   },
+   {
+    "level": 46,
+    "move": "DOKAWHIP"
+   }
+  ],
+  "height": 1.7,
+  "weight": 62.5,
+  "color": "Purple",
+  "habitat": "Cave",
+  "category": "Lagarto Tóxico",
+  "entry": "Um V-Monster do tipo Sombrio.\nCresceu sem sair da ruína e aprendeu a envenenar o ar antes de precisar morder.",
+  "evolutions": [
+   {
+    "into": "NAGINARI",
+    "method": "Level",
+    "param": "999",
+    "condition": {
+     "faintsAtLeast": 5
+    }
+   },
+   {
+    "into": "DRACONARI",
+    "method": "Level",
+    "param": "999",
+    "condition": {
+     "friendshipAbove": 180
+    }
+   }
+  ],
+  "franchise": "VMO"
+ },
+ {
+  "id": 976,
+  "name": "Naginari",
+  "internalName": "NAGINARI",
+  "type1": "DARK",
+  "type2": "POISON",
+  "vType": "Sombrio",
+  "stats": {
+   "hp": 115,
+   "atk": 135,
+   "def": 115,
+   "spe": 100,
+   "spa": 97,
+   "spd": 81
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 220,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 5,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "CORROSIVESTRIKE"
+   },
+   {
+    "level": 1,
+    "move": "DOKAWHIP"
+   },
+   {
+    "level": 24,
+    "move": "IRONDEFENSE"
+   },
+   {
+    "level": 32,
+    "move": "POISONJAB"
+   },
+   {
+    "level": 40,
+    "move": "NIGHTSLASH"
+   },
+   {
+    "level": 48,
+    "move": "GUNKSHOT"
+   },
+   {
+    "level": 52,
+    "move": "DARKPULSE"
+   }
+  ],
+  "height": 2.6,
+  "weight": 176,
+  "color": "Purple",
+  "habitat": "Rare",
+  "category": "Guarda de Ruína",
+  "entry": "Um V-Monster do tipo Sombrio.\nAs placas espinhosas cresceram sobre cicatrizes velhas. Só evolui assim quem já caiu muitas vezes e voltou.",
+  "evolutions": [],
+  "franchise": "VMO"
+ },
+ {
+  "id": 977,
+  "name": "Draconari",
+  "internalName": "DRACONARI",
+  "type1": "NORMAL",
+  "type2": "DRAGON",
+  "vType": "Selvagem",
+  "stats": {
+   "hp": 105,
+   "atk": 115,
+   "def": 100,
+   "spe": 125,
+   "spa": 109,
+   "spd": 90
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 220,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 3,
+   "spd": 0
+  },
+  "catchRate": 5,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "PHANTOMBLAST"
+   },
+   {
+    "level": 1,
+    "move": "DRAGONBREATH"
+   },
+   {
+    "level": 24,
+    "move": "DRAGONCLAW"
+   },
+   {
+    "level": 32,
+    "move": "SLUDGEBOMB"
+   },
+   {
+    "level": 40,
+    "move": "DRAGONPULSE"
+   },
+   {
+    "level": 48,
+    "move": "DARKPULSE"
+   },
+   {
+    "level": 52,
+    "move": "OUTRAGE"
+   }
+  ],
+  "height": 2.9,
+  "weight": 121,
+  "color": "Purple",
+  "habitat": "Rare",
+  "category": "Dragão de Dados",
+  "entry": "Um V-Monster do tipo Selvagem.\nAbriu asas em vez de armadura. Dizem que é o que acontece com um Dokanari que nunca foi deixado sozinho.",
+  "evolutions": [],
+  "franchise": "VMO"
+ },
+ {
+  "id": 978,
+  "name": "Quilli",
+  "internalName": "QUILLI",
+  "type1": "NORMAL",
+  "type2": "FLYING",
+  "vType": "Selvagem",
+  "stats": {
+   "hp": 70,
+   "atk": 70,
+   "def": 55,
+   "spe": 95,
+   "spa": 50,
+   "spd": 39
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 95,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 1,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 45,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "WINGSLASH"
+   },
+   {
+    "level": 1,
+    "move": "GROWL"
+   },
+   {
+    "level": 10,
+    "move": "PECK"
+   },
+   {
+    "level": 18,
+    "move": "WINDBEAT"
+   },
+   {
+    "level": 26,
+    "move": "GHOSTLYTALONS"
+   },
+   {
+    "level": 34,
+    "move": "AERIALACE"
+   },
+   {
+    "level": 42,
+    "move": "AIRSLASH"
+   }
+  ],
+  "height": 0.7,
+  "weight": 5.8,
+  "color": "Yellow",
+  "habitat": "Forest",
+  "category": "Arara",
+  "entry": "Um V-Monster do tipo Selvagem.\nEm batalha, costumam emitir gritos altos para intimidar seus inimigos.",
+  "evolutions": [
+   {
+    "into": "QUILLARA",
+    "method": "Level",
+    "param": "999"
+   },
+   {
+    "into": "HAUNRUTAU",
+    "method": "Level",
+    "param": "999",
+    "condition": {
+     "friendshipBelow": 70
+    }
+   }
+  ],
+  "franchise": "VMO"
+ },
+ {
+  "id": 979,
+  "name": "Quillara",
+  "internalName": "QUILLARA",
+  "type1": "NORMAL",
+  "type2": "FLYING",
+  "vType": "Selvagem",
+  "stats": {
+   "hp": 105,
+   "atk": 110,
+   "def": 80,
+   "spe": 95,
+   "spa": 92,
+   "spd": 64
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 160,
+  "evYield": {
+   "hp": 0,
+   "atk": 2,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 25,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "WINGSLASH"
+   },
+   {
+    "level": 1,
+    "move": "GROWL"
+   },
+   {
+    "level": 14,
+    "move": "WINDBEAT"
+   },
+   {
+    "level": 22,
+    "move": "CLOUDDISPERSION"
+   },
+   {
+    "level": 30,
+    "move": "WINGEDSTEEL"
+   },
+   {
+    "level": 38,
+    "move": "FRIGIDWHIRLWIND"
+   },
+   {
+    "level": 46,
+    "move": "AIRSLASH"
+   }
+  ],
+  "height": 1.3,
+  "weight": 21.4,
+  "color": "Blue",
+  "habitat": "Forest",
+  "category": "Arara",
+  "entry": "Um V-Monster do tipo Selvagem.\nO grito ficou grave e agora abre o vento à frente do bando inteiro.",
+  "evolutions": [
+   {
+    "into": "QUILLSTORM",
+    "method": "Level",
+    "param": "999",
+    "condition": {
+     "friendshipAbove": 180
+    }
+   },
+   {
+    "into": "QUILLJET",
+    "method": "Level",
+    "param": "999",
+    "condition": {
+     "hasItem": "VLINKPRO"
+    }
+   }
+  ],
+  "franchise": "VMO"
+ },
+ {
+  "id": 980,
+  "name": "Haunrutau",
+  "internalName": "HAUNRUTAU",
+  "type1": "GHOST",
+  "type2": "FLYING",
+  "vType": "Espectral",
+  "stats": {
+   "hp": 100,
+   "atk": 110,
+   "def": 85,
+   "spe": 135,
+   "spa": 92,
+   "spd": 68
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 190,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 3,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 12,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "GHOSTLYTALONS"
+   },
+   {
+    "level": 1,
+    "move": "ASTONISH"
+   },
+   {
+    "level": 24,
+    "move": "CONFUSERAY"
+   },
+   {
+    "level": 32,
+    "move": "SHADOWCLAW"
+   },
+   {
+    "level": 40,
+    "move": "AIRSLASH"
+   },
+   {
+    "level": 48,
+    "move": "SHADOWBALL"
+   },
+   {
+    "level": 52,
+    "move": "HEX"
+   }
+  ],
+  "height": 1.8,
+  "weight": 12.3,
+  "color": "White",
+  "habitat": "Rare",
+  "category": "Ave Espectral",
+  "entry": "Um V-Monster do tipo Espectral.\nÉ o que sobra de um Quilli que gritou por tempo demais sem receber resposta. As asas azuis não fazem barulho nenhum.",
+  "evolutions": [],
+  "franchise": "VMO"
+ },
+ {
+  "id": 981,
+  "name": "Quillstorm",
+  "internalName": "QUILLSTORM",
+  "type1": "NORMAL",
+  "type2": "FLYING",
+  "vType": "Selvagem",
+  "stats": {
+   "hp": 110,
+   "atk": 115,
+   "def": 95,
+   "spe": 120,
+   "spa": 109,
+   "spd": 85
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 220,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 3,
+   "spd": 0
+  },
+  "catchRate": 5,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "CLOUDDISPERSION"
+   },
+   {
+    "level": 1,
+    "move": "ROOST"
+   },
+   {
+    "level": 24,
+    "move": "AIRSLASH"
+   },
+   {
+    "level": 32,
+    "move": "EXTRASENSORY"
+   },
+   {
+    "level": 40,
+    "move": "DRILLPECK"
+   },
+   {
+    "level": 48,
+    "move": "HURRICANE"
+   },
+   {
+    "level": 52,
+    "move": "HYPERBEAM"
+   }
+  ],
+  "height": 2.4,
+  "weight": 38,
+  "color": "White",
+  "habitat": "Rare",
+  "category": "Tempestade",
+  "entry": "Um V-Monster do tipo Selvagem.\nAbre as asas e o céu muda de humor. É o fim natural da linhagem: nada nele foi trocado por metal ou por gelo.",
+  "evolutions": [],
+  "franchise": "VMO"
+ },
+ {
+  "id": 982,
+  "name": "Quilljet",
+  "internalName": "QUILLJET",
+  "type1": "STEEL",
+  "type2": "FLYING",
+  "vType": "Mecânico",
+  "stats": {
+   "hp": 105,
+   "atk": 130,
+   "def": 105,
+   "spe": 115,
+   "spa": 108,
+   "spd": 84
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 220,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 5,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "WINGEDSTEEL"
+   },
+   {
+    "level": 1,
+    "move": "METALSOUND"
+   },
+   {
+    "level": 24,
+    "move": "METALCLAW"
+   },
+   {
+    "level": 32,
+    "move": "AERIALACE"
+   },
+   {
+    "level": 40,
+    "move": "IRONHEAD"
+   },
+   {
+    "level": 48,
+    "move": "DRILLPECK"
+   },
+   {
+    "level": 52,
+    "move": "FLASHCANNON"
+   }
+  ],
+  "height": 2.2,
+  "weight": 210,
+  "color": "Gray",
+  "habitat": "Rare",
+  "category": "Ave de Combate",
+  "entry": "Um V-Monster do tipo Mecânico.\nTrocou as penas por chapa e os gritos por artilharia. Voa mais rápido e sente muito menos.",
+  "evolutions": [],
+  "franchise": "VMO"
+ },
+ {
+  "id": 983,
+  "name": "Quillphyr",
+  "internalName": "QUILLPHYR",
+  "type1": "ICE",
+  "type2": "FLYING",
+  "vType": "Gélido",
+  "stats": {
+   "hp": 105,
+   "atk": 105,
+   "def": 100,
+   "spe": 125,
+   "spa": 100,
+   "spd": 90
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 215,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 3,
+   "spd": 0
+  },
+  "catchRate": 8,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "FRIGIDWHIRLWIND"
+   },
+   {
+    "level": 1,
+    "move": "ICESHARD"
+   },
+   {
+    "level": 24,
+    "move": "AURORABEAM"
+   },
+   {
+    "level": 32,
+    "move": "AIRSLASH"
+   },
+   {
+    "level": 40,
+    "move": "ICEBEAM"
+   },
+   {
+    "level": 48,
+    "move": "HURRICANE"
+   },
+   {
+    "level": 52,
+    "move": "BLIZZARD"
+   }
+  ],
+  "height": 2.3,
+  "weight": 33.5,
+  "color": "Blue",
+  "habitat": "Rare",
+  "category": "Ave do Gelo",
+  "entry": "Um V-Monster do tipo Gélido.\nCompletou o elo sozinha, no alto do norte gelado, sem parceiro nenhum para escolher o caminho. Ninguém sabe reproduzir isso.",
+  "evolutions": [],
+  "franchise": "VMO"
+ },
+ {
+  "id": 984,
+  "name": "Sturtle",
+  "internalName": "STURTLE",
+  "type1": "WATER",
+  "type2": null,
+  "vType": "Aquático",
+  "stats": {
+   "hp": 85,
+   "atk": 65,
+   "def": 95,
+   "spe": 60,
+   "spa": 54,
+   "spd": 76
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 95,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 1,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 45,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "SHELLSMACK"
+   },
+   {
+    "level": 1,
+    "move": "OCEANSGIFT"
+   },
+   {
+    "level": 10,
+    "move": "WATERGUN"
+   },
+   {
+    "level": 18,
+    "move": "WITHDRAW"
+   },
+   {
+    "level": 26,
+    "move": "SANDSTREAM"
+   },
+   {
+    "level": 34,
+    "move": "BUBBLEBEAM"
+   },
+   {
+    "level": 42,
+    "move": "AQUATAIL"
+   }
+  ],
+  "height": 0.6,
+  "weight": 22.8,
+  "color": "Green",
+  "habitat": "WatersEdge",
+  "category": "Tartaruga",
+  "entry": "Um V-Monster do tipo Aquático.\nGosta de presentear seus amigos com objetos encontrados no oceano. Armazena energia e ganha resistência em seu casco.",
+  "evolutions": [
+   {
+    "into": "STELLADON",
+    "method": "Level",
+    "param": "999"
+   },
+   {
+    "into": "ARKAME",
+    "method": "Level",
+    "param": "999"
+   }
+  ],
+  "franchise": "VMO"
+ },
+ {
+  "id": 985,
+  "name": "Stelladon",
+  "internalName": "STELLADON",
+  "type1": "WATER",
+  "type2": "DARK",
+  "vType": "Aquático",
+  "stats": {
+   "hp": 80,
+   "atk": 120,
+   "def": 80,
+   "spe": 110,
+   "spa": 86,
+   "spd": 56
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 160,
+  "evYield": {
+   "hp": 0,
+   "atk": 2,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 25,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "SHELLSMACK"
+   },
+   {
+    "level": 1,
+    "move": "BITE"
+   },
+   {
+    "level": 14,
+    "move": "DARKMAW"
+   },
+   {
+    "level": 22,
+    "move": "AQUAJET"
+   },
+   {
+    "level": 30,
+    "move": "MARINPULSE"
+   },
+   {
+    "level": 38,
+    "move": "CRUNCH"
+   },
+   {
+    "level": 46,
+    "move": "TIDALJAW"
+   }
+  ],
+  "height": 2.7,
+  "weight": 148,
+  "color": "Blue",
+  "habitat": "Sea",
+  "category": "Predador",
+  "entry": "Um V-Monster do tipo Aquático.\nA estrela do peito virou marca de caçador. Nada em círculos cada vez menores até ninguém mais ter para onde ir.",
+  "evolutions": [
+   {
+    "into": "NEBULLODON",
+    "method": "Level",
+    "param": "999",
+    "condition": {
+     "winsAtLeast": 10
+    }
+   },
+   {
+    "into": "WHADOME",
+    "method": "Level",
+    "param": "999",
+    "condition": {
+     "hasItem": "VLINKPRO"
+    }
+   }
+  ],
+  "franchise": "VMO"
+ },
+ {
+  "id": 986,
+  "name": "Arkame",
+  "internalName": "ARKAME",
+  "type1": "ROCK",
+  "type2": null,
+  "vType": "Mineral",
+  "stats": {
+   "hp": 110,
+   "atk": 80,
+   "def": 120,
+   "spe": 80,
+   "spa": 67,
+   "spd": 96
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 160,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 2,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 25,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "SHELLSMACK"
+   },
+   {
+    "level": 1,
+    "move": "DEFIANTROAR"
+   },
+   {
+    "level": 14,
+    "move": "SANDSTREAM"
+   },
+   {
+    "level": 22,
+    "move": "REFRESHINGBLAST"
+   },
+   {
+    "level": 30,
+    "move": "SHELLCHARGE"
+   },
+   {
+    "level": 38,
+    "move": "IRONDEFENSE"
+   },
+   {
+    "level": 46,
+    "move": "ROCKSLIDE"
+   }
+  ],
+  "height": 1.4,
+  "weight": 195,
+  "color": "Brown",
+  "habitat": "RoughTerrain",
+  "category": "Fortaleza",
+  "entry": "Um V-Monster do tipo Mineral.\nO casco endureceu em pedra e ele parou de recuar. Ruge primeiro para que ninguém precise passar por ele.",
+  "evolutions": [
+   {
+    "into": "KAMEJIRA",
+    "method": "Level",
+    "param": "999",
+    "condition": {
+     "faintsAtLeast": 5
+    }
+   }
+  ],
+  "franchise": "VMO"
+ },
+ {
+  "id": 987,
+  "name": "Nebullodon",
+  "internalName": "NEBULLODON",
+  "type1": "WATER",
+  "type2": "DARK",
+  "vType": "Aquático",
+  "stats": {
+   "hp": 95,
+   "atk": 145,
+   "def": 100,
+   "spe": 125,
+   "spa": 104,
+   "spd": 70
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 220,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 5,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "DARKMAW"
+   },
+   {
+    "level": 1,
+    "move": "TIDALJAW"
+   },
+   {
+    "level": 24,
+    "move": "AQUAJET"
+   },
+   {
+    "level": 32,
+    "move": "CRUNCH"
+   },
+   {
+    "level": 40,
+    "move": "WATERFALL"
+   },
+   {
+    "level": 48,
+    "move": "NIGHTSLASH"
+   },
+   {
+    "level": 52,
+    "move": "DARKPULSE"
+   }
+  ],
+  "height": 4.1,
+  "weight": 388,
+  "color": "Gray",
+  "habitat": "Rare",
+  "category": "Abissal",
+  "entry": "Um V-Monster do tipo Aquático.\nDesceu fundo demais atrás da próxima vitória e voltou coberto de lâminas que não são dele.",
+  "evolutions": [],
+  "franchise": "VMO"
+ },
+ {
+  "id": 988,
+  "name": "Whadome",
+  "internalName": "WHADOME",
+  "type1": "STEEL",
+  "type2": "WATER",
+  "vType": "Mecânico",
+  "stats": {
+   "hp": 140,
+   "atk": 110,
+   "def": 130,
+   "spe": 70,
+   "spa": 92,
+   "spd": 104
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 220,
+  "evYield": {
+   "hp": 3,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 5,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "MARINPULSE"
+   },
+   {
+    "level": 1,
+    "move": "IRONDEFENSE"
+   },
+   {
+    "level": 24,
+    "move": "FLASHCANNON"
+   },
+   {
+    "level": 32,
+    "move": "SURF"
+   },
+   {
+    "level": 40,
+    "move": "IRONHEAD"
+   },
+   {
+    "level": 48,
+    "move": "HYDROPUMP"
+   },
+   {
+    "level": 52,
+    "move": "METALSOUND"
+   }
+  ],
+  "height": 7.8,
+  "weight": 1420,
+  "color": "Blue",
+  "habitat": "Rare",
+  "category": "Couraçado",
+  "entry": "Um V-Monster do tipo Mecânico.\nA cúpula nas costas é um V-Link antigo que virou casco. Carrega o mar inteiro em cima e não afunda.",
+  "evolutions": [],
+  "franchise": "VMO"
+ },
+ {
+  "id": 989,
+  "name": "Kamejira",
+  "internalName": "KAMEJIRA",
+  "type1": "ROCK",
+  "type2": "STEEL",
+  "vType": "Mineral",
+  "stats": {
+   "hp": 140,
+   "atk": 110,
+   "def": 155,
+   "spe": 55,
+   "spa": 79,
+   "spd": 109
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 225,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 3,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 5,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "SHELLCHARGE"
+   },
+   {
+    "level": 1,
+    "move": "DEFIANTROAR"
+   },
+   {
+    "level": 24,
+    "move": "IRONDEFENSE"
+   },
+   {
+    "level": 32,
+    "move": "ROCKSLIDE"
+   },
+   {
+    "level": 40,
+    "move": "IRONHEAD"
+   },
+   {
+    "level": 48,
+    "move": "STONEEDGE"
+   },
+   {
+    "level": 52,
+    "move": "EARTHQUAKE"
+   }
+  ],
+  "height": 5.2,
+  "weight": 980,
+  "color": "Yellow",
+  "habitat": "Rare",
+  "category": "Colosso",
+  "entry": "Um V-Monster do tipo Mineral.\nCada cristal aceso na armadura é uma queda de que ele se levantou. Anda devagar porque não precisa de pressa.",
+  "evolutions": [],
+  "franchise": "VMO"
+ },
+ {
+  "id": 990,
+  "name": "Guaxinito",
+  "internalName": "GUAXINITO",
+  "type1": "NORMAL",
+  "type2": "GRASS",
+  "vType": "Selvagem",
+  "stats": {
+   "hp": 70,
+   "atk": 75,
+   "def": 70,
+   "spe": 90,
+   "spa": 62,
+   "spd": 56
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 95,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 1,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 45,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "TANUKISPRINT"
+   },
+   {
+    "level": 1,
+    "move": "GROWL"
+   },
+   {
+    "level": 10,
+    "move": "FORESTFLICKER"
+   },
+   {
+    "level": 18,
+    "move": "TANGLEROOTS"
+   },
+   {
+    "level": 26,
+    "move": "QUICKATTACK"
+   },
+   {
+    "level": 34,
+    "move": "SEEDBOMB"
+   },
+   {
+    "level": 42,
+    "move": "SLASH"
+   }
+  ],
+  "height": 0.5,
+  "weight": 8.7,
+  "color": "Gray",
+  "habitat": "Forest",
+  "category": "Guaxinim",
+  "entry": "Um V-Monster do tipo Selvagem.\nÉ um explorador nato, muito ágil e sempre em busca de frutinhas.",
+  "evolutions": [
+   {
+    "into": "CAAYUPIRA",
+    "method": "Level",
+    "param": "999"
+   },
+   {
+    "into": "XIANBOO",
+    "method": "Level",
+    "param": "999",
+    "condition": {
+     "hasItem": "VLINKPRO"
+    }
+   }
+  ],
+  "franchise": "VMO"
+ },
+ {
+  "id": 991,
+  "name": "Caayupira",
+  "internalName": "CAAYUPIRA",
+  "type1": "NORMAL",
+  "type2": "GRASS",
+  "vType": "Selvagem",
+  "stats": {
+   "hp": 100,
+   "atk": 100,
+   "def": 85,
+   "spe": 105,
+   "spa": 72,
+   "spd": 59
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 160,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 2,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 25,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "TANUKISPRINT"
+   },
+   {
+    "level": 1,
+    "move": "TANGLEROOTS"
+   },
+   {
+    "level": 14,
+    "move": "JUNGLESWING"
+   },
+   {
+    "level": 22,
+    "move": "FLARECRASH"
+   },
+   {
+    "level": 30,
+    "move": "SEEDBOMB"
+   },
+   {
+    "level": 38,
+    "move": "PROTECTORSVINE"
+   },
+   {
+    "level": 46,
+    "move": "LEAFBLADE"
+   }
+  ],
+  "height": 1.5,
+  "weight": 44,
+  "color": "Gray",
+  "habitat": "Forest",
+  "category": "Guardião",
+  "entry": "Um V-Monster do tipo Selvagem.\nAssumiu a mata que explorava quando era filhote. O arco de cipó só dispara contra quem entra para levar algo embora.",
+  "evolutions": [
+   {
+    "into": "CAAYUBA",
+    "method": "Level",
+    "param": "999",
+    "condition": {
+     "friendshipAbove": 180
+    }
+   },
+   {
+    "into": "ANHAPIRA",
+    "method": "Level",
+    "param": "999",
+    "condition": {
+     "friendshipBelow": 70
+    }
+   }
+  ],
+  "franchise": "VMO"
+ },
+ {
+  "id": 992,
+  "name": "Xianboo",
+  "internalName": "XIANBOO",
+  "type1": "GRASS",
+  "type2": "FIGHTING",
+  "vType": "Vegetal",
+  "stats": {
+   "hp": 100,
+   "atk": 125,
+   "def": 95,
+   "spe": 110,
+   "spa": 90,
+   "spd": 67
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 190,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 12,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "JUNGLESWING"
+   },
+   {
+    "level": 1,
+    "move": "BULKUP"
+   },
+   {
+    "level": 24,
+    "move": "LEAFBLADE"
+   },
+   {
+    "level": 32,
+    "move": "BRICKBREAK"
+   },
+   {
+    "level": 40,
+    "move": "SEEDBOMB"
+   },
+   {
+    "level": 48,
+    "move": "CLOSECOMBAT"
+   },
+   {
+    "level": 52,
+    "move": "WOODHAMMER"
+   }
+  ],
+  "height": 1.6,
+  "weight": 58,
+  "color": "Red",
+  "habitat": "Rare",
+  "category": "Mestre do Bambu",
+  "entry": "Um V-Monster do tipo Vegetal.\nLargou a exploração e passou a treinar. A lança de bambu é a mesma desde filhote, e ele não deixa ninguém tocar nela.",
+  "evolutions": [],
+  "franchise": "VMO"
+ },
+ {
+  "id": 993,
+  "name": "Caayubá",
+  "internalName": "CAAYUBA",
+  "type1": "NORMAL",
+  "type2": "GRASS",
+  "vType": "Selvagem",
+  "stats": {
+   "hp": 140,
+   "atk": 120,
+   "def": 120,
+   "spe": 60,
+   "spa": 100,
+   "spd": 96
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 225,
+  "evYield": {
+   "hp": 3,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 5,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "PROTECTORSVINE"
+   },
+   {
+    "level": 1,
+    "move": "SYNTHESIS"
+   },
+   {
+    "level": 24,
+    "move": "GIGADRAIN"
+   },
+   {
+    "level": 32,
+    "move": "SEEDBOMB"
+   },
+   {
+    "level": 40,
+    "move": "ENERGYBALL"
+   },
+   {
+    "level": 48,
+    "move": "WOODHAMMER"
+   },
+   {
+    "level": 52,
+    "move": "HYPERBEAM"
+   }
+  ],
+  "height": 4.4,
+  "weight": 610,
+  "color": "Green",
+  "habitat": "Rare",
+  "category": "Mata Viva",
+  "entry": "Um V-Monster do tipo Selvagem.\nDeixou de andar pela floresta e virou parte dela. Os galhos da cabeça marcam quantas estações ele já protegeu.",
+  "evolutions": [],
+  "franchise": "VMO"
+ },
+ {
+  "id": 994,
+  "name": "Anhapira",
+  "internalName": "ANHAPIRA",
+  "type1": "PSYCHIC",
+  "type2": "FIRE",
+  "vType": "Divino",
+  "stats": {
+   "hp": 105,
+   "atk": 115,
+   "def": 95,
+   "spe": 125,
+   "spa": 109,
+   "spd": 85
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 220,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 3,
+   "spd": 0
+  },
+  "catchRate": 5,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "FLARECRASH"
+   },
+   {
+    "level": 1,
+    "move": "CONFUSION"
+   },
+   {
+    "level": 24,
+    "move": "FLAMEWHEEL"
+   },
+   {
+    "level": 32,
+    "move": "EXTRASENSORY"
+   },
+   {
+    "level": 40,
+    "move": "FLAMETHROWER"
+   },
+   {
+    "level": 48,
+    "move": "PSYCHIC"
+   },
+   {
+    "level": 52,
+    "move": "FIREBLAST"
+   }
+  ],
+  "height": 2.5,
+  "weight": 232,
+  "color": "Red",
+  "habitat": "Rare",
+  "category": "Espírito Ígneo",
+  "entry": "Um V-Monster do tipo Divino.\nA juba pegou fogo no dia em que o elo se rompeu. Continua guardando a mata, mas ninguém mais chega perto para agradecer.",
+  "evolutions": [],
+  "franchise": "VMO"
+ },
+ {
+  "id": 995,
+  "name": "Jareh",
+  "internalName": "JAREH",
+  "type1": "FIRE",
+  "type2": null,
+  "vType": "Fogo",
+  "stats": {
+   "hp": 80,
+   "atk": 90,
+   "def": 65,
+   "spe": 70,
+   "spa": 65,
+   "spd": 46
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 95,
+  "evYield": {
+   "hp": 0,
+   "atk": 1,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 45,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "UNTAMEDRUSH"
+   },
+   {
+    "level": 1,
+    "move": "FLAMEDANCE"
+   },
+   {
+    "level": 10,
+    "move": "EMBER"
+   },
+   {
+    "level": 18,
+    "move": "BEATIT"
+   },
+   {
+    "level": 26,
+    "move": "BITE"
+   },
+   {
+    "level": 34,
+    "move": "FLAMEWHEEL"
+   },
+   {
+    "level": 42,
+    "move": "SLASH"
+   }
+  ],
+  "height": 0.8,
+  "weight": 18.6,
+  "color": "Red",
+  "habitat": "RoughTerrain",
+  "category": "Lagarto de Fogo",
+  "entry": "Um V-Monster do tipo Fogo.\nSeu fone de ouvido o ajuda a se manter no ritmo e a canalizar a chama em sua cauda.",
+  "evolutions": [
+   {
+    "into": "CALMANITE",
+    "method": "Level",
+    "param": "999"
+   },
+   {
+    "into": "METALLIGATOR",
+    "method": "Level",
+    "param": "999"
+   }
+  ],
+  "franchise": "VMO"
+ },
+ {
+  "id": 996,
+  "name": "Calmanite",
+  "internalName": "CALMANITE",
+  "type1": "FIRE",
+  "type2": null,
+  "vType": "Fogo",
+  "stats": {
+   "hp": 105,
+   "atk": 125,
+   "def": 85,
+   "spe": 105,
+   "spa": 104,
+   "spd": 68
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 170,
+  "evYield": {
+   "hp": 0,
+   "atk": 2,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 25,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "UNTAMEDRUSH"
+   },
+   {
+    "level": 1,
+    "move": "FLAMEDANCE"
+   },
+   {
+    "level": 14,
+    "move": "BEATIT"
+   },
+   {
+    "level": 22,
+    "move": "SPECTRALCLAWS"
+   },
+   {
+    "level": 30,
+    "move": "EARTHQUAKE"
+   },
+   {
+    "level": 38,
+    "move": "FIREFANG"
+   },
+   {
+    "level": 46,
+    "move": "UNDERPRESSURE"
+   }
+  ],
+  "height": 1.9,
+  "weight": 96,
+  "color": "Red",
+  "habitat": "RoughTerrain",
+  "category": "Jacaré Cangaceiro",
+  "entry": "Um V-Monster do tipo Fogo.\nTrocou o fone pelo chapéu de couro. A chama saiu da cauda e subiu para a aba, onde todo mundo vê de longe.",
+  "evolutions": [
+   {
+    "into": "KROKOMALO",
+    "method": "Level",
+    "param": "999",
+    "condition": {
+     "winsAtLeast": 10
+    }
+   }
+  ],
+  "franchise": "VMO"
+ },
+ {
+  "id": 997,
+  "name": "Metalligator",
+  "internalName": "METALLIGATOR",
+  "type1": "STEEL",
+  "type2": "FIRE",
+  "vType": "Mecânico",
+  "stats": {
+   "hp": 100,
+   "atk": 115,
+   "def": 110,
+   "spe": 80,
+   "spa": 109,
+   "spd": 99
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 180,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 2,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 20,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "SCALDINBLAST"
+   },
+   {
+    "level": 1,
+    "move": "METALSOUND"
+   },
+   {
+    "level": 14,
+    "move": "BURNINGASHES"
+   },
+   {
+    "level": 22,
+    "move": "METALCLAW"
+   },
+   {
+    "level": 30,
+    "move": "STEELSPEARS"
+   },
+   {
+    "level": 38,
+    "move": "IRONHEAD"
+   },
+   {
+    "level": 46,
+    "move": "FLASHCANNON"
+   }
+  ],
+  "height": 2.3,
+  "weight": 340,
+  "color": "Blue",
+  "habitat": "Cave",
+  "category": "Jacaré Blindado",
+  "entry": "Um V-Monster do tipo Mecânico.\nO fogo interno foi selado dentro de chapa. Cospe vapor escaldante porque a chama não tem mais por onde sair.",
+  "evolutions": [
+   {
+    "into": "METALLOSAUR",
+    "method": "Level",
+    "param": "999",
+    "condition": {
+     "hasItem": "VLINKMAX"
+    }
+   }
+  ],
+  "franchise": "VMO"
+ },
+ {
+  "id": 998,
+  "name": "Krokomalo",
+  "internalName": "KROKOMALO",
+  "type1": "FIRE",
+  "type2": "DARK",
+  "vType": "Fogo",
+  "stats": {
+   "hp": 110,
+   "atk": 135,
+   "def": 95,
+   "spe": 105,
+   "spa": 112,
+   "spd": 76
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 220,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 5,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "UNDERPRESSURE"
+   },
+   {
+    "level": 1,
+    "move": "SPECTRALCLAWS"
+   },
+   {
+    "level": 24,
+    "move": "FIREFANG"
+   },
+   {
+    "level": 32,
+    "move": "CRUNCH"
+   },
+   {
+    "level": 40,
+    "move": "FLAMETHROWER"
+   },
+   {
+    "level": 48,
+    "move": "DARKPULSE"
+   },
+   {
+    "level": 52,
+    "move": "FIREBLAST"
+   }
+  ],
+  "height": 2.8,
+  "weight": 214,
+  "color": "Brown",
+  "habitat": "Rare",
+  "category": "Cangaceiro",
+  "entry": "Um V-Monster do tipo Fogo.\nCada vitória virou uma fita no chapéu. Anda pela fronteira cobrando pedágio de quem atravessa armado.",
+  "evolutions": [],
+  "franchise": "VMO"
+ },
+ {
+  "id": 999,
+  "name": "Metallosaur",
+  "internalName": "METALLOSAUR",
+  "type1": "STEEL",
+  "type2": "FIRE",
+  "vType": "Mecânico",
+  "stats": {
+   "hp": 115,
+   "atk": 130,
+   "def": 125,
+   "spe": 70,
+   "spa": 108,
+   "spd": 100
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 225,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 3,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 5,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "STEELSPEARS"
+   },
+   {
+    "level": 1,
+    "move": "BURNINGASHES"
+   },
+   {
+    "level": 24,
+    "move": "IRONHEAD"
+   },
+   {
+    "level": 32,
+    "move": "FLAMETHROWER"
+   },
+   {
+    "level": 40,
+    "move": "FLASHCANNON"
+   },
+   {
+    "level": 48,
+    "move": "IRONDEFENSE"
+   },
+   {
+    "level": 52,
+    "move": "FIREBLAST"
+   }
+  ],
+  "height": 3.6,
+  "weight": 720,
+  "color": "Blue",
+  "habitat": "Rare",
+  "category": "Couraça de Guerra",
+  "entry": "Um V-Monster do tipo Mecânico.\nSó o V-Link mais forte segura o elo até aqui. O que era jacaré agora é artilharia com mandíbula.",
+  "evolutions": [],
+  "franchise": "VMO"
+ },
+ {
+  "id": 1000,
+  "name": "Pulsebun",
+  "internalName": "PULSEBUN",
+  "type1": "ELECTRIC",
+  "type2": null,
+  "vType": "Elétrico",
+  "stats": {
+   "hp": 65,
+   "atk": 70,
+   "def": 60,
+   "spe": 95,
+   "spa": 58,
+   "spd": 48
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 95,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 1,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 45,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "TINYJOLT"
+   },
+   {
+    "level": 1,
+    "move": "GROWL"
+   },
+   {
+    "level": 10,
+    "move": "STATICSHOCK"
+   },
+   {
+    "level": 18,
+    "move": "QUICKATTACK"
+   },
+   {
+    "level": 26,
+    "move": "PULSECROSS"
+   },
+   {
+    "level": 34,
+    "move": "SPARK"
+   },
+   {
+    "level": 42,
+    "move": "AGILITY"
+   }
+  ],
+  "height": 0.5,
+  "weight": 6.2,
+  "color": "Yellow",
+  "habitat": "Grassland",
+  "category": "Coelho Boxeador",
+  "entry": "Um V-Monster do tipo Elétrico.\nPulsebun gera energia elétrica em seus pelos azuis para realizar ataques ao estilo de um boxeador.",
+  "evolutions": [
+   {
+    "into": "PULSEBOLT",
+    "method": "Level",
+    "param": "999"
+   },
+   {
+    "into": "WENBUN",
+    "method": "Level",
+    "param": "999",
+    "condition": {
+     "faintsAtLeast": 5
+    }
+   }
+  ],
+  "franchise": "VMO"
+ },
+ {
+  "id": 1001,
+  "name": "Pulsebolt",
+  "internalName": "PULSEBOLT",
+  "type1": "ELECTRIC",
+  "type2": null,
+  "vType": "Elétrico",
+  "stats": {
+   "hp": 100,
+   "atk": 115,
+   "def": 70,
+   "spe": 120,
+   "spa": 82,
+   "spd": 49
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 160,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 2,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 25,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "TINYJOLT"
+   },
+   {
+    "level": 1,
+    "move": "STATICSHOCK"
+   },
+   {
+    "level": 14,
+    "move": "PULSECROSS"
+   },
+   {
+    "level": 22,
+    "move": "JOLTSTREAM"
+   },
+   {
+    "level": 30,
+    "move": "WILDCOMBO"
+   },
+   {
+    "level": 38,
+    "move": "AGILITY"
+   },
+   {
+    "level": 46,
+    "move": "PULSERUSH"
+   }
+  ],
+  "height": 1.2,
+  "weight": 26.5,
+  "color": "Yellow",
+  "habitat": "Grassland",
+  "category": "Coelho Boxeador",
+  "entry": "Um V-Monster do tipo Elétrico.\nAs faixas dos braços viraram condutores. Fecha a distância antes de o adversário terminar de se armar.",
+  "evolutions": [
+   {
+    "into": "ROCKABOLT",
+    "method": "Level",
+    "param": "999",
+    "condition": {
+     "winsAtLeast": 10
+    }
+   },
+   {
+    "into": "GUARABOLT",
+    "method": "Level",
+    "param": "999",
+    "condition": {
+     "friendshipAbove": 180
+    }
+   }
+  ],
+  "franchise": "VMO"
+ },
+ {
+  "id": 1002,
+  "name": "Wenbun",
+  "internalName": "WENBUN",
+  "type1": "ICE",
+  "type2": "FIGHTING",
+  "vType": "Gélido",
+  "stats": {
+   "hp": 100,
+   "atk": 125,
+   "def": 90,
+   "spe": 120,
+   "spa": 90,
+   "spd": 63
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 190,
+  "evYield": {
+   "hp": 0,
+   "atk": 3,
+   "def": 0,
+   "spe": 0,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 12,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "PULSECROSS"
+   },
+   {
+    "level": 1,
+    "move": "ICESHARD"
+   },
+   {
+    "level": 24,
+    "move": "BULKUP"
+   },
+   {
+    "level": 32,
+    "move": "BRICKBREAK"
+   },
+   {
+    "level": 40,
+    "move": "ICEFANG"
+   },
+   {
+    "level": 48,
+    "move": "CLOSECOMBAT"
+   },
+   {
+    "level": 52,
+    "move": "ICICLECRASH"
+   }
+  ],
+  "height": 1.5,
+  "weight": 41,
+  "color": "Pink",
+  "habitat": "Rare",
+  "category": "Monge do Gelo",
+  "entry": "Um V-Monster do tipo Gélido.\nApanhou até parar de contar e resolveu aprender a arte de verdade. Os anéis giram frios e não deixam ninguém entrar no alcance.",
+  "evolutions": [],
+  "franchise": "VMO"
+ },
+ {
+  "id": 1003,
+  "name": "Rockabolt",
+  "internalName": "ROCKABOLT",
+  "type1": "ELECTRIC",
+  "type2": null,
+  "vType": "Elétrico",
+  "stats": {
+   "hp": 105,
+   "atk": 125,
+   "def": 95,
+   "spe": 125,
+   "spa": 104,
+   "spd": 76
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 220,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 3,
+   "spa": 0,
+   "spd": 0
+  },
+  "catchRate": 5,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "WILDCOMBO"
+   },
+   {
+    "level": 1,
+    "move": "JOLTSTREAM"
+   },
+   {
+    "level": 24,
+    "move": "AGILITY"
+   },
+   {
+    "level": 32,
+    "move": "PULSERUSH"
+   },
+   {
+    "level": 40,
+    "move": "THUNDERBOLT"
+   },
+   {
+    "level": 48,
+    "move": "WILDCHARGE"
+   },
+   {
+    "level": 52,
+    "move": "THUNDER"
+   }
+  ],
+  "height": 1.8,
+  "weight": 62,
+  "color": "Yellow",
+  "habitat": "Rare",
+  "category": "Coelho do Palco",
+  "entry": "Um V-Monster do tipo Elétrico.\nTransformou a contagem de vitórias em repertório. Cada golpe entra no tempo, e o público do Sul canta junto.",
+  "evolutions": [],
+  "franchise": "VMO"
+ },
+ {
+  "id": 1004,
+  "name": "Guarabolt",
+  "internalName": "GUARABOLT",
+  "type1": "PSYCHIC",
+  "type2": "ELECTRIC",
+  "vType": "Divino",
+  "stats": {
+   "hp": 105,
+   "atk": 110,
+   "def": 100,
+   "spe": 125,
+   "spa": 105,
+   "spd": 90
+  },
+  "genderRate": "Genderless",
+  "growthRate": "Slow",
+  "baseExp": 220,
+  "evYield": {
+   "hp": 0,
+   "atk": 0,
+   "def": 0,
+   "spe": 0,
+   "spa": 3,
+   "spd": 0
+  },
+  "catchRate": 5,
+  "abilities": [],
+  "levelMoves": [
+   {
+    "level": 1,
+    "move": "JOLTSTREAM"
+   },
+   {
+    "level": 1,
+    "move": "DIVINEBLAST"
+   },
+   {
+    "level": 24,
+    "move": "EXTRASENSORY"
+   },
+   {
+    "level": 32,
+    "move": "THUNDERBOLT"
+   },
+   {
+    "level": 40,
+    "move": "PSYCHIC"
+   },
+   {
+    "level": 48,
+    "move": "CALMMIND"
+   },
+   {
+    "level": 52,
+    "move": "THUNDER"
+   }
+  ],
+  "height": 2.1,
+  "weight": 118,
+  "color": "Red",
+  "habitat": "Rare",
+  "category": "Lobo-Guará",
+  "entry": "Um V-Monster do tipo Divino.\nAs asas de raio nas costas só aparecem quando o elo está no máximo. Corre à frente do parceiro, nunca atrás.",
+  "evolutions": [],
+  "franchise": "VMO"
  }
 ]
