@@ -12,7 +12,7 @@ module.exports = function({ ctx, ok, eq, G, section }) {
         fs.readFileSync(path.resolve(__dirname, "../../data/Parts.json"), "utf8")
     );
 
-    const P = ctx.PKM.Parts;
+    const P = ctx.MON.Parts;
     const KEYS = ["hp", "atk", "def", "spe", "spa", "spd"];
     const previousParty = ctx.$gameParty;
     const party = new ctx.Game_Party();
@@ -29,12 +29,12 @@ module.exports = function({ ctx, ok, eq, G, section }) {
     const statSum = (p) => KEYS.reduce((s, k) => s + p.stat(k), 0);
     const strip = (p) => { for (const slot of P.SLOTS) P.unequip(p, slot); return p; };
 
-    // replica o ramo de aprendizado de PKM_Battle.processNextLearn
-    function battleLearn(pokemon, learnable) {
+    // replica o ramo de aprendizado de MON_Battle.processNextLearn
+    function battleLearn(monster, learnable) {
         const announced = [], forgetPrompts = [];
         for (const moveId of learnable) {
-            if (pokemon.knowsMove(moveId)) continue;
-            if (pokemon.moves.length < 4) { pokemon.learnMove(moveId); announced.push(moveId); }
+            if (monster.knowsMove(moveId)) continue;
+            if (monster.moves.length < 4) { monster.learnMove(moveId); announced.push(moveId); }
             else forgetPrompts.push(moveId);
         }
         return { announced, forgetPrompts };
@@ -42,24 +42,24 @@ module.exports = function({ ctx, ok, eq, G, section }) {
 
     // --- catálogo -----------------------------------------------------------
     eq(P.all().length, 40, "catálogo tem 40 Medapeças (10 modelos × 4 slots)");
-    ok(P.all().every(p => !p.move || !!ctx.PKM.Core.move(p.move)), "todo golpe de peça existe no banco de golpes");
+    ok(P.all().every(p => !p.move || !!ctx.MON.Core.move(p.move)), "todo golpe de peça existe no banco de golpes");
     const legs = P.bySlot("legs");
     ok(legs.length === 10 && legs.every(p => !p.move && p.stats.spe > 0), "as 10 pernas dão velocidade e nenhum golpe");
 
     // --- loadout padrão: o inimigo nasce montado (defeito 2) -----------------
-    // caminho real de PKM_Encounters.startWild: new Game_Pokemon(species, level)
+    // caminho real de MON_Encounters.startWild: new Game_Monster(species, level)
     const wild = new G("ROKUSHO", 28);
     const wildIds = P.equipped(wild);
     ok(P.SLOTS.every(slot => !!wildIds[slot]), "Medabot selvagem nasce com os 4 slots montados");
     ok(P.SLOTS.every(slot => P.get(wildIds[slot]).model === "ROKUSHO"),
         "o loadout padrão são as peças do próprio modelo");
     eq(P.defaultLoadout(wild).head, "MB_HEAD_ROKUSHO", "defaultLoadout é puro e devolve as peças do modelo");
-    ok(P.equipped(new G("PIKACHU", 28)).head === null && !new G("PIKACHU", 28)._pkmParts,
+    ok(P.equipped(new G("PIKACHU", 28)).head === null && !new G("PIKACHU", 28)._monParts,
         "monstro de outra franquia não ganha loadout nem estado de slots");
     ok(wild.hp === wild.maxHp, "o HP nasce cheio já contando o bônus das peças");
 
-    // caminho real de PKM_Trainers.build (inclui setMoves com golpes fixos)
-    const built = ctx.PKM.Trainers.build({
+    // caminho real de MON_Trainers.build (inclui setMoves com golpes fixos)
+    const built = ctx.MON.Trainers.build({
         type: "YOUNGSTER", name: "Ikki",
         party: [{ species: "ROKUSHO", level: 30, moves: ["ICYWIND", "MEDABLADE"] }]
     });
@@ -72,18 +72,18 @@ module.exports = function({ ctx, ok, eq, G, section }) {
 
     // --- drop pós-vitória pelo caminho real (defeito 2) ----------------------
     const winner = new G("METABEE", 30);
-    const drops = ctx.PKM.Battle.runVictoryHooks(winner, wild, false);
+    const drops = ctx.MON.Battle.runVictoryHooks(winner, wild, false);
     eq(drops.length, 1, "vencer um Medabot selvagem dropa 1 peça pelo hook de vitória");
-    const stock = party.pkmParts();
+    const stock = party.monParts();
     ok(stock.length === 1 && P.SLOTS.some(slot => wildIds[slot] === stock[0].id),
         "a peça que entrou no estoque veio do loadout do derrotado");
-    eq(ctx.PKM.Battle.runVictoryHooks(winner, new G("PIKACHU", 30), false).length, 0,
+    eq(ctx.MON.Battle.runVictoryHooks(winner, new G("PIKACHU", 30), false).length, 0,
         "vitória contra Pokémon não gera drop");
     eq(P.rollDrop(strip(new G("PEPPERCAT", 20)), () => 0), null, "Medabot desmontado não dropa peça");
     const peppercat = new G("PEPPERCAT", 20);
     ok(P.rollDrop(peppercat, () => 0) === "MB_HEAD_PEPPERCAT" && P.rollDrop(peppercat, () => 3) === "MB_LEGS_PEPPERCAT",
         "sorteio determinístico percorre os slots ocupados na ordem head→legs");
-    ok(party.pkmLosePart(stock[0].id, 2) === false && party.pkmPartCount(stock[0].id) === 1,
+    ok(party.monLosePart(stock[0].id, 2) === false && party.monPartCount(stock[0].id) === 1,
         "o estoque nunca fica negativo");
 
     // --- equipar / desequipar ------------------------------------------------
@@ -127,12 +127,12 @@ module.exports = function({ ctx, ok, eq, G, section }) {
     ok(veteran.knowsMove("SCOPESHOT"),
         "golpe já conquistado por nível permanece após desmontar a peça que o dava");
 
-    // --- pokemon.moves é a lista real, estável e mutável (defeito 1c) --------
+    // --- monster.moves é a lista real, estável e mutável (defeito 1c) --------
     const mutable = new G("METABEE", 24);
-    ok(mutable.moves === mutable.moves, "pokemon.moves devolve sempre a mesma lista");
+    ok(mutable.moves === mutable.moves, "monster.moves devolve sempre a mesma lista");
     const beforePop = mutable.moves.length;
     mutable.moves.pop();
-    eq(mutable.moves.length, beforePop - 1, "mutação in-place em pokemon.moves tem efeito");
+    eq(mutable.moves.length, beforePop - 1, "mutação in-place em monster.moves tem efeito");
 
     // --- aprender por nível volta a funcionar e a mensagem não mente ---------
     const learned = battleLearn(mutable, ["TACKLE"]);
@@ -164,7 +164,7 @@ module.exports = function({ ctx, ok, eq, G, section }) {
         "bônus negativo é aplicado sem derrubar o stat abaixo de 1");
 
     // --- Medabots são competitivos na dimensão 3 (defeito 3) ----------------
-    for (const sp of ctx.PKM.Franchise.speciesOf("MDB")) {
+    for (const sp of ctx.MON.Franchise.speciesOf("MDB")) {
         const bst = KEYS.reduce((s, k) => s + sp.stats[k], 0);
         ok(bst >= 380 && bst <= 420, `BST de ${sp.name} na faixa 380-420 (${bst})`);
     }

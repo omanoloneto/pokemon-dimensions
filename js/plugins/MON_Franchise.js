@@ -1,29 +1,29 @@
 //=============================================================================
-// PKM_Franchise.js  — camada multi-franquia
+// MON_Franchise.js  — camada multi-franquia
 //=============================================================================
 /*:
  * @target MZ
- * @plugindesc [PKM v0.3] Camada multi-franquia: registro de dimensões, merge dos
+ * @plugindesc [MON v0.3] Camada multi-franquia: registro de dimensões, merge dos
  * dados extras (espécies, golpes, itens) e regras de captura por franquia.
  * @author Pokémon Dimensions
- * @base PKM_Core
- * @orderAfter PKM_Core
- * @orderBefore PKM_Battle
+ * @base MON_Core
+ * @orderAfter MON_Core
+ * @orderBefore MON_Battle
  *
- * @help PKM_Franchise.js
+ * @help MON_Franchise.js
  *
  * Cada franquia ocupa uma faixa contígua de IDs de espécie (data/Franchises.json):
- *   PKM 1-649 | DGM 650-799 | MDB 800-849 | MRA 850-899 | BKY 900-919
+ *   MON 1-649 | DGM 650-799 | MDB 800-849 | MRA 850-899 | BKY 900-919
  *
  * Funde em runtime os arquivos "Extra" nos bancos base, para que os monstros de
- * todas as franquias vivam no mesmo $dataPokemon/$dataMoves/$dataItems2 e usem o
+ * todas as franquias vivam no mesmo $dataMonsters/$dataMoves/$dataItems2 e usem o
  * mesmo motor de batalha, captura, party e PC.
  *
  * API:
- *   PKM.Franchise.get(id) / all() / ofSpecies(speciesId) / of(pokemon)
- *   PKM.Franchise.captureRule(pokemon, itemName) -> {allowed, reason}
- *   PKM.Franchise.captureItems(franchiseId) -> [internalName]
- *   PKM.Franchise.registerCaptureGate(fn) -> gate extra (usado por PKM_Pacts)
+ *   MON.Franchise.get(id) / all() / ofSpecies(speciesId) / of(monster)
+ *   MON.Franchise.captureRule(monster, itemName) -> {allowed, reason}
+ *   MON.Franchise.captureItems(franchiseId) -> [internalName]
+ *   MON.Franchise.registerCaptureGate(fn) -> gate extra (usado por MON_Pacts)
  */
 
 var $dataFranchises = $dataFranchises || null;
@@ -31,8 +31,8 @@ var $dataSpeciesExtra = $dataSpeciesExtra || null;
 var $dataMovesExtra = $dataMovesExtra || null;
 var $dataItemsExtra = $dataItemsExtra || null;
 
-var PKM = PKM || {};
-PKM.Franchise = PKM.Franchise || {};
+var MON = MON || {};
+MON.Franchise = MON.Franchise || {};
 
 (() => {
     "use strict";
@@ -49,18 +49,18 @@ PKM.Franchise = PKM.Franchise || {};
     //=========================================================================
     let installed = false;
 
-    PKM.Franchise.install = function() {
+    MON.Franchise.install = function() {
         if (installed) return;
-        if (!$dataPokemon || !$dataFranchises) return;
+        if (!$dataMonsters || !$dataFranchises) return;
 
         if ($dataSpeciesExtra) {
             const list = Array.isArray($dataSpeciesExtra) ? $dataSpeciesExtra : Object.values($dataSpeciesExtra);
             for (const sp of list) {
-                if (sp && sp.id > 0) $dataPokemon[sp.id] = sp;
+                if (sp && sp.id > 0) $dataMonsters[sp.id] = sp;
             }
             // fecha buracos deixados por faixas ainda não preenchidas
-            for (let i = 1; i < $dataPokemon.length; i++) {
-                if ($dataPokemon[i] === undefined) $dataPokemon[i] = null;
+            for (let i = 1; i < $dataMonsters.length; i++) {
+                if ($dataMonsters[i] === undefined) $dataMonsters[i] = null;
             }
         }
         if ($dataMovesExtra && $dataMoves) Object.assign($dataMoves, $dataMovesExtra);
@@ -71,7 +71,7 @@ PKM.Franchise = PKM.Franchise || {};
     if (typeof Scene_Boot !== "undefined" && Scene_Boot.prototype.onDatabaseLoaded) {
         const _onDatabaseLoaded = Scene_Boot.prototype.onDatabaseLoaded;
         Scene_Boot.prototype.onDatabaseLoaded = function() {
-            PKM.Franchise.install();
+            MON.Franchise.install();
             _onDatabaseLoaded.call(this);
         };
     }
@@ -79,35 +79,35 @@ PKM.Franchise = PKM.Franchise || {};
     //=========================================================================
     // Registro
     //=========================================================================
-    PKM.Franchise.all = function() {
+    MON.Franchise.all = function() {
         if (!$dataFranchises) return [];
         return ($dataFranchises.order || []).map(id => $dataFranchises.list[id]).filter(Boolean);
     };
-    PKM.Franchise.get = function(id) {
+    MON.Franchise.get = function(id) {
         return ($dataFranchises && $dataFranchises.list && $dataFranchises.list[id]) || null;
     };
-    PKM.Franchise.ofSpecies = function(speciesId) {
-        for (const f of PKM.Franchise.all()) {
+    MON.Franchise.ofSpecies = function(speciesId) {
+        for (const f of MON.Franchise.all()) {
             if (speciesId >= f.speciesFrom && speciesId <= f.speciesTo) return f;
         }
-        return PKM.Franchise.get(DEFAULT_FRANCHISE);
+        return MON.Franchise.get(DEFAULT_FRANCHISE);
     };
-    PKM.Franchise.of = function(pokemon) {
-        if (!pokemon) return PKM.Franchise.get(DEFAULT_FRANCHISE);
-        const sp = pokemon.species && pokemon.species();
-        if (sp && sp.franchise) return PKM.Franchise.get(sp.franchise) || PKM.Franchise.ofSpecies(pokemon.speciesId);
-        return PKM.Franchise.ofSpecies(pokemon.speciesId);
+    MON.Franchise.of = function(monster) {
+        if (!monster) return MON.Franchise.get(DEFAULT_FRANCHISE);
+        const sp = monster.species && monster.species();
+        if (sp && sp.franchise) return MON.Franchise.get(sp.franchise) || MON.Franchise.ofSpecies(monster.speciesId);
+        return MON.Franchise.ofSpecies(monster.speciesId);
     };
-    PKM.Franchise.idOf = function(pokemon) {
-        const f = PKM.Franchise.of(pokemon);
+    MON.Franchise.idOf = function(monster) {
+        const f = MON.Franchise.of(monster);
         return f ? f.id : DEFAULT_FRANCHISE;
     };
-    PKM.Franchise.speciesOf = function(franchiseId) {
-        const f = PKM.Franchise.get(franchiseId);
-        if (!f || !$dataPokemon) return [];
+    MON.Franchise.speciesOf = function(franchiseId) {
+        const f = MON.Franchise.get(franchiseId);
+        if (!f || !$dataMonsters) return [];
         const out = [];
-        for (let i = f.speciesFrom; i <= f.speciesTo && i < $dataPokemon.length; i++) {
-            if ($dataPokemon[i]) out.push($dataPokemon[i]);
+        for (let i = f.speciesFrom; i <= f.speciesTo && i < $dataMonsters.length; i++) {
+            if ($dataMonsters[i]) out.push($dataMonsters[i]);
         }
         return out;
     };
@@ -117,72 +117,72 @@ PKM.Franchise = PKM.Franchise || {};
     //=========================================================================
     const gates = [];
 
-    // gate extra: fn(pokemon, itemName, franchise) -> null | {allowed:false, reason}
-    PKM.Franchise.registerCaptureGate = function(fn) {
+    // gate extra: fn(monster, itemName, franchise) -> null | {allowed:false, reason}
+    MON.Franchise.registerCaptureGate = function(fn) {
         if (typeof fn === "function") gates.push(fn);
     };
 
-    PKM.Franchise.captureItems = function(franchiseId) {
-        const f = PKM.Franchise.get(franchiseId);
+    MON.Franchise.captureItems = function(franchiseId) {
+        const f = MON.Franchise.get(franchiseId);
         return (f && f.capture && f.capture.items) || [];
     };
 
     // itens de captura válidos contra este alvo (bolas comuns só valem para Pokémon)
-    PKM.Franchise.itemWorksOn = function(itemName, pokemon) {
-        const f = PKM.Franchise.of(pokemon);
+    MON.Franchise.itemWorksOn = function(itemName, monster) {
+        const f = MON.Franchise.of(monster);
         const specific = (f && f.capture && f.capture.items) || [];
         if (specific.length) return specific.includes(itemName);
         return !isFranchiseSpecificItem(itemName);
     };
 
     function isFranchiseSpecificItem(itemName) {
-        for (const f of PKM.Franchise.all()) {
+        for (const f of MON.Franchise.all()) {
             const items = (f.capture && f.capture.items) || [];
             if (items.includes(itemName)) return true;
         }
         return false;
     }
 
-    function fill(text, pokemon, itemName) {
-        const item = PKM.Core.item && PKM.Core.item(itemName);
+    function fill(text, monster, itemName) {
+        const item = MON.Core.item && MON.Core.item(itemName);
         return String(text || "")
-            .replace("{target}", pokemon ? pokemon.name : "?")
+            .replace("{target}", monster ? monster.name : "?")
             .replace("{item}", item ? item.name : itemName || "?");
     }
-    PKM.Franchise.text = fill;
+    MON.Franchise.text = fill;
 
     // regra completa de captura. Retorna {allowed, reason}
-    PKM.Franchise.captureRule = function(pokemon, itemName) {
-        const f = PKM.Franchise.of(pokemon);
+    MON.Franchise.captureRule = function(monster, itemName) {
+        const f = MON.Franchise.of(monster);
         const rule = (f && f.capture) || {};
 
         if (rule.inField === false) {
-            return { allowed: false, reason: fill(rule.deniedText || "Este monstro não pode ser capturado.", pokemon, itemName) };
+            return { allowed: false, reason: fill(rule.deniedText || "Este monstro não pode ser capturado.", monster, itemName) };
         }
-        if (itemName && !PKM.Franchise.itemWorksOn(itemName, pokemon)) {
-            return { allowed: false, reason: fill("{item} não funciona em " + (f ? f.name : "?") + "!", pokemon, itemName) };
+        if (itemName && !MON.Franchise.itemWorksOn(itemName, monster)) {
+            return { allowed: false, reason: fill("{item} não funciona em " + (f ? f.name : "?") + "!", monster, itemName) };
         }
-        if (rule.maxHpRate !== undefined && pokemon.hpRate && pokemon.hpRate() > rule.maxHpRate) {
-            return { allowed: false, reason: fill(rule.deniedText || "O alvo ainda está forte demais!", pokemon, itemName) };
+        if (rule.maxHpRate !== undefined && monster.hpRate && monster.hpRate() > rule.maxHpRate) {
+            return { allowed: false, reason: fill(rule.deniedText || "O alvo ainda está forte demais!", monster, itemName) };
         }
         for (const gate of gates) {
-            const res = gate(pokemon, itemName, f);
+            const res = gate(monster, itemName, f);
             if (res && res.allowed === false) {
-                return { allowed: false, reason: fill(res.reason || rule.deniedText || "Não é possível agora.", pokemon, itemName) };
+                return { allowed: false, reason: fill(res.reason || rule.deniedText || "Não é possível agora.", monster, itemName) };
             }
         }
         return { allowed: true, reason: null };
     };
 
     // textos temáticos usados pela cena de batalha
-    PKM.Franchise.throwText = function(pokemon, itemName) {
-        const f = PKM.Franchise.of(pokemon);
+    MON.Franchise.throwText = function(monster, itemName) {
+        const f = MON.Franchise.of(monster);
         const t = (f && f.capture && f.capture.throwText) || "Você jogou uma {item}!";
-        return fill(t, pokemon, itemName);
+        return fill(t, monster, itemName);
     };
-    PKM.Franchise.successText = function(pokemon, itemName) {
-        const f = PKM.Franchise.of(pokemon);
+    MON.Franchise.successText = function(monster, itemName) {
+        const f = MON.Franchise.of(monster);
         const t = (f && f.capture && f.capture.successText) || "Gotcha! {target} foi capturado!";
-        return fill(t, pokemon, itemName);
+        return fill(t, monster, itemName);
     };
 })();

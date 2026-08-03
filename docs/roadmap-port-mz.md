@@ -7,7 +7,7 @@ Ordem de execução priorizando chegar a uma **demo jogável** o quanto antes:
 |------|------|--------|
 | 0 | Fundação & Dados (compiladores PBS→JSON, Core, tabela de tipos) | ✅ |
 | 0 | Pokédex | ✅ |
-| 1 | Modelo do Pokémon individual (`Game_Pokemon`) | ✅ |
+| 1 | Modelo do Pokémon individual (`Game_Monster`) | ✅ |
 | 2 | Party & Tela de Resumo | ✅ |
 | 4 | Overworld & Encontros selvagens | ✅ |
 | 5a | Motor de Batalha — esqueleto jogável (1v1) | ✅ |

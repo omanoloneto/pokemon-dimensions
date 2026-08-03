@@ -1,15 +1,15 @@
 //=============================================================================
-// PKM_Audio.js  — Fase 10
+// MON_Audio.js  — Fase 10
 //=============================================================================
 /*:
  * @target MZ
- * @plugindesc [PKM v0.5.2] Áudio: cries dos Pokémon, BGM de batalha e fanfarra de
+ * @plugindesc [MON v0.5.2] Áudio: cries dos Pokémon, BGM de batalha e fanfarra de
  * vitória. Arquivos ausentes são ignorados em silêncio (nunca quebram o jogo).
  * @author Pokémon Dimensions (port MZ)
- * @base PKM_Core
- * @orderAfter PKM_Battle
+ * @base MON_Core
+ * @orderAfter MON_Battle
  *
- * @help PKM_Audio.js
+ * @help MON_Audio.js
  *
  * Toca o "cry" de um Pokémon e a trilha de batalha/vitória. Antes de tocar,
  * verifica se o arquivo existe (no NW.js/playtest); se não existir, pula sem
@@ -43,11 +43,11 @@
  * @default Victory2
  */
 
-var PKM = PKM || {};
+var MON = MON || {};
 
 (() => {
     "use strict";
-    const P = PluginManager.parameters("PKM_Audio");
+    const P = PluginManager.parameters("MON_Audio");
     const num3 = (n) => String(n).padStart(3, "0");
 
     // cache de existência de arquivos; fora do NW.js assume que existe
@@ -67,7 +67,7 @@ var PKM = PKM || {};
         return ok;
     }
 
-    PKM.Audio = {
+    MON.Audio = {
         _savedBgm: null,
 
         playCry(speciesId) {

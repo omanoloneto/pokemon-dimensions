@@ -3,10 +3,10 @@
 module.exports = function({ ctx, ok, eq, G, section }) {
     section("Bucky — Pactos, Emblema e Troublemonsters (BKY)");
 
-    const P = ctx.PKM.Pacts;
-    const F = ctx.PKM.Franchise;
-    const B = ctx.PKM.Battle;
-    const C = ctx.PKM.Core;
+    const P = ctx.MON.Pacts;
+    const F = ctx.MON.Franchise;
+    const B = ctx.MON.Battle;
+    const C = ctx.MON.Core;
 
     // faixas da campanha (docs/03): D5 selvagens 40-47, chefes 45/49, D0 48-55
     const D5_WILD_TOP = 47;
@@ -94,14 +94,14 @@ module.exports = function({ ctx, ok, eq, G, section }) {
     const emblem = C.item("GCEMBLEM");
     ok(emblem && emblem.pocket === 3 && emblem.catchBonus === 12 && emblem.keepOnUse === true,
         "GCEMBLEM é item de captura (pocket 3), bônus 12 e não se gasta");
-    eq(ctx.PKM.Items.ballBonus("GCEMBLEM"), 12, "ballBonus lê o catchBonus do emblema");
-    eq(ctx.PKM.Items.isConsumedOnThrow("GCEMBLEM"), false, "o emblema sobrevive ao arremesso");
+    eq(ctx.MON.Items.ballBonus("GCEMBLEM"), 12, "ballBonus lê o catchBonus do emblema");
+    eq(ctx.MON.Items.isConsumedOnThrow("GCEMBLEM"), false, "o emblema sobrevive ao arremesso");
 
-    // mesma cadeia da cena de batalha: pkmBalls() -> itemWorksOn -> lista de captura
+    // mesma cadeia da cena de batalha: monBalls() -> itemWorksOn -> lista de captura
     const jibac = new G("JIBAC", 45);
-    const captureList = () => party.pkmBalls().filter(b => F.itemWorksOn(b.name, jibac)).map(b => b.name);
+    const captureList = () => party.monBalls().filter(b => F.itemWorksOn(b.name, jibac)).map(b => b.name);
     eq(captureList().length, 0, "sem o emblema não há item de captura para o espírito");
-    party.pkmGainItem("POKEBALL", 5);
+    party.monGainItem("POKEBALL", 5);
     eq(captureList().length, 0, "Poké Ball comum não entra na lista de um espírito");
     ok(P.giveEmblemItem() && captureList().includes("GCEMBLEM"),
         "com o emblema na mochila ele aparece na lista de captura da batalha");
@@ -151,7 +151,7 @@ module.exports = function({ ctx, ok, eq, G, section }) {
     const asleep = P.canPact(dragac);
     ok(asleep.ok === false && asleep.reason.includes("adormecido"),
         "Dragac recusa o pacto enquanto faltam os outros onze");
-    for (let id = 900; id <= 910; id++) ctx.$gameSystem.pkmSetCaught(id);
+    for (let id = 900; id <= 910; id++) ctx.$gameSystem.monSetCaught(id);
     eq(P.pactCount(), 11, "onze pactos firmados nos outros mundos");
     eq(P.canPact(dragac).ok, true, "com os onze pactos e a Marca do Mundo Zero, Dragac desperta");
 

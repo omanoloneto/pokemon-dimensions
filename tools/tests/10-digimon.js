@@ -3,8 +3,8 @@
 module.exports = function({ ctx, ok, eq, G, section }) {
     section("Digimon — elenco Adventure e digievolução ramificada");
 
-    const E = ctx.PKM.Evolution;
-    const F = ctx.PKM.Franchise;
+    const E = ctx.MON.Evolution;
+    const F = ctx.MON.Franchise;
     const roster = F.speciesOf("DGM");
     const byName = new Map(roster.map(sp => [sp.internalName, sp]));
     const STAGES = ["Baby I", "Baby II", "Rookie", "Champion", "Ultimate", "Mega"];
@@ -14,7 +14,7 @@ module.exports = function({ ctx, ok, eq, G, section }) {
 
     function withBag(items, fn) {
         const previous = ctx.$gameParty;
-        ctx.$gameParty = { pkmHasItem: (name) => items.includes(name) };
+        ctx.$gameParty = { monHasItem: (name) => items.includes(name) };
         try { return fn(); } finally { ctx.$gameParty = previous; }
     }
     // percorre a árvore inteira a partir de um Baby I
@@ -126,11 +126,11 @@ module.exports = function({ ctx, ok, eq, G, section }) {
         const opts = { fixedRand: 1, forceCrit: true };
         const attacker = new G("GREYMON", 28);
         const target = new G("TYRANNOMON", 28);
-        const before = ctx.PKM.Battle.calcDamage(attacker, target, "NOVABLAST", opts).damage;
+        const before = ctx.MON.Battle.calcDamage(attacker, target, "NOVABLAST", opts).damage;
         const species = attacker.species();
         const saved = species.attribute;
         species.attribute = "Virus";
-        const after = ctx.PKM.Battle.calcDamage(attacker, target, "NOVABLAST", opts).damage;
+        const after = ctx.MON.Battle.calcDamage(attacker, target, "NOVABLAST", opts).damage;
         species.attribute = saved;
         eq(after, before, "atributo não altera o dano (flavor puro)");
     }
@@ -247,9 +247,9 @@ module.exports = function({ ctx, ok, eq, G, section }) {
         const again = E.useDigimemory(digimon);
         eq(again.ok, false, "sem histórico, a Digimemória falha");
 
-        const pokemon = new G("BULBASAUR", 16);
-        pokemon.evolveInto("IVYSAUR");
-        eq(E.useDigimemory(pokemon).ok, false, "Digimemória não funciona fora da Dimensão Digital");
+        const monster = new G("BULBASAUR", 16);
+        monster.evolveInto("IVYSAUR");
+        eq(E.useDigimemory(monster).ok, false, "Digimemória não funciona fora da Dimensão Digital");
         eq(E.useDigimemory(null).ok, false, "Digimemória sem alvo falha");
     }
 };

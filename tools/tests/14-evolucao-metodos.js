@@ -3,10 +3,10 @@
 module.exports = function({ ctx, ok, eq, G, section }) {
     section("Evolução — métodos completos");
 
-    const E = ctx.PKM.Evolution;
+    const E = ctx.MON.Evolution;
     const LEVEL_ONLY = ["Level", "LevelMale", "LevelFemale"];
 
-    // comportamento ANTIGO (core + override do PKM_Evolution v0.3) congelado
+    // comportamento ANTIGO (core + override do MON_Evolution v0.3) congelado
     // aqui como oráculo da regressão
     function legacyEvolution(pkm) {
         for (const ev of (pkm.species().evolutions || [])) {
@@ -26,14 +26,14 @@ module.exports = function({ ctx, ok, eq, G, section }) {
     }
     function withBag(items, fn) {
         const previous = ctx.$gameParty;
-        ctx.$gameParty = { pkmHasItem: (name) => items.includes(name) };
+        ctx.$gameParty = { monHasItem: (name) => items.includes(name) };
         try { return fn(); } finally { ctx.$gameParty = previous; }
     }
     function withParty(members, items, fn) {
         const previous = ctx.$gameParty;
         ctx.$gameParty = {
-            pkmHasItem: (name) => (items || []).includes(name),
-            pkmParty: () => members
+            monHasItem: (name) => (items || []).includes(name),
+            monParty: () => members
         };
         try { return fn(); } finally { ctx.$gameParty = previous; }
     }
@@ -102,7 +102,7 @@ module.exports = function({ ctx, ok, eq, G, section }) {
 
     //--- 4. Vínculo (Cabo Link no lugar da troca) ----------------------------
     {
-        ok(!!ctx.PKM.Core.item("LINKCABLE"), "Cabo Link existe no banco de itens");
+        ok(!!ctx.MON.Core.item("LINKCABLE"), "Cabo Link existe no banco de itens");
         eq(E.byItem(at("MACHOKE", 30), "LINKCABLE"), "MACHAMP", "Machoke + Cabo Link = Machamp");
         eq(E.byItem(at("HAUNTER", 30), "LINKCABLE"), "GENGAR", "Haunter + Cabo Link = Gengar");
         eq(at("MACHOKE", 100).evolutionByLevel(), null, "Machoke nunca evolui só por nível");
@@ -176,7 +176,7 @@ module.exports = function({ ctx, ok, eq, G, section }) {
         eq(E.byItem(null, "THUNDERSTONE"), null, "byItem sem monstro retorna null");
     }
 
-    //--- 8. Mochila: hook tardio (PKM_Bag carrega DEPOIS deste plugin) -------
+    //--- 8. Mochila: hook tardio (MON_Bag carrega DEPOIS deste plugin) -------
     {
         E.installBagIntegration();
         E.installBagIntegration();   // idempotente: não pode empilhar wrapper
@@ -186,29 +186,29 @@ module.exports = function({ ctx, ok, eq, G, section }) {
         ok(!E.isEvolutionItem("POTION"), "Potion não é item de evolução");
 
         const pika = at("PIKACHU", 20);
-        const res = ctx.PKM.Items.useOnPokemon("THUNDERSTONE", pika);
+        const res = ctx.MON.Items.useOnMonster("THUNDERSTONE", pika);
         ok(res.ok && pika.speciesName === "Raichu", "usar a pedra pela mochila evolui de verdade");
         ok(res.message.includes("Raichu"), "a mensagem anuncia a evolução");
 
         // o wrapper não pode atrapalhar os itens comuns
         const hurt = at("BLASTOISE", 50);
         hurt.hp = 1;
-        const heal = ctx.PKM.Items.useOnPokemon("POTION", hurt);
+        const heal = ctx.MON.Items.useOnMonster("POTION", hurt);
         ok(heal.ok && hurt.hp === 21, "Potion continua curando +20 pela mochila");
-        eq(ctx.PKM.Items.useOnPokemon("THUNDERSTONE", at("BULBASAUR", 20)).ok, false,
+        eq(ctx.MON.Items.useOnMonster("THUNDERSTONE", at("BULBASAUR", 20)).ok, false,
             "pedra sem efeito devolve a recusa padrão");
     }
 
     //--- 9. Regressão: 649 espécies × níveis × gêneros -----------------------
     {
         section("Evolução — regressão contra o comportamento antigo");
-        const ids = ctx.PKM.Core.allSpeciesIds();
+        const ids = ctx.MON.Core.allSpeciesIds();
         const levels = [1, 5, 7, 10, 16, 20, 25, 30, 34, 37, 40, 45, 50, 55, 64, 80, 100];
         let checks = 0, contradictions = 0, unlocked = 0;
         const samples = [];
 
         for (const id of ids) {
-            const species = ctx.PKM.Core.species(id);
+            const species = ctx.MON.Core.species(id);
             if (!species || !(species.evolutions || []).length) continue;
             for (const level of levels) {
                 for (const gender of ["M", "F", "N"]) {
@@ -240,7 +240,7 @@ module.exports = function({ ctx, ok, eq, G, section }) {
         ]);
         const unhandled = new Set();
         for (const id of ids) {
-            for (const ev of (ctx.PKM.Core.species(id).evolutions || [])) {
+            for (const ev of (ctx.MON.Core.species(id).evolutions || [])) {
                 if (!known.has(ev.method)) unhandled.add(ev.method);
             }
         }

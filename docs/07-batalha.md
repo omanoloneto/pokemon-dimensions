@@ -13,32 +13,32 @@ Substitui o 1v1 estilo Pokémon clássico. Decisões do dono do projeto, travada
 O motor antigo tinha a regra de combate presa dentro da cena (`this._player` vs `this._enemy`). Com 6 unidades isso duplicaria regra em todo lugar, então a lógica foi extraída:
 
 ```
-PKM_Field.js      campo em times — puro, headless, testável
-PKM_Human.js      Game_Human (estende Game_Pokemon)
-PKM_Battle.js     fórmulas puras (PKM.Battle.*) + Scene_PkmBattle (só render e input)
+MON_Field.js      campo em times — puro, headless, testável
+MON_Human.js      Game_Human (estende Game_Monster)
+MON_Battle.js     fórmulas puras (MON.Battle.*) + Scene_PkmBattle (só render e input)
 ```
 
-**A cena não decide nada de combate.** Ela pergunta ao campo quem age, em que ordem e contra quem, manda `PKM.Battle.executeMove` resolver, e desenha o resultado.
+**A cena não decide nada de combate.** Ela pergunta ao campo quem age, em que ordem e contra quem, manda `MON.Battle.executeMove` resolver, e desenha o resultado.
 
-### `PKM.Field` — o campo
+### `MON.Field` — o campo
 
 ```js
-const field = PKM.Field.create({ allies, foes, isTrainer, trainer });
-PKM.Field.activeUnits(field, PKM.Field.ALLY)   // de pé, em campo
-PKM.Field.slots(field, side)                   // inclui caídos (a cena desenha)
-PKM.Field.validTargets(field, unit)            // inimigos de pé
-PKM.Field.resolveTarget(field, unit, target)   // redireciona se o alvo morreu
-PKM.Field.turnOrder(actions)                   // prioridade > velocidade > moeda
-PKM.Field.outcome(field)                       // null | "win" | "lose"
-PKM.Field.fillEmptySlots(field, side)          // reserva entra no lugar do caído
-PKM.Field.pickAction(field, unit)              // IA do lado inimigo
+const field = MON.Field.create({ allies, foes, isTrainer, trainer });
+MON.Field.activeUnits(field, MON.Field.ALLY)   // de pé, em campo
+MON.Field.slots(field, side)                   // inclui caídos (a cena desenha)
+MON.Field.validTargets(field, unit)            // inimigos de pé
+MON.Field.resolveTarget(field, unit, target)   // redireciona se o alvo morreu
+MON.Field.turnOrder(actions)                   // prioridade > velocidade > moeda
+MON.Field.outcome(field)                       // null | "win" | "lose"
+MON.Field.fillEmptySlots(field, side)          // reserva entra no lugar do caído
+MON.Field.pickAction(field, unit)              // IA do lado inimigo
 ```
 
 Lados: `ALLY` (esquerda) e `FOE` (direita). `MAX_ACTIVE = 3`.
 
 Ação não-golpe (item, troca, fuga, captura) tem prioridade 6, acima de qualquer golpe — mesma convenção do Pokémon clássico.
 
-### `Game_Human` — por que estende `Game_Pokemon`
+### `Game_Human` — por que estende `Game_Monster`
 
 Herança deliberada: o motor inteiro (dano, tabela de tipos, status, estágios de stat, ordem de turno, campo) passa a tratar humano e monstro pela **mesma interface**, sem um segundo sistema de combate. O humano difere só no que importa:
 
@@ -49,22 +49,22 @@ Herança deliberada: o motor inteiro (dano, tabela de tipos, status, estágios d
 | Evolui | sim | não |
 | Shiny | 1/4096 | não |
 
-As "espécies" da faixa **HUM (920–969)** são **classes de personagem** — Treinador, DigiEscolhido, Medafighter, Criador, Grande Criança — e definem stats e ações. O avatar do jogador vive em `$gameParty.pkmSetAvatar(human)`, e `pkmBattleTeam()` devolve o avatar seguido dos monstros de pé.
+As "espécies" da faixa **HUM (920–969)** são **classes de personagem** — Treinador, DigiEscolhido, Medafighter, Criador, Grande Criança — e definem stats e ações. O avatar do jogador vive em `$gameParty.monSetAvatar(human)`, e `monBattleTeam()` devolve o avatar seguido dos monstros de pé.
 
 ## Sprites
 
-Não existem sprites de costas neste layout, e o repositório só tem `img/pokemon/front/`. A cena usa **front dos dois lados**, espelhando horizontalmente o time da esquerda para que os lados se encarem.
+Não existem sprites de costas neste layout, e o repositório só tem `img/monsters/front/`. A cena usa **front dos dois lados**, espelhando horizontalmente o time da esquerda para que os lados se encarem.
 
-Carregamento **obrigatoriamente** por `PKM.Core.loadSprite()`, que usa `Bitmap.load()` fora do cache do `ImageManager`: as classes humanas e as franquias novas ainda não têm arte, e um bitmap ausente no cache derrubaria a cena inteira via `ImageManager.throwLoadError` (a mesma classe do crash de áudio corrigido em `3fb6a23`).
+Carregamento **obrigatoriamente** por `MON.Core.loadSprite()`, que usa `Bitmap.load()` fora do cache do `ImageManager`: as classes humanas e as franquias novas ainda não têm arte, e um bitmap ausente no cache derrubaria a cena inteira via `ImageManager.throwLoadError` (a mesma classe do crash de áudio corrigido em `3fb6a23`).
 
 ## Regras que a revisão adversarial fixou
 
-- **O avatar do jogador é criado sozinho** se nenhum evento chamar `PKM_Human → Definir Avatar`. Sem isso o humano nunca apareceria em campo e o pedido não seria observável rodando o jogo.
-- **O humano é curado pelo Centro e alcançável por itens** (`pkmHealAll` e `pkmBattleRoster`). Ele não mora em `pkmParty()`, então cair numa batalha *vencida* o deixava morto para sempre, sem caminho de recuperação.
+- **O avatar do jogador é criado sozinho** se nenhum evento chamar `MON_Human → Definir Avatar`. Sem isso o humano nunca apareceria em campo e o pedido não seria observável rodando o jogo.
+- **O humano é curado pelo Centro e alcançável por itens** (`monHealAll` e `monBattleRoster`). Ele não mora em `monParty()`, então cair numa batalha *vencida* o deixava morto para sempre, sem caminho de recuperação.
 - **Struggle para o jogador**: sem PP em nenhum golpe, com reserva vazia e sem itens, numa batalha de treinador (onde Bola e Fugir são bloqueados) a UI travava sem ação possível.
 - **Uma tentativa de captura por turno** — com 3 aliados eram 3 rolagens no mesmo alvo.
 - **`catchRate: 0` significa incapturável** (era tratado como 45 pelo `||`), e franquia com `roster: false` fica fora da Pokédex.
 
 ## O que foi preservado do motor antigo
 
-Nada disso podia regredir na virada para times: EXP, nível, aprender golpe e evolução no fim da batalha; `runVictoryHooks` (drop de peça Medabot); `recordWin`/`recordFaint` (condições de digievolução dependem deles); captura com as regras por franquia (`PKM.Franchise.captureRule`, item-chave não consumido); prêmio em dinheiro, texto de derrota, insígnias e áudio.
+Nada disso podia regredir na virada para times: EXP, nível, aprender golpe e evolução no fim da batalha; `runVictoryHooks` (drop de peça Medabot); `recordWin`/`recordFaint` (condições de digievolução dependem deles); captura com as regras por franquia (`MON.Franchise.captureRule`, item-chave não consumido); prêmio em dinheiro, texto de derrota, insígnias e áudio.

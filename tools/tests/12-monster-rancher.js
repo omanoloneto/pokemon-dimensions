@@ -8,7 +8,7 @@ module.exports = function({ ctx, ok, eq, G, section }) {
     // headless não roda Scene_Boot: o banco de discos entra na mão
     ctx.$dataDiscs = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../../data/Discs.json"), "utf8"));
 
-    const S = ctx.PKM.Sanctuary;
+    const S = ctx.MON.Sanctuary;
     const STAT_KEYS = ["hp", "atk", "def", "spe", "spa", "spd"];
     const newParty = () => {
         const gp = new ctx.Game_Party();
@@ -17,19 +17,19 @@ module.exports = function({ ctx, ok, eq, G, section }) {
         return gp;
     };
     const bornWith = (discId, seed) => {
-        newParty().pkmGainItem(discId, 1);
+        newParty().monGainItem(discId, 1);
         return S.generate(discId, seed);
     };
     // o monstro inteiro: campos internos + stats derivados
     const snapshot = (p) => JSON.stringify({ state: p, stats: STAT_KEYS.map(k => p.stat(k)) });
 
     // --- espécies -----------------------------------------------------------
-    const suezo = ctx.PKM.Core.speciesByInternal("SUEZO");
-    const tiger = ctx.PKM.Core.speciesByInternal("TIGER");
+    const suezo = ctx.MON.Core.speciesByInternal("SUEZO");
+    const tiger = ctx.MON.Core.speciesByInternal("TIGER");
     ok(!!suezo && suezo.type1 === "PSYCHIC", "Suezo é Psychic");
     ok(!!tiger && tiger.type1 === "ELECTRIC" && tiger.type2 === "ICE", "Tiger é Electric/Ice");
-    eq(ctx.PKM.Core.speciesByInternal("GOLEM_MRA").type1, "ROCK", "Golem da fazenda é Rock");
-    ok(ctx.PKM.Franchise.speciesOf("MRA").every(sp => (sp.evolutions || []).length === 0),
+    eq(ctx.MON.Core.speciesByInternal("GOLEM_MRA").type1, "ROCK", "Golem da fazenda é Rock");
+    ok(ctx.MON.Franchise.speciesOf("MRA").every(sp => (sp.evolutions || []).length === 0),
         "nenhuma espécie MRA evolui por nível (progressão é treino)");
 
     // --- hash ---------------------------------------------------------------
@@ -60,27 +60,27 @@ module.exports = function({ ctx, ok, eq, G, section }) {
     // --- geração ------------------------------------------------------------
     const empty = newParty();
     const denied = S.generate("DISCCOMMON", "Bad Religion");
-    ok(!denied.ok && denied.pokemon === null, "sem o disco na mochila a geração falha limpa");
-    eq(empty.pkmCount(), 0, "geração negada não adiciona monstro");
+    ok(!denied.ok && denied.monster === null, "sem o disco na mochila a geração falha limpa");
+    eq(empty.monCount(), 0, "geração negada não adiciona monstro");
 
     const gp = newParty();
-    gp.pkmGainItem("DISCCOMMON", 1);
+    gp.monGainItem("DISCCOMMON", 1);
     const born = S.generate("DISCCOMMON", "Bad Religion");
-    ok(born.ok && !!born.pokemon, "com o disco na mochila o monstro nasce");
-    eq(gp.pkmItemCount("DISCCOMMON"), 0, "o disco é consumido na geração");
-    eq(gp.pkmCount(), 1, "o monstro gerado entra na equipe");
-    eq(born.pokemon.species().internalName, first.species, "o monstro gerado é o previsto pelo preview");
-    eq(born.pokemon.level, first.level, "o nível gerado é o previsto pelo preview");
-    eq(ctx.PKM.Franchise.of(born.pokemon).id, "MRA", "o monstro gerado pertence a Monster Rancher");
+    ok(born.ok && !!born.monster, "com o disco na mochila o monstro nasce");
+    eq(gp.monItemCount("DISCCOMMON"), 0, "o disco é consumido na geração");
+    eq(gp.monCount(), 1, "o monstro gerado entra na equipe");
+    eq(born.monster.species().internalName, first.species, "o monstro gerado é o previsto pelo preview");
+    eq(born.monster.level, first.level, "o nível gerado é o previsto pelo preview");
+    eq(ctx.MON.Franchise.of(born.monster).id, "MRA", "o monstro gerado pertence a Monster Rancher");
     eq(born.seed, "Bad Religion", "o resultado devolve a seed que foi usada");
 
     // --- o monstro INTEIRO sai da seed --------------------------------------
     const runs = [];
-    for (let i = 0; i < 5; i++) runs.push(snapshot(bornWith("DISCLEGEND", "Bad Religion").pokemon));
+    for (let i = 0; i < 5; i++) runs.push(snapshot(bornWith("DISCLEGEND", "Bad Religion").monster));
     eq(new Set(runs).size, 1, "5 gerações com a mesma seed dão monstros idênticos (natureza, gênero, shiny, habilidade, IVs, stats)");
 
     const traits = S.traits("DISCLEGEND", "Bad Religion");
-    const legend = bornWith("DISCLEGEND", "Bad Religion").pokemon;
+    const legend = bornWith("DISCLEGEND", "Bad Religion").monster;
     ok(legend._nature === traits.nature && legend.gender === traits.gender
         && legend.shiny === traits.shiny && legend._ability === traits.ability
         && STAT_KEYS.every(k => legend._ivs[k] === traits.ivs[k]),
@@ -106,7 +106,7 @@ module.exports = function({ ctx, ok, eq, G, section }) {
     ok(shinies > 0 && shinies < SHINY_SAMPLE / 1000, `shiny continua raro e possível (${shinies}/${SHINY_SAMPLE})`);
 
     // gênero e habilidade também saem da seed (espécie MRA é sem gênero, use uma com taxa)
-    const pidgey = ctx.PKM.Core.speciesByInternal("PIDGEY");
+    const pidgey = ctx.MON.Core.speciesByInternal("PIDGEY");
     const genders = new Set(), abilities = new Set();
     for (let i = 0; i < 60; i++) {
         const t = S.traitsFor(pidgey, "GEN-" + i);
@@ -155,10 +155,10 @@ module.exports = function({ ctx, ok, eq, G, section }) {
 
     const autoSeeds = [], autoSpecies = [];
     for (let i = 0; i < 8; i++) {
-        newParty().pkmGainItem("DISCCOMMON", 1);
+        newParty().monGainItem("DISCCOMMON", 1);
         const seed = S.resolveSeed("DISCCOMMON", { mode: "auto" });
         autoSeeds.push(seed);
-        autoSpecies.push(S.generate("DISCCOMMON", seed).pokemon.species().internalName);
+        autoSpecies.push(S.generate("DISCCOMMON", seed).monster.species().internalName);
     }
     eq(new Set(autoSeeds).size, 8, "cada geração automática usa uma seed nova");
     ok(new Set(autoSpecies).size >= 3,
@@ -166,10 +166,10 @@ module.exports = function({ ctx, ok, eq, G, section }) {
     eq(S.useCount("DISCCOMMON"), 8, "cada disco lido soma no contador do save");
     eq(S.totalUses(), 8, "totalUses acompanha o contador de discos");
 
-    const savedUses = JSON.parse(JSON.stringify(ctx.$gameSystem.pkmDiscUses));
+    const savedUses = JSON.parse(JSON.stringify(ctx.$gameSystem.monDiscUses));
     const beforeReload = S.resolveSeed("DISCCOMMON", { mode: "auto" });
     ctx.$gameSystem = new ctx.Game_System();
-    ctx.$gameSystem.pkmDiscUses = savedUses;
+    ctx.$gameSystem.monDiscUses = savedUses;
     eq(S.resolveSeed("DISCCOMMON", { mode: "auto" }), beforeReload,
         "recarregar o save devolve a mesma seed automática (sem save-scumming de IV)");
 

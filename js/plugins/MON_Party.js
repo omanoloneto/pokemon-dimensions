@@ -1,21 +1,21 @@
 //=============================================================================
-// PKM_Party.js  — Fase 2
+// MON_Party.js  — Fase 2
 //=============================================================================
 /*:
  * @target MZ
- * @plugindesc [PKM v0.2] Party de até 6 Pokémon + telas de equipe e resumo.
+ * @plugindesc [MON v0.2] Party de até 6 Pokémon + telas de equipe e resumo.
  * @author Pokémon Dimensions (port MZ)
- * @base PKM_Core
- * @base PKM_Pokemon
- * @orderAfter PKM_Pokemon
+ * @base MON_Core
+ * @base MON_Monster
+ * @orderAfter MON_Monster
  *
- * @help PKM_Party.js
+ * @help MON_Party.js
  *
  * Estende $gameParty com a equipe Pokémon (salva no save):
- *   $gameParty.pkmParty()        -> array de Game_Pokemon (até 6)
- *   $gameParty.pkmAdd(pkm)       -> adiciona (vai p/ "PC" se cheio); retorna destino
- *   $gameParty.pkmFirstAble()    -> primeiro Pokémon não desmaiado
- *   $gameParty.pkmHealAll()      -> cura tudo (Centro Pokémon)
+ *   $gameParty.monParty()        -> array de Game_Monster (até 6)
+ *   $gameParty.monAdd(pkm)       -> adiciona (vai p/ "PC" se cheio); retorna destino
+ *   $gameParty.monFirstAble()    -> primeiro Pokémon não desmaiado
+ *   $gameParty.monHealAll()      -> cura tudo (Centro Pokémon)
  *
  * @command give
  * @text Dar Pokémon
@@ -37,7 +37,7 @@
  * @desc Restaura HP/PP/status de toda a equipe.
  */
 
-var PKM = PKM || {};
+var MON = MON || {};
 
 (() => {
     "use strict";
@@ -49,53 +49,53 @@ var PKM = PKM || {};
     const _GP_init = Game_Party.prototype.initialize;
     Game_Party.prototype.initialize = function() {
         _GP_init.call(this);
-        this._pkmParty = [];
-        this._pkmStorage = [];
+        this._monParty = [];
+        this._monStorage = [];
     };
-    Game_Party.prototype.pkmEnsure = function() {
-        if (!this._pkmParty) this._pkmParty = [];
-        if (!this._pkmStorage) this._pkmStorage = [];
+    Game_Party.prototype.monEnsure = function() {
+        if (!this._monParty) this._monParty = [];
+        if (!this._monStorage) this._monStorage = [];
     };
-    Game_Party.prototype.pkmParty = function() { this.pkmEnsure(); return this._pkmParty; };
-    Game_Party.prototype.pkmCount = function() { this.pkmEnsure(); return this._pkmParty.length; };
-    Game_Party.prototype.pkmStorage = function() { this.pkmEnsure(); return this._pkmStorage; };
+    Game_Party.prototype.monParty = function() { this.monEnsure(); return this._monParty; };
+    Game_Party.prototype.monCount = function() { this.monEnsure(); return this._monParty.length; };
+    Game_Party.prototype.monStorage = function() { this.monEnsure(); return this._monStorage; };
 
-    Game_Party.prototype.pkmAdd = function(pkm) {
-        this.pkmEnsure();
-        if (this._pkmParty.length < MAX_PARTY) {
-            this._pkmParty.push(pkm);
+    Game_Party.prototype.monAdd = function(pkm) {
+        this.monEnsure();
+        if (this._monParty.length < MAX_PARTY) {
+            this._monParty.push(pkm);
             return "party";
         }
-        this._pkmStorage.push(pkm);
+        this._monStorage.push(pkm);
         return "storage";
     };
-    Game_Party.prototype.pkmCreate = function(species, level) {
-        return this.pkmAdd(new Game_Pokemon(species, level));
+    Game_Party.prototype.monCreate = function(species, level) {
+        return this.monAdd(new Game_Monster(species, level));
     };
-    Game_Party.prototype.pkmFirstAble = function() {
-        this.pkmEnsure();
-        return this._pkmParty.find(p => !p.isFainted()) || null;
+    Game_Party.prototype.monFirstAble = function() {
+        this.monEnsure();
+        return this._monParty.find(p => !p.isFainted()) || null;
     };
-    Game_Party.prototype.pkmAllFainted = function() {
-        this.pkmEnsure();
-        return this._pkmParty.length > 0 && this._pkmParty.every(p => p.isFainted());
+    Game_Party.prototype.monAllFainted = function() {
+        this.monEnsure();
+        return this._monParty.length > 0 && this._monParty.every(p => p.isFainted());
     };
-    Game_Party.prototype.pkmHealAll = function() {
-        this.pkmEnsure();
-        this._pkmParty.forEach(p => p.healFully());
-        // o avatar humano nao mora em _pkmParty: sem isto ele cai numa batalha
+    Game_Party.prototype.monHealAll = function() {
+        this.monEnsure();
+        this._monParty.forEach(p => p.healFully());
+        // o avatar humano nao mora em _monParty: sem isto ele cai numa batalha
         // vencida e nao ha caminho no jogo para revive-lo
-        const avatar = this.pkmAvatar ? this.pkmAvatar() : null;
+        const avatar = this.monAvatar ? this.monAvatar() : null;
         if (avatar && avatar.healFully) avatar.healFully();
     };
 
-    PluginManager.registerCommand("PKM_Party", "give", args => {
+    PluginManager.registerCommand("MON_Party", "give", args => {
         const lvl = Number(args.level) || 5;
         const sp = /^\d+$/.test(args.species) ? Number(args.species) : args.species;
-        $gameParty.pkmCreate(sp, lvl);
+        $gameParty.monCreate(sp, lvl);
     });
-    PluginManager.registerCommand("PKM_Party", "openParty", () => SceneManager.push(Scene_PkmParty));
-    PluginManager.registerCommand("PKM_Party", "heal", () => $gameParty.pkmHealAll());
+    PluginManager.registerCommand("MON_Party", "openParty", () => SceneManager.push(Scene_PkmParty));
+    PluginManager.registerCommand("MON_Party", "heal", () => $gameParty.monHealAll());
 
     // headless (testes): só a lógica de party acima
     if (typeof Scene_MenuBase === "undefined" || !Scene_MenuBase.prototype.create) return;
@@ -113,13 +113,13 @@ var PKM = PKM || {};
         this.select(0);
         this.activate();
     };
-    Window_PkmPartyList.prototype.maxItems = function() { return $gameParty.pkmCount(); };
+    Window_PkmPartyList.prototype.maxItems = function() { return $gameParty.monCount(); };
     Window_PkmPartyList.prototype.itemHeight = function() { return Math.floor(this.innerHeight / 6); };
-    Window_PkmPartyList.prototype.pokemon = function(i) { return $gameParty.pkmParty()[i]; };
-    Window_PkmPartyList.prototype.currentPokemon = function() { return this.pokemon(this.index()); };
+    Window_PkmPartyList.prototype.monster = function(i) { return $gameParty.monParty()[i]; };
+    Window_PkmPartyList.prototype.currentMonster = function() { return this.monster(this.index()); };
 
     Window_PkmPartyList.prototype.drawItem = function(index) {
-        const p = this.pokemon(index);
+        const p = this.monster(index);
         if (!p) return;
         const r = this.itemRect(index);
         const pad = 8;
@@ -157,9 +157,9 @@ var PKM = PKM || {};
         this.addWindow(this._listWindow);
     };
     Scene_PkmParty.prototype.onOk = function() {
-        const p = this._listWindow.currentPokemon();
+        const p = this._listWindow.currentMonster();
         if (p) {
-            PKM._summaryTarget = p;
+            MON._summaryTarget = p;
             SceneManager.push(Scene_PkmSummary);
         } else {
             this._listWindow.activate();
@@ -177,7 +177,7 @@ var PKM = PKM || {};
         Window_Base.prototype.initialize.call(this, rect);
         this._pkm = null;
     };
-    Window_PkmSummary.prototype.setPokemon = function(p) { this._pkm = p; this.refresh(); };
+    Window_PkmSummary.prototype.setMonster = function(p) { this._pkm = p; this.refresh(); };
     Window_PkmSummary.prototype.refresh = function() {
         this.contents.clear();
         const p = this._pkm;
@@ -218,7 +218,7 @@ var PKM = PKM || {};
         this.drawText("Golpes", 0, y, 200, "left"); y += lh;
         this.resetTextColor();
         for (const mv of p.moves) {
-            const md = PKM.Core.move(mv.id);
+            const md = MON.Core.move(mv.id);
             const nm = md ? md.name : mv.id;
             this.drawText("• " + nm, 16, y, 300, "left");
             this.drawText("PP " + mv.pp + "/" + mv.ppMax, 320, y, 120, "left");
@@ -233,7 +233,7 @@ var PKM = PKM || {};
         Scene_MenuBase.prototype.create.call(this);
         const rect = new Rectangle(0, this.mainAreaTop(), Graphics.boxWidth, this.mainAreaHeight());
         this._win = new Window_PkmSummary(rect);
-        this._win.setPokemon(PKM._summaryTarget);
+        this._win.setMonster(MON._summaryTarget);
         this.addWindow(this._win);
     };
     Scene_PkmSummary.prototype.update = function() {

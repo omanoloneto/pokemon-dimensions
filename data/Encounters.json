@@ -1,6 +1,6 @@
 {
  "_meta": {
-  "about": "Tabelas de encontro selvagem. Chave = mapId do projeto MZ; entradas com '_' são metadados e nunca são consultadas (PKM_Encounters faz lookup direto por mapId).",
+  "about": "Tabelas de encontro selvagem. Chave = mapId do projeto MZ; entradas com '_' são metadados e nunca são consultadas (MON_Encounters faz lookup direto por mapId).",
   "mapIdRanges": {
    "1": "MAP001 — mapa de teste, sem encontros",
    "2-19": "D1 Pokémon (Kanto)",
@@ -19,8 +19,8 @@
    "6": "D1_PKM_RiftSite — a criar, fim da Rota 2",
    "7-10": "resto da D1 (pós-vertical-slice), sem tabela ainda"
   },
-  "methods": "PKM_Encounters consome apenas 'Land' (12 slots ponderados). Outros métodos entram quando surfe/pesca existirem.",
-  "speciesNames": "internalName EXATO de data/Pokemon.json. Game_Pokemon._resolveSpecies faz toUpperCase antes de comparar, então nome com minúscula (NIDORANmA, NIDORANfE) cai no fallback silencioso do Bulbasaur — essas espécies ficam fora das tabelas até o lookup virar case-insensitive.",
+  "methods": "MON_Encounters consome apenas 'Land' (12 slots ponderados). Outros métodos entram quando surfe/pesca existirem.",
+  "speciesNames": "internalName EXATO de data/Monsters.json. Game_Monster._resolveSpecies faz toUpperCase antes de comparar, então nome com minúscula (NIDORANmA, NIDORANfE) cai no fallback silencioso do Bulbasaur — essas espécies ficam fora das tabelas até o lookup virar case-insensitive.",
   "densities": "[terrestre, caverna, água] — chance por passo = densidade / stepDivisor (250).",
   "levelBand": "D1 = 3-14 (docs/03-mundo-e-narrativa.md).",
   "pending": "Encontro só dispara em tiles pintados com a Região 1 (parâmetro grassRegionId). Map002 ainda não tem região pintada — tarefa de edição de mapa."

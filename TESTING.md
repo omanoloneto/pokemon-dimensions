@@ -17,16 +17,16 @@ captura → EXP/evolução → mochila → treinador → PC.
    sobrescrever os arquivos do próprio MZ como `Items.json`/`System.json` quebra
    o editor):
    - Estes 6 JSON → `<Projeto>/data/`:
-     `Pokemon.json`, `Moves.json`, `Types.json`, `PkmItems.json`,
+     `Monsters.json`, `Moves.json`, `Types.json`, `MonItems.json`,
      `Encounters.json`, `Trainers.json`
-   - `js/plugins/PKM_*.js` → `<Projeto>/js/plugins/`
+   - `js/plugins/MON_*.js` → `<Projeto>/js/plugins/`
 
    > Neste repositório a raiz JÁ É o projeto MZ — os arquivos já estão no
    > lugar, nada a copiar. Este passo vale só para instalar em outro projeto.
-4. (Opcional) Sprites: `img/pokemon/front/001.png`… → `<Projeto>/img/pokemon/front/`.
+4. (Opcional) Sprites: `img/monsters/front/001.png`… → `<Projeto>/img/monsters/front/`.
    Sem isso, a Pokédex mostra um placeholder "?".
 5. (Opcional) Áudio: coloque cries em `audio/se/Cries/001Cry.ogg`…, e
-   BGMs/MEs com os nomes configurados em `PKM_Audio`.
+   BGMs/MEs com os nomes configurados em `MON_Audio`.
 
 Reabra o projeto no MZ.
 
@@ -38,16 +38,16 @@ Reabra o projeto no MZ.
 nesta ordem (a ordem importa — dependências):
 
 ```
-1. PKM_Core
-2. PKM_Pokemon
-3. PKM_Pokedex
-4. PKM_Party
-5. PKM_Encounters
-6. PKM_Battle
-7. PKM_Bag
-8. PKM_Trainers
-9. PKM_Storage
-10. PKM_Audio
+1. MON_Core
+2. MON_Monster
+3. MON_Codex
+4. MON_Party
+5. MON_Encounters
+6. MON_Battle
+7. MON_Bag
+8. MON_Trainers
+9. MON_Storage
+10. MON_Audio
 ```
 
 Salve (Ctrl+S).
@@ -69,42 +69,42 @@ No mapa inicial, crie eventos (clique direito → Novo Evento). Em cada um,
 **Disparo: Tecla de Ação** e adicione um comando **Plugin** (ou **Script**).
 
 ### Evento A — "Dar inicial + itens" (Disparo: Tecla de Ação)
-- Comando de Plugin → `PKM_Party` → **Dar Pokémon**: `CHARMANDER`, nível `5`
-- Comando de Plugin → `PKM_Party` → **Dar Pokémon**: `PIDGEY`, nível `4`
-- Comando de Plugin → `PKM_Bag` → **Dar Item**: `POTION`, `5`
-- Comando de Plugin → `PKM_Bag` → **Dar Item**: `POKEBALL`, `10`
-- Comando de Plugin → `PKM_Bag` → **Dar Item**: `GREATBALL`, `5`
+- Comando de Plugin → `MON_Party` → **Dar Pokémon**: `CHARMANDER`, nível `5`
+- Comando de Plugin → `MON_Party` → **Dar Pokémon**: `PIDGEY`, nível `4`
+- Comando de Plugin → `MON_Bag` → **Dar Item**: `POTION`, `5`
+- Comando de Plugin → `MON_Bag` → **Dar Item**: `POKEBALL`, `10`
+- Comando de Plugin → `MON_Bag` → **Dar Item**: `GREATBALL`, `5`
 - Mostrar Texto: "Recebeu Charmander, Pidgey e itens!"
 
 > Use isto PRIMEIRO em cada playtest (a equipe/mochila começam vazias num save novo).
 
 ### Evento B — "Abrir Pokédex"
-- Comando de Plugin → `PKM_Pokedex` → **Abrir Pokédex**
-  - (ou Script: `SceneManager.push(Scene_Pokedex)`)
+- Comando de Plugin → `MON_Codex` → **Abrir Pokédex**
+  - (ou Script: `SceneManager.push(Scene_Codex)`)
 
 ### Evento C — "Abrir Equipe"
-- Comando de Plugin → `PKM_Party` → **Abrir Equipe**
+- Comando de Plugin → `MON_Party` → **Abrir Equipe**
 
 ### Evento D — "Abrir Mochila"
-- Comando de Plugin → `PKM_Bag` → **Abrir Mochila**
+- Comando de Plugin → `MON_Bag` → **Abrir Mochila**
 
 ### Evento E — "Forçar encontro selvagem"
-- Comando de Plugin → `PKM_Encounters` → **Forçar Encontro**: `PIDGEY`, nível `6`
+- Comando de Plugin → `MON_Encounters` → **Forçar Encontro**: `PIDGEY`, nível `6`
 
 ### Evento F — "Batalha de treinador"
-- Comando de Plugin → `PKM_Trainers` → **Batalha de Treinador**:
+- Comando de Plugin → `MON_Trainers` → **Batalha de Treinador**:
   - Tipo: `LEADER_Brock`  · Nome: `Brock`  · (fala ao perder, opcional)
-- Depois: Comando de Plugin → `PKM_Trainers` → **Dar Insígnia**: `KANTO_1`
+- Depois: Comando de Plugin → `MON_Trainers` → **Dar Insígnia**: `KANTO_1`
 
 ### Evento G — "Abrir PC"
-- Comando de Plugin → `PKM_Storage` → **Abrir PC**
+- Comando de Plugin → `MON_Storage` → **Abrir PC**
 
 ### (Opcional) Encontros ao andar na grama
 - Pinte a **Região 1** (aba **R** do editor de mapa) sobre tiles de grama.
 - Só dispara encontro se o **ID do mapa** existir em `Encounters.json`
   (ex.: mapa 5 = Route 1, mapa 2 = Lappet Town/água). Como o mapa inicial novo
   provavelmente não está lá, prefira o **Evento E** para testar a batalha, ou
-  ajuste o parâmetro do `PKM_Encounters`.
+  ajuste o parâmetro do `MON_Encounters`.
 
 ---
 
@@ -156,8 +156,8 @@ Rode o **Evento A** primeiro, depois:
 | Sintoma | Causa provável | O que fazer |
 |---|---|---|
 | Tela preta / erro ao abrir | Falta um `*.json` em `data/`, ou ordem dos plugins | Confira os 6 JSON em `data/` e a ordem da seção 2 |
-| `$dataPokemon is null` no console | `PKM_Core` desativado ou abaixo dos outros | `PKM_Core` deve ser o 1º e estar ON |
-| `Scene_PkmBattle is not defined` | `PKM_Battle` desativado/fora de ordem | Ative `PKM_Battle` antes de `PKM_Trainers`/`PKM_Audio` |
+| `$dataMonsters is null` no console | `MON_Core` desativado ou abaixo dos outros | `MON_Core` deve ser o 1º e estar ON |
+| `Scene_PkmBattle is not defined` | `MON_Battle` desativado/fora de ordem | Ative `MON_Battle` antes de `MON_Trainers`/`MON_Audio` |
 | Acentos estranhos (ç, ã) | Fonte do projeto sem esses glifos | Use a fonte padrão do MZ (tem acentuação) |
 | Avisos de áudio no console | Arquivos de cry/BGM ausentes | Normal — é opcional, não quebra nada |
 | Encontro não dispara na grama | Mapa não está em `Encounters.json` ou região ≠ 1 | Use o Evento E, ou ajuste `grassRegionId` no plugin |
@@ -168,8 +168,8 @@ Rode o **Evento A** primeiro, depois:
 ## 6. Limitações conhecidas (por design, nesta versão)
 
 - **Sprites de batalha**: a batalha usa janelas/barras de HP (sem sprites animados
-  dos Pokémon) — coloque imagens em `img/pokemon/front/` para a Pokédex.
-- **Golpes de status**: só os do registry `PKM.Battle.MOVE_EFFECTS` têm efeito;
+  dos Pokémon) — coloque imagens em `img/monsters/front/` para a Pokédex.
+- **Golpes de status**: só os do registry `MON.Battle.MOVE_EFFECTS` têm efeito;
   os demais golpes de status dizem "ainda não tem efeito". É fácil expandir.
 - **Itens de treinador / IA avançada**: a IA escolhe golpes aleatoriamente e não
   usa itens (Full Restore etc.) ainda.

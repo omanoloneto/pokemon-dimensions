@@ -1,6 +1,6 @@
 # 04 — Produção: Release Web/Mobile, Assets, Legal e QA
 
-Números medidos no repo: **939MB totais** — `img/` 395MB (`img/pokemon/` = 342MB em ~4.770 PNGs), `audio/` 48MB (1.104 .ogg). Corescript MZ 1.6+ (decoder Vorbis embutido → .ogg funciona no iOS; saves via localforage/IndexedDB). Resolução 816×624.
+Números medidos no repo: **939MB totais** — `img/` 395MB (`img/monsters/` = 342MB em ~4.770 PNGs), `audio/` 48MB (1.104 .ogg). Corescript MZ 1.6+ (decoder Vorbis embutido → .ogg funciona no iOS; saves via localforage/IndexedDB). Resolução 816×624.
 
 ## Pipeline de release
 
@@ -19,18 +19,18 @@ Fato base: MZ só exporta Windows/macOS/Web. **Não existe export nativo APK/IPA
 
 ## Adaptação mobile (gaps concretos no código)
 
-- [PKM_Pokedex.js:323-324](../js/plugins/PKM_Pokedex.js#L323-L324) — ordenação/filtro usa `pageup`/`pagedown` (Q/W). **Sem equivalente touch.**
-- [PKM_Storage.js:250-251](../js/plugins/PKM_Storage.js#L250-L251) — troca de box idem. **Sem equivalente touch.**
-- PKM_Battle/PKM_Party já tratam `TouchInput` básico; PKM_Bag herda tap/scroll de `Window_Selectable`. Validar tudo em device.
+- [MON_Codex.js:323-324](../js/plugins/MON_Codex.js#L323-L324) — ordenação/filtro usa `pageup`/`pagedown` (Q/W). **Sem equivalente touch.**
+- [MON_Storage.js:250-251](../js/plugins/MON_Storage.js#L250-L251) — troca de box idem. **Sem equivalente touch.**
+- MON_Battle/MON_Party já tratam `TouchInput` básico; MON_Bag herda tap/scroll de `Window_Selectable`. Validar tudo em device.
 - Fix mínimo: setas/botões clicáveis nas cenas Pokédex e Storage + swipe horizontal pra trocar box. Alternativa: plugin de controles virtuais (Hakuen Mobile Controls).
 - Conferir `touchUI` habilitado no ConfigManager (menu/cancel touch do core).
-- Resolução: manter 816×624 com letterbox no primeiro release (opção barata); migrar pra 1280×720 só se teste real incomodar (exige revisar todas as janelas PKM_*). Safe area/notch via `env(safe-area-inset-*)` no index.html.
+- Resolução: manter 816×624 com letterbox no primeiro release (opção barata); migrar pra 1280×720 só se teste real incomodar (exige revisar todas as janelas MON_*). Safe area/notch via `env(safe-area-inset-*)` no index.html.
 - **Memória em runtime > peso em disco:** cache de bitmaps do MZ cresce sem limite; iOS Safari mata a aba ~1-1.5GB. Adicionar limpeza seletiva (`ImageManager.clear()`) ao sair de batalha/Pokédex. Budget: <800MB no iOS.
 
 ## Corte de assets (por prioridade)
 
 1. **pngquant/oxipng em massa** nos sprites — quantização 256 cores ≈ lossless em sprite art; 342MB → ~110-130MB. Maior ganho, zero decisão de design.
-2. Cortar `img/pokemon/alt/` (84MB) do build se formas alternativas ficarem fora da v1.
+2. Cortar `img/monsters/alt/` (84MB) do build se formas alternativas ficarem fora da v1.
 3. Shinies (131MB): manter no servidor (web = sob demanda); fora do APK se apertar.
 4. Áudio: BGM re-encodado ~96kbps (29→~15MB); deletar SE/BGM do RTP não referenciados nos JSON.
 5. Atlas de ícones/footprints: só se um dia precisar do itch (limite de arquivos) — baixa prioridade.
@@ -53,5 +53,5 @@ Fato base: MZ só exporta Windows/macOS/Web. **Não existe export nativo APK/IPA
 1. **Teste de integridade de assets (fazer já):** varrer `data/*.json` e validar que todo áudio/imagem referenciado existe. O crash de áudio ausente já aconteceu (commit `3fb6a23`) — classe de bug 100% prevenível.
 2. **Smoke E2E (Playwright) no build web:** bootar → novo jogo → andar → batalha → captura → Pokédex/PC/mochila → salvar → recarregar → conferir. Pega crash de runtime que o harness de lógica não vê.
 3. **Save compat:** definir `schemaVersion` no save **antes do primeiro release público**; guardar um save-fixture por release; teste que carrega fixtures antigos. Testar export/import manual (proteção contra eviction do Safari).
-4. **Device matrix mensal (manual, 15 min):** 1 Android low-end (~3GB, browser+APK), 1 Android mid, 1 iPhone (PWA). FPS, alvos de toque das cenas PKM_*, save sobrevive a fechar o app.
+4. **Device matrix mensal (manual, 15 min):** 1 Android low-end (~3GB, browser+APK), 1 Android mid, 1 iPhone (PWA). FPS, alvos de toque das cenas MON_*, save sobrevive a fechar o app.
 5. Cena custom nova → entra no checklist touch no mesmo PR.

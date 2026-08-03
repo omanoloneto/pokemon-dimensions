@@ -1,23 +1,23 @@
 //=============================================================================
-// PKM_Bag.js  — Fase 3
+// MON_Bag.js  — Fase 3
 //=============================================================================
 /*:
  * @target MZ
- * @plugindesc [PKM v0.3] Mochila por bolsos, dinheiro, efeitos de itens (cura/PP/
+ * @plugindesc [MON v0.3] Mochila por bolsos, dinheiro, efeitos de itens (cura/PP/
  * revive/status) e cena da mochila. Integra Poké Bolas com a batalha.
  * @author Pokémon Dimensions (port MZ)
- * @base PKM_Core
- * @base PKM_Pokemon
- * @base PKM_Party
- * @orderAfter PKM_Battle
+ * @base MON_Core
+ * @base MON_Monster
+ * @base MON_Party
+ * @orderAfter MON_Battle
  *
- * @help PKM_Bag.js
+ * @help MON_Bag.js
  *
  * Estende $gameParty com a mochila Pokémon (salva no save):
- *   $gameParty.pkmGainItem(name, qty)   / pkmLoseItem(name, qty)
- *   $gameParty.pkmItemCount(name)       / pkmHasItem(name)
- *   $gameParty.pkmPocket(n)             -> [{name, qty}] do bolso n
- *   $gameParty.pkmMoney() / pkmGainMoney(n) / pkmLoseMoney(n)
+ *   $gameParty.monGainItem(name, qty)   / monLoseItem(name, qty)
+ *   $gameParty.monItemCount(name)       / monHasItem(name)
+ *   $gameParty.monPocket(n)             -> [{name, qty}] do bolso n
+ *   $gameParty.monMoney() / monGainMoney(n) / monLoseMoney(n)
  *
  * Bolsos: 1 Itens · 2 Remédios · 3 Poké Bolas · 4 MTs · 5 Berries ·
  *         6 Correio · 7 Batalha · 8 Chave.
@@ -40,7 +40,7 @@
  * @arg amount @type number @min 0 @default 100 @text Valor
  */
 
-var PKM = PKM || {};
+var MON = MON || {};
 
 (() => {
     "use strict";
@@ -70,24 +70,24 @@ var PKM = PKM || {};
     const PP_RESTORE = { ETHER: 10, MAXETHER: "full", ELIXIR: 10, MAXELIXIR: "full" };
     const BALL_BONUS = { POKEBALL: 1, GREATBALL: 1.5, ULTRABALL: 2, MASTERBALL: 255, PREMIERBALL: 1 };
 
-    PKM.Items = PKM.Items || {};
+    MON.Items = MON.Items || {};
     // itens de captura das outras dimensões declaram "catchBonus" no próprio dado
-    PKM.Items.ballBonus = function(name) {
+    MON.Items.ballBonus = function(name) {
         if (BALL_BONUS[name] !== undefined) return BALL_BONUS[name];
-        const it = PKM.Core.item(name);
+        const it = MON.Core.item(name);
         return it && it.catchBonus !== undefined ? it.catchBonus : 1;
     };
     // itens-chave de captura (ex.: Emblema G.C.) não são gastos no arremesso
-    PKM.Items.isConsumedOnThrow = function(name) {
-        const it = PKM.Core.item(name);
+    MON.Items.isConsumedOnThrow = function(name) {
+        const it = MON.Core.item(name);
         return !(it && it.keepOnUse);
     };
-    PKM.Items.isBall = (name) => { const it = PKM.Core.item(name); return it && it.pocket === 3; };
-    PKM.Items.isMedicine = (name) => { const it = PKM.Core.item(name); return it && it.pocket === 2; };
+    MON.Items.isBall = (name) => { const it = MON.Core.item(name); return it && it.pocket === 3; };
+    MON.Items.isMedicine = (name) => { const it = MON.Core.item(name); return it && it.pocket === 2; };
 
     // aplica item em um Pokémon. Retorna {ok, message}
-    PKM.Items.useOnPokemon = function(name, pkm) {
-        const it = PKM.Core.item(name);
+    MON.Items.useOnMonster = function(name, pkm) {
+        const it = MON.Core.item(name);
         const label = it ? it.name : name;
 
         if (REVIVE[name] !== undefined) {
@@ -130,40 +130,40 @@ var PKM = PKM || {};
     const _GP_init = Game_Party.prototype.initialize;
     Game_Party.prototype.initialize = function() {
         _GP_init.call(this);
-        this._pkmBag = {};
-        this._pkmMoney = 3000;
+        this._monBag = {};
+        this._monMoney = 3000;
     };
-    Game_Party.prototype.pkmBagEnsure = function() {
-        if (!this._pkmBag) this._pkmBag = {};
-        if (this._pkmMoney === undefined) this._pkmMoney = 0;
+    Game_Party.prototype.monBagEnsure = function() {
+        if (!this._monBag) this._monBag = {};
+        if (this._monMoney === undefined) this._monMoney = 0;
     };
-    Game_Party.prototype.pkmItemCount = function(name) { this.pkmBagEnsure(); return this._pkmBag[name] || 0; };
-    Game_Party.prototype.pkmHasItem = function(name) { return this.pkmItemCount(name) > 0; };
-    Game_Party.prototype.pkmGainItem = function(name, qty = 1) {
-        this.pkmBagEnsure();
-        if (!PKM.Core.item(name)) { console.warn("Item desconhecido:", name); return; }
-        this._pkmBag[name] = Math.max(0, (this._pkmBag[name] || 0) + qty);
-        if (this._pkmBag[name] === 0) delete this._pkmBag[name];
+    Game_Party.prototype.monItemCount = function(name) { this.monBagEnsure(); return this._monBag[name] || 0; };
+    Game_Party.prototype.monHasItem = function(name) { return this.monItemCount(name) > 0; };
+    Game_Party.prototype.monGainItem = function(name, qty = 1) {
+        this.monBagEnsure();
+        if (!MON.Core.item(name)) { console.warn("Item desconhecido:", name); return; }
+        this._monBag[name] = Math.max(0, (this._monBag[name] || 0) + qty);
+        if (this._monBag[name] === 0) delete this._monBag[name];
     };
-    Game_Party.prototype.pkmLoseItem = function(name, qty = 1) { this.pkmGainItem(name, -qty); };
-    Game_Party.prototype.pkmPocket = function(pocket) {
-        this.pkmBagEnsure();
-        return Object.keys(this._pkmBag)
-            .map(name => ({ name, qty: this._pkmBag[name], data: PKM.Core.item(name) }))
+    Game_Party.prototype.monLoseItem = function(name, qty = 1) { this.monGainItem(name, -qty); };
+    Game_Party.prototype.monPocket = function(pocket) {
+        this.monBagEnsure();
+        return Object.keys(this._monBag)
+            .map(name => ({ name, qty: this._monBag[name], data: MON.Core.item(name) }))
             .filter(e => e.data && e.data.pocket === pocket)
             .sort((a, b) => a.data.id - b.data.id);
     };
-    Game_Party.prototype.pkmBalls = function() { return this.pkmPocket(3); };
-    Game_Party.prototype.pkmMoney = function() { this.pkmBagEnsure(); return this._pkmMoney; };
-    Game_Party.prototype.pkmGainMoney = function(n) { this.pkmBagEnsure(); this._pkmMoney = Math.max(0, Math.min(9999999, this._pkmMoney + n)); };
-    Game_Party.prototype.pkmLoseMoney = function(n) { this.pkmGainMoney(-n); };
+    Game_Party.prototype.monBalls = function() { return this.monPocket(3); };
+    Game_Party.prototype.monMoney = function() { this.monBagEnsure(); return this._monMoney; };
+    Game_Party.prototype.monGainMoney = function(n) { this.monBagEnsure(); this._monMoney = Math.max(0, Math.min(9999999, this._monMoney + n)); };
+    Game_Party.prototype.monLoseMoney = function(n) { this.monGainMoney(-n); };
 
     // ambiente headless (testes): só lógica de itens/mochila acima.
     if (typeof Scene_MenuBase === "undefined" || !Scene_MenuBase.prototype.create) {
         // comandos de plugin ainda assim (no-op se PluginManager for stub)
-        PluginManager.registerCommand("PKM_Bag", "giveItem", args => $gameParty.pkmGainItem(args.item, Number(args.qty) || 1));
-        PluginManager.registerCommand("PKM_Bag", "takeItem", args => $gameParty.pkmLoseItem(args.item, Number(args.qty) || 1));
-        PluginManager.registerCommand("PKM_Bag", "giveMoney", args => $gameParty.pkmGainMoney(Number(args.amount) || 0));
+        PluginManager.registerCommand("MON_Bag", "giveItem", args => $gameParty.monGainItem(args.item, Number(args.qty) || 1));
+        PluginManager.registerCommand("MON_Bag", "takeItem", args => $gameParty.monLoseItem(args.item, Number(args.qty) || 1));
+        PluginManager.registerCommand("MON_Bag", "giveMoney", args => $gameParty.monGainMoney(Number(args.amount) || 0));
         return;
     }
 
@@ -193,7 +193,7 @@ var PKM = PKM || {};
     Window_BagList.prototype.setPocket = function(p) { this._pocket = p; this.refresh(); this.select(0); };
     Window_BagList.prototype.maxItems = function() { return this._data ? this._data.length : 0; };
     Window_BagList.prototype.currentEntry = function() { return this._data[this.index()]; };
-    Window_BagList.prototype.makeItemList = function() { this._data = $gameParty.pkmPocket(this._pocket); };
+    Window_BagList.prototype.makeItemList = function() { this._data = $gameParty.monPocket(this._pocket); };
     Window_BagList.prototype.refresh = function() { this.makeItemList(); Window_Selectable.prototype.refresh.call(this); };
     Window_BagList.prototype.drawItem = function(index) {
         const e = this._data[index];
@@ -253,7 +253,7 @@ var PKM = PKM || {};
     };
     Scene_PkmBag.prototype.refreshGold = function() {
         const c = this._gold.contents; c.clear();
-        this._gold.drawText("$ " + $gameParty.pkmMoney(), 0, 0, this._gold.innerWidth - 8, "right");
+        this._gold.drawText("$ " + $gameParty.monMoney(), 0, 0, this._gold.innerWidth - 8, "right");
     };
     Scene_PkmBag.prototype.onPocketOk = function() {
         this._list.setPocket(this._pockets.currentPocket());
@@ -265,11 +265,11 @@ var PKM = PKM || {};
     Scene_PkmBag.prototype.onItemOk = function() {
         const e = this._list.currentEntry();
         if (!e) { this._list.activate(); return; }
-        if (PKM.Items.isMedicine(e.name)) {
+        if (MON.Items.isMedicine(e.name)) {
             this._pendingItem = e.name;
             this._list.deactivate();
             this._target.refresh(); this._target.show(); this._target.activate(); this._target.select(0);
-        } else if (PKM.Items.isBall(e.name)) {
+        } else if (MON.Items.isBall(e.name)) {
             this._help.setText("Poké Bolas só podem ser usadas em batalha.");
             this._list.activate();
         } else {
@@ -278,17 +278,17 @@ var PKM = PKM || {};
         }
     };
     Scene_PkmBag.prototype.onTargetOk = function() {
-        const p = this._target.currentPokemon();
-        const res = PKM.Items.useOnPokemon(this._pendingItem, p);
+        const p = this._target.currentMonster();
+        const res = MON.Items.useOnMonster(this._pendingItem, p);
         if (res.ok) {
-            $gameParty.pkmLoseItem(this._pendingItem, 1);
+            $gameParty.monLoseItem(this._pendingItem, 1);
             SoundManager.playUseItem && SoundManager.playUseItem();
         } else {
             SoundManager.playBuzzer();
         }
         this._help.setText(res.message);
         this._target.refresh();
-        if ($gameParty.pkmItemCount(this._pendingItem) <= 0 || !res.ok) {
+        if ($gameParty.monItemCount(this._pendingItem) <= 0 || !res.ok) {
             this.closeTarget();
         } else {
             this._target.activate();
@@ -306,14 +306,14 @@ var PKM = PKM || {};
     Window_BagTarget.prototype.constructor = Window_BagTarget;
     // inclui o avatar humano: ele luta em campo, entao precisa receber cura e revive
     Window_BagTarget.prototype.targets = function() {
-        return $gameParty.pkmBattleRoster ? $gameParty.pkmBattleRoster() : $gameParty.pkmParty();
+        return $gameParty.monBattleRoster ? $gameParty.monBattleRoster() : $gameParty.monParty();
     };
     Window_BagTarget.prototype.maxItems = function() { return this.targets().length; };
     Window_BagTarget.prototype.itemHeight = function() { return Math.floor(this.innerHeight / 6); };
-    Window_BagTarget.prototype.pokemon = function(i) { return this.targets()[i]; };
-    Window_BagTarget.prototype.currentPokemon = function() { return this.pokemon(this.index()); };
+    Window_BagTarget.prototype.monster = function(i) { return this.targets()[i]; };
+    Window_BagTarget.prototype.currentMonster = function() { return this.monster(this.index()); };
     Window_BagTarget.prototype.drawItem = function(index) {
-        const p = this.pokemon(index);
+        const p = this.monster(index);
         if (!p) return;
         const r = this.itemRect(index);
         this.changePaintOpacity(!p.isFainted() || true);
@@ -327,8 +327,8 @@ var PKM = PKM || {};
     //=========================================================================
     // Comandos de plugin
     //=========================================================================
-    PluginManager.registerCommand("PKM_Bag", "giveItem", args => $gameParty.pkmGainItem(args.item, Number(args.qty) || 1));
-    PluginManager.registerCommand("PKM_Bag", "takeItem", args => $gameParty.pkmLoseItem(args.item, Number(args.qty) || 1));
-    PluginManager.registerCommand("PKM_Bag", "openBag", () => SceneManager.push(Scene_PkmBag));
-    PluginManager.registerCommand("PKM_Bag", "giveMoney", args => $gameParty.pkmGainMoney(Number(args.amount) || 0));
+    PluginManager.registerCommand("MON_Bag", "giveItem", args => $gameParty.monGainItem(args.item, Number(args.qty) || 1));
+    PluginManager.registerCommand("MON_Bag", "takeItem", args => $gameParty.monLoseItem(args.item, Number(args.qty) || 1));
+    PluginManager.registerCommand("MON_Bag", "openBag", () => SceneManager.push(Scene_PkmBag));
+    PluginManager.registerCommand("MON_Bag", "giveMoney", args => $gameParty.monGainMoney(Number(args.amount) || 0));
 })();

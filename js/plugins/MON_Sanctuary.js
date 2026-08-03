@@ -1,18 +1,18 @@
 //=============================================================================
-// PKM_Sanctuary.js  — Monster Rancher
+// MON_Sanctuary.js  — Monster Rancher
 //=============================================================================
 /*:
  * @target MZ
- * @plugindesc [PKM v0.3] Santuário de Discos (Monster Rancher): o disco vira
+ * @plugindesc [MON v0.3] Santuário de Discos (Monster Rancher): o disco vira
  * monstro por sorteio determinístico da seed, e o treino de fazenda aplica EVs.
  * @author Pokémon Dimensions
- * @base PKM_Core
- * @base PKM_Pokemon
- * @orderAfter PKM_Franchise
- * @orderAfter PKM_Bag
- * @orderAfter PKM_Storage
+ * @base MON_Core
+ * @base MON_Monster
+ * @orderAfter MON_Franchise
+ * @orderAfter MON_Bag
+ * @orderAfter MON_Storage
  *
- * @help PKM_Sanctuary.js
+ * @help MON_Sanctuary.js
  *
  * Na Dimensão Fazenda não existe captura em campo (Franchises.json, inField:false).
  * Monstros nascem de discos levados ao Santuário: a seed tempera o sorteio INTEIRO
@@ -20,17 +20,17 @@
  * (disco, seed) devolve exatamente o mesmo monstro, hoje e depois de recarregar.
  *
  * API:
- *   PKM.Sanctuary.hash(seed)                -> inteiro 32 bits determinístico
- *   PKM.Sanctuary.disc(discId)              -> entrada de data/Discs.json
- *   PKM.Sanctuary.preview(discId, seed)     -> {species, level} | null
- *   PKM.Sanctuary.traits(discId, seed)      -> {nature, gender, shiny, ability, ivs} | null
- *   PKM.Sanctuary.traitsFor(species, seed)  -> idem, para uma espécie qualquer
- *   PKM.Sanctuary.generate(discId, seed)    -> {ok, pokemon, seed, message}
- *   PKM.Sanctuary.expandSeed(text)          -> texto com \V[n] e \N[n] resolvidos
- *   PKM.Sanctuary.resolveSeed(discId, opts) -> seed final (opts: mode/text/variableId/actorId)
- *   PKM.Sanctuary.autoSeed(discId) / useCount(discId) / totalUses()
- *   PKM.Sanctuary.train(pokemon, statKey, amount) -> {ok, gained, message}
- *   PKM.Sanctuary.evTotal(pokemon) / evOf(pokemon, statKey)
+ *   MON.Sanctuary.hash(seed)                -> inteiro 32 bits determinístico
+ *   MON.Sanctuary.disc(discId)              -> entrada de data/Discs.json
+ *   MON.Sanctuary.preview(discId, seed)     -> {species, level} | null
+ *   MON.Sanctuary.traits(discId, seed)      -> {nature, gender, shiny, ability, ivs} | null
+ *   MON.Sanctuary.traitsFor(species, seed)  -> idem, para uma espécie qualquer
+ *   MON.Sanctuary.generate(discId, seed)    -> {ok, monster, seed, message}
+ *   MON.Sanctuary.expandSeed(text)          -> texto com \V[n] e \N[n] resolvidos
+ *   MON.Sanctuary.resolveSeed(discId, opts) -> seed final (opts: mode/text/variableId/actorId)
+ *   MON.Sanctuary.autoSeed(discId) / useCount(discId) / totalUses()
+ *   MON.Sanctuary.train(monster, statKey, amount) -> {ok, gained, message}
+ *   MON.Sanctuary.evTotal(monster) / evOf(monster, statKey)
  *
  * COMO O EVENTO DEVE CHAMAR
  * Argumento de comando no MZ é texto estático (não expande \V[n] sozinho): uma seed
@@ -133,13 +133,13 @@
 
 var $dataDiscs = $dataDiscs || null;
 
-var PKM = PKM || {};
-PKM.Sanctuary = PKM.Sanctuary || {};
+var MON = MON || {};
+MON.Sanctuary = MON.Sanctuary || {};
 
 (() => {
     "use strict";
 
-    const PLUGIN_NAME = "PKM_Sanctuary";
+    const PLUGIN_NAME = "MON_Sanctuary";
     const STAT_KEYS = ["hp", "atk", "def", "spe", "spa", "spd"];
     const STAT_LABELS = {
         hp: "Vitalidade", atk: "Força", def: "Resistência",
@@ -153,7 +153,7 @@ PKM.Sanctuary = PKM.Sanctuary || {};
     const GENDER_RESOLUTION = 1000;
     const SEED_MODES = ["text", "variable", "actorName", "auto"];
 
-    // PKM_Pokemon não exporta a tabela de gênero: cópia local para derivar da seed
+    // MON_Monster não exporta a tabela de gênero: cópia local para derivar da seed
     const GENDER_FEMALE_RATIO = {
         AlwaysMale: 0, FemaleOneEighth: 0.125, Female25Percent: 0.25,
         Female50Percent: 0.5, Female75Percent: 0.75, FemaleSevenEighths: 0.875,
@@ -165,14 +165,14 @@ PKM.Sanctuary = PKM.Sanctuary || {};
     //=========================================================================
     // Sorteio determinístico
     //=========================================================================
-    PKM.Sanctuary.disc = function(discId) {
+    MON.Sanctuary.disc = function(discId) {
         return ($dataDiscs && $dataDiscs[discId]) || null;
     };
 
-    PKM.Sanctuary.discName = function(discId) {
-        const item = PKM.Core.item(discId);
+    MON.Sanctuary.discName = function(discId) {
+        const item = MON.Core.item(discId);
         if (item) return item.name;
-        const disc = PKM.Sanctuary.disc(discId);
+        const disc = MON.Sanctuary.disc(discId);
         return (disc && disc.name) || String(discId);
     };
 
@@ -181,7 +181,7 @@ PKM.Sanctuary = PKM.Sanctuary || {};
     }
 
     // FNV-1a 32 bits: a mesma seed tem de gerar sempre o mesmo monstro
-    PKM.Sanctuary.hash = function(seed) {
+    MON.Sanctuary.hash = function(seed) {
         const text = seedText(seed);
         let h = 0x811c9dc5;
         for (let i = 0; i < text.length; i++) {
@@ -231,25 +231,25 @@ PKM.Sanctuary = PKM.Sanctuary || {};
     }
 
     function rollDisc(discId, seed) {
-        const disc = PKM.Sanctuary.disc(discId);
+        const disc = MON.Sanctuary.disc(discId);
         const pool = (disc && disc.pool) || [];
         const total = pool.reduce((sum, e) => sum + weightOf(e), 0);
         if (total <= 0) return null;
 
-        let state = step(PKM.Sanctuary.hash(discId + "|" + seedText(seed)));
+        let state = step(MON.Sanctuary.hash(discId + "|" + seedText(seed)));
         const entry = pickEntry(pool, state % total);
         if (!entry) return null;
         state = step(state);
         return { entry: entry, level: levelFrom(entry, state), state: state };
     }
 
-    PKM.Sanctuary.preview = function(discId, seed) {
+    MON.Sanctuary.preview = function(discId, seed) {
         const roll = rollDisc(discId, seed);
         return roll ? { species: roll.entry.species, level: roll.level } : null;
     };
 
     function natureCount() {
-        const natures = PKM.Pokemon && PKM.Pokemon.NATURES;
+        const natures = MON.Pokemon && MON.Pokemon.NATURES;
         return (natures && natures.length) || 1;
     }
 
@@ -272,26 +272,26 @@ PKM.Sanctuary = PKM.Sanctuary || {};
         };
     }
 
-    PKM.Sanctuary.traits = function(discId, seed) {
+    MON.Sanctuary.traits = function(discId, seed) {
         const roll = rollDisc(discId, seed);
         if (!roll) return null;
-        return deriveTraits(PKM.Core.speciesByInternal(roll.entry.species), roll.state);
+        return deriveTraits(MON.Core.speciesByInternal(roll.entry.species), roll.state);
     };
 
-    PKM.Sanctuary.traitsFor = function(species, seed) {
-        return species ? deriveTraits(species, step(PKM.Sanctuary.hash(seedText(seed)))) : null;
+    MON.Sanctuary.traitsFor = function(species, seed) {
+        return species ? deriveTraits(species, step(MON.Sanctuary.hash(seedText(seed)))) : null;
     };
 
-    // Game_Pokemon sorteia natureza/gênero/shiny/habilidade/IVs com Math.random no
+    // Game_Monster sorteia natureza/gênero/shiny/habilidade/IVs com Math.random no
     // construtor; como aqui é o disco que define o monstro (e não save-scumming),
     // o Santuário reescreve esses campos com os valores tirados da própria seed.
-    function applyTraits(pokemon, traits) {
-        pokemon._nature = traits.nature;
-        pokemon._gender = traits.gender;
-        pokemon._shiny = traits.shiny;
-        pokemon._ability = traits.ability;
-        for (const key of STAT_KEYS) pokemon._ivs[key] = traits.ivs[key];
-        pokemon._hp = pokemon.maxHp;
+    function applyTraits(monster, traits) {
+        monster._nature = traits.nature;
+        monster._gender = traits.gender;
+        monster._shiny = traits.shiny;
+        monster._ability = traits.ability;
+        for (const key of STAT_KEYS) monster._ivs[key] = traits.ivs[key];
+        monster._hp = monster.maxHp;
     }
 
     //=========================================================================
@@ -315,15 +315,15 @@ PKM.Sanctuary = PKM.Sanctuary || {};
     function useCounts() {
         const sys = system();
         if (!sys) return null;
-        if (!sys.pkmDiscUses) sys.pkmDiscUses = {};
-        return sys.pkmDiscUses;
+        if (!sys.monDiscUses) sys.monDiscUses = {};
+        return sys.monDiscUses;
     }
 
-    PKM.Sanctuary.useCount = function(discId) {
+    MON.Sanctuary.useCount = function(discId) {
         const counts = useCounts();
         return (counts && counts[discId]) || 0;
     };
-    PKM.Sanctuary.totalUses = function() {
+    MON.Sanctuary.totalUses = function() {
         const counts = useCounts();
         return counts ? Object.keys(counts).reduce((sum, key) => sum + counts[key], 0) : 0;
     };
@@ -335,103 +335,103 @@ PKM.Sanctuary = PKM.Sanctuary || {};
 
     // seed sem texto sai só do estado salvo: varia a cada disco usado, mas
     // recarregar o save e girar de novo devolve o mesmo monstro
-    PKM.Sanctuary.autoSeed = function(discId) {
-        return String(discId) + "#" + PKM.Sanctuary.useCount(discId) + "@" + PKM.Sanctuary.totalUses();
+    MON.Sanctuary.autoSeed = function(discId) {
+        return String(discId) + "#" + MON.Sanctuary.useCount(discId) + "@" + MON.Sanctuary.totalUses();
     };
 
-    PKM.Sanctuary.expandSeed = function(text) {
+    MON.Sanctuary.expandSeed = function(text) {
         return seedText(text)
             .replace(/\\V\[(\d+)\]/gi, (match, id) => variableValue(Number(id)))
             .replace(/\\N\[(\d+)\]/gi, (match, id) => actorName(Number(id)));
     };
 
-    PKM.Sanctuary.resolveSeed = function(discId, options) {
+    MON.Sanctuary.resolveSeed = function(discId, options) {
         const opt = options || {};
         const mode = SEED_MODES.includes(opt.mode) ? opt.mode : "text";
         let seed = "";
-        if (mode === "text") seed = PKM.Sanctuary.expandSeed(opt.text);
+        if (mode === "text") seed = MON.Sanctuary.expandSeed(opt.text);
         else if (mode === "variable") seed = variableValue(Number(opt.variableId) || 0);
         else if (mode === "actorName") seed = actorName(Number(opt.actorId) || 0);
-        return seed.trim() || PKM.Sanctuary.autoSeed(discId);
+        return seed.trim() || MON.Sanctuary.autoSeed(discId);
     };
 
     //=========================================================================
     // Santuário: disco -> monstro
     //=========================================================================
-    PKM.Sanctuary.generate = function(discId, seed) {
-        const label = PKM.Sanctuary.discName(discId);
+    MON.Sanctuary.generate = function(discId, seed) {
+        const label = MON.Sanctuary.discName(discId);
         const used = seedText(seed);
-        if (!PKM.Sanctuary.disc(discId)) {
-            return { ok: false, pokemon: null, seed: used, message: "O Santuário não reconhece este disco." };
+        if (!MON.Sanctuary.disc(discId)) {
+            return { ok: false, monster: null, seed: used, message: "O Santuário não reconhece este disco." };
         }
-        if (!$gameParty.pkmHasItem(discId)) {
-            return { ok: false, pokemon: null, seed: used, message: "Você não tem nenhum " + label + "." };
+        if (!$gameParty.monHasItem(discId)) {
+            return { ok: false, monster: null, seed: used, message: "Você não tem nenhum " + label + "." };
         }
         const roll = rollDisc(discId, seed);
-        const species = roll && PKM.Core.speciesByInternal(roll.entry.species);
+        const species = roll && MON.Core.speciesByInternal(roll.entry.species);
         if (!species) {
-            return { ok: false, pokemon: null, seed: used, message: label + " está arranhado demais para ser lido." };
+            return { ok: false, monster: null, seed: used, message: label + " está arranhado demais para ser lido." };
         }
 
-        $gameParty.pkmLoseItem(discId, 1);
-        const pokemon = new Game_Pokemon(species.id, roll.level);
-        applyTraits(pokemon, deriveTraits(species, roll.state));
+        $gameParty.monLoseItem(discId, 1);
+        const monster = new Game_Monster(species.id, roll.level);
+        applyTraits(monster, deriveTraits(species, roll.state));
         countUse(discId);
-        const destination = $gameParty.pkmAdd(pokemon);
+        const destination = $gameParty.monAdd(monster);
         const sys = system();
-        if (sys && sys.pkmSetCaught) sys.pkmSetCaught(species.id);
+        if (sys && sys.monSetCaught) sys.monSetCaught(species.id);
         const sent = destination === "storage" ? " Foi enviado para o PC." : "";
         return {
             ok: true,
-            pokemon: pokemon,
+            monster: monster,
             seed: used,
-            message: label + " girou e " + pokemon.name + " (Nv." + pokemon.level + ") nasceu no Santuário!" + sent
+            message: label + " girou e " + monster.name + " (Nv." + monster.level + ") nasceu no Santuário!" + sent
         };
     };
 
     //=========================================================================
     // Treino de fazenda (EVs permanentes)
     //=========================================================================
-    function evsOf(pokemon) {
-        if (!pokemon._evs) pokemon._evs = {};
+    function evsOf(monster) {
+        if (!monster._evs) monster._evs = {};
         for (const key of STAT_KEYS) {
-            if (typeof pokemon._evs[key] !== "number") pokemon._evs[key] = 0;
+            if (typeof monster._evs[key] !== "number") monster._evs[key] = 0;
         }
-        return pokemon._evs;
+        return monster._evs;
     }
 
-    PKM.Sanctuary.evOf = function(pokemon, statKey) {
-        return pokemon ? evsOf(pokemon)[statKey] || 0 : 0;
+    MON.Sanctuary.evOf = function(monster, statKey) {
+        return monster ? evsOf(monster)[statKey] || 0 : 0;
     };
-    PKM.Sanctuary.evTotal = function(pokemon) {
-        if (!pokemon) return 0;
-        const evs = evsOf(pokemon);
+    MON.Sanctuary.evTotal = function(monster) {
+        if (!monster) return 0;
+        const evs = evsOf(monster);
         return STAT_KEYS.reduce((sum, key) => sum + evs[key], 0);
     };
 
-    PKM.Sanctuary.train = function(pokemon, statKey, amount) {
-        if (!pokemon || !STAT_KEYS.includes(statKey)) {
+    MON.Sanctuary.train = function(monster, statKey, amount) {
+        if (!monster || !STAT_KEYS.includes(statKey)) {
             return { ok: false, gained: 0, message: "Não dá para treinar isso." };
         }
-        const evs = evsOf(pokemon);
+        const evs = evsOf(monster);
         const wanted = Math.max(1, Math.floor(Number(amount) || DEFAULT_TRAIN_GAIN));
-        const room = Math.min(EV_MAX_PER_STAT - evs[statKey], EV_MAX_TOTAL - PKM.Sanctuary.evTotal(pokemon));
+        const room = Math.min(EV_MAX_PER_STAT - evs[statKey], EV_MAX_TOTAL - MON.Sanctuary.evTotal(monster));
         const gained = Math.min(wanted, room);
         if (gained <= 0) {
-            return { ok: false, gained: 0, message: pokemon.name + " não rende mais nesse treino." };
+            return { ok: false, gained: 0, message: monster.name + " não rende mais nesse treino." };
         }
         evs[statKey] += gained;
         return {
             ok: true,
             gained: gained,
-            message: pokemon.name + " treinou " + STAT_LABELS[statKey] + " (+" + gained + ")."
+            message: monster.name + " treinou " + STAT_LABELS[statKey] + " (+" + gained + ")."
         };
     };
 
-    PKM.Sanctuary.EV_MAX_PER_STAT = EV_MAX_PER_STAT;
-    PKM.Sanctuary.EV_MAX_TOTAL = EV_MAX_TOTAL;
-    PKM.Sanctuary.SEED_MODES = SEED_MODES;
-    PKM.Sanctuary.SHINY_ODDS = SHINY_ODDS;
+    MON.Sanctuary.EV_MAX_PER_STAT = EV_MAX_PER_STAT;
+    MON.Sanctuary.EV_MAX_TOTAL = EV_MAX_TOTAL;
+    MON.Sanctuary.SEED_MODES = SEED_MODES;
+    MON.Sanctuary.SHINY_ODDS = SHINY_ODDS;
 
     //=========================================================================
     // Comandos de plugin
@@ -441,17 +441,17 @@ PKM.Sanctuary = PKM.Sanctuary || {};
     }
 
     PluginManager.registerCommand(PLUGIN_NAME, "giveDisc", args => {
-        $gameParty.pkmGainItem(args.disc, Number(args.qty) || 1);
+        $gameParty.monGainItem(args.disc, Number(args.qty) || 1);
     });
 
     PluginManager.registerCommand(PLUGIN_NAME, "generate", args => {
-        const seed = PKM.Sanctuary.resolveSeed(args.disc, {
+        const seed = MON.Sanctuary.resolveSeed(args.disc, {
             mode: args.seedMode,
             text: args.seed,
             variableId: args.seedVariable,
             actorId: args.seedActor
         });
-        const result = PKM.Sanctuary.generate(args.disc, seed);
+        const result = MON.Sanctuary.generate(args.disc, seed);
         announce(result.message);
         const switchId = Number(args.resultSwitch) || 0;
         if (switchId > 0 && typeof $gameSwitches !== "undefined" && $gameSwitches) {
@@ -460,8 +460,8 @@ PKM.Sanctuary = PKM.Sanctuary || {};
     });
 
     PluginManager.registerCommand(PLUGIN_NAME, "train", args => {
-        const pokemon = $gameParty.pkmParty()[Number(args.index) || 0];
-        const result = PKM.Sanctuary.train(pokemon, args.stat, Number(args.amount) || DEFAULT_TRAIN_GAIN);
+        const monster = $gameParty.monParty()[Number(args.index) || 0];
+        const result = MON.Sanctuary.train(monster, args.stat, Number(args.amount) || DEFAULT_TRAIN_GAIN);
         announce(result.message);
     });
 })();

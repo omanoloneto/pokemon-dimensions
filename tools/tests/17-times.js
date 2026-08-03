@@ -1,5 +1,5 @@
 // Times em batalha (até 3x3): encontros selvagens em grupo, treinador em campo
-// como combatente e condição de fim pelo campo (PKM_Field).
+// como combatente e condição de fim pelo campo (MON_Field).
 const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
@@ -33,17 +33,17 @@ function stubClass(id, internalName, name) {
 module.exports = function({ ctx, ok, eq, G, section }) {
     section("Times — encontros em grupo, treinador em campo e fim de batalha");
 
-    const hasHuman = ensurePlugin(ctx, "PKM_Human.js", () => typeof ctx.Game_Human !== "undefined");
-    const hasField = ensurePlugin(ctx, "PKM_Field.js", () => !!ctx.PKM.Field);
-    const hasEnc = ensurePlugin(ctx, "PKM_Encounters.js", () => !!ctx.PKM.Encounters);
-    ok(hasHuman, "PKM_Human carregado");
-    ok(hasField, "PKM_Field carregado");
-    ok(hasEnc, "PKM_Encounters carregado");
+    const hasHuman = ensurePlugin(ctx, "MON_Human.js", () => typeof ctx.Game_Human !== "undefined");
+    const hasField = ensurePlugin(ctx, "MON_Field.js", () => !!ctx.MON.Field);
+    const hasEnc = ensurePlugin(ctx, "MON_Encounters.js", () => !!ctx.MON.Encounters);
+    ok(hasHuman, "MON_Human carregado");
+    ok(hasField, "MON_Field carregado");
+    ok(hasEnc, "MON_Encounters carregado");
     if (!hasHuman || !hasField || !hasEnc) return;
 
-    const E = ctx.PKM.Encounters;
-    const T = ctx.PKM.Trainers;
-    const F = ctx.PKM.Field;
+    const E = ctx.MON.Encounters;
+    const T = ctx.MON.Trainers;
+    const F = ctx.MON.Field;
     const MAP_ID = 3;                       // rota de grama densa (densidade 25)
 
     // estado global do jogo só para este bloco. O Math é o do contexto do vm —
@@ -52,8 +52,8 @@ module.exports = function({ ctx, ok, eq, G, section }) {
     const prevParty = ctx.$gameParty, prevTemp = ctx.$gameTemp, prevRandom = vmMath.random;
     const party = new ctx.Game_Party();
     party.initialize();
-    party.pkmAdd(new G("PIKACHU", 10));
-    party.pkmAdd(new G("BULBASAUR", 10));
+    party.monAdd(new G("PIKACHU", 10));
+    party.monAdd(new G("BULBASAUR", 10));
     ctx.$gameParty = party;
     ctx.$gameTemp = {};
 
@@ -62,8 +62,8 @@ module.exports = function({ ctx, ok, eq, G, section }) {
     for (const [id, internal, name] of [
         [920, "TRAINER", "Treinador"], [925, "RIVAL", "Rival"], [926, "MARKLEADER", "Líder de Marco"]
     ]) {
-        if (ctx.PKM.Core.speciesByInternal(internal)) continue;
-        ctx.$dataPokemon[id] = stubClass(id, internal, name);
+        if (ctx.MON.Core.speciesByInternal(internal)) continue;
+        ctx.$dataMonsters[id] = stubClass(id, internal, name);
         injected.push(id);
     }
 
@@ -91,21 +91,21 @@ module.exports = function({ ctx, ok, eq, G, section }) {
         vmMath.random = prevRandom;
 
         eq(E.startWild("RATTATA", 5), true, "startWild inicia o encontro");
-        ok(Array.isArray(ctx.$gameTemp.pkmFoes), "pkmFoes é array mesmo no solo");
-        eq(ctx.$gameTemp.pkmFoes.length, 1, "encontro solo publica 1 unidade");
-        eq(ctx.$gameTemp.pkmWild, ctx.$gameTemp.pkmFoes[0], "pkmWild é o primeiro de pkmFoes");
+        ok(Array.isArray(ctx.$gameTemp.monFoes), "monFoes é array mesmo no solo");
+        eq(ctx.$gameTemp.monFoes.length, 1, "encontro solo publica 1 unidade");
+        eq(ctx.$gameTemp.monWild, ctx.$gameTemp.monFoes[0], "monWild é o primeiro de monFoes");
 
         E.startWildTeam([
             { species: "RATTATA", level: 5 }, { species: "PIDGEY", level: 4 },
             { species: "CATERPIE", level: 3 }, { species: "WEEDLE", level: 3 }
         ]);
-        eq(ctx.$gameTemp.pkmFoes.length, 3, "time selvagem satura em 3 unidades");
-        eq(ctx.$gameTemp.pkmWild, ctx.$gameTemp.pkmFoes[0], "pkmWild acompanha o time");
-        ok(ctx.$gameTemp.pkmFoes.every(u => !u.isHuman()), "selvagem não leva humano ao campo");
-        eq(ctx.$gameTemp.pkmTrainer, null, "encontro selvagem limpa o treinador");
+        eq(ctx.$gameTemp.monFoes.length, 3, "time selvagem satura em 3 unidades");
+        eq(ctx.$gameTemp.monWild, ctx.$gameTemp.monFoes[0], "monWild acompanha o time");
+        ok(ctx.$gameTemp.monFoes.every(u => !u.isHuman()), "selvagem não leva humano ao campo");
+        eq(ctx.$gameTemp.monTrainer, null, "encontro selvagem limpa o treinador");
 
         ok(E.rollAndStart(MAP_ID, "Land"), "rollAndStart sorteia e publica");
-        const rolled = ctx.$gameTemp.pkmFoes;
+        const rolled = ctx.$gameTemp.monFoes;
         ok(rolled.length >= 1 && rolled.length <= 3, `sorteio publica de 1 a 3 (${rolled.length})`);
 
         //--- treinador em campo ----------------------------------------------
@@ -131,15 +131,15 @@ module.exports = function({ ctx, ok, eq, G, section }) {
 
         eq(T.start("LEADER_Brock", "Brock", { defeatText: "Impressionante!" }), true,
             "start publica a batalha de treinador");
-        eq(ctx.$gameTemp.pkmFoes.length, 3, "time inimigo = humano + 2 monstros");
-        ok(ctx.$gameTemp.pkmFoes[0].isHuman(), "slot 0 do inimigo é o humano");
-        eq(ctx.$gameTemp.pkmWild, null, "batalha de treinador não deixa selvagem");
+        eq(ctx.$gameTemp.monFoes.length, 3, "time inimigo = humano + 2 monstros");
+        ok(ctx.$gameTemp.monFoes[0].isHuman(), "slot 0 do inimigo é o humano");
+        eq(ctx.$gameTemp.monWild, null, "batalha de treinador não deixa selvagem");
 
         //--- degradação sem classe humana no banco ---------------------------
-        const realLookup = ctx.PKM.Core.speciesByInternal;
-        ctx.PKM.Core.speciesByInternal = () => null;
+        const realLookup = ctx.MON.Core.speciesByInternal;
+        ctx.MON.Core.speciesByInternal = () => null;
         const bare = T.build(def);
-        ctx.PKM.Core.speciesByInternal = realLookup;
+        ctx.MON.Core.speciesByInternal = realLookup;
         eq(bare.human, null, "sem classe humana, o treinador fica fora do campo");
         eq(bare.team.length, bare.party.length, "time cai para só os monstros");
         eq(bare.team[0], bare.party[0], "primeiro do time volta a ser um monstro");
@@ -147,8 +147,8 @@ module.exports = function({ ctx, ok, eq, G, section }) {
 
         //--- campo: começo, vitória e derrota --------------------------------
         const avatar = new ctx.Game_Human("TRAINER", 10, { name: "Manolo" });
-        party.pkmSetAvatar(avatar);
-        const allies = party.pkmBattleTeam();
+        party.monSetAvatar(avatar);
+        const allies = party.monBattleTeam();
         eq(allies.length, 3, "time do jogador = humano + 2 monstros");
         ok(allies[0].isHuman(), "avatar humano no slot 0 do jogador");
 
@@ -168,7 +168,7 @@ module.exports = function({ ctx, ok, eq, G, section }) {
         for (const u of allies) u.hp = 0;
         eq(F.outcome(field2), "lose", "lado do jogador inteiro caído = derrota");
     } finally {
-        for (const id of injected) ctx.$dataPokemon[id] = undefined;
+        for (const id of injected) ctx.$dataMonsters[id] = undefined;
         vmMath.random = prevRandom;
         ctx.$gameParty = prevParty;
         ctx.$gameTemp = prevTemp;

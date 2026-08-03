@@ -1,21 +1,21 @@
 //=============================================================================
-// PKM_Storage.js  — Fase 8
+// MON_Storage.js  — Fase 8
 //=============================================================================
 /*:
  * @target MZ
- * @plugindesc [PKM v0.4] Sistema de PC: 16 caixas × 30 espaços, com depositar,
+ * @plugindesc [MON v0.4] Sistema de PC: 16 caixas × 30 espaços, com depositar,
  * retirar, mover/trocar e soltar Pokémon. Cena Scene_PkmStorage.
  * @author Pokémon Dimensions (port MZ)
- * @base PKM_Core
- * @base PKM_Pokemon
- * @base PKM_Party
- * @orderAfter PKM_Party
+ * @base MON_Core
+ * @base MON_Monster
+ * @base MON_Party
+ * @orderAfter MON_Party
  *
- * @help PKM_Storage.js
+ * @help MON_Storage.js
  *
  * Estende $gameParty com o PC (caixas), salvo no save:
- *   $gameParty.pkmBox(i) / pkmBoxCount() / pkmStoreToBox(pkm)
- *   $gameParty.pkmDeposit(partyIndex) / pkmWithdraw(box, slot)
+ *   $gameParty.monBox(i) / monBoxCount() / monStoreToBox(pkm)
+ *   $gameParty.monDeposit(partyIndex) / monWithdraw(box, slot)
  *
  * Capturas com a equipe cheia passam a ir para a primeira caixa com espaço.
  * Abra o PC pelo comando de plugin "Abrir PC".
@@ -25,7 +25,7 @@
  * @desc Abre a cena do sistema de armazenamento (caixas).
  */
 
-var PKM = PKM || {};
+var MON = MON || {};
 
 (() => {
     "use strict";
@@ -37,29 +37,29 @@ var PKM = PKM || {};
     //=========================================================================
     // Game_Party — caixas do PC
     //=========================================================================
-    Game_Party.prototype.pkmBoxesEnsure = function() {
-        if (!this._pkmBoxes) {
-            this._pkmBoxes = [];
+    Game_Party.prototype.monBoxesEnsure = function() {
+        if (!this._monBoxes) {
+            this._monBoxes = [];
             for (let i = 0; i < BOXES; i++) {
-                this._pkmBoxes.push({ name: "Caixa " + (i + 1), slots: new Array(PER_BOX).fill(null) });
+                this._monBoxes.push({ name: "Caixa " + (i + 1), slots: new Array(PER_BOX).fill(null) });
             }
-            // migra capturas antigas (array plano de PKM_Party) para as caixas
-            if (this._pkmStorage && this._pkmStorage.length) {
-                for (const p of this._pkmStorage) this.pkmStoreToBox(p);
-                this._pkmStorage = [];
+            // migra capturas antigas (array plano de MON_Party) para as caixas
+            if (this._monStorage && this._monStorage.length) {
+                for (const p of this._monStorage) this.monStoreToBox(p);
+                this._monStorage = [];
             }
         }
     };
-    Game_Party.prototype.pkmBoxCount = function() { this.pkmBoxesEnsure(); return this._pkmBoxes.length; };
-    Game_Party.prototype.pkmBox = function(i) { this.pkmBoxesEnsure(); return this._pkmBoxes[i]; };
-    Game_Party.prototype.pkmStoredCount = function() {
-        this.pkmBoxesEnsure();
-        return this._pkmBoxes.reduce((n, b) => n + b.slots.filter(Boolean).length, 0);
+    Game_Party.prototype.monBoxCount = function() { this.monBoxesEnsure(); return this._monBoxes.length; };
+    Game_Party.prototype.monBox = function(i) { this.monBoxesEnsure(); return this._monBoxes[i]; };
+    Game_Party.prototype.monStoredCount = function() {
+        this.monBoxesEnsure();
+        return this._monBoxes.reduce((n, b) => n + b.slots.filter(Boolean).length, 0);
     };
-    Game_Party.prototype.pkmStoreToBox = function(pkm) {
-        this.pkmBoxesEnsure();
-        for (let b = 0; b < this._pkmBoxes.length; b++) {
-            const slots = this._pkmBoxes[b].slots;
+    Game_Party.prototype.monStoreToBox = function(pkm) {
+        this.monBoxesEnsure();
+        for (let b = 0; b < this._monBoxes.length; b++) {
+            const slots = this._monBoxes[b].slots;
             for (let s = 0; s < slots.length; s++) {
                 if (!slots[s]) { slots[s] = pkm; return { box: b, slot: s }; }
             }
@@ -68,47 +68,47 @@ var PKM = PKM || {};
     };
 
     // captura com equipe cheia agora vai para uma caixa
-    Game_Party.prototype.pkmAdd = function(pkm) {
-        this.pkmEnsure();
-        if (this._pkmParty.length < MAX_PARTY) { this._pkmParty.push(pkm); return "party"; }
-        return this.pkmStoreToBox(pkm) ? "storage" : "full";
+    Game_Party.prototype.monAdd = function(pkm) {
+        this.monEnsure();
+        if (this._monParty.length < MAX_PARTY) { this._monParty.push(pkm); return "party"; }
+        return this.monStoreToBox(pkm) ? "storage" : "full";
     };
 
     // depositar: equipe -> caixa (mantém ao menos 1 na equipe)
-    Game_Party.prototype.pkmDeposit = function(partyIndex) {
-        this.pkmEnsure();
-        if (this._pkmParty.length <= 1) return { ok: false, reason: "Não pode depositar o último Pokémon!" };
-        const pkm = this._pkmParty[partyIndex];
+    Game_Party.prototype.monDeposit = function(partyIndex) {
+        this.monEnsure();
+        if (this._monParty.length <= 1) return { ok: false, reason: "Não pode depositar o último Pokémon!" };
+        const pkm = this._monParty[partyIndex];
         if (!pkm) return { ok: false, reason: "Nada para depositar." };
-        const dest = this.pkmStoreToBox(pkm);
+        const dest = this.monStoreToBox(pkm);
         if (!dest) return { ok: false, reason: "O PC está cheio!" };
-        this._pkmParty.splice(partyIndex, 1);
+        this._monParty.splice(partyIndex, 1);
         return { ok: true, dest };
     };
     // retirar: caixa -> equipe
-    Game_Party.prototype.pkmWithdraw = function(boxIndex, slot) {
-        this.pkmEnsure(); this.pkmBoxesEnsure();
-        if (this._pkmParty.length >= MAX_PARTY) return { ok: false, reason: "A equipe está cheia!" };
-        const pkm = this._pkmBoxes[boxIndex].slots[slot];
+    Game_Party.prototype.monWithdraw = function(boxIndex, slot) {
+        this.monEnsure(); this.monBoxesEnsure();
+        if (this._monParty.length >= MAX_PARTY) return { ok: false, reason: "A equipe está cheia!" };
+        const pkm = this._monBoxes[boxIndex].slots[slot];
         if (!pkm) return { ok: false, reason: "Espaço vazio." };
-        this._pkmBoxes[boxIndex].slots[slot] = null;
-        this._pkmParty.push(pkm);
+        this._monBoxes[boxIndex].slots[slot] = null;
+        this._monParty.push(pkm);
         return { ok: true };
     };
-    Game_Party.prototype.pkmReleaseBox = function(boxIndex, slot) {
-        this.pkmBoxesEnsure();
-        const pkm = this._pkmBoxes[boxIndex].slots[slot];
+    Game_Party.prototype.monReleaseBox = function(boxIndex, slot) {
+        this.monBoxesEnsure();
+        const pkm = this._monBoxes[boxIndex].slots[slot];
         if (!pkm) return null;
-        this._pkmBoxes[boxIndex].slots[slot] = null;
+        this._monBoxes[boxIndex].slots[slot] = null;
         return pkm;
     };
-    Game_Party.prototype.pkmMoveBoxSlot = function(boxIndex, from, to) {
-        this.pkmBoxesEnsure();
-        const slots = this._pkmBoxes[boxIndex].slots;
+    Game_Party.prototype.monMoveBoxSlot = function(boxIndex, from, to) {
+        this.monBoxesEnsure();
+        const slots = this._monBoxes[boxIndex].slots;
         const tmp = slots[to]; slots[to] = slots[from]; slots[from] = tmp;   // troca/move
     };
 
-    PluginManager.registerCommand("PKM_Storage", "openPC", () => SceneManager.push(Scene_PkmStorage));
+    PluginManager.registerCommand("MON_Storage", "openPC", () => SceneManager.push(Scene_PkmStorage));
 
     // headless (testes): só a lógica de caixas acima
     if (typeof Scene_MenuBase === "undefined" || !Scene_MenuBase.prototype.create) return;
@@ -127,7 +127,7 @@ var PKM = PKM || {};
     Window_PCBox.prototype.setBox = function(i) { this._boxIndex = i; this.refresh(); };
     Window_PCBox.prototype.maxCols = function() { return COLS; };
     Window_PCBox.prototype.maxItems = function() { return PER_BOX; };
-    Window_PCBox.prototype.slotPkm = function(i) { return $gameParty.pkmBox(this._boxIndex).slots[i]; };
+    Window_PCBox.prototype.slotPkm = function(i) { return $gameParty.monBox(this._boxIndex).slots[i]; };
     Window_PCBox.prototype.current = function() { return this.slotPkm(this.index()); };
     Window_PCBox.prototype.drawItem = function(index) {
         const p = this.slotPkm(index);
@@ -153,9 +153,9 @@ var PKM = PKM || {};
     function Window_PCParty() { this.initialize(...arguments); }
     Window_PCParty.prototype = Object.create(Window_Selectable.prototype);
     Window_PCParty.prototype.constructor = Window_PCParty;
-    Window_PCParty.prototype.maxItems = function() { return $gameParty.pkmCount(); };
+    Window_PCParty.prototype.maxItems = function() { return $gameParty.monCount(); };
     Window_PCParty.prototype.itemHeight = function() { return Math.floor(this.innerHeight / 6); };
-    Window_PCParty.prototype.pkm = function(i) { return $gameParty.pkmParty()[i]; };
+    Window_PCParty.prototype.pkm = function(i) { return $gameParty.monParty()[i]; };
     Window_PCParty.prototype.current = function() { return this.pkm(this.index()); };
     Window_PCParty.prototype.drawItem = function(index) {
         const p = this.pkm(index);
@@ -227,7 +227,7 @@ var PKM = PKM || {};
     };
     Scene_PkmStorage.prototype.refreshTitle = function() {
         const c = this._titleWindow.contents; c.clear();
-        const box = $gameParty.pkmBox(this._boxWindow._boxIndex);
+        const box = $gameParty.monBox(this._boxWindow._boxIndex);
         this._titleWindow.drawText("◀ " + box.name + " ▶", 0, 0, this._titleWindow.innerWidth, "center");
     };
     Scene_PkmStorage.prototype.drawInfo = function(text) {
@@ -253,7 +253,7 @@ var PKM = PKM || {};
         }
     };
     Scene_PkmStorage.prototype.changeBox = function(dir) {
-        const n = $gameParty.pkmBoxCount();
+        const n = $gameParty.monBoxCount();
         this._boxWindow._boxIndex = (this._boxWindow._boxIndex + dir + n) % n;
         this._boxWindow.refresh();
         this.refreshTitle();
@@ -264,7 +264,7 @@ var PKM = PKM || {};
     Scene_PkmStorage.prototype.onBoxOk = function() {
         // modo mover: segundo OK define o destino
         if (this._boxWindow._moveFrom >= 0) {
-            $gameParty.pkmMoveBoxSlot(this._boxWindow._boxIndex, this._boxWindow._moveFrom, this._boxWindow.index());
+            $gameParty.monMoveBoxSlot(this._boxWindow._boxIndex, this._boxWindow._moveFrom, this._boxWindow.index());
             this._boxWindow._moveFrom = -1;
             this._boxWindow.refresh();
             this._boxWindow.activate();
@@ -297,13 +297,13 @@ var PKM = PKM || {};
     Scene_PkmStorage.prototype.cmdCancel = function() { this.closeCommand(); this._boxWindow.activate(); };
     Scene_PkmStorage.prototype.cmdWithdraw = function() {
         this.closeCommand();
-        const r = $gameParty.pkmWithdraw(this._boxWindow._boxIndex, this._boxWindow.index());
+        const r = $gameParty.monWithdraw(this._boxWindow._boxIndex, this._boxWindow.index());
         if (!r.ok) { SoundManager.playBuzzer(); this.drawInfo(r.reason); } else { SoundManager.playOk(); }
         this.refreshAll(); this._boxWindow.activate();
     };
     Scene_PkmStorage.prototype.cmdSummary = function() {
         this.closeCommand();
-        PKM._summaryTarget = this._boxWindow.current();
+        MON._summaryTarget = this._boxWindow.current();
         SceneManager.push(Scene_PkmSummary);
     };
     Scene_PkmStorage.prototype.cmdMove = function() {
@@ -315,7 +315,7 @@ var PKM = PKM || {};
     Scene_PkmStorage.prototype.cmdRelease = function() {
         this.closeCommand();
         const p = this._boxWindow.current();
-        $gameParty.pkmReleaseBox(this._boxWindow._boxIndex, this._boxWindow.index());
+        $gameParty.monReleaseBox(this._boxWindow._boxIndex, this._boxWindow.index());
         SoundManager.playOk();
         this.refreshAll();
         this.drawInfo((p ? p.name : "O Pokémon") + " foi solto. Adeus!");
@@ -323,7 +323,7 @@ var PKM = PKM || {};
     };
     Scene_PkmStorage.prototype.cmdDeposit = function() {
         this.closeCommand();
-        if ($gameParty.pkmCount() <= 1) {
+        if ($gameParty.monCount() <= 1) {
             SoundManager.playBuzzer(); this.drawInfo("Não pode depositar o último Pokémon!");
             this._boxWindow.activate(); return;
         }
@@ -333,7 +333,7 @@ var PKM = PKM || {};
 
     //--- depósito a partir da equipe (vai para a 1ª caixa com espaço) ---------
     Scene_PkmStorage.prototype.onPartyOk = function() {
-        const r = $gameParty.pkmDeposit(this._partyWindow.index());
+        const r = $gameParty.monDeposit(this._partyWindow.index());
         if (!r.ok) { SoundManager.playBuzzer(); this.drawInfo(r.reason); }
         else SoundManager.playOk();
         this._partyWindow.deactivate();

@@ -42,7 +42,7 @@ Critério: reconhecimento decrescente + contraste temático alternado (natureza 
 ### Chaves Dimensionais (análogo de insígnias — sistema já pronto)
 
 - **12 no total:** Pokémon 3, Digimon 3, Medabots 2, Monster Rancher 2, Bucky 2.
-- Cada Chave = boss num **Marco** temático: Ginásio (PKM), Torre de Dados (DGM), Arena Robattle (MDB), Santuário de Pedra (MR), Templo Elemental (BKY). Mesmo esqueleto de evento, skin diferente.
+- Cada Chave = boss num **Marco** temático: Ginásio (MON), Torre de Dados (DGM), Arena Robattle (MDB), Santuário de Pedra (MR), Templo Elemental (BKY). Mesmo esqueleto de evento, skin diferente.
 - Benefício por Chave: obediência até nível X + no máximo 1 desbloqueio de campo por dimensão (análogo de HM).
 
 ### Curva de nível

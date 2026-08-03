@@ -10,36 +10,36 @@ const DEX_ID = "KANTO";
 const TOTAL = 151;
 const D1_LEVELS = { min: 3, max: 14 };
 const D1_MAP_IDS = { from: 2, to: 19 };
-const LAND_SLOTS = 12; // PKM_Encounters.LAND_WEIGHTS
+const LAND_SLOTS = 12; // MON_Encounters.LAND_WEIGHTS
 const METHODS = ["wild", "evolution", "starter", "gift", "unavailable"];
 const REASONS = ["legendary", "trade", "fossil", "postgame"];
 
-// o harness carrega uma lista fixa de plugins; PKM_Dex e a dex regional entram aqui
+// o harness carrega uma lista fixa de plugins; MON_Dex e a dex regional entram aqui
 function bootDex(ctx) {
-    if (ctx.PKM.Dex) return;
+    if (ctx.MON.Dex) return;
     ctx.$dataDexKanto = readJson("data/dex/KANTO.json");
-    vm.runInContext(fs.readFileSync(path.join(ROOT, "js/plugins/PKM_Dex.js"), "utf8"),
-        ctx, { filename: "PKM_Dex.js" });
-    ctx.PKM.Dex.install();
+    vm.runInContext(fs.readFileSync(path.join(ROOT, "js/plugins/MON_Dex.js"), "utf8"),
+        ctx, { filename: "MON_Dex.js" });
+    ctx.MON.Dex.install();
 }
 
 module.exports = function({ ctx, ok, eq, G, section }) {
     section("Kanto — dex regional da D1 e encontros");
 
     bootDex(ctx);
-    const D = ctx.PKM.Dex;
+    const D = ctx.MON.Dex;
     const dex = D.get(DEX_ID);
     const species = D.species(DEX_ID);
 
     //--- recorte -------------------------------------------------------------
     ok(!!dex && dex.franchise === "PKM" && dex.dimension === "D1",
-        "KANTO é a dex da franquia PKM na dimensão D1");
+        "KANTO é a dex da franquia MON na dimensão D1");
     eq(species.length, TOTAL, "a dex tem 151 espécies");
     ok(species.every((id, i) => id === i + 1), "ordem regional é 1..151, crescente e sem buracos");
-    ok(species.every(id => !!ctx.PKM.Core.species(id)), "toda espécie da dex existe em $dataPokemon");
-    ok(species.every(id => ctx.PKM.Franchise.ofSpecies(id).id === "PKM"),
-        "toda espécie da dex está na faixa da franquia PKM");
-    eq(D.franchise(DEX_ID).id, "PKM", "franchise() reusa o registro de PKM_Franchise");
+    ok(species.every(id => !!ctx.MON.Core.species(id)), "toda espécie da dex existe em $dataMonsters");
+    ok(species.every(id => ctx.MON.Franchise.ofSpecies(id).id === "PKM"),
+        "toda espécie da dex está na faixa da franquia MON");
+    eq(D.franchise(DEX_ID).id, "PKM", "franchise() reusa o registro de MON_Franchise");
     ok(D.ofFranchise("PKM").some(d => d.id === DEX_ID), "ofFranchise('PKM') acha a dex de Kanto");
 
     //--- número regional -----------------------------------------------------
@@ -74,17 +74,17 @@ module.exports = function({ ctx, ok, eq, G, section }) {
         "todo presente de NPC documenta onde é entregue");
 
     // consistência da corrente: evolução aponta para uma pré-evolução obtível e real
-    const byInternal = new Map(species.map(id => [ctx.PKM.Core.species(id).internalName, id]));
+    const byInternal = new Map(species.map(id => [ctx.MON.Core.species(id).internalName, id]));
     const evolutions = species.filter(id => obt(id).method === "evolution");
     ok(evolutions.length > 0 && evolutions.every(id => byInternal.has(obt(id).from)),
         "toda evolução aponta para uma pré-evolução dentro da dex");
     ok(evolutions.every(id => obt(byInternal.get(obt(id).from)).method !== "unavailable"),
         "nenhuma evolução depende de uma linha bloqueada");
     ok(evolutions.every(id => {
-        const pre = ctx.PKM.Core.species(byInternal.get(obt(id).from));
-        const into = ctx.PKM.Core.species(id).internalName;
+        const pre = ctx.MON.Core.species(byInternal.get(obt(id).from));
+        const into = ctx.MON.Core.species(id).internalName;
         return (pre.evolutions || []).some(ev => ev.into === into);
-    }), "o 'from' declarado confere com as evoluções de $dataPokemon");
+    }), "o 'from' declarado confere com as evoluções de $dataMonsters");
 
     //--- encontros -----------------------------------------------------------
     const enc = ctx.$dataEncounters;
@@ -103,12 +103,12 @@ module.exports = function({ ctx, ok, eq, G, section }) {
         if (table) for (const s of table) slots.push(s);
     }
     ok(mapIds.every(k => (enc[k].methods.Land || []).length === LAND_SLOTS),
-        "toda tabela Land tem os 12 slots ponderados que PKM_Encounters espera");
+        "toda tabela Land tem os 12 slots ponderados que MON_Encounters espera");
     ok(mapIds.every(k => Array.isArray(enc[k].densities) && enc[k].densities[0] > 0),
         "toda tabela declara densidade terrestre positiva");
 
-    const found = slots.map(s => ctx.PKM.Core.speciesByInternal(s.species));
-    ok(found.every(Boolean), "toda espécie citada nos encontros existe em $dataPokemon");
+    const found = slots.map(s => ctx.MON.Core.speciesByInternal(s.species));
+    ok(found.every(Boolean), "toda espécie citada nos encontros existe em $dataMonsters");
     ok(found.every(sp => sp && D.contains(DEX_ID, sp.id)),
         "toda espécie dos encontros está na dex de Kanto");
     ok(found.every(sp => sp && obt(sp.id).method === "wild"),
@@ -116,7 +116,7 @@ module.exports = function({ ctx, ok, eq, G, section }) {
     ok(slots.every(s => s.min >= D1_LEVELS.min && s.max <= D1_LEVELS.max && s.min <= s.max),
         "todo slot respeita a faixa de nível da D1 (3-14)");
 
-    // jogável de verdade: o slot vira o monstro CERTO. Game_Pokemon._resolveSpecies
+    // jogável de verdade: o slot vira o monstro CERTO. Game_Monster._resolveSpecies
     // faz toUpperCase, então internalName com minúscula cai no Bulbasaur em silêncio.
     ok(slots.every((s, i) => {
         const p = new G(s.species, s.min);
@@ -134,14 +134,14 @@ module.exports = function({ ctx, ok, eq, G, section }) {
     ok(zero.seen === 0 && zero.caught === 0 && zero.total === TOTAL,
         "save limpo: 0 vistos, 0 capturados, 151 no total");
 
-    ctx.$gameSystem.pkmSetSeen(16);
-    ctx.$gameSystem.pkmSetSeen(19);
-    ctx.$gameSystem.pkmSetCaught(25);
+    ctx.$gameSystem.monSetSeen(16);
+    ctx.$gameSystem.monSetSeen(19);
+    ctx.$gameSystem.monSetCaught(25);
     const partial = D.progress(DEX_ID);
     ok(partial.seen === 3 && partial.caught === 1,
         "capturado conta como visto uma única vez (3 vistos, 1 capturado)");
 
-    ctx.$gameSystem.pkmSetCaught(650); // Digimon: fora da dex regional
+    ctx.$gameSystem.monSetCaught(650); // Digimon: fora da dex regional
     const after = D.progress(DEX_ID);
     ok(after.seen === 3 && after.caught === 1,
         "espécie de outra franquia não entra no progresso de Kanto");

@@ -1,4 +1,4 @@
-// Suíte do campo de batalha em times (PKM_Field): posições, lados, alvos,
+// Suíte do campo de batalha em times (MON_Field): posições, lados, alvos,
 // ordem de turno, substituição, condição de fim e IA — tudo headless.
 const fs = require("fs");
 const path = require("path");
@@ -11,13 +11,13 @@ const STAT_KEYS = ["hp", "atk", "def", "spe", "spa", "spd"];
 function bootField(ctx) {
     const run = (file) => vm.runInContext(
         fs.readFileSync(path.join(ROOT, "js/plugins", file), "utf8"), ctx, { filename: file });
-    if (!ctx.Game_Human) run("PKM_Human.js");
-    if (!ctx.PKM.Field || !ctx.PKM.Field.create) run("PKM_Field.js");
+    if (!ctx.Game_Human) run("MON_Human.js");
+    if (!ctx.MON.Field || !ctx.MON.Field.create) run("MON_Field.js");
 }
 
 // classe humana real quando o banco HUM já está compilado; senão o padrão
 function humanClass(ctx) {
-    const classes = (ctx.PKM.Human && ctx.PKM.Human.classes) ? ctx.PKM.Human.classes() : [];
+    const classes = (ctx.MON.Human && ctx.MON.Human.classes) ? ctx.MON.Human.classes() : [];
     const found = classes.find(sp => sp && sp.internalName);
     return found ? found.internalName : "TRAINER";
 }
@@ -40,7 +40,7 @@ const drainPP = (unit) => { for (const m of unit.moves) m.pp = 0; };
 module.exports = function({ ctx, ok, eq, G, section }) {
     bootField(ctx);
 
-    const F = ctx.PKM.Field;
+    const F = ctx.MON.Field;
     const KLASS = humanClass(ctx);
     const mon = (species, level, opts) => fixate(new G(species, level), opts);
     const human = (level, opts = {}) =>
@@ -292,7 +292,7 @@ module.exports = function({ ctx, ok, eq, G, section }) {
         const ghost = mon("GASTLY", 50);
         const utility = mon("RATTATA", 50, { moves: ["TACKLE", "GROWL"] });
         const ghostField = F.create({ allies: [ghost], foes: [utility] });
-        eq(ctx.PKM.Battle.calcDamage(utility, ghost, "TACKLE", { fixedRand: 1, forceCrit: false }).damage, 0,
+        eq(ctx.MON.Battle.calcDamage(utility, ghost, "TACKLE", { fixedRand: 1, forceCrit: false }).damage, 0,
             "golpe Normal não machuca Fantasma");
         eq(F.pickAction(ghostField, utility).move.id, "GROWL", "contra alvo imune a IA parte para a utilidade");
 
@@ -303,7 +303,7 @@ module.exports = function({ ctx, ok, eq, G, section }) {
 
         drainPP(noPP);
         const desperate = F.pickAction(ppField, noPP);
-        ok(desperate && desperate.move && !!ctx.PKM.Core.move(desperate.move.id),
+        ok(desperate && desperate.move && !!ctx.MON.Core.move(desperate.move.id),
             "com todo o PP zerado ainda devolve um golpe que existe no banco");
         ok(desperate.move.pp > 0, "o golpe de desespero tem PP para ser usado");
         ok(F.validTargets(ppField, noPP).includes(desperate.target), "o desespero também mira alvo válido");

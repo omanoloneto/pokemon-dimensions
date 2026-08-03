@@ -1,15 +1,15 @@
 //=============================================================================
-// PKM_Pokedex.js
+// MON_Codex.js
 //=============================================================================
 /*:
  * @target MZ
- * @plugindesc [PKM v0.1] Sistema de Pokédex: lista navegável + ficha de detalhes
+ * @plugindesc [MON v0.1] Sistema de Pokédex: lista navegável + ficha de detalhes
  * (tipos, categoria, altura/peso, descrição), com estado visto/capturado.
  * @author Pokémon Dimensions (port MZ)
- * @base PKM_Core
- * @orderAfter PKM_Core
+ * @base MON_Core
+ * @orderAfter MON_Core
  *
- * @help PKM_Pokedex.js
+ * @help MON_Codex.js
  *
  * Abre a Pokédex. Espécies não vistas aparecem como "----------" e ficham com
  * "???". Espécies vistas mostram nome/tipos/altura/peso. A descrição completa
@@ -17,10 +17,10 @@
  *
  * COMO ABRIR
  *   - Comando de plugin "Abrir Pokédex", ou
- *   - Em um evento (Script):  SceneManager.push(Scene_Pokedex);
+ *   - Em um evento (Script):  SceneManager.push(Scene_Codex);
  *
  * SPRITES (opcional)
- *   Coloque imagens em  img/pokemon/front/<numero>.png  (ex.: 1.png).
+ *   Coloque imagens em  img/monsters/front/<numero>.png  (ex.: 1.png).
  *   Se não houver imagem, um quadro de silhueta/placeholder é desenhado.
  *
  * @command open
@@ -28,12 +28,12 @@
  * @desc Abre a cena da Pokédex.
  */
 
-var PKM = PKM || {};
+var MON = MON || {};
 
 (() => {
     "use strict";
 
-    const FRONT_DIR = "img/pokemon/front/";
+    const FRONT_DIR = "img/monsters/front/";
 
     // Cores por tipo (hex) — usadas nos "badges" de tipo.
     const TYPE_COLORS = {
@@ -47,51 +47,51 @@ var PKM = PKM || {};
     const num3 = (n) => String(n).padStart(3, "0");
 
     //=========================================================================
-    // Window_PokedexList — lista de todas as espécies
+    // Window_CodexList — lista de todas as espécies
     //=========================================================================
-    function Window_PokedexList() { this.initialize(...arguments); }
-    Window_PokedexList.prototype = Object.create(Window_Selectable.prototype);
-    Window_PokedexList.prototype.constructor = Window_PokedexList;
+    function Window_CodexList() { this.initialize(...arguments); }
+    Window_CodexList.prototype = Object.create(Window_Selectable.prototype);
+    Window_CodexList.prototype.constructor = Window_CodexList;
 
-    Window_PokedexList.prototype.initialize = function(rect) {
+    Window_CodexList.prototype.initialize = function(rect) {
         Window_Selectable.prototype.initialize.call(this, rect);
         this._detailWindow = null;
-        this._order = PKM.Core.allSpeciesIds();
+        this._order = MON.Core.allSpeciesIds();
         this.refresh();
         this.select(0);
         this.activate();
     };
-    Window_PokedexList.prototype.setOrder = function(ids) {
+    Window_CodexList.prototype.setOrder = function(ids) {
         this._order = ids;
         this.refresh();
         this.select(0);
         this.callUpdateHelp();
     };
-    Window_PokedexList.prototype.maxItems = function() {
+    Window_CodexList.prototype.maxItems = function() {
         return this._order ? this._order.length : 0;
     };
-    Window_PokedexList.prototype.speciesId = function(index) {
+    Window_CodexList.prototype.speciesId = function(index) {
         return this._order[index] || 1;
     };
-    Window_PokedexList.prototype.currentSpeciesId = function() {
+    Window_CodexList.prototype.currentSpeciesId = function() {
         return this.speciesId(this.index());
     };
-    Window_PokedexList.prototype.setDetailWindow = function(w) {
+    Window_CodexList.prototype.setDetailWindow = function(w) {
         this._detailWindow = w;
         this.callUpdateHelp();
     };
-    Window_PokedexList.prototype.callUpdateHelp = function() {
+    Window_CodexList.prototype.callUpdateHelp = function() {
         if (this._detailWindow) {
             this._detailWindow.setSpeciesId(this.currentSpeciesId());
         }
     };
-    Window_PokedexList.prototype.drawItem = function(index) {
+    Window_CodexList.prototype.drawItem = function(index) {
         const id = this.speciesId(index);
-        const sp = PKM.Core.species(id);
+        const sp = MON.Core.species(id);
         if (!sp) return;
         const rect = this.itemLineRect(index);
-        const seen = $gameSystem.pkmIsSeen(id);
-        const caught = $gameSystem.pkmIsCaught(id);
+        const seen = $gameSystem.monIsSeen(id);
+        const caught = $gameSystem.monIsCaught(id);
 
         // marcador de capturado (poké ball "●")
         this.changeTextColor(caught ? "#ff5959" : ColorManager.normalColor());
@@ -110,35 +110,35 @@ var PKM = PKM || {};
     };
 
     //=========================================================================
-    // Window_PokedexDetail — ficha da espécie selecionada
+    // Window_CodexDetail — ficha da espécie selecionada
     //=========================================================================
-    function Window_PokedexDetail() { this.initialize(...arguments); }
-    Window_PokedexDetail.prototype = Object.create(Window_Base.prototype);
-    Window_PokedexDetail.prototype.constructor = Window_PokedexDetail;
+    function Window_CodexDetail() { this.initialize(...arguments); }
+    Window_CodexDetail.prototype = Object.create(Window_Base.prototype);
+    Window_CodexDetail.prototype.constructor = Window_CodexDetail;
 
-    Window_PokedexDetail.prototype.initialize = function(rect) {
+    Window_CodexDetail.prototype.initialize = function(rect) {
         Window_Base.prototype.initialize.call(this, rect);
         this._id = 0;
         this._bitmap = null;
     };
-    Window_PokedexDetail.prototype.setSpeciesId = function(id) {
+    Window_CodexDetail.prototype.setSpeciesId = function(id) {
         if (this._id === id) return;
         this._id = id;
         this.loadSprite();
         this.refresh();
     };
-    Window_PokedexDetail.prototype.loadSprite = function() {
+    Window_CodexDetail.prototype.loadSprite = function() {
         this._bitmap = null;
-        if (!$gameSystem.pkmIsSeen(this._id)) return;
-        const bmp = PKM.Core.loadSprite(FRONT_DIR, num3(this._id));
+        if (!$gameSystem.monIsSeen(this._id)) return;
+        const bmp = MON.Core.loadSprite(FRONT_DIR, num3(this._id));
         if (bmp) bmp.addLoadListener(() => { this._bitmap = bmp; this.refresh(); });
     };
-    Window_PokedexDetail.prototype.refresh = function() {
+    Window_CodexDetail.prototype.refresh = function() {
         this.contents.clear();
-        const sp = PKM.Core.species(this._id);
+        const sp = MON.Core.species(this._id);
         if (!sp) return;
-        const seen = $gameSystem.pkmIsSeen(this._id);
-        const caught = $gameSystem.pkmIsCaught(this._id);
+        const seen = $gameSystem.monIsSeen(this._id);
+        const caught = $gameSystem.monIsCaught(this._id);
 
         const pad = 8;
         const boxW = 200;
@@ -181,7 +181,7 @@ var PKM = PKM || {};
 
         // categoria + selo da dimensão de origem (e atributo, nas franquias que usam)
         if (seen) {
-            const fr = PKM.Franchise && PKM.Franchise.of({ speciesId: sp.id, species: () => sp });
+            const fr = MON.Franchise && MON.Franchise.of({ speciesId: sp.id, species: () => sp });
             const kind = sp.category ? (fr && fr.id !== "PKM" ? sp.category : "Pokémon " + sp.category) : "";
             if (kind) this.drawText(kind, tx, ty, tw, "left");
             const tag = [fr && fr.id !== "PKM" ? fr.name : null, sp.attribute].filter(Boolean).join(" · ");
@@ -236,14 +236,14 @@ var PKM = PKM || {};
         this.changeTextColor(ColorManager.systemColor());
         if (this._sortLabel) this.drawText(this._sortLabel, pad, fy, 280, "left");
         this.drawText(
-            "Vistos: " + $gameSystem.pkmSeenCount() +
-            "   Capturados: " + $gameSystem.pkmCaughtCount(),
+            "Vistos: " + $gameSystem.monSeenCount() +
+            "   Capturados: " + $gameSystem.monCaughtCount(),
             pad, fy, this.contentsWidth() - pad * 2, "right");
         this.resetTextColor();
     };
-    Window_PokedexDetail.prototype.setSortLabel = function(label) { this._sortLabel = label; this.refresh(); };
-    Window_PokedexDetail.prototype.evoLabel = function(ev) {
-        const sp = PKM.Core.speciesByInternal ? PKM.Core.speciesByInternal(ev.into) : null;
+    Window_CodexDetail.prototype.setSortLabel = function(label) { this._sortLabel = label; this.refresh(); };
+    Window_CodexDetail.prototype.evoLabel = function(ev) {
+        const sp = MON.Core.speciesByInternal ? MON.Core.speciesByInternal(ev.into) : null;
         const name = sp ? sp.name : ev.into;
         if (ev.method === "Level" || ev.method === "LevelMale" || ev.method === "LevelFemale") {
             return name + " (Nv " + ev.param + ")";
@@ -251,7 +251,7 @@ var PKM = PKM || {};
         return name + " (" + ev.method + (ev.param ? " " + ev.param : "") + ")";
     };
 
-    Window_PokedexDetail.prototype.drawTypeBadge = function(type, x, y) {
+    Window_CodexDetail.prototype.drawTypeBadge = function(type, x, y) {
         if (!type) return;
         const w = 100, h = 28;
         this.contents.fillRect(x, y + 2, w, h, typeColor(type));
@@ -262,7 +262,7 @@ var PKM = PKM || {};
     };
 
     // Quebra de texto simples por palavras.
-    Window_PokedexDetail.prototype.drawWrappedText = function(text, x, y, maxW) {
+    Window_CodexDetail.prototype.drawWrappedText = function(text, x, y, maxW) {
         const words = String(text).split(/\s+/);
         let line = "";
         let cy = y;
@@ -284,11 +284,11 @@ var PKM = PKM || {};
     };
 
     //=========================================================================
-    // Scene_Pokedex
+    // Scene_Codex
     //=========================================================================
-    window.Scene_Pokedex = function() { this.initialize(...arguments); };
-    Scene_Pokedex.prototype = Object.create(Scene_MenuBase.prototype);
-    Scene_Pokedex.prototype.constructor = Scene_Pokedex;
+    window.Scene_Codex = function() { this.initialize(...arguments); };
+    Scene_Codex.prototype = Object.create(Scene_MenuBase.prototype);
+    Scene_Codex.prototype.constructor = Scene_Codex;
 
     const SORT_MODES = [
         { key: "num",    label: "Ordem: Nº" },
@@ -297,7 +297,7 @@ var PKM = PKM || {};
         { key: "seenOnly", label: "Filtro: Só vistos" }
     ];
 
-    Scene_Pokedex.prototype.create = function() {
+    Scene_Codex.prototype.create = function() {
         Scene_MenuBase.prototype.create.call(this);
         this._sortMode = 0;
         this.createDetailWindow();
@@ -305,58 +305,58 @@ var PKM = PKM || {};
         this._listWindow.setDetailWindow(this._detailWindow);
         this.applySort();
     };
-    Scene_Pokedex.prototype.applySort = function() {
-        const max = PKM.Core.maxSpecies();
+    Scene_Codex.prototype.applySort = function() {
+        const max = MON.Core.maxSpecies();
         let ids = [];
         for (let i = 1; i <= max; i++) ids.push(i);
         const mode = SORT_MODES[this._sortMode].key;
         if (mode === "name") {
             ids.sort((a, b) => {
-                const na = PKM.Core.species(a).name, nb = PKM.Core.species(b).name;
+                const na = MON.Core.species(a).name, nb = MON.Core.species(b).name;
                 return na < nb ? -1 : na > nb ? 1 : 0;
             });
         } else if (mode === "caught") {
-            ids.sort((a, b) => (($gameSystem.pkmIsCaught(b) ? 1 : 0) - ($gameSystem.pkmIsCaught(a) ? 1 : 0)) || (a - b));
+            ids.sort((a, b) => (($gameSystem.monIsCaught(b) ? 1 : 0) - ($gameSystem.monIsCaught(a) ? 1 : 0)) || (a - b));
         } else if (mode === "seenOnly") {
-            ids = ids.filter(i => $gameSystem.pkmIsSeen(i));
+            ids = ids.filter(i => $gameSystem.monIsSeen(i));
             if (ids.length === 0) ids = [1];
         }
         this._detailWindow.setSortLabel(SORT_MODES[this._sortMode].label + "  (Q/W muda)");
         this._listWindow.setOrder(ids);
     };
-    Scene_Pokedex.prototype.update = function() {
+    Scene_Codex.prototype.update = function() {
         Scene_MenuBase.prototype.update.call(this);
         if (this._listWindow.active) {
             if (Input.isTriggered("pagedown")) { this._sortMode = (this._sortMode + 1) % SORT_MODES.length; this.applySort(); SoundManager.playCursor(); }
             else if (Input.isTriggered("pageup")) { this._sortMode = (this._sortMode + SORT_MODES.length - 1) % SORT_MODES.length; this.applySort(); SoundManager.playCursor(); }
         }
     };
-    Scene_Pokedex.prototype.listWindowRect = function() {
+    Scene_Codex.prototype.listWindowRect = function() {
         const ww = 360;
         const wh = this.mainAreaHeight();
         return new Rectangle(0, this.mainAreaTop(), ww, wh);
     };
-    Scene_Pokedex.prototype.detailWindowRect = function() {
+    Scene_Codex.prototype.detailWindowRect = function() {
         const x = 360;
         const ww = Graphics.boxWidth - x;
         const wh = this.mainAreaHeight();
         return new Rectangle(x, this.mainAreaTop(), ww, wh);
     };
-    Scene_Pokedex.prototype.createListWindow = function() {
-        this._listWindow = new Window_PokedexList(this.listWindowRect());
+    Scene_Codex.prototype.createListWindow = function() {
+        this._listWindow = new Window_CodexList(this.listWindowRect());
         this._listWindow.setHandler("cancel", this.popScene.bind(this));
         this._listWindow.setHandler("ok", () => this._listWindow.activate());
         this.addWindow(this._listWindow);
     };
-    Scene_Pokedex.prototype.createDetailWindow = function() {
-        this._detailWindow = new Window_PokedexDetail(this.detailWindowRect());
+    Scene_Codex.prototype.createDetailWindow = function() {
+        this._detailWindow = new Window_CodexDetail(this.detailWindowRect());
         this.addWindow(this._detailWindow);
     };
 
     //=========================================================================
     // Comando de plugin
     //=========================================================================
-    PluginManager.registerCommand("PKM_Pokedex", "open", () => {
-        SceneManager.push(Scene_Pokedex);
+    PluginManager.registerCommand("MON_Codex", "open", () => {
+        SceneManager.push(Scene_Codex);
     });
 })();

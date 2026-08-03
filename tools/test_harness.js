@@ -1,5 +1,5 @@
 // Harness headless: stuba o mínimo da API do RPG Maker MZ para rodar a LÓGICA
-// dos plugins PKM (Core, Pokemon, Battle) fora do editor, em Node.
+// dos plugins MON (Core, Pokemon, Battle) fora do editor, em Node.
 // Uso:  node mz/tools/test_harness.js
 const fs = require("fs");
 const path = require("path");
@@ -16,10 +16,10 @@ const ctx = {
     console,
     Rectangle,
     // dados pré-carregados (DataManager.push é no-op aqui)
-    $dataPokemon: load("Pokemon.json"),
+    $dataMonsters: load("Monsters.json"),
     $dataMoves: load("Moves.json"),
     $dataTypes: load("Types.json"),
-    $dataItems2: load("PkmItems.json"),
+    $dataItems2: load("MonItems.json"),
     $dataEncounters: load("Encounters.json"),
     $dataTrainers: load("Trainers.json"),
     $dataFranchises: load("Franchises.json"),
@@ -53,23 +53,23 @@ vm.runInContext(`
 `, ctx);
 
 // carrega plugins de lógica (não os de cena — esses usam render)
-for (const f of ["PKM_Core.js", "PKM_Franchise.js", "PKM_Pokemon.js", "PKM_Battle.js", "PKM_Bag.js",
-                 "PKM_Trainers.js", "PKM_Party.js", "PKM_Storage.js",
-                 "PKM_Evolution.js", "PKM_Parts.js", "PKM_Sanctuary.js", "PKM_Pacts.js",
-                 "PKM_Human.js", "PKM_Field.js", "PKM_Encounters.js"]) {
+for (const f of ["MON_Core.js", "MON_Franchise.js", "MON_Monster.js", "MON_Battle.js", "MON_Bag.js",
+                 "MON_Trainers.js", "MON_Party.js", "MON_Storage.js",
+                 "MON_Evolution.js", "MON_Parts.js", "MON_Sanctuary.js", "MON_Pacts.js",
+                 "MON_Human.js", "MON_Field.js", "MON_Encounters.js"]) {
     const p = path.join(ROOT, "js/plugins", f);
     if (fs.existsSync(p)) vm.runInContext(fs.readFileSync(p, "utf8"), ctx, { filename: f });
 }
 // sem Scene_Boot no headless: funde os bancos multi-franquia na mão
-if (ctx.PKM.Franchise) ctx.PKM.Franchise.install();
+if (ctx.MON.Franchise) ctx.MON.Franchise.install();
 
 // --- mini framework de asserts ---
 let pass = 0, fail = 0;
 function ok(cond, msg) { cond ? (pass++) : (fail++, console.log("  ✗ " + msg)); }
 function eq(a, b, msg) { ok(a === b, `${msg} (esperado ${b}, obteve ${a})`); }
 
-console.log("== Game_Pokemon ==");
-const G = ctx.Game_Pokemon;
+console.log("== Game_Monster ==");
+const G = ctx.Game_Monster;
 
 // Pikachu nível 10
 const pika = new G("PIKACHU", 10);
@@ -84,56 +84,56 @@ ok(["M", "F", "N"].includes(pika.gender), "gênero válido");
 // determinismo dos stats: dois com mesmos IVs/natureza dão mesmo stat
 ok(new G("BULBASAUR", 5).maxHp > 0, "Bulbasaur maxHp");
 
-// dano (função pura exposta por PKM_Battle)
+// dano (função pura exposta por MON_Battle)
 console.log("== Cálculo de dano ==");
-if (ctx.PKM.Battle && ctx.PKM.Battle.calcDamage) {
+if (ctx.MON.Battle && ctx.MON.Battle.calcDamage) {
     const atk = new G("CHARMANDER", 50);
     const dfn = new G("BULBASAUR", 50);
     const ember = { id: "EMBER", pp: 25, ppMax: 25 };
-    const r = ctx.PKM.Battle.calcDamage(atk, dfn, "EMBER");
+    const r = ctx.MON.Battle.calcDamage(atk, dfn, "EMBER");
     ok(r.damage > 0, "Ember causa dano");
     eq(r.effectiveness, 2, "Fogo x Grama = super eficaz (2x)");
     // imunidade
-    const r2 = ctx.PKM.Battle.calcDamage(new G("PIKACHU", 50), new G("GEODUDE", 50), "THUNDERBOLT");
+    const r2 = ctx.MON.Battle.calcDamage(new G("PIKACHU", 50), new G("GEODUDE", 50), "THUNDERBOLT");
     eq(r2.effectiveness, 0, "Electric x Ground (Geodude) = imune (0x)");
 } else {
-    console.log("  (PKM.Battle.calcDamage indisponível — pulando)");
+    console.log("  (MON.Battle.calcDamage indisponível — pulando)");
 }
 
 // captura (função pura)
 console.log("== Captura ==");
-if (ctx.PKM.Battle && ctx.PKM.Battle.tryCapture) {
+if (ctx.MON.Battle && ctx.MON.Battle.tryCapture) {
     const weak = new G("CATERPIE", 3); weak.hp = 1;
     let caught = 0;
-    for (let i = 0; i < 200; i++) if (ctx.PKM.Battle.tryCapture(weak, 1).success) caught++;
+    for (let i = 0; i < 200; i++) if (ctx.MON.Battle.tryCapture(weak, 1).success) caught++;
     ok(caught > 0, `captura possível em alvo fraco (${caught}/200)`);
 } else {
-    console.log("  (PKM.Battle.tryCapture indisponível — pulando)");
+    console.log("  (MON.Battle.tryCapture indisponível — pulando)");
 }
 
-// itens (Fase 3) — função pura PKM.Items.useOnPokemon
+// itens (Fase 3) — função pura MON.Items.useOnMonster
 console.log("== Itens (mochila) ==");
-if (ctx.PKM.Items && ctx.PKM.Items.useOnPokemon) {
+if (ctx.MON.Items && ctx.MON.Items.useOnMonster) {
     const inj = new G("BLASTOISE", 50);
     inj.hp = 1;
-    const r = ctx.PKM.Items.useOnPokemon("POTION", inj);
+    const r = ctx.MON.Items.useOnMonster("POTION", inj);
     ok(r.ok && inj.hp === 21, `Potion cura +20 (HP=${inj.hp})`);
 
     const full = new G("BLASTOISE", 50);
-    eq(ctx.PKM.Items.useOnPokemon("POTION", full).ok, false, "Potion não usa em HP cheio");
+    eq(ctx.MON.Items.useOnMonster("POTION", full).ok, false, "Potion não usa em HP cheio");
 
     const ko = new G("PIDGEY", 10); ko.hp = 0;
-    const rev = ctx.PKM.Items.useOnPokemon("REVIVE", ko);
+    const rev = ctx.MON.Items.useOnMonster("REVIVE", ko);
     ok(rev.ok && ko.hp === Math.floor(ko.maxHp / 2), "Revive volta com metade do HP");
 
     const poisoned = new G("RATTATA", 10); poisoned.status = "PSN";
-    ok(ctx.PKM.Items.useOnPokemon("ANTIDOTE", poisoned).ok && poisoned.status === null, "Antídoto cura veneno");
-    eq(ctx.PKM.Items.useOnPokemon("BURNHEAL", new G("RATTATA", 10)).ok, false, "Burn Heal sem queimadura não tem efeito");
+    ok(ctx.MON.Items.useOnMonster("ANTIDOTE", poisoned).ok && poisoned.status === null, "Antídoto cura veneno");
+    eq(ctx.MON.Items.useOnMonster("BURNHEAL", new G("RATTATA", 10)).ok, false, "Burn Heal sem queimadura não tem efeito");
 
-    eq(ctx.PKM.Items.ballBonus("ULTRABALL"), 2, "Ultra Ball bônus = 2");
-    eq(ctx.PKM.Items.ballBonus("MASTERBALL"), 255, "Master Ball bônus = 255");
+    eq(ctx.MON.Items.ballBonus("ULTRABALL"), 2, "Ultra Ball bônus = 2");
+    eq(ctx.MON.Items.ballBonus("MASTERBALL"), 255, "Master Ball bônus = 255");
 } else {
-    console.log("  (PKM.Items indisponível — pulando)");
+    console.log("  (MON.Items indisponível — pulando)");
 }
 
 // crescimento (Fase 7)
@@ -147,7 +147,7 @@ console.log("== EXP / Nível / Evolução ==");
     ok(res.levels.length === 3, `registrou ${res.levels.length} level-ups (esperado 3)`);
 
     // fórmula de EXP positiva
-    ok(ctx.PKM.Battle.expGain(new G("PIDGEY", 10), 1) > 0, "expGain > 0");
+    ok(ctx.MON.Battle.expGain(new G("PIDGEY", 10), 1) > 0, "expGain > 0");
 
     // evolução por nível: Bulbasaur evolui em Ivysaur no nível 16
     const b = new G("BULBASAUR", 15);
@@ -168,7 +168,7 @@ console.log("== EXP / Nível / Evolução ==");
 // status / estágios / efeitos (Fase 5b)
 console.log("== Status & Estágios (5b) ==");
 {
-    const B = ctx.PKM.Battle;
+    const B = ctx.MON.Battle;
     // imunidades de status
     eq(B.statusImmune(new G("CHARIZARD", 50), "BRN"), true, "Fire imune a queimadura");
     eq(B.statusImmune(new G("LAPRAS", 50), "FRZ"), true, "Ice imune a congelamento");
@@ -210,11 +210,11 @@ console.log("== Status & Estágios (5b) ==");
 
 // treinadores (Fase 9)
 console.log("== Treinadores (9) ==");
-if (ctx.PKM.Trainers) {
-    const def = ctx.PKM.Trainers.find("LEADER_Brock", "Brock");
+if (ctx.MON.Trainers) {
+    const def = ctx.MON.Trainers.find("LEADER_Brock", "Brock");
     ok(!!def, "encontra LEADER_Brock");
     if (def) {
-        const built = ctx.PKM.Trainers.build(def);
+        const built = ctx.MON.Trainers.build(def);
         eq(built.party.length, 2, "equipe do Brock tem 2 Pokémon");
         eq(built.party[0].speciesName, "Geodude", "primeiro é Geodude");
         ok(built.party[1].knowsMove("ROCKTOMB"), "Onix tem o golpe definido (Rock Tomb)");
@@ -224,9 +224,9 @@ if (ctx.PKM.Trainers) {
     }
     // bônus de EXP de treinador (1.5×) > selvagem
     const e = new G("PIDGEY", 10);
-    ok(ctx.PKM.Battle.expGain(e, 1, 1.5) > ctx.PKM.Battle.expGain(e, 1, 1), "EXP de treinador (1.5×) > selvagem");
+    ok(ctx.MON.Battle.expGain(e, 1, 1.5) > ctx.MON.Battle.expGain(e, 1, 1), "EXP de treinador (1.5×) > selvagem");
 } else {
-    console.log("  (PKM.Trainers indisponível — pulando)");
+    console.log("  (MON.Trainers indisponível — pulando)");
 }
 
 // PC / caixas (Fase 8)
@@ -236,39 +236,39 @@ console.log("== PC / Caixas (8) ==");
     gp.initialize();
     // adiciona 8 Pokémon: 6 vão p/ equipe, 2 p/ caixa
     const dests = [];
-    for (let i = 0; i < 8; i++) dests.push(gp.pkmAdd(new G("RATTATA", 5)));
-    eq(gp.pkmCount(), 6, "equipe enche em 6");
+    for (let i = 0; i < 8; i++) dests.push(gp.monAdd(new G("RATTATA", 5)));
+    eq(gp.monCount(), 6, "equipe enche em 6");
     eq(dests.filter(d => d === "storage").length, 2, "os 2 extras vão para a caixa");
-    eq(gp.pkmStoredCount(), 2, "PC tem 2 armazenados");
+    eq(gp.monStoredCount(), 2, "PC tem 2 armazenados");
 
     // depositar e retirar
-    const dep = gp.pkmDeposit(0);
-    ok(dep.ok && gp.pkmCount() === 5 && gp.pkmStoredCount() === 3, "depósito: equipe 5, PC 3");
-    const wd = gp.pkmWithdraw(0, 0);
-    ok(wd.ok && gp.pkmCount() === 6 && gp.pkmStoredCount() === 2, "retirada: equipe 6, PC 2");
+    const dep = gp.monDeposit(0);
+    ok(dep.ok && gp.monCount() === 5 && gp.monStoredCount() === 3, "depósito: equipe 5, PC 3");
+    const wd = gp.monWithdraw(0, 0);
+    ok(wd.ok && gp.monCount() === 6 && gp.monStoredCount() === 2, "retirada: equipe 6, PC 2");
 
     // não pode depositar o último
-    const solo = new ctx.Game_Party(); solo.initialize(); solo.pkmAdd(new G("PIDGEY", 5));
-    eq(solo.pkmDeposit(0).ok, false, "não deposita o último Pokémon");
+    const solo = new ctx.Game_Party(); solo.initialize(); solo.monAdd(new G("PIDGEY", 5));
+    eq(solo.monDeposit(0).ok, false, "não deposita o último Pokémon");
 
     // soltar (slot 1 ainda está preenchido)
-    const released = gp.pkmReleaseBox(0, 1);
-    ok(released && gp.pkmStoredCount() === 1, "soltar remove da caixa");
+    const released = gp.monReleaseBox(0, 1);
+    ok(released && gp.monStoredCount() === 1, "soltar remove da caixa");
 }
 
 // polimento (Fase 10)
 console.log("== Polimento (10) ==");
 {
-    const sp = ctx.PKM.Core.speciesByInternal("CHARIZARD");
+    const sp = ctx.MON.Core.speciesByInternal("CHARIZARD");
     ok(sp && sp.name === "Charizard", "speciesByInternal acha Charizard");
-    eq(ctx.PKM.Core.speciesByInternal("NAOEXISTE"), null, "espécie inexistente retorna null");
-    ok(!!ctx.PKM.Audio || true, "PKM.Audio é opcional (não carregado no harness)");
+    eq(ctx.MON.Core.speciesByInternal("NAOEXISTE"), null, "espécie inexistente retorna null");
+    ok(!!ctx.MON.Audio || true, "MON.Audio é opcional (não carregado no harness)");
 }
 
 // camada multi-franquia (core)
 console.log("== Multi-franquia (core) ==");
 {
-    const F = ctx.PKM.Franchise;
+    const F = ctx.MON.Franchise;
     eq(F.ofSpecies(1).id, "PKM", "id 1 pertence a Pokémon");
     eq(F.ofSpecies(650).id, "DGM", "id 650 pertence a Digimon");
     eq(F.ofSpecies(800).id, "MDB", "id 700 pertence a Medabots");
@@ -292,13 +292,13 @@ console.log("== Multi-franquia (core) ==");
     eq(F.captureRule(hurt, "MEDALCASE").allowed, true, "Medabot danificado aceita o estojo");
 
     // itens extras entraram no banco de itens
-    ok(!!ctx.PKM.Core.item("DIGILINK"), "ItemsExtra fundido em $dataItems2");
+    ok(!!ctx.MON.Core.item("DIGILINK"), "ItemsExtra fundido em $dataItems2");
 }
 
 // recuo, dreno e autodestruição (base do golpe Jibaku)
 console.log("== Efeitos sobre o próprio atacante ==");
 {
-    const B = ctx.PKM.Battle;
+    const B = ctx.MON.Battle;
     const mon = new G("MACHOP", 50);
     mon.hp = mon.maxHp;
     B.applySelfEffect(mon, { recoil: 0.5 }, 40);

@@ -1,20 +1,20 @@
 //=============================================================================
-// PKM_Field.js — campo de batalha em times (até 3v3)
+// MON_Field.js — campo de batalha em times (até 3v3)
 //=============================================================================
 /*:
  * @target MZ
- * @plugindesc [PKM v0.5] Campo de batalha em times (até 3v3) com humanos em campo:
+ * @plugindesc [MON v0.5] Campo de batalha em times (até 3v3) com humanos em campo:
  * posições, ordem de turno, alvos, substituição e condição de fim. Lógica pura.
  * @author Pokémon Dimensions
- * @base PKM_Core
- * @base PKM_Pokemon
- * @orderAfter PKM_Pokemon
- * @orderBefore PKM_Battle
+ * @base MON_Core
+ * @base MON_Monster
+ * @orderAfter MON_Monster
+ * @orderBefore MON_Battle
  *
- * @help PKM_Field.js
+ * @help MON_Field.js
  *
  * Substitui o 1v1 do motor original por um campo com dois lados de até 3 unidades
- * ativas cada. Uma "unidade" é qualquer coisa com a interface de Game_Pokemon —
+ * ativas cada. Uma "unidade" é qualquer coisa com a interface de Game_Monster —
  * inclusive Game_Human, então o treinador luta lado a lado com os monstros dele.
  *
  * Layout: lado "ally" à ESQUERDA, "foe" à DIREITA (a cena desenha de perfil, sem
@@ -22,15 +22,15 @@
  *
  * Toda a lógica aqui é pura e roda headless — a cena só renderiza e coleta input.
  *
- *   const field = PKM.Field.create({ allies: [...], foes: [...] });
- *   PKM.Field.activeUnits(field, "ally");
- *   PKM.Field.validTargets(field, unit);
- *   PKM.Field.turnOrder(actions);
- *   PKM.Field.outcome(field);   // null | "win" | "lose"
+ *   const field = MON.Field.create({ allies: [...], foes: [...] });
+ *   MON.Field.activeUnits(field, "ally");
+ *   MON.Field.validTargets(field, unit);
+ *   MON.Field.turnOrder(actions);
+ *   MON.Field.outcome(field);   // null | "win" | "lose"
  */
 
-var PKM = PKM || {};
-PKM.Field = PKM.Field || {};
+var MON = MON || {};
+MON.Field = MON.Field || {};
 
 (() => {
     "use strict";
@@ -39,15 +39,15 @@ PKM.Field = PKM.Field || {};
     const FOE = "foe";
     const MAX_ACTIVE = 3;
 
-    PKM.Field.ALLY = ALLY;
-    PKM.Field.FOE = FOE;
-    PKM.Field.MAX_ACTIVE = MAX_ACTIVE;
+    MON.Field.ALLY = ALLY;
+    MON.Field.FOE = FOE;
+    MON.Field.MAX_ACTIVE = MAX_ACTIVE;
 
     //=========================================================================
     // Construção
     //=========================================================================
     // allies/foes: listas completas; as MAX_ACTIVE primeiras entram em campo.
-    PKM.Field.create = function(opts = {}) {
+    MON.Field.create = function(opts = {}) {
         const allies = (opts.allies || []).filter(Boolean);
         const foes = (opts.foes || []).filter(Boolean);
         const field = {
@@ -60,7 +60,7 @@ PKM.Field = PKM.Field || {};
             runAttempts: 0,
             turn: 0
         };
-        for (const unit of PKM.Field.allUnits(field)) {
+        for (const unit of MON.Field.allUnits(field)) {
             if (unit.resetBattleState) unit.resetBattleState();
         }
         return field;
@@ -73,21 +73,21 @@ PKM.Field = PKM.Field || {};
     //=========================================================================
     // Consulta
     //=========================================================================
-    PKM.Field.side = function(field, side) { return field.sides[side]; };
-    PKM.Field.opposing = function(side) { return side === ALLY ? FOE : ALLY; };
+    MON.Field.side = function(field, side) { return field.sides[side]; };
+    MON.Field.opposing = function(side) { return side === ALLY ? FOE : ALLY; };
 
-    PKM.Field.activeUnits = function(field, side) {
+    MON.Field.activeUnits = function(field, side) {
         return field.sides[side].active.filter(u => u && !u.isFainted());
     };
     // inclui as caídas ainda ocupando posição (a cena precisa desenhá-las)
-    PKM.Field.slots = function(field, side) { return field.sides[side].active.slice(); };
+    MON.Field.slots = function(field, side) { return field.sides[side].active.slice(); };
 
-    PKM.Field.allUnits = function(field) {
+    MON.Field.allUnits = function(field) {
         return [ALLY, FOE].reduce((acc, s) => acc.concat(field.sides[s].active, field.sides[s].bench), [])
             .filter(Boolean);
     };
 
-    PKM.Field.sideOf = function(field, unit) {
+    MON.Field.sideOf = function(field, unit) {
         for (const side of [ALLY, FOE]) {
             const s = field.sides[side];
             if (s.active.includes(unit) || s.bench.includes(unit)) return side;
@@ -95,16 +95,16 @@ PKM.Field = PKM.Field || {};
         return null;
     };
 
-    PKM.Field.isAlly = function(field, unit) { return PKM.Field.sideOf(field, unit) === ALLY; };
+    MON.Field.isAlly = function(field, unit) { return MON.Field.sideOf(field, unit) === ALLY; };
 
-    PKM.Field.validTargets = function(field, unit) {
-        const side = PKM.Field.sideOf(field, unit);
+    MON.Field.validTargets = function(field, unit) {
+        const side = MON.Field.sideOf(field, unit);
         if (!side) return [];
-        return PKM.Field.activeUnits(field, PKM.Field.opposing(side));
+        return MON.Field.activeUnits(field, MON.Field.opposing(side));
     };
 
-    PKM.Field.resolveTarget = function(field, unit, target) {
-        const options = PKM.Field.validTargets(field, unit);
+    MON.Field.resolveTarget = function(field, unit, target) {
+        const options = MON.Field.validTargets(field, unit);
         if (target && options.includes(target)) return target;
         return options.length ? options[0] : null;
     };
@@ -115,27 +115,27 @@ PKM.Field = PKM.Field || {};
     // actions: [{unit, kind:"move"|"item"|"switch"|"run"|"capture", move, target}]
     // Ações que não são golpe agem antes (item/troca/fuga têm prioridade alta),
     // como no Pokémon clássico. Empate de velocidade é sorteado.
-    PKM.Field.actionPriority = function(action) {
+    MON.Field.actionPriority = function(action) {
         if (!action) return 0;
         if (action.kind && action.kind !== "move") return 6;
-        const md = action.move && PKM.Core.move(action.move.id);
+        const md = action.move && MON.Core.move(action.move.id);
         return (md && md.priority) || 0;
     };
 
-    PKM.Field.unitSpeed = function(unit) {
+    MON.Field.unitSpeed = function(unit) {
         if (!unit) return 0;
         return unit.battleSpeed ? unit.battleSpeed() : unit.stat("spe");
     };
 
     // o desempate sorteia UMA chave por ação antes de ordenar; sortear dentro do
     // comparador torna a ordenação inconsistente e enviesa as permutações
-    PKM.Field.turnOrder = function(actions) {
+    MON.Field.turnOrder = function(actions) {
         return actions.filter(a => a && a.unit)
             .map(a => ({ a, tie: Math.random() }))
             .sort((x, y) => {
-                const pd = PKM.Field.actionPriority(y.a) - PKM.Field.actionPriority(x.a);
+                const pd = MON.Field.actionPriority(y.a) - MON.Field.actionPriority(x.a);
                 if (pd !== 0) return pd;
-                const sd = PKM.Field.unitSpeed(y.a.unit) - PKM.Field.unitSpeed(x.a.unit);
+                const sd = MON.Field.unitSpeed(y.a.unit) - MON.Field.unitSpeed(x.a.unit);
                 if (sd !== 0) return sd;
                 return x.tie - y.tie;
             })
@@ -145,21 +145,21 @@ PKM.Field = PKM.Field || {};
     //=========================================================================
     // Substituição e fim de batalha
     //=========================================================================
-    PKM.Field.isSideDown = function(field, side) {
-        return PKM.Field.activeUnits(field, side).length === 0
+    MON.Field.isSideDown = function(field, side) {
+        return MON.Field.activeUnits(field, side).length === 0
             && field.sides[side].bench.every(u => !u || u.isFainted());
     };
 
     // null enquanto a batalha corre; "win" derrotou o inimigo; "lose" perdeu
-    PKM.Field.outcome = function(field) {
-        if (PKM.Field.isSideDown(field, FOE)) return "win";
-        if (PKM.Field.isSideDown(field, ALLY)) return "lose";
+    MON.Field.outcome = function(field) {
+        if (MON.Field.isSideDown(field, FOE)) return "win";
+        if (MON.Field.isSideDown(field, ALLY)) return "lose";
         return null;
     };
 
     // troca as unidades caídas em campo pelas primeiras de pé da reserva.
     // Retorna [{slot, out, in}] para a cena narrar.
-    PKM.Field.fillEmptySlots = function(field, side) {
+    MON.Field.fillEmptySlots = function(field, side) {
         const s = field.sides[side];
         const changes = [];
         for (let i = 0; i < s.active.length; i++) {
@@ -176,7 +176,7 @@ PKM.Field = PKM.Field || {};
         return changes;
     };
 
-    PKM.Field.switchUnit = function(field, side, unit, replacement) {
+    MON.Field.switchUnit = function(field, side, unit, replacement) {
         const s = field.sides[side];
         const slot = s.active.indexOf(unit);
         const benchIndex = s.bench.indexOf(replacement);
@@ -188,7 +188,7 @@ PKM.Field = PKM.Field || {};
         return true;
     };
 
-    PKM.Field.benchReady = function(field, side) {
+    MON.Field.benchReady = function(field, side) {
         return field.sides[side].bench.filter(u => u && !u.isFainted());
     };
 
@@ -197,8 +197,8 @@ PKM.Field = PKM.Field || {};
     //=========================================================================
     // Heurística barata: entre os golpes com PP, prefere o de maior dano esperado
     // contra o alvo mais fraco de pé. Sem previsão de turno futuro.
-    PKM.Field.pickAction = function(field, unit) {
-        const targets = PKM.Field.validTargets(field, unit);
+    MON.Field.pickAction = function(field, unit) {
+        const targets = MON.Field.validTargets(field, unit);
         if (!targets.length) return null;
         const usable = (unit.moves || []).filter(m => m.pp === undefined || m.pp > 0);
         const move = usable.length ? bestMove(unit, targets, usable) : null;
@@ -218,10 +218,10 @@ PKM.Field = PKM.Field || {};
     }
 
     function estimate(unit, target, move) {
-        const md = PKM.Core.move(move.id);
+        const md = MON.Core.move(move.id);
         if (!md) return 0;
         if (md.power <= 0 || md.category === "Status") return 12;   // utilidade fixa
-        const calc = PKM.Battle.calcDamage(unit, target, move.id, { fixedRand: 1, forceCrit: false });
+        const calc = MON.Battle.calcDamage(unit, target, move.id, { fixedRand: 1, forceCrit: false });
         const lethal = calc.damage >= target.hp ? 40 : 0;           // prefere finalizar
         return calc.damage + lethal;
     }

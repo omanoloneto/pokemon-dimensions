@@ -4,11 +4,11 @@ Estado de referência: **o engine está pronto; o jogo ainda não existe.** Este
 
 ## Estado atual (medido no repo)
 
-**Engine (✅ — [roadmap-port-mz.md](roadmap-port-mz.md)):** 10 plugins PKM_* (~2.9k linhas), batalha 1v1 completa (status, estágios, precisão, troca, fuga), captura, EXP/evolução por nível, treinadores+insígnias, PC 16×30, mochila, Pokédex, áudio. 56 testes headless.
+**Engine (✅ — [roadmap-port-mz.md](roadmap-port-mz.md)):** 10 plugins MON_* (~2.9k linhas), batalha 1v1 completa (status, estágios, precisão, troca, fuga), captura, EXP/evolução por nível, treinadores+insígnias, PC 16×30, mochila, Pokédex, áudio. 56 testes headless.
 
 **Franquias (✅ — [02](02-franquias.md), [06](06-arquitetura-franquias.md)):** camada multi-franquia + os 5 sistemas de dimensão. **793 espécies** (649 Pokémon + 101 Digimon de *Adventure* + 10 Medabots + 13 Monster Rancher + 20 Bucky), 659 golpes, 40 Medapeças, 3 discos, dex de Kanto recortada. 412 testes headless.
 
-**Dados:** 559 golpes base + 100 novos; **~77 com efeito implementado** (recuo/dreno/autodestruição incluídos); 18 tipos, 538 itens. Encontros religados para a D1 (4 tabelas), mas **nenhum dispara ainda** — Map001/Map002 estão com a camada de região zerada e `PKM_Encounters` exige a Região 1 pintada. 60 treinadores definidos e não usados em mapa nenhum.
+**Dados:** 559 golpes base + 100 novos; **~77 com efeito implementado** (recuo/dreno/autodestruição incluídos); 18 tipos, 538 itens. Encontros religados para a D1 (4 tabelas), mas **nenhum dispara ainda** — Map001/Map002 estão com a camada de região zerada e `MON_Encounters` exige a Região 1 pintada. 60 treinadores definidos e não usados em mapa nenhum.
 
 **Conteúdo real:** 2 mapas — Map001 (hub de testes, 8 eventos debug) e Map002 (Coral Town, tiles reais, **zero gameplay**). Sprites: só Pokémon (front/back/shiny/icons/footprints/alt). Áudio: 655 cries + RTP padrão do MZ.
 

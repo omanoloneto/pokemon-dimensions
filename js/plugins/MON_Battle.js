@@ -1,39 +1,39 @@
 //=============================================================================
-// PKM_Battle.js  — fórmulas de batalha/captura + cena 3v3 lado a lado
+// MON_Battle.js  — fórmulas de batalha/captura + cena 3v3 lado a lado
 //=============================================================================
 /*:
  * @target MZ
- * @plugindesc [PKM v0.5] Batalha em times de até 3v3 lado a lado: dano por tipo/
- * STAB/crítico, status, troca, fuga e CAPTURA. Fórmulas puras em PKM.Battle.
+ * @plugindesc [MON v0.5] Batalha em times de até 3v3 lado a lado: dano por tipo/
+ * STAB/crítico, status, troca, fuga e CAPTURA. Fórmulas puras em MON.Battle.
  * @author Pokémon Dimensions (port MZ)
- * @base PKM_Core
- * @base PKM_Pokemon
- * @base PKM_Human
- * @base PKM_Field
- * @orderAfter PKM_Encounters
+ * @base MON_Core
+ * @base MON_Monster
+ * @base MON_Human
+ * @base MON_Field
+ * @orderAfter MON_Encounters
  *
- * @help PKM_Battle.js
+ * @help MON_Battle.js
  *
  * Duas camadas independentes:
- *   1. PKM.Battle.* — fórmulas puras (dano, status, captura, EXP, executeMove).
+ *   1. MON.Battle.* — fórmulas puras (dano, status, captura, EXP, executeMove).
  *      Rodam headless e são consumidas por outros plugins e pelos testes.
  *   2. Scene_PkmBattle — casca de render e input. Toda a regra de campo vem de
- *      PKM.Field e a resolução de golpe de PKM.Battle.executeMove.
+ *      MON.Field e a resolução de golpe de MON.Battle.executeMove.
  *
  * Layout da cena: time do jogador à ESQUERDA, adversário à DIREITA, até 3
  * unidades por lado empilhadas verticalmente. Não existe arte de costas — os
- * dois lados usam img/pokemon/front/ e o lado aliado é espelhado no Sprite.
+ * dois lados usam img/monsters/front/ e o lado aliado é espelhado no Sprite.
  * O humano do jogador ocupa o slot 0 e aparece destacado no HUD.
  *
  * Entrada da cena:
- *   $gameTemp.pkmTrainer = {name, party, avatar?, money, introText, defeatText}
- *   $gameTemp.pkmFoes    = [unidades]   (time selvagem de 1 a 3)
- *   $gameTemp.pkmWild    = unidade      (encontro selvagem simples)
- * O time do jogador vem de $gameParty.pkmBattleTeam() (avatar + monstros).
+ *   $gameTemp.monTrainer = {name, party, avatar?, money, introText, defeatText}
+ *   $gameTemp.monFoes    = [unidades]   (time selvagem de 1 a 3)
+ *   $gameTemp.monWild    = unidade      (encontro selvagem simples)
+ * O time do jogador vem de $gameParty.monBattleTeam() (avatar + monstros).
  */
 
-var PKM = PKM || {};
-PKM.Battle = PKM.Battle || {};
+var MON = MON || {};
+MON.Battle = MON.Battle || {};
 
 (() => {
     "use strict";
@@ -43,8 +43,8 @@ PKM.Battle = PKM.Battle || {};
     //=========================================================================
 
     // dano de um golpe de dano. Retorna {damage, effectiveness, crit, stab}.
-    PKM.Battle.calcDamage = function(attacker, defender, moveId, opts = {}) {
-        const md = PKM.Core.move(moveId);
+    MON.Battle.calcDamage = function(attacker, defender, moveId, opts = {}) {
+        const md = MON.Core.move(moveId);
         if (!md || md.power <= 0 || md.category === "Status") {
             return { damage: 0, effectiveness: 1, crit: false, stab: 1, status: true };
         }
@@ -58,7 +58,7 @@ PKM.Battle = PKM.Battle || {};
         let base = Math.floor(Math.floor(Math.floor(2 * level / 5 + 2) * power * A / D) / 50) + 2;
 
         const stab = attacker.types().includes(md.type) ? 1.5 : 1.0;
-        const eff = PKM.Core.typeMultiplier(md.type, defender.types());
+        const eff = MON.Core.typeMultiplier(md.type, defender.types());
         const crit = opts.forceCrit !== undefined ? !!opts.forceCrit : Math.randomInt(24) === 0;
         const critMod = crit ? 1.5 : 1.0;
         const rand = opts.fixedRand !== undefined ? opts.fixedRand : (85 + Math.randomInt(16)) / 100;
@@ -73,7 +73,7 @@ PKM.Battle = PKM.Battle || {};
     };
 
     // tentativa de captura. ballBonus: PokeBall=1, Great=1.5, Ultra=2, Master=255.
-    PKM.Battle.tryCapture = function(wild, ballBonus = 1, statusBonus = 1) {
+    MON.Battle.tryCapture = function(wild, ballBonus = 1, statusBonus = 1) {
         const sp = wild.species();
         const catchRate = sp && sp.catchRate !== undefined ? sp.catchRate : 45;
         if (catchRate <= 0) return { success: false, shakes: 0 };
@@ -93,9 +93,9 @@ PKM.Battle = PKM.Battle || {};
     };
 
     // ordem de turno
-    PKM.Battle.fasterFirst = function(monA, moveA, monB, moveB) {
-        const pa = (PKM.Core.move(moveA.id) || {}).priority || 0;
-        const pb = (PKM.Core.move(moveB.id) || {}).priority || 0;
+    MON.Battle.fasterFirst = function(monA, moveA, monB, moveB) {
+        const pa = (MON.Core.move(moveA.id) || {}).priority || 0;
+        const pb = (MON.Core.move(moveB.id) || {}).priority || 0;
         if (pa !== pb) return pa > pb;
         const sa = monA.battleSpeed ? monA.battleSpeed() : monA.spe;
         const sb = monB.battleSpeed ? monB.battleSpeed() : monB.spe;
@@ -109,7 +109,7 @@ PKM.Battle = PKM.Battle || {};
 
     // registry de efeitos por golpe (internalName). target: "self" | "foe".
     // status moves usam {status}/{stats}; golpes de dano usam {secondary, chance}.
-    PKM.Battle.MOVE_EFFECTS = {
+    MON.Battle.MOVE_EFFECTS = {
         // --- inflige status (golpes de status) ---
         POISONPOWDER: { status: "PSN", target: "foe" }, POISONGAS: { status: "PSN", target: "foe" },
         TOXIC: { status: "TOX", target: "foe" },
@@ -163,7 +163,7 @@ PKM.Battle = PKM.Battle || {};
     const STAT_LABEL = { atk: "Ataque", def: "Defesa", spa: "At. Esp.", spd: "Def. Esp.", spe: "Velocidade", acc: "Precisão", eva: "Evasão" };
     const STATUS_VERB = { PSN: " foi envenenado!", TOX: " foi gravemente envenenado!", BRN: " foi queimado!", PAR: " ficou paralisado!", SLP: " adormeceu!", FRZ: " foi congelado!" };
 
-    PKM.Battle.statusImmune = function(target, status) {
+    MON.Battle.statusImmune = function(target, status) {
         if (target.status) return true;             // já tem um status maior
         const types = target.types();
         if (status === "BRN" && types.includes("FIRE")) return true;
@@ -171,14 +171,14 @@ PKM.Battle = PKM.Battle || {};
         if ((status === "PSN" || status === "TOX") && (types.includes("POISON") || types.includes("STEEL"))) return true;
         return false;
     };
-    PKM.Battle.applyStatus = function(target, status) {
-        if (PKM.Battle.statusImmune(target, status)) return { ok: false, messages: [] };
+    MON.Battle.applyStatus = function(target, status) {
+        if (MON.Battle.statusImmune(target, status)) return { ok: false, messages: [] };
         target.status = status;
         if (status === "SLP") target._sleepTurns = 1 + Math.randomInt(3);
         if (status === "TOX") target._toxic = 1;
         return { ok: true, messages: [target.name + (STATUS_VERB[status] || " foi afetado!")] };
     };
-    PKM.Battle.applyStatChange = function(target, stat, delta) {
+    MON.Battle.applyStatChange = function(target, stat, delta) {
         const applied = target.changeStage(stat, delta);
         const label = STAT_LABEL[stat] || stat;
         if (applied === 0) {
@@ -189,7 +189,7 @@ PKM.Battle = PKM.Battle || {};
         return [label + " de " + target.name + dir];
     };
     // pode agir? trata SLP/FRZ/PAR (mutável). Retorna {act, messages}
-    PKM.Battle.canAct = function(mon) {
+    MON.Battle.canAct = function(mon) {
         if (mon.status === "FRZ") {
             if (Math.randomInt(100) < 20) { mon.status = null; return { act: true, messages: [mon.name + " descongelou!"] }; }
             return { act: false, messages: [mon.name + " está congelado!"] };
@@ -207,15 +207,15 @@ PKM.Battle = PKM.Battle || {};
         }
         return { act: true, messages: [] };
     };
-    PKM.Battle.accuracyCheck = function(attacker, defender, move) {
-        const md = PKM.Core.move(move.id);
+    MON.Battle.accuracyCheck = function(attacker, defender, move) {
+        const md = MON.Core.move(move.id);
         if (!md || md.accuracy === 0) return true;       // 0 = nunca erra
         const accStage = attacker.stageMult ? attacker.stageMult("acc") : 1;
         const evaStage = defender.stageMult ? defender.stageMult("eva") : 1;
         return Math.randomInt(100) < (md.accuracy * accStage / evaStage);
     };
     // dano residual de fim de turno (PSN/TOX/BRN). Retorna mensagens.
-    PKM.Battle.endOfTurnResidual = function(mon) {
+    MON.Battle.endOfTurnResidual = function(mon) {
         if (mon.isFainted()) return [];
         const msgs = [];
         if (mon.status === "PSN") {
@@ -235,14 +235,14 @@ PKM.Battle = PKM.Battle || {};
     };
 
     // ganchos de vitória: plugins de franquia penduram recompensas aqui
-    // (ex.: PKM_Parts dropa uma peça do Medabot derrotado). fn -> [mensagens]
-    PKM.Battle._victoryHooks = [];
-    PKM.Battle.registerVictoryHook = function(fn) {
-        if (typeof fn === "function") PKM.Battle._victoryHooks.push(fn);
+    // (ex.: MON_Parts dropa uma peça do Medabot derrotado). fn -> [mensagens]
+    MON.Battle._victoryHooks = [];
+    MON.Battle.registerVictoryHook = function(fn) {
+        if (typeof fn === "function") MON.Battle._victoryHooks.push(fn);
     };
-    PKM.Battle.runVictoryHooks = function(winner, defeated, isTrainer) {
+    MON.Battle.runVictoryHooks = function(winner, defeated, isTrainer) {
         const msgs = [];
-        for (const fn of PKM.Battle._victoryHooks) {
+        for (const fn of MON.Battle._victoryHooks) {
             const out = fn(winner, defeated, isTrainer);
             if (Array.isArray(out)) msgs.push(...out);
             else if (typeof out === "string") msgs.push(out);
@@ -252,7 +252,7 @@ PKM.Battle = PKM.Battle || {};
 
     // efeitos que recaem sobre o próprio atacante: dreno, recuo, autodestruição.
     // Usado pelos golpes "Jibaku" da dimensão Bucky sem motor novo.
-    PKM.Battle.applySelfEffect = function(attacker, eff, damageDealt) {
+    MON.Battle.applySelfEffect = function(attacker, eff, damageDealt) {
         const msgs = [];
         if (!eff || attacker.isFainted()) return msgs;
         if (eff.drain && damageDealt > 0) {
@@ -273,15 +273,15 @@ PKM.Battle = PKM.Battle || {};
     };
 
     // aplica efeito de status/stat de um golpe. Retorna mensagens.
-    PKM.Battle.applyMoveEffect = function(eff, attacker, defender) {
+    MON.Battle.applyMoveEffect = function(eff, attacker, defender) {
         const out = [];
         const tgt = eff.target === "self" ? attacker : defender;
         if (eff.status) {
-            const r = PKM.Battle.applyStatus(tgt, eff.status);
+            const r = MON.Battle.applyStatus(tgt, eff.status);
             out.push(...(r.messages.length ? r.messages : ["Mas não teve efeito em " + tgt.name + "."]));
         }
         if (eff.stats) {
-            for (const k in eff.stats) out.push(...PKM.Battle.applyStatChange(tgt, k, eff.stats[k]));
+            for (const k in eff.stats) out.push(...MON.Battle.applyStatChange(tgt, k, eff.stats[k]));
         }
         return out;
     };
@@ -289,38 +289,38 @@ PKM.Battle = PKM.Battle || {};
     // Executa um golpe de ponta a ponta e devolve as mensagens. É pura (não usa
     // cena), então o campo em times consegue resolver 6 unidades sem duplicar regra.
     // tags: {attacker, defender} — sufixos de nome, ex.: " selvagem".
-    PKM.Battle.executeMove = function(attacker, defender, move, tags = {}) {
-        const md = PKM.Core.move(move.id);
+    MON.Battle.executeMove = function(attacker, defender, move, tags = {}) {
+        const md = MON.Core.move(move.id);
         const name = md ? md.name : move.id;
         const atkTag = tags.attacker || "";
         const defTag = tags.defender || "";
         const msgs = [];
 
-        const ca = PKM.Battle.canAct(attacker);
+        const ca = MON.Battle.canAct(attacker);
         msgs.push(...ca.messages);
         if (!ca.act) return msgs.length ? msgs : [attacker.name + " não pode agir."];
 
         msgs.push(attacker.name + atkTag + " usou " + name + "!");
         if (move.pp !== undefined && move.pp > 0) move.pp--;
         if (!defender || defender.isFainted()) { msgs.push("Mas não há alvo!"); return msgs; }
-        if (!PKM.Battle.accuracyCheck(attacker, defender, move)) { msgs.push("Mas o ataque errou!"); return msgs; }
+        if (!MON.Battle.accuracyCheck(attacker, defender, move)) { msgs.push("Mas o ataque errou!"); return msgs; }
 
-        const eff = PKM.Battle.MOVE_EFFECTS[move.id];
+        const eff = MON.Battle.MOVE_EFFECTS[move.id];
         const isStatus = !md || md.category === "Status" || md.power <= 0;
         if (isStatus) {
-            if (eff) msgs.push(...PKM.Battle.applyMoveEffect(eff, attacker, defender));
+            if (eff) msgs.push(...MON.Battle.applyMoveEffect(eff, attacker, defender));
             else msgs.push("…mas o golpe ainda não tem efeito implementado.");
             return msgs;
         }
 
-        const calc = PKM.Battle.calcDamage(attacker, defender, move.id);
+        const calc = MON.Battle.calcDamage(attacker, defender, move.id);
         if (calc.effectiveness === 0) { msgs.push("Não afeta " + defender.name + "…"); return msgs; }
         defender.takeDamage(calc.damage);
         if (calc.crit) msgs.push("Um acerto crítico!");
         if (calc.effectiveness > 1) msgs.push("Foi super eficaz!");
         else if (calc.effectiveness < 1) msgs.push("Não foi muito eficaz…");
 
-        const selfMsgs = PKM.Battle.applySelfEffect(attacker, eff, calc.damage);
+        const selfMsgs = MON.Battle.applySelfEffect(attacker, eff, calc.damage);
         if (defender.isFainted()) {
             msgs.push(defender.name + defTag + " desmaiou!");
             return msgs.concat(selfMsgs);
@@ -331,14 +331,14 @@ PKM.Battle = PKM.Battle || {};
             const chance = eff.chance || (md ? md.effectChance : 0) || 0;
             if (chance > 0 && Math.randomInt(100) < chance) {
                 const sec = Object.assign({ target: "foe" }, eff.secondary);
-                msgs.push(...PKM.Battle.applyMoveEffect(sec, attacker, defender));
+                msgs.push(...MON.Battle.applyMoveEffect(sec, attacker, defender));
             }
         }
         return msgs;
     };
 
     // chance de fuga (true = fugiu)
-    PKM.Battle.canEscape = function(playerSpe, enemySpe, attempts = 0) {
+    MON.Battle.canEscape = function(playerSpe, enemySpe, attempts = 0) {
         if (playerSpe > enemySpe) return true;
         if (enemySpe <= 0) return true;
         const odds = (Math.floor((playerSpe * 128) / enemySpe) + 30 * attempts) % 256;
@@ -346,7 +346,7 @@ PKM.Battle = PKM.Battle || {};
     };
 
     // EXP ganha por derrotar um Pokémon (bonus 1.5 em treinadores)
-    PKM.Battle.expGain = function(faintedMon, participants = 1, bonus = 1) {
+    MON.Battle.expGain = function(faintedMon, participants = 1, bonus = 1) {
         const sp = faintedMon.species();
         const base = (sp && sp.baseExp) || 64;
         return Math.max(1, Math.floor((base * faintedMon.level * bonus) / 7 / Math.max(1, participants)));
@@ -360,10 +360,10 @@ PKM.Battle = PKM.Battle || {};
         return;
     }
 
-    const ALLY = PKM.Field.ALLY;
-    const FOE = PKM.Field.FOE;
-    const FRONT_DIR = "img/pokemon/front/";
-    const SHINY_DIR = "img/pokemon/front_shiny/";
+    const ALLY = MON.Field.ALLY;
+    const FOE = MON.Field.FOE;
+    const FRONT_DIR = "img/monsters/front/";
+    const SHINY_DIR = "img/monsters/front_shiny/";
 
     // Layout: aliados à esquerda, inimigos à direita, 3 faixas empilhadas.
     const SLOT_TOP = 6;
@@ -382,7 +382,7 @@ PKM.Battle = PKM.Battle || {};
         PAR: "#f8d030", SLP: "#8888a0", FRZ: "#98d8d8"
     };
 
-    const isHuman = (unit) => !!(PKM.Human && PKM.Human.isHuman(unit));
+    const isHuman = (unit) => !!(MON.Human && MON.Human.isHuman(unit));
 
     window.Scene_PkmBattle = function() { this.initialize(...arguments); };
     Scene_PkmBattle.prototype = Object.create(Scene_Base.prototype);
@@ -398,7 +398,7 @@ PKM.Battle = PKM.Battle || {};
         this._endReason = null;
         this._focusUnit = null;
         this._hoverUnit = null;
-        PKM.Field.activeUnits(this._field, ALLY).forEach(u => this.notePartaker(u));
+        MON.Field.activeUnits(this._field, ALLY).forEach(u => this.notePartaker(u));
         this.createBackground();
         this.createFieldSprites();
         this.createFlash();
@@ -407,22 +407,22 @@ PKM.Battle = PKM.Battle || {};
         this.startBattle();
     };
 
-    // $gameTemp.pkmFoes (time) tem precedência; pkmWild mantém o encontro 1x1.
+    // $gameTemp.monFoes (time) tem precedência; monWild mantém o encontro 1x1.
     Scene_PkmBattle.prototype.buildField = function() {
-        const trainer = $gameTemp.pkmTrainer || null;
-        const allies = $gameParty.pkmBattleTeam
-            ? $gameParty.pkmBattleTeam()
-            : $gameParty.pkmParty().filter(p => p && !p.isFainted());
+        const trainer = $gameTemp.monTrainer || null;
+        const allies = $gameParty.monBattleTeam
+            ? $gameParty.monBattleTeam()
+            : $gameParty.monParty().filter(p => p && !p.isFainted());
         let foes;
         if (trainer) {
             const rival = trainer.avatar || trainer.human;
             foes = (rival ? [rival] : []).concat(trainer.party || []);
-        } else if (Array.isArray($gameTemp.pkmFoes) && $gameTemp.pkmFoes.length) {
-            foes = $gameTemp.pkmFoes.slice();
+        } else if (Array.isArray($gameTemp.monFoes) && $gameTemp.monFoes.length) {
+            foes = $gameTemp.monFoes.slice();
         } else {
-            foes = [$gameTemp.pkmWild];
+            foes = [$gameTemp.monWild];
         }
-        return PKM.Field.create({ allies, foes, isTrainer: !!trainer, trainer });
+        return MON.Field.create({ allies, foes, isTrainer: !!trainer, trainer });
     };
 
     Scene_PkmBattle.prototype.createBackground = function() {
@@ -442,7 +442,7 @@ PKM.Battle = PKM.Battle || {};
     Scene_PkmBattle.prototype.createFieldSprites = function() {
         this._views = [];
         for (const side of [ALLY, FOE]) {
-            for (let i = 0; i < PKM.Field.MAX_ACTIVE; i++) {
+            for (let i = 0; i < MON.Field.MAX_ACTIVE; i++) {
                 const sprite = new Sprite();
                 sprite.anchor.x = 0.5;
                 sprite.anchor.y = 1;
@@ -516,7 +516,7 @@ PKM.Battle = PKM.Battle || {};
 
     Scene_PkmBattle.prototype.refreshField = function() {
         for (const view of this._views) {
-            const unit = PKM.Field.slots(this._field, view.side)[view.index] || null;
+            const unit = MON.Field.slots(this._field, view.side)[view.index] || null;
             if (view.unit !== unit) this.loadArt(view, unit);
             view.sprite.visible = !!unit;
             view.sprite.opacity = unit && unit.isFainted() ? 90 : 255;
@@ -532,7 +532,7 @@ PKM.Battle = PKM.Battle || {};
         view.ready = false;
         view.tick = 0;
         if (!unit) { sprite.bitmap = null; return; }
-        sprite.bitmap = PKM.Core.loadSprite(unit.shiny ? SHINY_DIR : FRONT_DIR, unit.frontImageName());
+        sprite.bitmap = MON.Core.loadSprite(unit.shiny ? SHINY_DIR : FRONT_DIR, unit.frontImageName());
         sprite.setFrame(0, 0, 0, 0);
         sprite.x = this.artX(view.side, view.index);
         sprite.y = this.slotY(view.index) + SLOT_H - 8;
@@ -588,8 +588,8 @@ PKM.Battle = PKM.Battle || {};
         bmp.clear();
         bmp.fontFace = $gameSystem.mainFontFace();
         for (const side of [ALLY, FOE]) {
-            const slots = PKM.Field.slots(this._field, side);
-            for (let i = 0; i < PKM.Field.MAX_ACTIVE; i++) {
+            const slots = MON.Field.slots(this._field, side);
+            for (let i = 0; i < MON.Field.MAX_ACTIVE; i++) {
                 if (slots[i]) this.drawUnitPanel(bmp, slots[i], this.panelX(side), this.slotY(i) + 10, side);
             }
         }
@@ -681,26 +681,26 @@ PKM.Battle = PKM.Battle || {};
     //--- abertura -------------------------------------------------------------
     Scene_PkmBattle.prototype.foeTag = function() { return this._field.isTrainer ? "" : " selvagem"; };
     Scene_PkmBattle.prototype.tagOf = function(unit) {
-        return PKM.Field.sideOf(this._field, unit) === FOE ? this.foeTag() : "";
+        return MON.Field.sideOf(this._field, unit) === FOE ? this.foeTag() : "";
     };
     Scene_PkmBattle.prototype.notePartaker = function(unit) {
         if (unit && !this._participants.includes(unit)) this._participants.push(unit);
     };
     // humano não entra na Pokédex nem tem cry
     Scene_PkmBattle.prototype.noteFoeSeen = function(unit) {
-        if (!isHuman(unit) && $gameSystem.pkmSetSeen) $gameSystem.pkmSetSeen(unit.dexNumber);
+        if (!isHuman(unit) && $gameSystem.monSetSeen) $gameSystem.monSetSeen(unit.dexNumber);
     };
 
     Scene_PkmBattle.prototype.startBattle = function() {
-        const foes = PKM.Field.activeUnits(this._field, FOE);
+        const foes = MON.Field.activeUnits(this._field, FOE);
         foes.forEach(f => this.noteFoeSeen(f));
-        if (PKM.Audio) {
-            PKM.Audio.playBattleBgm(this._field.isTrainer);
+        if (MON.Audio) {
+            MON.Audio.playBattleBgm(this._field.isTrainer);
             const criable = foes.find(f => !isHuman(f));
-            if (criable) PKM.Audio.playCry(criable.dexNumber);
+            if (criable) MON.Audio.playCry(criable.dexNumber);
         }
         const foeNames = foes.map(u => u.name).join(", ");
-        const allyNames = PKM.Field.activeUnits(this._field, ALLY).map(u => u.name).join(", ");
+        const allyNames = MON.Field.activeUnits(this._field, ALLY).map(u => u.name).join(", ");
         const steps = [];
         if (this._field.isTrainer) {
             const trainer = this._field.trainer;
@@ -720,8 +720,8 @@ PKM.Battle = PKM.Battle || {};
 
     //--- entrada de ações (uma por unidade viva do jogador) --------------------
     Scene_PkmBattle.prototype.startInput = function() {
-        if (PKM.Field.outcome(this._field)) return this.concludeByOutcome();
-        this._inputUnits = PKM.Field.activeUnits(this._field, ALLY);
+        if (MON.Field.outcome(this._field)) return this.concludeByOutcome();
+        this._inputUnits = MON.Field.activeUnits(this._field, ALLY);
         this._actions = [];
         this._inputIndex = 0;
         this.nextInput();
@@ -768,7 +768,7 @@ PKM.Battle = PKM.Battle || {};
 
     //--- seleção de alvo ------------------------------------------------------
     Scene_PkmBattle.prototype.openTargets = function(onOk, onCancel) {
-        const targets = PKM.Field.validTargets(this._field, this.actor());
+        const targets = MON.Field.validTargets(this._field, this.actor());
         const back = onCancel || (() => this.openCommand());
         if (!targets.length) { SoundManager.playBuzzer(); back(); return; }
         if (targets.length === 1) { onOk(targets[0]); return; }
@@ -831,11 +831,11 @@ PKM.Battle = PKM.Battle || {};
         if (this._actions.some(a => a && a.kind === "capture")) {
             return this.warn("Já foi arremessado algo neste turno!");
         }
-        if (!$gameParty.pkmBalls) return this.chooseCaptureTarget("POKEBALL", false);
-        const targets = PKM.Field.validTargets(this._field, this.actor());
-        let balls = $gameParty.pkmBalls();
-        if (PKM.Franchise) {
-            balls = balls.filter(b => targets.some(t => PKM.Franchise.itemWorksOn(b.name, t)));
+        if (!$gameParty.monBalls) return this.chooseCaptureTarget("POKEBALL", false);
+        const targets = MON.Field.validTargets(this._field, this.actor());
+        let balls = $gameParty.monBalls();
+        if (MON.Franchise) {
+            balls = balls.filter(b => targets.some(t => MON.Franchise.itemWorksOn(b.name, t)));
         }
         if (!balls.length) return this.warn("Você não tem um item de captura que sirva aqui!");
         this._entryWindow.setEntries(balls);
@@ -862,7 +862,7 @@ PKM.Battle = PKM.Battle || {};
     Scene_PkmBattle.prototype.chooseCaptureTarget = function(ball, consume) {
         const unit = this.actor();
         this.openTargets(target => {
-            const rule = PKM.Franchise ? PKM.Franchise.captureRule(target, ball) : { allowed: true };
+            const rule = MON.Franchise ? MON.Franchise.captureRule(target, ball) : { allowed: true };
             if (!rule.allowed) return this.warn(rule.reason);
             this.commit({ unit, kind: "capture", ball, consume, target });
         }, () => this.onBall());
@@ -871,7 +871,7 @@ PKM.Battle = PKM.Battle || {};
     Scene_PkmBattle.prototype.onItem = function() {
         this._cmdWindow.hide();
         this._cmdWindow.deactivate();
-        const meds = $gameParty.pkmPocket ? $gameParty.pkmPocket(2) : [];
+        const meds = $gameParty.monPocket ? $gameParty.monPocket(2) : [];
         if (!meds.length) return this.warn("Você não tem remédios!");
         this._entryWindow.setEntries(meds);
         this._entryWindow.setHandler("ok", this.onItemOk.bind(this));
@@ -888,7 +888,7 @@ PKM.Battle = PKM.Battle || {};
         this._entryWindow.deactivate();
         if (!entry) return this.openCommand();
         const unit = this.actor();
-        const side = PKM.Field.side(this._field, ALLY);
+        const side = MON.Field.side(this._field, ALLY);
         this.openUnitList(side.active.filter(Boolean).concat(side.bench),
             target => this.commit({ unit, kind: "item", item: entry.name, target }),
             () => this.onItem(),
@@ -898,7 +898,7 @@ PKM.Battle = PKM.Battle || {};
     Scene_PkmBattle.prototype.onSwitch = function() {
         this._cmdWindow.hide();
         this._cmdWindow.deactivate();
-        const bench = PKM.Field.benchReady(this._field, ALLY);
+        const bench = MON.Field.benchReady(this._field, ALLY);
         if (!bench.length) return this.warn("Não há ninguém na reserva!");
         const unit = this.actor();
         this.openUnitList(bench,
@@ -935,22 +935,22 @@ PKM.Battle = PKM.Battle || {};
     Scene_PkmBattle.prototype.beginResolve = function() {
         this._focusUnit = null;
         this.hideMenus();
-        const foeActions = PKM.Field.activeUnits(this._field, FOE)
-            .map(unit => PKM.Field.pickAction(this._field, unit))
+        const foeActions = MON.Field.activeUnits(this._field, FOE)
+            .map(unit => MON.Field.pickAction(this._field, unit))
             .filter(Boolean);
-        this._order = PKM.Field.turnOrder(this._actions.filter(Boolean).concat(foeActions));
+        this._order = MON.Field.turnOrder(this._actions.filter(Boolean).concat(foeActions));
         this._phase = "resolve";
         this.resolveNext();
     };
 
     Scene_PkmBattle.prototype.onField = function(unit) {
-        const side = PKM.Field.sideOf(this._field, unit);
-        return !!side && PKM.Field.slots(this._field, side).includes(unit);
+        const side = MON.Field.sideOf(this._field, unit);
+        return !!side && MON.Field.slots(this._field, side).includes(unit);
     };
 
     Scene_PkmBattle.prototype.resolveNext = function() {
         if (this._endReason) return this.endBattle();
-        if (PKM.Field.outcome(this._field)) return this.endOfTurn();
+        if (MON.Field.outcome(this._field)) return this.endOfTurn();
         const action = this._order.shift();
         if (!action) return this.endOfTurn();
         if (action.unit.isFainted() || !this.onField(action.unit)) return this.resolveNext();
@@ -973,22 +973,22 @@ PKM.Battle = PKM.Battle || {};
 
     Scene_PkmBattle.prototype.moveSteps = function(action) {
         const unit = action.unit;
-        const target = PKM.Field.resolveTarget(this._field, unit, action.target);
+        const target = MON.Field.resolveTarget(this._field, unit, action.target);
         if (!target) return [{ text: unit.name + " não encontrou um alvo." }];
-        return PKM.Battle.executeMove(unit, target, action.move, {
+        return MON.Battle.executeMove(unit, target, action.move, {
             attacker: this.tagOf(unit), defender: this.tagOf(target)
         }).map(text => ({ text }));
     };
 
     Scene_PkmBattle.prototype.itemSteps = function(action) {
-        const label = (PKM.Core.item(action.item) || {}).name || action.item;
-        const res = PKM.Items.useOnPokemon(action.item, action.target);
-        if (res.ok && $gameParty.pkmLoseItem) $gameParty.pkmLoseItem(action.item, 1);
+        const label = (MON.Core.item(action.item) || {}).name || action.item;
+        const res = MON.Items.useOnMonster(action.item, action.target);
+        if (res.ok && $gameParty.monLoseItem) $gameParty.monLoseItem(action.item, 1);
         return [{ text: action.unit.name + " usou " + label + "." }, { text: res.message }];
     };
 
     Scene_PkmBattle.prototype.switchSteps = function(action) {
-        if (!PKM.Field.switchUnit(this._field, ALLY, action.unit, action.replacement)) {
+        if (!MON.Field.switchUnit(this._field, ALLY, action.unit, action.replacement)) {
             return [{ text: action.replacement.name + " não pode entrar agora." }];
         }
         this.notePartaker(action.replacement);
@@ -996,9 +996,9 @@ PKM.Battle = PKM.Battle || {};
     };
 
     Scene_PkmBattle.prototype.runSteps = function(action) {
-        const foes = PKM.Field.activeUnits(this._field, FOE);
-        const fastest = foes.reduce((mx, f) => Math.max(mx, PKM.Field.unitSpeed(f)), 0);
-        const escaped = PKM.Battle.canEscape(PKM.Field.unitSpeed(action.unit), fastest, this._field.runAttempts);
+        const foes = MON.Field.activeUnits(this._field, FOE);
+        const fastest = foes.reduce((mx, f) => Math.max(mx, MON.Field.unitSpeed(f)), 0);
+        const escaped = MON.Battle.canEscape(MON.Field.unitSpeed(action.unit), fastest, this._field.runAttempts);
         this._field.runAttempts++;
         if (!escaped) return [{ text: "Não conseguiu fugir!" }];
         this._endReason = "escape";
@@ -1006,21 +1006,21 @@ PKM.Battle = PKM.Battle || {};
     };
 
     Scene_PkmBattle.prototype.captureSteps = function(action) {
-        const target = PKM.Field.resolveTarget(this._field, action.unit, action.target);
+        const target = MON.Field.resolveTarget(this._field, action.unit, action.target);
         if (!target) return [{ text: "Não há alvo para capturar." }];
-        if (PKM.Franchise) {
-            const rule = PKM.Franchise.captureRule(target, action.ball);
+        if (MON.Franchise) {
+            const rule = MON.Franchise.captureRule(target, action.ball);
             if (!rule.allowed) return [{ text: rule.reason }];
         }
-        const bonus = PKM.Items ? PKM.Items.ballBonus(action.ball) : 1;
-        const res = PKM.Battle.tryCapture(target, bonus, 1);
+        const bonus = MON.Items ? MON.Items.ballBonus(action.ball) : 1;
+        const res = MON.Battle.tryCapture(target, bonus, 1);
         const spend = action.consume &&
-            (!PKM.Items || !PKM.Items.isConsumedOnThrow || PKM.Items.isConsumedOnThrow(action.ball));
+            (!MON.Items || !MON.Items.isConsumedOnThrow || MON.Items.isConsumedOnThrow(action.ball));
         const steps = [{
-            text: PKM.Franchise
-                ? PKM.Franchise.throwText(target, action.ball)
-                : "Você jogou uma " + ((PKM.Core.item(action.ball) || {}).name || "Poké Ball") + "!",
-            fn: () => { if (spend && $gameParty.pkmLoseItem) $gameParty.pkmLoseItem(action.ball, 1); }
+            text: MON.Franchise
+                ? MON.Franchise.throwText(target, action.ball)
+                : "Você jogou uma " + ((MON.Core.item(action.ball) || {}).name || "Poké Ball") + "!",
+            fn: () => { if (spend && $gameParty.monLoseItem) $gameParty.monLoseItem(action.ball, 1); }
         }];
         const shakes = res.success ? 3 : res.shakes;
         for (let i = 0; i < shakes; i++) steps.push({ text: "…" });
@@ -1029,14 +1029,14 @@ PKM.Battle = PKM.Battle || {};
             return steps;
         }
         steps.push({
-            text: PKM.Franchise
-                ? PKM.Franchise.successText(target, action.ball)
+            text: MON.Franchise
+                ? MON.Franchise.successText(target, action.ball)
                 : "Gotcha! " + target.name + " foi capturado!",
             fn: () => {
-                $gameSystem.pkmSetCaught(target.dexNumber);
+                $gameSystem.monSetCaught(target.dexNumber);
                 if (target.healStatusOnly) target.healStatusOnly();
                 this.removeFromField(target);
-                if ($gameParty.pkmAdd(target) === "storage") this.queueStep(target.name + " foi enviado ao PC.");
+                if ($gameParty.monAdd(target) === "storage") this.queueStep(target.name + " foi enviado ao PC.");
             }
         });
         return steps;
@@ -1044,9 +1044,9 @@ PKM.Battle = PKM.Battle || {};
 
     // capturado sai do campo sem desmaiar: não vale EXP nem conta como derrota
     Scene_PkmBattle.prototype.removeFromField = function(unit) {
-        const sideId = PKM.Field.sideOf(this._field, unit);
+        const sideId = MON.Field.sideOf(this._field, unit);
         if (!sideId) return;
-        const side = PKM.Field.side(this._field, sideId);
+        const side = MON.Field.side(this._field, sideId);
         const slot = side.active.indexOf(unit);
         if (slot >= 0) side.active[slot] = null;
         const benched = side.bench.indexOf(unit);
@@ -1055,7 +1055,7 @@ PKM.Battle = PKM.Battle || {};
 
     // registra quem caiu: vitórias/derrotas alimentam as condições de evolução
     Scene_PkmBattle.prototype.noteCasualties = function(actor) {
-        for (const unit of PKM.Field.allUnits(this._field)) {
+        for (const unit of MON.Field.allUnits(this._field)) {
             const index = this._down.indexOf(unit);
             if (!unit.isFainted()) {
                 if (index >= 0) this._down.splice(index, 1);
@@ -1063,8 +1063,8 @@ PKM.Battle = PKM.Battle || {};
             }
             if (index >= 0) continue;
             this._down.push(unit);
-            if (PKM.Field.sideOf(this._field, unit) === FOE) {
-                const killer = actor && PKM.Field.sideOf(this._field, actor) === ALLY ? actor : null;
+            if (MON.Field.sideOf(this._field, unit) === FOE) {
+                const killer = actor && MON.Field.sideOf(this._field, actor) === ALLY ? actor : null;
                 this._defeated.push({ unit, killer });
                 if (killer && killer.recordWin) killer.recordWin(unit);
             } else if (unit.recordFaint) {
@@ -1075,12 +1075,12 @@ PKM.Battle = PKM.Battle || {};
 
     //--- fim de turno ---------------------------------------------------------
     Scene_PkmBattle.prototype.endOfTurn = function() {
-        const living = PKM.Field.activeUnits(this._field, ALLY)
-            .concat(PKM.Field.activeUnits(this._field, FOE))
-            .sort((a, b) => PKM.Field.unitSpeed(b) - PKM.Field.unitSpeed(a));
+        const living = MON.Field.activeUnits(this._field, ALLY)
+            .concat(MON.Field.activeUnits(this._field, FOE))
+            .sort((a, b) => MON.Field.unitSpeed(b) - MON.Field.unitSpeed(a));
         const steps = [];
         for (const unit of living) {
-            PKM.Battle.endOfTurnResidual(unit).forEach(text => steps.push({ text }));
+            MON.Battle.endOfTurnResidual(unit).forEach(text => steps.push({ text }));
         }
         this.noteCasualties(null);
         this._field.turn++;
@@ -1088,10 +1088,10 @@ PKM.Battle = PKM.Battle || {};
     };
 
     Scene_PkmBattle.prototype.fillSlots = function() {
-        if (PKM.Field.outcome(this._field)) return this.concludeByOutcome();
+        if (MON.Field.outcome(this._field)) return this.concludeByOutcome();
         const steps = [];
         for (const side of [ALLY, FOE]) {
-            for (const change of PKM.Field.fillEmptySlots(this._field, side)) {
+            for (const change of MON.Field.fillEmptySlots(this._field, side)) {
                 const unit = change.in;
                 if (side === ALLY) {
                     this.notePartaker(unit);
@@ -1110,7 +1110,7 @@ PKM.Battle = PKM.Battle || {};
     };
 
     Scene_PkmBattle.prototype.concludeByOutcome = function() {
-        const outcome = PKM.Field.outcome(this._field);
+        const outcome = MON.Field.outcome(this._field);
         if (outcome === "win") return this.onVictory();
         if (outcome === "lose") return this.onDefeat();
         this.startInput();
@@ -1118,14 +1118,14 @@ PKM.Battle = PKM.Battle || {};
 
     //--- vitória: EXP, golpes e evolução de todos os participantes vivos -------
     Scene_PkmBattle.prototype.onVictory = function() {
-        if (PKM.Audio) PKM.Audio.playVictory(this._field.isTrainer);
+        if (MON.Audio) MON.Audio.playVictory(this._field.isTrainer);
         const winners = this._participants.filter(u => !u.isFainted());
         const bonus = this._field.isTrainer ? 1.5 : 1;
         const share = Math.max(1, winners.length);
-        const exp = this._defeated.reduce((sum, e) => sum + PKM.Battle.expGain(e.unit, share, bonus), 0);
+        const exp = this._defeated.reduce((sum, e) => sum + MON.Battle.expGain(e.unit, share, bonus), 0);
         const steps = [];
         for (const entry of this._defeated) {
-            PKM.Battle.runVictoryHooks(entry.killer || winners[0] || null, entry.unit, this._field.isTrainer)
+            MON.Battle.runVictoryHooks(entry.killer || winners[0] || null, entry.unit, this._field.isTrainer)
                 .forEach(text => steps.push({ text }));
         }
         this._growthQueue = exp > 0 ? winners.map(unit => ({ unit, exp })) : [];
@@ -1154,7 +1154,7 @@ PKM.Battle = PKM.Battle || {};
         if (!this._learnQueue || this._learnQueue.length === 0) return this.evolutionStep();
         const moveId = this._learnQueue.shift();
         if (winner.knowsMove(moveId)) return this.processNextLearn();
-        const md = PKM.Core.move(moveId);
+        const md = MON.Core.move(moveId);
         const name = md ? md.name : moveId;
         if (winner.moves.length < 4) {
             winner.learnMove(moveId);
@@ -1193,7 +1193,7 @@ PKM.Battle = PKM.Battle || {};
     Scene_PkmBattle.prototype.onForgetOk = function() {
         const winner = this._expWinner;
         const index = this._forgetWindow.index();
-        const old = PKM.Core.move(winner.moves[index].id);
+        const old = MON.Core.move(winner.moves[index].id);
         const oldName = old ? old.name : winner.moves[index].id;
         winner.replaceMove(index, this._pendingLearn.moveId);
         this._forgetWindow.hide();
@@ -1230,7 +1230,7 @@ PKM.Battle = PKM.Battle || {};
         if (trainer.defeatText) steps.push({ text: trainer.defeatText });
         steps.push({
             text: "Você recebeu $" + reward + " de prêmio!",
-            fn: () => { if ($gameParty.pkmGainMoney) $gameParty.pkmGainMoney(reward); }
+            fn: () => { if ($gameParty.monGainMoney) $gameParty.monGainMoney(reward); }
         });
         this.showSteps(steps, () => this.endBattle());
     };
@@ -1243,17 +1243,17 @@ PKM.Battle = PKM.Battle || {};
     };
 
     Scene_PkmBattle.prototype.healTeam = function() {
-        if ($gameParty.pkmHealAll) $gameParty.pkmHealAll();
-        const avatar = $gameParty.pkmAvatar ? $gameParty.pkmAvatar() : null;
+        if ($gameParty.monHealAll) $gameParty.monHealAll();
+        const avatar = $gameParty.monAvatar ? $gameParty.monAvatar() : null;
         if (avatar && avatar.healFully) avatar.healFully();
     };
 
     //--- fim ------------------------------------------------------------------
     Scene_PkmBattle.prototype.endBattle = function() {
-        $gameTemp.pkmWild = null;
-        $gameTemp.pkmFoes = null;
-        $gameTemp.pkmTrainer = null;
-        if (PKM.Audio) PKM.Audio.restoreBgm();
+        $gameTemp.monWild = null;
+        $gameTemp.monFoes = null;
+        $gameTemp.monTrainer = null;
+        if (MON.Audio) MON.Audio.restoreBgm();
         this.popScene();
     };
 
@@ -1287,7 +1287,7 @@ PKM.Battle = PKM.Battle || {};
     Window_BattleMoves.prototype.drawItem = function(index) {
         const move = this._unit.moves[index];
         if (!move) return;
-        const md = PKM.Core.move(move.id);
+        const md = MON.Core.move(move.id);
         const rect = this.itemLineRect(index);
         this.changePaintOpacity(move.pp > 0);
         this.drawText(md ? md.name : move.id, rect.x, rect.y, rect.width - 90, "left");

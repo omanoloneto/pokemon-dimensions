@@ -6,7 +6,7 @@ deste repositório É o projeto MZ (abra `game.rmmzproject` no editor).
 
 > As fontes do projeto XP (PBS, Data, Graphics, Audio) foram removidas do
 > working tree; para recuperá-las: `git checkout 3fb6a23 -- PBS Data Graphics`.
-> Os assets gráficos dos Pokémon foram preservados em `img/pokemon/`.
+> Os assets gráficos dos Pokémon foram preservados em `img/monsters/`.
 
 > 🧪 Para instalar e testar no MZ passo a passo, veja **[TESTING.md](TESTING.md)**.
 > 🎮 Design e roadmap do jogo: **[docs/](docs/README.md)** (visão, franquias, mundo, produção, roadmap mestre).
@@ -17,7 +17,7 @@ deste repositório É o projeto MZ (abra `game.rmmzproject` no editor).
 |-----------|---------------|
 | Dados (Pokémon, golpes, tipos, itens, encontros → JSON) | ✅ |
 | **Pokédex** (lista + ficha)             | ✅ |
-| **Game_Pokemon** (IVs/EVs/natureza/stats) | ✅ Fase 1 |
+| **Game_Monster** (IVs/EVs/natureza/stats) | ✅ Fase 1 |
 | **Party & Resumo**                      | ✅ Fase 2 |
 | **Encontros selvagens**                 | ✅ Fase 4 |
 | **Batalha 1v1 + Captura**               | ✅ Fases 5a/6 |
@@ -33,52 +33,52 @@ deste repositório É o projeto MZ (abra `game.rmmzproject` no editor).
 ```
 ./
 ├── data/                     # bancos compilados do PBS (gerados)
-│   ├── Pokemon.json  Moves.json  Types.json  PkmItems.json  Encounters.json
+│   ├── Monsters.json  Moves.json  Types.json  MonItems.json  Encounters.json
 ├── js/plugins/
-│   ├── PKM_Core.js           # carrega dados, tabela de tipos, estado da Pokédex
-│   ├── PKM_Pokemon.js        # classe Game_Pokemon (Fase 1)
-│   ├── PKM_Pokedex.js        # cena da Pokédex
-│   ├── PKM_Party.js          # equipe + telas de resumo (Fase 2)
-│   ├── PKM_Encounters.js     # encontros no overworld (Fase 4)
-│   ├── PKM_Battle.js         # batalha 1v1 + captura (Fases 5a/6)
-│   ├── PKM_Bag.js            # mochila, itens, dinheiro (Fase 3)
-│   ├── PKM_Trainers.js       # batalhas de treinador + insígnias (Fase 9)
-│   ├── PKM_Storage.js        # PC: caixas de armazenamento (Fase 8)
-│   └── PKM_Audio.js          # cries, BGM de batalha, vitória (Fase 10)
-├── img/pokemon/              # sprites <numero>.png (front, back, front_shiny,
+│   ├── MON_Core.js           # carrega dados, tabela de tipos, estado da Pokédex
+│   ├── MON_Monster.js        # classe Game_Monster (Fase 1)
+│   ├── MON_Codex.js        # cena da Pokédex
+│   ├── MON_Party.js          # equipe + telas de resumo (Fase 2)
+│   ├── MON_Encounters.js     # encontros no overworld (Fase 4)
+│   ├── MON_Battle.js         # batalha 1v1 + captura (Fases 5a/6)
+│   ├── MON_Bag.js            # mochila, itens, dinheiro (Fase 3)
+│   ├── MON_Trainers.js       # batalhas de treinador + insígnias (Fase 9)
+│   ├── MON_Storage.js        # PC: caixas de armazenamento (Fase 8)
+│   └── MON_Audio.js          # cries, BGM de batalha, vitória (Fase 10)
+├── img/monsters/              # sprites <numero>.png (front, back, front_shiny,
 │                             # back_shiny, icons, footprints, alt)
 └── tools/
     ├── compile_all.rb        # PBS → todos os data/*.json
-    ├── compile_pbs.rb        # (legado) só Pokemon.json
+    ├── compile_pbs.rb        # (legado) só Monsters.json
     └── test_harness.js       # testes headless da lógica (node)
 ```
 
 ## Instalação num projeto MZ
 
 1. Copie tudo de `data/` para a pasta `data/` do seu projeto MZ.
-2. Copie todos os `js/plugins/PKM_*.js` para `js/plugins/`.
+2. Copie todos os `js/plugins/MON_*.js` para `js/plugins/`.
 3. No **Gerenciador de Plugins**, adicione e ative **nesta ordem**:
-   `PKM_Core` → `PKM_Pokemon` → `PKM_Pokedex` → `PKM_Party` →
-   `PKM_Encounters` → `PKM_Battle` → `PKM_Bag` → `PKM_Trainers` →
-   `PKM_Storage` → `PKM_Audio`.
-4. (Opcional) Sprites frontais em `img/pokemon/front/` (`001.png`…). Sem imagem,
+   `MON_Core` → `MON_Monster` → `MON_Codex` → `MON_Party` →
+   `MON_Encounters` → `MON_Battle` → `MON_Bag` → `MON_Trainers` →
+   `MON_Storage` → `MON_Audio`.
+4. (Opcional) Sprites frontais em `img/monsters/front/` (`001.png`…). Sem imagem,
    a Pokédex mostra um placeholder "?".
 
 ## Testar a demo jogável (andar → encontro → batalha → captura)
 
-1. Num evento, dê um inicial: comando `PKM_Party → Dar Pokémon` (ex.: CHARMANDER nv5).
+1. Num evento, dê um inicial: comando `MON_Party → Dar Pokémon` (ex.: CHARMANDER nv5).
 2. Pinte a **Região 1** (editor de mapa) sobre tiles de grama de um mapa que
    exista em `Encounters.json` (ex.: mapa 5 = Route 1).
 3. Ande na grama → encontro selvagem → batalha. Teste Lutar/Bola/Pokémon/Fugir.
-   - Para forçar: comando `PKM_Encounters → Forçar Encontro` (PIDGEY nv7).
+   - Para forçar: comando `MON_Encounters → Forçar Encontro` (PIDGEY nv7).
 
 ## Mochila (Fase 3)
 
-- Dar item: comando `PKM_Bag → Dar Item` (ex.: POTION ×5, GREATBALL ×10).
-- Abrir: comando `PKM_Bag → Abrir Mochila` (8 bolsos; remédios usáveis na equipe).
+- Dar item: comando `MON_Bag → Dar Item` (ex.: POTION ×5, GREATBALL ×10).
+- Abrir: comando `MON_Bag → Abrir Mochila` (8 bolsos; remédios usáveis na equipe).
 - Em batalha, o comando **Bola** agora usa as Poké Bolas da mochila (bônus por
-  tipo: Great ×1.5, Ultra ×2, Master ×255). Sem `PKM_Bag`, usa uma Poké Ball comum.
-- Começa com $3000; `PKM_Bag → Dar Dinheiro` ajusta.
+  tipo: Great ×1.5, Ultra ×2, Master ×255). Sem `MON_Bag`, usa uma Poké Ball comum.
+- Começa com $3000; `MON_Bag → Dar Dinheiro` ajusta.
 
 ## EXP, nível e evolução (Fase 7)
 
@@ -99,22 +99,22 @@ deste repositório É o projeto MZ (abra `game.rmmzproject` no editor).
   de dano (ex.: Ember 10% queima, Thunderbolt 10% paralisa, Body Slam 30%).
 - **Precisão** afetada por estágios de precisão/evasão. Trocar de Pokémon zera
   os estágios. Imunidades por tipo (Fogo não queima, Gelo não congela, etc.).
-- O registry `PKM.Battle.MOVE_EFFECTS` (em PKM_Battle.js) é data-driven — dá
+- O registry `MON.Battle.MOVE_EFFECTS` (em MON_Battle.js) é data-driven — dá
   para adicionar mais golpes facilmente.
 
 ## Treinadores & ginásios (Fase 9)
 
-- Iniciar: comando `PKM_Trainers → Batalha de Treinador` (tipo + nome), ou
-  `PKM.Trainers.start("LEADER_Brock", "Brock", {defeatText:"..."} )` num evento.
+- Iniciar: comando `MON_Trainers → Batalha de Treinador` (tipo + nome), ou
+  `MON.Trainers.start("LEADER_Brock", "Brock", {defeatText:"..."} )` num evento.
 - O oponente envia cada Pokémon em sequência; **não dá para capturar nem fugir**;
   ao vencer você recebe prêmio (`baseMoney × nível do último`) e EXP com bônus 1.5×.
-- Insígnias: `$gameSystem.pkmGiveBadge("KANTO_1")`, `pkmHasBadge`, `pkmBadgeCount`,
-  ou comando `PKM_Trainers → Dar Insígnia`.
+- Insígnias: `$gameSystem.monGiveBadge("KANTO_1")`, `monHasBadge`, `monBadgeCount`,
+  ou comando `MON_Trainers → Dar Insígnia`.
 - Dados de 60 treinadores e 75 tipos vêm do seu PBS.
 
 ## PC / armazenamento (Fase 8)
 
-- 16 caixas × 30 espaços. Abra com o comando `PKM_Storage → Abrir PC`.
+- 16 caixas × 30 espaços. Abra com o comando `MON_Storage → Abrir PC`.
 - Capturas com a equipe cheia vão automaticamente para a 1ª caixa com espaço
   (o array antigo de armazenamento é migrado para as caixas).
 - Na cena: **Q/W** trocam de caixa; em um Pokémon → Retirar / Resumo / Mover /
@@ -122,7 +122,7 @@ deste repositório É o projeto MZ (abra `game.rmmzproject` no editor).
 
 ## Polimento (Fase 10)
 
-- **Áudio** (`PKM_Audio.js`, opcional): toca o *cry* do Pokémon ao aparecer/ser
+- **Áudio** (`MON_Audio.js`, opcional): toca o *cry* do Pokémon ao aparecer/ser
   enviado, BGM de batalha (selvagem/treinador) e fanfarra de vitória — basta
   colocar os arquivos em `audio/se/Cries/`, `audio/bgm/`, `audio/me/`. Sem os
   arquivos, nada quebra.
@@ -143,21 +143,21 @@ ruby tools/migrate_xp.rb     # exporta o conteúdo dos mapas do projeto XP
 
 ## Como usar
 
-**Abrir a Pokédex** — comando de plugin `PKM_Pokedex → Abrir Pokédex`, ou em um
+**Abrir a Pokédex** — comando de plugin `MON_Codex → Abrir Pokédex`, ou em um
 evento (Script):
 
 ```js
-SceneManager.push(Scene_Pokedex);
+SceneManager.push(Scene_Codex);
 ```
 
 **Registrar espécies** (em batalhas/encontros, por enquanto manual):
 
-- Comandos de plugin `PKM_Core → Registrar Visto` / `Registrar Capturado`, ou
+- Comandos de plugin `MON_Core → Registrar Visto` / `Registrar Capturado`, ou
   via script:
 
 ```js
-$gameSystem.pkmSetSeen(25);    // viu Pikachu
-$gameSystem.pkmSetCaught(25);  // capturou Pikachu (revela a descrição)
+$gameSystem.monSetSeen(25);    // viu Pikachu
+$gameSystem.monSetCaught(25);  // capturou Pikachu (revela a descrição)
 ```
 
 Regras (como nos jogos oficiais): não vistos aparecem como `----------`;

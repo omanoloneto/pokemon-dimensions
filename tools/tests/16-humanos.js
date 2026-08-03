@@ -37,14 +37,14 @@ function ensurePlugin(ctx, file, loaded) {
 module.exports = function({ ctx, ok, eq, G, section }) {
     section("Humanos — classes jogáveis, ações e combate (16)");
 
-    const hasHuman = ensurePlugin(ctx, "PKM_Human.js", () => typeof ctx.Game_Human !== "undefined");
-    ok(hasHuman, "PKM_Human carregado");
+    const hasHuman = ensurePlugin(ctx, "MON_Human.js", () => typeof ctx.Game_Human !== "undefined");
+    ok(hasHuman, "MON_Human carregado");
     if (!hasHuman) return;
 
     const Human = ctx.Game_Human;
-    const B = ctx.PKM.Battle;
-    const F = ctx.PKM.Franchise;
-    const C = ctx.PKM.Core;
+    const B = ctx.MON.Battle;
+    const F = ctx.MON.Franchise;
+    const C = ctx.MON.Core;
     const humMoves = JSON.parse(fs.readFileSync(path.join(ROOT, "data/moves/HUM.json"), "utf8"));
     const classes = F.speciesOf("HUM");
     const byName = new Map(classes.map(sp => [sp.internalName, sp]));
@@ -65,7 +65,7 @@ module.exports = function({ ctx, ok, eq, G, section }) {
     ok(classes.every(sp => sp.id >= 920 && sp.id <= 969), "toda classe está na faixa HUM (920-969)");
     ok(classes.every(sp => F.ofSpecies(sp.id).id === "HUM"), "toda classe pertence à franquia HUM");
     ok(!!byName.get("TRAINER"), "a classe padrão TRAINER existe (default de Game_Human)");
-    eq(ctx.PKM.Human.classes().length, classes.length, "PKM.Human.classes() devolve o elenco HUM");
+    eq(ctx.MON.Human.classes().length, classes.length, "MON.Human.classes() devolve o elenco HUM");
 
     ok(classes.every(sp => sp.type1 === "NORMAL"), "humano é NORMAL — a tabela de tipos é a língua franca");
     const dualType = classes.filter(sp => sp.type2);
@@ -135,7 +135,7 @@ module.exports = function({ ctx, ok, eq, G, section }) {
     ok(ids.every(id => humMoves[id].description && humMoves[id].description.length > 20),
         "toda ação tem descrição em português");
 
-    // o que ainda depende de um plugin registrar em PKM.Battle.MOVE_EFFECTS
+    // o que ainda depende de um plugin registrar em MON.Battle.MOVE_EFFECTS
     const missing = ids.filter(id => {
         const md = humMoves[id];
         const needsEffect = md.category === "Status" || md.effectChance > 0;
@@ -157,10 +157,10 @@ module.exports = function({ ctx, ok, eq, G, section }) {
     ok(you.types().includes("NORMAL"), "humano entra na tabela de tipos como NORMAL");
     eq(you.shiny, false, "humano nunca é shiny");
     eq(new Human("TRAINER", 5).name, "Treinador", "sem nome de pessoa, cai no nome da classe");
-    eq(ctx.PKM.Human.isHuman(you), true, "PKM.Human.isHuman reconhece o avatar");
-    eq(ctx.PKM.Human.isHuman(new G("PIKACHU", 5)), false, "PKM.Human.isHuman rejeita monstro");
-    ok(ctx.PKM.Human.create("MEDAFIGHTER", 30, { name: "Ikki" }).className === "Medafighter",
-        "PKM.Human.create monta qualquer classe do elenco");
+    eq(ctx.MON.Human.isHuman(you), true, "MON.Human.isHuman reconhece o avatar");
+    eq(ctx.MON.Human.isHuman(new G("PIKACHU", 5)), false, "MON.Human.isHuman rejeita monstro");
+    ok(ctx.MON.Human.create("MEDAFIGHTER", 30, { name: "Ikki" }).className === "Medafighter",
+        "MON.Human.create monta qualquer classe do elenco");
 
     // repertório: o humano entra em campo com ações utilizáveis
     ok(you.moves.length >= 1 && you.moves.length <= 4, "1..4 ações no repertório");
@@ -181,7 +181,7 @@ module.exports = function({ ctx, ok, eq, G, section }) {
 
     //--- não é capturável e não evolui ---------------------------------------
     const rule = F.captureRule(you, null);
-    eq(rule.allowed, false, "PKM.Franchise.captureRule barra a captura de humano");
+    eq(rule.allowed, false, "MON.Franchise.captureRule barra a captura de humano");
     ok(rule.reason && rule.reason.includes("Manolo"), "a recusa cita a pessoa pelo nome");
     eq(F.captureRule(you, "POKEBALL").allowed, false, "nem com Poké Bola na mão");
     eq(F.captureRule(you, "MASTERBALL").allowed, false, "nem com Master Ball");
@@ -201,26 +201,26 @@ module.exports = function({ ctx, ok, eq, G, section }) {
     ctx.$gameParty = party;
     try {
         const pika = new G("PIKACHU", 10), bulba = new G("BULBASAUR", 10);
-        party.pkmAdd(pika);
-        party.pkmAdd(bulba);
+        party.monAdd(pika);
+        party.monAdd(bulba);
         // o jogador sempre entra em campo: sem avatar definido, cria o padrão
-        eq(party.pkmBattleTeam().length, 3, "sem avatar definido, o padrão entra no time");
-        ok(party.pkmBattleTeam()[0].isHuman(), "o avatar padrão ocupa o slot 0");
-        ok(party.pkmBattleRoster().includes(party.pkmAvatar()),
+        eq(party.monBattleTeam().length, 3, "sem avatar definido, o padrão entra no time");
+        ok(party.monBattleTeam()[0].isHuman(), "o avatar padrão ocupa o slot 0");
+        ok(party.monBattleRoster().includes(party.monAvatar()),
             "o avatar é alvo válido de item/cura fora de batalha");
 
-        party.pkmSetAvatar(you);
-        eq(party.pkmAvatar(), you, "pkmAvatar devolve o humano definido");
-        const team = party.pkmBattleTeam();
+        party.monSetAvatar(you);
+        eq(party.monAvatar(), you, "monAvatar devolve o humano definido");
+        const team = party.monBattleTeam();
         eq(team.length, 3, "time de batalha = humano + 2 monstros");
         eq(team[0], you, "o avatar humano ocupa a frente do time");
         eq(team[1], pika, "os monstros vêm depois do humano");
-        ok(team.length <= ctx.PKM.Field.MAX_ACTIVE, "o time cabe nos 3 slots do campo");
+        ok(team.length <= ctx.MON.Field.MAX_ACTIVE, "o time cabe nos 3 slots do campo");
 
         you._hp = 0;
-        ok(!party.pkmBattleTeam().includes(you), "avatar caído sai do time de batalha");
+        ok(!party.monBattleTeam().includes(you), "avatar caído sai do time de batalha");
         you._hp = you.maxHp;
-        ok(party.pkmBattleTeam()[0] === you, "avatar curado volta para a frente");
+        ok(party.monBattleTeam()[0] === you, "avatar curado volta para a frente");
     } finally {
         ctx.$gameParty = prevParty;
     }

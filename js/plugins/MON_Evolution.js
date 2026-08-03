@@ -1,26 +1,26 @@
 //=============================================================================
-// PKM_Evolution.js  — Digimon
+// MON_Evolution.js  — Digimon
 //=============================================================================
 /*:
  * @target MZ
- * @plugindesc [PKM v0.4] Evolução: métodos completos (pedra, amizade, golpe,
+ * @plugindesc [MON v0.4] Evolução: métodos completos (pedra, amizade, golpe,
  * vínculo, local), condição ramificada (digievolução) e Digimemória.
  * @author Pokémon Dimensions
- * @base PKM_Core
- * @base PKM_Pokemon
- * @orderAfter PKM_Pokemon
- * @orderBefore PKM_Battle
+ * @base MON_Core
+ * @base MON_Monster
+ * @orderAfter MON_Monster
+ * @orderBefore MON_Battle
  *
- * @help PKM_Evolution.js
+ * @help MON_Evolution.js
  *
- * Dono único da evolução estendida. Substitui Game_Pokemon.evolutionByLevel
+ * Dono único da evolução estendida. Substitui Game_Monster.evolutionByLevel
  * (que só entendia Level/LevelMale/LevelFemale) por uma tabela de métodos.
  *
  * ---------------------------------------------------------------------------
  * DOIS GATILHOS
  * ---------------------------------------------------------------------------
  *   evolutionByLevel()            -> disparado ao subir de nível
- *   PKM.Evolution.byItem(p, item) -> disparado ao usar um item no monstro
+ *   MON.Evolution.byItem(p, item) -> disparado ao usar um item no monstro
  *
  * Ambos devolvem o internalName do alvo ou null, e nunca mutam o monstro.
  * Método fora das tabelas SEMPRE reprova: dado desconhecido não evolui nada.
@@ -37,7 +37,7 @@
  *   HasInParty                          espécie indicada na equipe (Mantyke)
  *   Location                            mapa atual (ver LOCATION_MAPS)
  *
- * Métodos por item (PKM.Evolution.byItem):
+ * Métodos por item (MON.Evolution.byItem):
  *   Item / ItemMale / ItemFemale        a pedra indicada (+ gênero)
  *   DayHoldItem / NightHoldItem         o item indicado
  *   Trade                               Cabo Link (LINKCABLE)
@@ -62,7 +62,7 @@
  * · Location compara o mapa atual com LOCATION_MAPS. Os params do banco são ids
  *   do Essentials original (28, 34, 49, 50, 51) e o jogo ainda só tem Map001 e
  *   Map002: a tabela nasce VAZIA e a regra falha fechada. Quando o mapa existir,
- *   basta mapear PKM.Evolution.LOCATION_MAPS["28"] = <id do mapa no MZ>.
+ *   basta mapear MON.Evolution.LOCATION_MAPS["28"] = <id do mapa no MZ>.
  *
  * ---------------------------------------------------------------------------
  * CONDIÇÃO RAMIFICADA (digievolução)
@@ -72,7 +72,7 @@
  *   { "into": "GREYMON", "method": "Level", "param": "20",
  *     "condition": { "faintsBelow": 3 } }
  *
- * Condições suportadas (todas lidas do estado que Game_Pokemon já mantém):
+ * Condições suportadas (todas lidas do estado que Game_Monster já mantém):
  *   faintsBelow      nº de desmaios menor que o valor
  *   faintsAtLeast    nº de desmaios maior ou igual ao valor
  *   winsAtLeast      nº de vitórias maior ou igual ao valor
@@ -89,11 +89,11 @@
  * ---------------------------------------------------------------------------
  * API
  * ---------------------------------------------------------------------------
- *   PKM.Evolution.checkCondition(pokemon, condition) -> bool
- *   PKM.Evolution.byItem(pokemon, itemName)          -> internalName | null
- *   PKM.Evolution.isEvolutionItem(itemName)          -> bool
- *   PKM.Evolution.installBagIntegration()            -> instala os hooks tardios
- *   PKM.Evolution.useDigimemory(pokemon)             -> {ok, message}
+ *   MON.Evolution.checkCondition(monster, condition) -> bool
+ *   MON.Evolution.byItem(monster, itemName)          -> internalName | null
+ *   MON.Evolution.isEvolutionItem(itemName)          -> bool
+ *   MON.Evolution.installBagIntegration()            -> instala os hooks tardios
+ *   MON.Evolution.useDigimemory(monster)             -> {ok, message}
  *
  * @command devolve
  * @text Usar Digimemória
@@ -107,20 +107,20 @@
  * @desc 0 = primeiro membro da equipe.
  */
 
-var PKM = PKM || {};
-PKM.Evolution = PKM.Evolution || {};
+var MON = MON || {};
+MON.Evolution = MON.Evolution || {};
 
 (() => {
     "use strict";
 
-    const PLUGIN_NAME = "PKM_Evolution";
+    const PLUGIN_NAME = "MON_Evolution";
     const DEVOLVE_ITEM = "DIGIMEMORY";
     const DEVOLVE_FRANCHISE = "DGM";
     const LINK_ITEM = "LINKCABLE";
     const HAPPINESS_THRESHOLD = 220;
 
     // param do banco -> id do mapa no MZ. Vazia enquanto os mapas não existem.
-    PKM.Evolution.LOCATION_MAPS = {};
+    MON.Evolution.LOCATION_MAPS = {};
 
     //=========================================================================
     // Leituras do mundo (tudo tolerante a ambiente headless)
@@ -130,11 +130,11 @@ PKM.Evolution = PKM.Evolution || {};
     }
     function bagHas(internalName) {
         const p = party();
-        return !!(p && p.pkmHasItem && p.pkmHasItem(internalName));
+        return !!(p && p.monHasItem && p.monHasItem(internalName));
     }
     function partyHasSpecies(internalName) {
         const p = party();
-        const members = p && p.pkmParty ? p.pkmParty() : null;
+        const members = p && p.monParty ? p.monParty() : null;
         if (!members) return false;
         const up = String(internalName).toUpperCase();
         return members.some(m => m && m.species() && m.species().internalName === up);
@@ -144,14 +144,14 @@ PKM.Evolution = PKM.Evolution || {};
         return map && map.mapId ? map.mapId() : 0;
     }
     function onLocation(param) {
-        const target = PKM.Evolution.LOCATION_MAPS[String(param)];
+        const target = MON.Evolution.LOCATION_MAPS[String(param)];
         return target !== undefined && currentMapId() === Number(target);
     }
     // Wurmple sorteia o ramo por indivíduo; a natureza já é fixa no nascimento
     // e faz esse papel sem inventar campo novo no save.
-    function splitBranch(pokemon) {
-        const natures = (PKM.Pokemon && PKM.Pokemon.NATURES) || [];
-        return natures.indexOf(pokemon.natureData()) % 2;
+    function splitBranch(monster) {
+        const natures = (MON.Pokemon && MON.Pokemon.NATURES) || [];
+        return natures.indexOf(monster.natureData()) % 2;
     }
 
     const atLeast = (p, v) => { const n = Number(v); return Number.isFinite(n) && p.level >= n; };
@@ -195,7 +195,7 @@ PKM.Evolution = PKM.Evolution || {};
     //=========================================================================
     // Consultas puras
     //=========================================================================
-    const evolutionsOf = (pokemon) => (pokemon.species() && pokemon.species().evolutions) || [];
+    const evolutionsOf = (monster) => (monster.species() && monster.species().evolutions) || [];
 
     const CONDITIONS = {
         faintsBelow:     (p, v) => p.faints < Number(v),
@@ -209,12 +209,12 @@ PKM.Evolution = PKM.Evolution || {};
     };
 
     // chave desconhecida reprova: erro de dados nunca libera uma evolução errada
-    PKM.Evolution.checkCondition = function(pokemon, condition) {
+    MON.Evolution.checkCondition = function(monster, condition) {
         if (!condition) return true;
-        if (!pokemon) return false;
+        if (!monster) return false;
         return Object.keys(condition).every(key => {
             const check = own(CONDITIONS, key);
-            return check ? check(pokemon, condition[key]) : false;
+            return check ? check(monster, condition[key]) : false;
         });
     };
 
@@ -224,33 +224,33 @@ PKM.Evolution = PKM.Evolution || {};
         return Object.prototype.hasOwnProperty.call(table, key) ? table[key] : null;
     }
 
-    function firstMatch(pokemon, table, extra) {
-        for (const ev of evolutionsOf(pokemon)) {
+    function firstMatch(monster, table, extra) {
+        for (const ev of evolutionsOf(monster)) {
             const check = own(table, ev.method);
-            if (!check || !check(pokemon, ev.param, extra)) continue;
-            if (!PKM.Evolution.checkCondition(pokemon, ev.condition)) continue;
+            if (!check || !check(monster, ev.param, extra)) continue;
+            if (!MON.Evolution.checkCondition(monster, ev.condition)) continue;
             return ev.into;
         }
         return null;
     }
 
-    Game_Pokemon.prototype.evolutionByLevel = function() {
+    Game_Monster.prototype.evolutionByLevel = function() {
         return firstMatch(this, LEVEL_METHODS);
     };
 
-    PKM.Evolution.byItem = function(pokemon, itemName) {
-        if (!pokemon || !itemName) return null;
-        return firstMatch(pokemon, ITEM_METHODS, String(itemName).toUpperCase());
+    MON.Evolution.byItem = function(monster, itemName) {
+        if (!monster || !itemName) return null;
+        return firstMatch(monster, ITEM_METHODS, String(itemName).toUpperCase());
     };
 
     // itens que disparam evolução, lidos do próprio banco (nada hardcoded).
     // Preguiçoso porque o merge multi-franquia só roda depois dos plugins.
     let evolutionItems = null;
-    PKM.Evolution.isEvolutionItem = function(itemName) {
+    MON.Evolution.isEvolutionItem = function(itemName) {
         if (!itemName) return false;
         if (!evolutionItems) {
             evolutionItems = new Set([LINK_ITEM]);
-            for (const sp of (typeof $dataPokemon !== "undefined" && $dataPokemon) || []) {
+            for (const sp of (typeof $dataMonsters !== "undefined" && $dataMonsters) || []) {
                 for (const ev of (sp && sp.evolutions) || []) {
                     if (DIRECT_ITEM_METHODS.includes(ev.method)) {
                         evolutionItems.add(String(ev.param).toUpperCase());
@@ -264,21 +264,21 @@ PKM.Evolution = PKM.Evolution || {};
     //=========================================================================
     // Integração com a mochila (hook TARDIO)
     //=========================================================================
-    // js/plugins.js carrega PKM_Bag DEPOIS deste plugin, então envolver
-    // PKM.Items.useOnPokemon agora seria código morto: PKM_Bag reatribuiria o
+    // js/plugins.js carrega MON_Bag DEPOIS deste plugin, então envolver
+    // MON.Items.useOnMonster agora seria código morto: MON_Bag reatribuiria o
     // método logo em seguida. Scene_Boot.start é o primeiro momento com todos os
     // plugins já avaliados — no headless o teste chama installBagIntegration().
     let bagInstalled = false;
-    PKM.Evolution.installBagIntegration = function() {
-        if (bagInstalled || !PKM.Items || !PKM.Items.useOnPokemon) return;
+    MON.Evolution.installBagIntegration = function() {
+        if (bagInstalled || !MON.Items || !MON.Items.useOnMonster) return;
         bagInstalled = true;
 
-        const _useOnPokemon = PKM.Items.useOnPokemon;
-        PKM.Items.useOnPokemon = function(name, pkm) {
-            const into = pkm ? PKM.Evolution.byItem(pkm, name) : null;
-            if (!into) return _useOnPokemon.call(this, name, pkm);
+        const _useOnMonster = MON.Items.useOnMonster;
+        MON.Items.useOnMonster = function(name, pkm) {
+            const into = pkm ? MON.Evolution.byItem(pkm, name) : null;
+            if (!into) return _useOnMonster.call(this, name, pkm);
             const before = pkm.name;
-            if (!pkm.evolveInto(into)) return _useOnPokemon.call(this, name, pkm);
+            if (!pkm.evolveInto(into)) return _useOnMonster.call(this, name, pkm);
             return { ok: true, message: before + " evoluiu em " + pkm.speciesName + "!" };
         };
 
@@ -286,7 +286,7 @@ PKM.Evolution = PKM.Evolution || {};
         const _onItemOk = Scene_PkmBag.prototype.onItemOk;
         Scene_PkmBag.prototype.onItemOk = function() {
             const entry = this._list.currentEntry();
-            if (!entry || !PKM.Evolution.isEvolutionItem(entry.name)) return _onItemOk.call(this);
+            if (!entry || !MON.Evolution.isEvolutionItem(entry.name)) return _onItemOk.call(this);
             this._pendingItem = entry.name;
             this._list.deactivate();
             this._target.refresh();
@@ -299,7 +299,7 @@ PKM.Evolution = PKM.Evolution || {};
     if (typeof Scene_Boot !== "undefined" && Scene_Boot.prototype.start) {
         const _Scene_Boot_start = Scene_Boot.prototype.start;
         Scene_Boot.prototype.start = function() {
-            PKM.Evolution.installBagIntegration();
+            MON.Evolution.installBagIntegration();
             _Scene_Boot_start.call(this);
         };
     }
@@ -309,26 +309,26 @@ PKM.Evolution = PKM.Evolution || {};
     //=========================================================================
     // Desfaz a digievolução mais recente. Não mexe na mochila — quem consome o
     // item é o comando de plugin.
-    PKM.Evolution.useDigimemory = function(pokemon) {
-        if (!pokemon) return { ok: false, message: "Nenhum parceiro selecionado." };
-        if (PKM.Franchise && PKM.Franchise.idOf(pokemon) !== DEVOLVE_FRANCHISE) {
+    MON.Evolution.useDigimemory = function(monster) {
+        if (!monster) return { ok: false, message: "Nenhum parceiro selecionado." };
+        if (MON.Franchise && MON.Franchise.idOf(monster) !== DEVOLVE_FRANCHISE) {
             return { ok: false, message: "A Digimemória só responde a Digimon." };
         }
-        const before = pokemon.name;
-        if (!pokemon.devolve()) {
+        const before = monster.name;
+        if (!monster.devolve()) {
             return { ok: false, message: before + " não tem digievolução para reverter." };
         }
-        return { ok: true, message: before + " reverteu para " + pokemon.speciesName + "!" };
+        return { ok: true, message: before + " reverteu para " + monster.speciesName + "!" };
     };
 
     PluginManager.registerCommand(PLUGIN_NAME, "devolve", args => {
-        const item = PKM.Core.item(DEVOLVE_ITEM);
-        if (!$gameParty.pkmHasItem(DEVOLVE_ITEM)) {
+        const item = MON.Core.item(DEVOLVE_ITEM);
+        if (!$gameParty.monHasItem(DEVOLVE_ITEM)) {
             $gameMessage.add("Você não tem " + (item ? item.name : DEVOLVE_ITEM) + ".");
             return;
         }
-        const res = PKM.Evolution.useDigimemory($gameParty.pkmParty()[Number(args.index) || 0]);
-        if (res.ok) $gameParty.pkmLoseItem(DEVOLVE_ITEM, 1);
+        const res = MON.Evolution.useDigimemory($gameParty.monParty()[Number(args.index) || 0]);
+        if (res.ok) $gameParty.monLoseItem(DEVOLVE_ITEM, 1);
         $gameMessage.add(res.message);
     });
 })();

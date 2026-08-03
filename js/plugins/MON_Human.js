@@ -1,19 +1,19 @@
 //=============================================================================
-// PKM_Human.js — humanos como combatentes
+// MON_Human.js — humanos como combatentes
 //=============================================================================
 /*:
  * @target MZ
- * @plugindesc [PKM v0.5] Humanos em campo: Game_Human luta lado a lado com os
+ * @plugindesc [MON v0.5] Humanos em campo: Game_Human luta lado a lado com os
  * monstros, com HP, golpes e derrota próprios.
  * @author Pokémon Dimensions
- * @base PKM_Core
- * @base PKM_Pokemon
- * @orderAfter PKM_Pokemon
- * @orderBefore PKM_Field
+ * @base MON_Core
+ * @base MON_Monster
+ * @orderAfter MON_Monster
+ * @orderBefore MON_Field
  *
- * @help PKM_Human.js
+ * @help MON_Human.js
  *
- * Game_Human ESTENDE Game_Pokemon de propósito: assim o motor inteiro (dano,
+ * Game_Human ESTENDE Game_Monster de propósito: assim o motor inteiro (dano,
  * tipos, status, estágios, ordem de turno, campo em times) trata humano e monstro
  * pela mesma interface, sem um segundo sistema de combate.
  *
@@ -26,7 +26,7 @@
  * personagem — Treinador, Grande Criança, Medafighter — e definem stats e golpes.
  *
  *   const you = new Game_Human("TRAINER", 5, { name: "Manolo" });
- *   $gameParty.pkmSetAvatar(you);      // seu humano, slot 0 do time em batalha
+ *   $gameParty.monSetAvatar(you);      // seu humano, slot 0 do time em batalha
  *
  * @command setAvatar
  * @text Definir Avatar
@@ -45,8 +45,8 @@
  * @text Nível
  */
 
-var PKM = PKM || {};
-PKM.Human = PKM.Human || {};
+var MON = MON || {};
+MON.Human = MON.Human || {};
 
 (() => {
     "use strict";
@@ -57,11 +57,11 @@ PKM.Human = PKM.Human || {};
     // Game_Human
     //=========================================================================
     window.Game_Human = function() { this.initialize(...arguments); };
-    Game_Human.prototype = Object.create(Game_Pokemon.prototype);
+    Game_Human.prototype = Object.create(Game_Monster.prototype);
     Game_Human.prototype.constructor = Game_Human;
 
     Game_Human.prototype.initialize = function(klass, level, opts = {}) {
-        Game_Pokemon.prototype.initialize.call(this, klass || DEFAULT_CLASS, level);
+        Game_Monster.prototype.initialize.call(this, klass || DEFAULT_CLASS, level);
         this._shiny = false;
         this._personName = opts.name || null;
         this._portrait = opts.portrait || null;
@@ -70,7 +70,7 @@ PKM.Human = PKM.Human || {};
     };
 
     Game_Human.prototype.isHuman = function() { return true; };
-    Game_Pokemon.prototype.isHuman = function() { return false; };
+    Game_Monster.prototype.isHuman = function() { return false; };
 
     // o nome é da pessoa; a "espécie" é a classe (Treinador, Grande Criança...)
     Object.defineProperty(Game_Human.prototype, "name", {
@@ -86,38 +86,38 @@ PKM.Human = PKM.Human || {};
         return this._portrait || String(this._speciesId).padStart(3, "0");
     };
 
-    PKM.Human.create = function(klass, level, opts) {
+    MON.Human.create = function(klass, level, opts) {
         return new Game_Human(klass, level, opts);
     };
-    PKM.Human.isHuman = function(unit) { return !!(unit && unit.isHuman && unit.isHuman()); };
+    MON.Human.isHuman = function(unit) { return !!(unit && unit.isHuman && unit.isHuman()); };
 
-    PKM.Human.classes = function() {
-        return PKM.Franchise ? PKM.Franchise.speciesOf("HUM") : [];
+    MON.Human.classes = function() {
+        return MON.Franchise ? MON.Franchise.speciesOf("HUM") : [];
     };
 
     //=========================================================================
     // Avatar do jogador — o humano que entra no slot 0 do time
     //=========================================================================
-    Game_Party.prototype.pkmSetAvatar = function(human) {
-        this._pkmAvatar = human || null;
-        return this._pkmAvatar;
+    Game_Party.prototype.monSetAvatar = function(human) {
+        this._monAvatar = human || null;
+        return this._monAvatar;
     };
     // o jogador SEMPRE luta em campo: sem avatar definido por evento, cria o padrao
-    Game_Party.prototype.pkmAvatar = function() {
-        if (!this._pkmAvatar && PKM.Human.classes().length) {
-            this._pkmAvatar = new Game_Human(DEFAULT_CLASS, 5, { name: defaultAvatarName() });
+    Game_Party.prototype.monAvatar = function() {
+        if (!this._monAvatar && MON.Human.classes().length) {
+            this._monAvatar = new Game_Human(DEFAULT_CLASS, 5, { name: defaultAvatarName() });
         }
-        return this._pkmAvatar || null;
+        return this._monAvatar || null;
     };
-    Game_Party.prototype.pkmBattleTeam = function() {
-        const monsters = this.pkmParty ? this.pkmParty().filter(p => p && !p.isFainted()) : [];
-        const avatar = this.pkmAvatar();
+    Game_Party.prototype.monBattleTeam = function() {
+        const monsters = this.monParty ? this.monParty().filter(p => p && !p.isFainted()) : [];
+        const avatar = this.monAvatar();
         return avatar && !avatar.isFainted() ? [avatar].concat(monsters) : monsters;
     };
     // tudo que o jogador pode curar/reviver, inclusive o humano
-    Game_Party.prototype.pkmBattleRoster = function() {
-        const monsters = this.pkmParty ? this.pkmParty().slice() : [];
-        const avatar = this.pkmAvatar();
+    Game_Party.prototype.monBattleRoster = function() {
+        const monsters = this.monParty ? this.monParty().slice() : [];
+        const avatar = this.monAvatar();
         return avatar ? [avatar].concat(monsters) : monsters;
     };
 
@@ -140,17 +140,17 @@ PKM.Human = PKM.Human || {};
         COLDREAD: { stats: { spa: 1, spd: 1 }, target: "self" }
     };
 
-    // PKM_Battle carrega DEPOIS deste plugin no jogo (e antes, no harness):
+    // MON_Battle carrega DEPOIS deste plugin no jogo (e antes, no harness):
     // registra assim que o registry existir, sem depender da ordem.
-    PKM.Human.installEffects = function() {
-        if (!PKM.Battle || !PKM.Battle.MOVE_EFFECTS) return false;
-        Object.assign(PKM.Battle.MOVE_EFFECTS, HUMAN_EFFECTS);
+    MON.Human.installEffects = function() {
+        if (!MON.Battle || !MON.Battle.MOVE_EFFECTS) return false;
+        Object.assign(MON.Battle.MOVE_EFFECTS, HUMAN_EFFECTS);
         return true;
     };
-    if (!PKM.Human.installEffects() && typeof Scene_Boot !== "undefined") {
+    if (!MON.Human.installEffects() && typeof Scene_Boot !== "undefined") {
         const _onDatabaseLoaded = Scene_Boot.prototype.onDatabaseLoaded;
         Scene_Boot.prototype.onDatabaseLoaded = function() {
-            PKM.Human.installEffects();
+            MON.Human.installEffects();
             _onDatabaseLoaded.call(this);
         };
     }
@@ -159,10 +159,10 @@ PKM.Human = PKM.Human || {};
     // Comandos de plugin
     //=========================================================================
     if (typeof PluginManager !== "undefined") {
-        PluginManager.registerCommand("PKM_Human", "setAvatar", args => {
+        PluginManager.registerCommand("MON_Human", "setAvatar", args => {
             const human = new Game_Human(args.klass || DEFAULT_CLASS, Number(args.level) || 5,
                 { name: args.name });
-            $gameParty.pkmSetAvatar(human);
+            $gameParty.monSetAvatar(human);
         });
     }
 })();

@@ -1,25 +1,25 @@
 //=============================================================================
-// PKM_Core.js
+// MON_Core.js
 //=============================================================================
 /*:
  * @target MZ
- * @plugindesc [PKM v0.1] Núcleo do port do Pokémon Essentials para MZ. Carrega os
+ * @plugindesc [MON v0.1] Núcleo do port do Pokémon Essentials para MZ. Carrega os
  * dados das espécies e controla o estado da Pokédex (vistos/capturados).
  * @author Pokémon Dimensions (port MZ)
  *
- * @help PKM_Core.js
+ * @help MON_Core.js
  *
  * Base mínima para os sistemas Pokémon no RPG Maker MZ. Por enquanto fornece:
- *   - $dataPokemon : array de espécies carregado de data/Pokemon.json
- *   - $gameSystem.pkmDex : registro de Pokémon vistos e capturados (salvo no save)
+ *   - $dataMonsters : array de espécies carregado de data/Monsters.json
+ *   - $gameSystem.monDex : registro de Pokémon vistos e capturados (salvo no save)
  *   - Comandos de plugin para marcar visto/capturado.
  *
  * INSTALAÇÃO
- *   1. Copie data/Pokemon.json para a pasta data/ do seu projeto MZ.
- *   2. Copie js/plugins/PKM_Core.js e PKM_Pokedex.js para js/plugins/.
- *   3. No Gerenciador de Plugins, ative PKM_Core ANTES de PKM_Pokedex.
+ *   1. Copie data/Monsters.json para a pasta data/ do seu projeto MZ.
+ *   2. Copie js/plugins/MON_Core.js e MON_Codex.js para js/plugins/.
+ *   3. No Gerenciador de Plugins, ative MON_Core ANTES de MON_Codex.
  *
- * Este plugin não depende de nenhum outro. PKM_Pokedex depende dele.
+ * Este plugin não depende de nenhum outro. MON_Codex depende dele.
  *
  * @command registerSeen
  * @text Registrar Visto
@@ -39,61 +39,61 @@
  * @text Nº da Pokédex
  */
 
-var $dataPokemon = $dataPokemon || null;
+var $dataMonsters = $dataMonsters || null;
 var $dataMoves = $dataMoves || null;
 var $dataTypes = $dataTypes || null;
 var $dataItems2 = $dataItems2 || null;       // itens Pokémon (evita colidir com $dataItems do MZ)
 var $dataEncounters = $dataEncounters || null;
 var $dataTrainers = $dataTrainers || null;
 
-var PKM = PKM || {};
-PKM.Core = {};
-PKM.PLUGIN_NAME = "PKM_Core";
+var MON = MON || {};
+MON.Core = {};
+MON.PLUGIN_NAME = "MON_Core";
 
 (() => {
     "use strict";
 
     // --- Carrega os bancos de dados Pokémon (data/*.json) ---
-    DataManager._databaseFiles.push({ name: "$dataPokemon", src: "Pokemon.json" });
+    DataManager._databaseFiles.push({ name: "$dataMonsters", src: "Monsters.json" });
     DataManager._databaseFiles.push({ name: "$dataMoves", src: "Moves.json" });
     DataManager._databaseFiles.push({ name: "$dataTypes", src: "Types.json" });
-    DataManager._databaseFiles.push({ name: "$dataItems2", src: "PkmItems.json" });
+    DataManager._databaseFiles.push({ name: "$dataItems2", src: "MonItems.json" });
     DataManager._databaseFiles.push({ name: "$dataEncounters", src: "Encounters.json" });
     DataManager._databaseFiles.push({ name: "$dataTrainers", src: "Trainers.json" });
 
     // --- Tabela de eficácia de tipos ---
-    PKM.Core.typeEffectiveness = function(atkType, defType) {
+    MON.Core.typeEffectiveness = function(atkType, defType) {
         if (!$dataTypes || !$dataTypes.chart) return 1;
         const row = $dataTypes.chart[atkType];
         if (!row || row[defType] === undefined) return 1;
         return row[defType];
     };
     // multiplicador total contra um ou dois tipos
-    PKM.Core.typeMultiplier = function(atkType, defTypes) {
-        return defTypes.reduce((m, t) => m * PKM.Core.typeEffectiveness(atkType, t), 1);
+    MON.Core.typeMultiplier = function(atkType, defTypes) {
+        return defTypes.reduce((m, t) => m * MON.Core.typeEffectiveness(atkType, t), 1);
     };
-    PKM.Core.move = function(internalName) {
+    MON.Core.move = function(internalName) {
         return ($dataMoves && $dataMoves[internalName]) || null;
     };
-    PKM.Core.item = function(internalName) {
+    MON.Core.item = function(internalName) {
         return ($dataItems2 && $dataItems2[internalName]) || null;
     };
 
     // --- Acesso a espécies ----------------------------------------------------
-    PKM.Core.species = function(id) {
-        return ($dataPokemon && $dataPokemon[id]) || null;
+    MON.Core.species = function(id) {
+        return ($dataMonsters && $dataMonsters[id]) || null;
     };
-    PKM.Core.maxSpecies = function() {
-        return $dataPokemon ? $dataPokemon.length - 1 : 0;
+    MON.Core.maxSpecies = function() {
+        return $dataMonsters ? $dataMonsters.length - 1 : 0;
     };
     // ids realmente preenchidos (as faixas de franquia deixam buracos)
     // franquia com "roster: false" (humanos) fica fora da Pokedex: inflaria o
     // total com entradas que nunca podem ser vistas
-    PKM.Core.allSpeciesIds = function() {
+    MON.Core.allSpeciesIds = function() {
         const out = [];
-        for (let i = 1; i <= PKM.Core.maxSpecies(); i++) {
-            if (!$dataPokemon[i]) continue;
-            const fr = PKM.Franchise && PKM.Franchise.ofSpecies(i);
+        for (let i = 1; i <= MON.Core.maxSpecies(); i++) {
+            if (!$dataMonsters[i]) continue;
+            const fr = MON.Franchise && MON.Franchise.ofSpecies(i);
             if (fr && fr.roster === false) continue;
             out.push(i);
         }
@@ -102,17 +102,17 @@ PKM.PLUGIN_NAME = "PKM_Core";
 
     // Carrega sprite FORA do cache do ImageManager: monstro sem imagem ainda não
     // instalada não pode derrubar a cena via ImageManager.throwLoadError.
-    PKM.Core.loadSprite = function(folder, filename) {
+    MON.Core.loadSprite = function(folder, filename) {
         if (typeof Bitmap === "undefined") return null;
         const url = folder + (typeof Utils !== "undefined" ? Utils.encodeURI(filename) : filename) + ".png";
         return Bitmap.load(url);
     };
 
-    PKM.Core.speciesByInternal = function(internalName) {
-        if (!$dataPokemon || !internalName) return null;
+    MON.Core.speciesByInternal = function(internalName) {
+        if (!$dataMonsters || !internalName) return null;
         const up = internalName.toUpperCase();
-        for (let i = 1; i < $dataPokemon.length; i++) {
-            if ($dataPokemon[i] && $dataPokemon[i].internalName.toUpperCase() === up) return $dataPokemon[i];
+        for (let i = 1; i < $dataMonsters.length; i++) {
+            if ($dataMonsters[i] && $dataMonsters[i].internalName.toUpperCase() === up) return $dataMonsters[i];
         }
         return null;
     };
@@ -123,48 +123,48 @@ PKM.PLUGIN_NAME = "PKM_Core";
     const _GameSystem_initialize = Game_System.prototype.initialize;
     Game_System.prototype.initialize = function() {
         _GameSystem_initialize.call(this);
-        this.pkmDex = { seen: {}, caught: {} };
+        this.monDex = { seen: {}, caught: {} };
     };
 
-    Game_System.prototype.pkmEnsureDex = function() {
-        if (!this.pkmDex) this.pkmDex = { seen: {}, caught: {} };
-        if (!this.pkmDex.seen) this.pkmDex.seen = {};
-        if (!this.pkmDex.caught) this.pkmDex.caught = {};
-        return this.pkmDex;
+    Game_System.prototype.monEnsureDex = function() {
+        if (!this.monDex) this.monDex = { seen: {}, caught: {} };
+        if (!this.monDex.seen) this.monDex.seen = {};
+        if (!this.monDex.caught) this.monDex.caught = {};
+        return this.monDex;
     };
 
-    Game_System.prototype.pkmSetSeen = function(id) {
-        this.pkmEnsureDex().seen[id] = true;
+    Game_System.prototype.monSetSeen = function(id) {
+        this.monEnsureDex().seen[id] = true;
     };
-    Game_System.prototype.pkmSetCaught = function(id) {
-        const dex = this.pkmEnsureDex();
+    Game_System.prototype.monSetCaught = function(id) {
+        const dex = this.monEnsureDex();
         dex.seen[id] = true;
         dex.caught[id] = true;
     };
-    Game_System.prototype.pkmIsSeen = function(id) {
-        return !!this.pkmEnsureDex().seen[id];
+    Game_System.prototype.monIsSeen = function(id) {
+        return !!this.monEnsureDex().seen[id];
     };
-    Game_System.prototype.pkmIsCaught = function(id) {
-        return !!this.pkmEnsureDex().caught[id];
+    Game_System.prototype.monIsCaught = function(id) {
+        return !!this.monEnsureDex().caught[id];
     };
-    Game_System.prototype.pkmSeenCount = function() {
-        return Object.keys(this.pkmEnsureDex().seen).length;
+    Game_System.prototype.monSeenCount = function() {
+        return Object.keys(this.monEnsureDex().seen).length;
     };
-    Game_System.prototype.pkmCaughtCount = function() {
-        return Object.keys(this.pkmEnsureDex().caught).length;
+    Game_System.prototype.monCaughtCount = function() {
+        return Object.keys(this.monEnsureDex().caught).length;
     };
 
     // --- Atalhos globais convenientes ----------------------------------------
-    PKM.Core.setSeen   = (id) => $gameSystem.pkmSetSeen(id);
-    PKM.Core.setCaught = (id) => $gameSystem.pkmSetCaught(id);
+    MON.Core.setSeen   = (id) => $gameSystem.monSetSeen(id);
+    MON.Core.setCaught = (id) => $gameSystem.monSetCaught(id);
 
     //=========================================================================
     // Comandos de plugin
     //=========================================================================
-    PluginManager.registerCommand(PKM.PLUGIN_NAME, "registerSeen", args => {
-        $gameSystem.pkmSetSeen(Number(args.id));
+    PluginManager.registerCommand(MON.PLUGIN_NAME, "registerSeen", args => {
+        $gameSystem.monSetSeen(Number(args.id));
     });
-    PluginManager.registerCommand(PKM.PLUGIN_NAME, "registerCaught", args => {
-        $gameSystem.pkmSetCaught(Number(args.id));
+    PluginManager.registerCommand(MON.PLUGIN_NAME, "registerCaught", args => {
+        $gameSystem.monSetCaught(Number(args.id));
     });
 })();

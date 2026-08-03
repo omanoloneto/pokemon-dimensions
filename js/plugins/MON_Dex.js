@@ -1,17 +1,17 @@
 //=============================================================================
-// PKM_Dex.js  — dex regional por dimensão
+// MON_Dex.js  — dex regional por dimensão
 //=============================================================================
 /*:
  * @target MZ
- * @plugindesc [PKM v0.4] Dex regional por dimensão: recorte ordenado de espécies,
+ * @plugindesc [MON v0.4] Dex regional por dimensão: recorte ordenado de espécies,
  * número regional, forma de obtenção e progresso de vistos/capturados.
  * @author Pokémon Dimensions
- * @base PKM_Core
- * @base PKM_Franchise
- * @orderAfter PKM_Franchise
- * @orderBefore PKM_Pokedex
+ * @base MON_Core
+ * @base MON_Franchise
+ * @orderAfter MON_Franchise
+ * @orderBefore MON_Codex
  *
- * @help PKM_Dex.js
+ * @help MON_Dex.js
  *
  * A Pokédex nacional lista todas as franquias de uma vez; a dex regional é o
  * recorte jogável de UMA dimensão, na ordem em que a dimensão apresenta as
@@ -29,15 +29,15 @@
  * uma linha em SOURCES aqui embaixo.
  *
  * API:
- *   PKM.Dex.all()                              -> [dex]
- *   PKM.Dex.get("KANTO")                       -> dex | null
- *   PKM.Dex.ofFranchise("PKM")                 -> [dex]
- *   PKM.Dex.franchise("KANTO")                 -> franquia dona (PKM_Franchise)
- *   PKM.Dex.species("KANTO")                   -> ids na ordem regional
- *   PKM.Dex.contains("KANTO", 25)              -> bool
- *   PKM.Dex.regionalNumber("KANTO", 25)        -> 25 (0 = fora da dex)
- *   PKM.Dex.obtainable("KANTO", 25)            -> { method, ... } | null
- *   PKM.Dex.progress("KANTO")                  -> { seen, caught, total }
+ *   MON.Dex.all()                              -> [dex]
+ *   MON.Dex.get("KANTO")                       -> dex | null
+ *   MON.Dex.ofFranchise("PKM")                 -> [dex]
+ *   MON.Dex.franchise("KANTO")                 -> franquia dona (MON_Franchise)
+ *   MON.Dex.species("KANTO")                   -> ids na ordem regional
+ *   MON.Dex.contains("KANTO", 25)              -> bool
+ *   MON.Dex.regionalNumber("KANTO", 25)        -> 25 (0 = fora da dex)
+ *   MON.Dex.obtainable("KANTO", 25)            -> { method, ... } | null
+ *   MON.Dex.progress("KANTO")                  -> { seen, caught, total }
  *
  * @command progress
  * @text Progresso da Dex
@@ -62,13 +62,13 @@
 
 var $dataDexKanto = $dataDexKanto || null;
 
-var PKM = PKM || {};
-PKM.Dex = PKM.Dex || {};
+var MON = MON || {};
+MON.Dex = MON.Dex || {};
 
 (() => {
     "use strict";
 
-    const PLUGIN_NAME = "PKM_Dex";
+    const PLUGIN_NAME = "MON_Dex";
     const SOURCES = [{ global: "$dataDexKanto", src: "dex/KANTO.json" }];
     const root = typeof window !== "undefined" ? window : globalThis;
 
@@ -82,7 +82,7 @@ PKM.Dex = PKM.Dex || {};
     let index = null;
 
     // idempotente; enquanto nenhum arquivo tiver carregado, tenta de novo depois
-    PKM.Dex.install = function() {
+    MON.Dex.install = function() {
         const built = {};
         let found = 0;
         for (const s of SOURCES) {
@@ -98,7 +98,7 @@ PKM.Dex = PKM.Dex || {};
     };
 
     function entries() {
-        if (!index) PKM.Dex.install();
+        if (!index) MON.Dex.install();
         return index || {};
     }
     function entry(dexId) {
@@ -108,7 +108,7 @@ PKM.Dex = PKM.Dex || {};
     if (typeof Scene_Boot !== "undefined" && Scene_Boot.prototype.onDatabaseLoaded) {
         const _onDatabaseLoaded = Scene_Boot.prototype.onDatabaseLoaded;
         Scene_Boot.prototype.onDatabaseLoaded = function() {
-            PKM.Dex.install();
+            MON.Dex.install();
             _onDatabaseLoaded.call(this);
         };
     }
@@ -116,47 +116,47 @@ PKM.Dex = PKM.Dex || {};
     //=========================================================================
     // Consulta
     //=========================================================================
-    PKM.Dex.all = function() {
+    MON.Dex.all = function() {
         return Object.values(entries()).map(e => e.data);
     };
-    PKM.Dex.get = function(dexId) {
+    MON.Dex.get = function(dexId) {
         const e = entry(dexId);
         return e ? e.data : null;
     };
-    PKM.Dex.ofFranchise = function(franchiseId) {
-        return PKM.Dex.all().filter(d => d.franchise === franchiseId);
+    MON.Dex.ofFranchise = function(franchiseId) {
+        return MON.Dex.all().filter(d => d.franchise === franchiseId);
     };
-    PKM.Dex.franchise = function(dexId) {
-        const dex = PKM.Dex.get(dexId);
-        return dex ? PKM.Franchise.get(dex.franchise) : null;
+    MON.Dex.franchise = function(dexId) {
+        const dex = MON.Dex.get(dexId);
+        return dex ? MON.Franchise.get(dex.franchise) : null;
     };
-    PKM.Dex.species = function(dexId) {
-        const dex = PKM.Dex.get(dexId);
+    MON.Dex.species = function(dexId) {
+        const dex = MON.Dex.get(dexId);
         return dex ? (dex.species || []).slice() : [];
     };
-    PKM.Dex.contains = function(dexId, speciesId) {
+    MON.Dex.contains = function(dexId, speciesId) {
         const e = entry(dexId);
         return !!e && e.order.has(speciesId);
     };
     // 0 = espécie fora desta dex
-    PKM.Dex.regionalNumber = function(dexId, speciesId) {
+    MON.Dex.regionalNumber = function(dexId, speciesId) {
         const e = entry(dexId);
         return (e && e.order.get(speciesId)) || 0;
     };
-    PKM.Dex.obtainable = function(dexId, speciesId) {
-        const dex = PKM.Dex.get(dexId);
+    MON.Dex.obtainable = function(dexId, speciesId) {
+        const dex = MON.Dex.get(dexId);
         if (!dex || !dex.obtainable) return null;
         return dex.obtainable[speciesId] || null;
     };
 
-    PKM.Dex.progress = function(dexId) {
-        const ids = PKM.Dex.species(dexId);
+    MON.Dex.progress = function(dexId) {
+        const ids = MON.Dex.species(dexId);
         const sys = typeof $gameSystem !== "undefined" ? $gameSystem : null;
         let seen = 0, caught = 0;
-        if (sys && sys.pkmIsSeen) {
+        if (sys && sys.monIsSeen) {
             for (const id of ids) {
-                if (sys.pkmIsCaught(id)) { seen++; caught++; }
-                else if (sys.pkmIsSeen(id)) seen++;
+                if (sys.monIsCaught(id)) { seen++; caught++; }
+                else if (sys.monIsSeen(id)) seen++;
             }
         }
         return { seen, caught, total: ids.length };
@@ -166,7 +166,7 @@ PKM.Dex = PKM.Dex || {};
     // Comandos de plugin
     //=========================================================================
     PluginManager.registerCommand(PLUGIN_NAME, "progress", args => {
-        const p = PKM.Dex.progress(args.dexId);
+        const p = MON.Dex.progress(args.dexId);
         const set = (varId, value) => {
             if (Number(varId) > 0) $gameVariables.setValue(Number(varId), value);
         };
