@@ -157,7 +157,7 @@ Rode o **Evento A** primeiro, depois:
 |---|---|---|
 | Tela preta / erro ao abrir | Falta um `*.json` em `data/`, ou ordem dos plugins | Confira os 6 JSON em `data/` e a ordem da seção 2 |
 | `$dataMonsters is null` no console | `MON_Core` desativado ou abaixo dos outros | `MON_Core` deve ser o 1º e estar ON |
-| `Scene_PkmBattle is not defined` | `MON_Battle` desativado/fora de ordem | Ative `MON_Battle` antes de `MON_Trainers`/`MON_Audio` |
+| `Scene_MonBattle is not defined` | `MON_Battle` desativado/fora de ordem | Ative `MON_Battle` antes de `MON_Trainers`/`MON_Audio` |
 | Acentos estranhos (ç, ã) | Fonte do projeto sem esses glifos | Use a fonte padrão do MZ (tem acentuação) |
 | Avisos de áudio no console | Arquivos de cry/BGM ausentes | Normal — é opcional, não quebra nada |
 | Encontro não dispara na grama | Mapa não está em `Encounters.json` ou região ≠ 1 | Use o Evento E, ou ajuste `grassRegionId` no plugin |

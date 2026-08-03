@@ -1,0 +1,626 @@
+{
+  "source": "/Users/omanoloneto/GitHub/vmonsters-forgotten-link/Assets/Sprites/Monsters",
+  "naming": "internalName em minúsculas (VMO.json ainda não existe)",
+  "frameBox": 96,
+  "upscale": 2,
+  "portraitMax": 512,
+  "monsters": [
+    {
+      "key": "anhapira",
+      "name": "Anhapira",
+      "speciesId": null,
+      "sourceDir": "0100103 - Caayupira",
+      "portrait": {
+        "file": "portrait/anhapira.png",
+        "width": 409,
+        "height": 512
+      }
+    },
+    {
+      "key": "arkame",
+      "name": "Arkame",
+      "speciesId": null,
+      "sourceDir": "0070104 - Arkame",
+      "portrait": {
+        "file": "portrait/arkame.png",
+        "width": 512,
+        "height": 374
+      }
+    },
+    {
+      "key": "caayuba",
+      "name": "Caayubá",
+      "speciesId": null,
+      "sourceDir": "0100103 - Caayupira",
+      "portrait": {
+        "file": "portrait/caayuba.png",
+        "width": 378,
+        "height": 512
+      }
+    },
+    {
+      "key": "caayupira",
+      "name": "Caayupira",
+      "speciesId": null,
+      "sourceDir": "0100103 - Caayupira",
+      "sheet": {
+        "file": "sheet/caayupira.png",
+        "frames": 24,
+        "frameSize": 96,
+        "animations": [
+          "idle",
+          "run",
+          "melee",
+          "atk",
+          "damage",
+          "happy"
+        ]
+      },
+      "front": {
+        "file": "front/caayupira.png",
+        "frames": 4,
+        "frameSize": 96,
+        "upscale": 2
+      },
+      "portrait": {
+        "file": "portrait/caayupira.png",
+        "width": 424,
+        "height": 512
+      },
+      "icon": "icon/caayupira.png"
+    },
+    {
+      "key": "calmanite",
+      "name": "Calmanite",
+      "speciesId": null,
+      "sourceDir": "0120205 - Calmanite",
+      "portrait": {
+        "file": "portrait/calmanite.png",
+        "width": 448,
+        "height": 512
+      }
+    },
+    {
+      "key": "dokanari",
+      "name": "Dokanari",
+      "speciesId": null,
+      "sourceDir": "0010403 - Dokanari",
+      "sheet": {
+        "file": "sheet/dokanari.png",
+        "frames": 24,
+        "frameSize": 96,
+        "animations": [
+          "idle",
+          "run",
+          "melee",
+          "atk",
+          "damage",
+          "happy"
+        ]
+      },
+      "front": {
+        "file": "front/dokanari.png",
+        "frames": 4,
+        "frameSize": 96,
+        "upscale": 2
+      },
+      "portrait": {
+        "file": "portrait/dokanari.png",
+        "width": 512,
+        "height": 470
+      }
+    },
+    {
+      "key": "dokuri",
+      "name": "Dokuri",
+      "speciesId": null,
+      "sourceDir": "0010402 - Dokuri",
+      "sheet": {
+        "file": "sheet/dokuri.png",
+        "frames": 24,
+        "frameSize": 64,
+        "animations": [
+          "idle",
+          "run",
+          "melee",
+          "atk",
+          "damage",
+          "happy"
+        ]
+      },
+      "front": {
+        "file": "front/dokuri.png",
+        "frames": 4,
+        "frameSize": 64,
+        "upscale": 2
+      },
+      "portrait": {
+        "file": "portrait/dokuri.png",
+        "width": 381,
+        "height": 512
+      }
+    },
+    {
+      "key": "draconari",
+      "name": "Draconari",
+      "speciesId": null,
+      "sourceDir": "0010403 - Dokanari",
+      "portrait": {
+        "file": "portrait/draconari.png",
+        "width": 348,
+        "height": 300
+      }
+    },
+    {
+      "key": "guarabolt",
+      "name": "Guarabolt",
+      "speciesId": null,
+      "sourceDir": "0140103 - Pulsebolt",
+      "portrait": {
+        "file": "portrait/guarabolt.png",
+        "width": 512,
+        "height": 504
+      }
+    },
+    {
+      "key": "guaxinito",
+      "name": "Guaxinito",
+      "speciesId": null,
+      "sourceDir": "0100102 - Guaxinito",
+      "sheet": {
+        "file": "sheet/guaxinito.png",
+        "frames": 24,
+        "frameSize": 64,
+        "animations": [
+          "idle",
+          "run",
+          "melee",
+          "atk",
+          "damage",
+          "happy"
+        ]
+      },
+      "front": {
+        "file": "front/guaxinito.png",
+        "frames": 4,
+        "frameSize": 64,
+        "upscale": 2
+      },
+      "portrait": {
+        "file": "portrait/guaxinito.png",
+        "width": 502,
+        "height": 512
+      }
+    },
+    {
+      "key": "haunrutau",
+      "name": "Haunrutau",
+      "speciesId": null,
+      "sourceDir": "0050302 - Quilli",
+      "portrait": {
+        "file": "portrait/haunrutau.png",
+        "width": 512,
+        "height": 437
+      }
+    },
+    {
+      "key": "jareh",
+      "name": "Jareh",
+      "speciesId": null,
+      "sourceDir": "0120203 - Jareh",
+      "portrait": {
+        "file": "portrait/jareh.png",
+        "width": 503,
+        "height": 512
+      }
+    },
+    {
+      "key": "kagenari",
+      "name": "Kagenari",
+      "speciesId": null,
+      "sourceDir": "0010103 - Kagenari",
+      "sheet": {
+        "file": "sheet/kagenari.png",
+        "frames": 24,
+        "frameSize": 96,
+        "animations": [
+          "idle",
+          "run",
+          "melee",
+          "atk",
+          "damage",
+          "happy"
+        ]
+      },
+      "front": {
+        "file": "front/kagenari.png",
+        "frames": 4,
+        "frameSize": 96,
+        "upscale": 2
+      },
+      "portrait": {
+        "file": "portrait/kagenari.png",
+        "width": 452,
+        "height": 512
+      },
+      "icon": "icon/kagenari.png"
+    },
+    {
+      "key": "kamejira",
+      "name": "Kamejira",
+      "speciesId": null,
+      "sourceDir": "0070104 - Arkame",
+      "portrait": {
+        "file": "portrait/kamejira.png",
+        "width": 467,
+        "height": 512
+      }
+    },
+    {
+      "key": "katanari",
+      "name": "Katanari",
+      "speciesId": null,
+      "sourceDir": "0010103 - Kagenari",
+      "portrait": {
+        "file": "portrait/katanari.png",
+        "width": 342,
+        "height": 512
+      }
+    },
+    {
+      "key": "krokomalo",
+      "name": "Krokomalo",
+      "speciesId": null,
+      "sourceDir": "0120205 - Calmanite",
+      "portrait": {
+        "file": "portrait/krokomalo.png",
+        "width": 446,
+        "height": 512
+      }
+    },
+    {
+      "key": "metalligator",
+      "name": "Metalligator",
+      "speciesId": null,
+      "sourceDir": "0120403 - Metalligator",
+      "portrait": {
+        "file": "portrait/metalligator.png",
+        "width": 432,
+        "height": 512
+      }
+    },
+    {
+      "key": "metallosaur",
+      "name": "Metallosaur",
+      "speciesId": null,
+      "sourceDir": "0120403 - Metalligator",
+      "portrait": {
+        "file": "portrait/metallosaur.png",
+        "width": 300,
+        "height": 300
+      }
+    },
+    {
+      "key": "naginari",
+      "name": "Naginari",
+      "speciesId": null,
+      "sourceDir": "0010403 - Dokanari",
+      "portrait": {
+        "file": "portrait/naginari.png",
+        "width": 442,
+        "height": 512
+      }
+    },
+    {
+      "key": "nebullodon",
+      "name": "Nebullodon",
+      "speciesId": null,
+      "sourceDir": "0070103 - Stelladon",
+      "portrait": {
+        "file": "portrait/nebullodon.png",
+        "width": 512,
+        "height": 503
+      }
+    },
+    {
+      "key": "pulsebolt",
+      "name": "Pulsebolt",
+      "speciesId": null,
+      "sourceDir": "0140103 - Pulsebolt",
+      "sheet": {
+        "file": "sheet/pulsebolt.png",
+        "frames": 24,
+        "frameSize": 96,
+        "animations": [
+          "idle",
+          "run",
+          "melee",
+          "atk",
+          "damage",
+          "happy"
+        ]
+      },
+      "front": {
+        "file": "front/pulsebolt.png",
+        "frames": 4,
+        "frameSize": 96,
+        "upscale": 2
+      },
+      "portrait": {
+        "file": "portrait/pulsebolt.png",
+        "width": 385,
+        "height": 512
+      }
+    },
+    {
+      "key": "pulsebun",
+      "name": "Pulsebun",
+      "speciesId": null,
+      "sourceDir": "0140102 - Pulsebun",
+      "sheet": {
+        "file": "sheet/pulsebun.png",
+        "frames": 24,
+        "frameSize": 64,
+        "animations": [
+          "idle",
+          "run",
+          "melee",
+          "atk",
+          "damage",
+          "happy"
+        ]
+      },
+      "front": {
+        "file": "front/pulsebun.png",
+        "frames": 4,
+        "frameSize": 64,
+        "upscale": 2
+      },
+      "portrait": {
+        "file": "portrait/pulsebun.png",
+        "width": 421,
+        "height": 512
+      }
+    },
+    {
+      "key": "quillara",
+      "name": "Quillara",
+      "speciesId": null,
+      "sourceDir": "0050303 - Quillara",
+      "sheet": {
+        "file": "sheet/quillara.png",
+        "frames": 24,
+        "frameSize": 96,
+        "animations": [
+          "idle",
+          "run",
+          "melee",
+          "atk",
+          "damage",
+          "happy"
+        ]
+      },
+      "front": {
+        "file": "front/quillara.png",
+        "frames": 4,
+        "frameSize": 96,
+        "upscale": 2
+      },
+      "portrait": {
+        "file": "portrait/quillara.png",
+        "width": 473,
+        "height": 512
+      }
+    },
+    {
+      "key": "quilli",
+      "name": "Quilli",
+      "speciesId": null,
+      "sourceDir": "0050302 - Quilli",
+      "sheet": {
+        "file": "sheet/quilli.png",
+        "frames": 24,
+        "frameSize": 64,
+        "animations": [
+          "idle",
+          "run",
+          "melee",
+          "atk",
+          "damage",
+          "happy"
+        ]
+      },
+      "front": {
+        "file": "front/quilli.png",
+        "frames": 4,
+        "frameSize": 64,
+        "upscale": 2
+      },
+      "portrait": {
+        "file": "portrait/quilli.png",
+        "width": 512,
+        "height": 396
+      }
+    },
+    {
+      "key": "quilljet",
+      "name": "Quilljet",
+      "speciesId": null,
+      "sourceDir": "0050303 - Quillara",
+      "portrait": {
+        "file": "portrait/quilljet.png",
+        "width": 484,
+        "height": 300
+      }
+    },
+    {
+      "key": "quillphyr",
+      "name": "Quillphyr",
+      "speciesId": null,
+      "sourceDir": "0050303 - Quillara",
+      "portrait": {
+        "file": "portrait/quillphyr.png",
+        "width": 512,
+        "height": 504
+      }
+    },
+    {
+      "key": "quillstorm",
+      "name": "Quillstorm",
+      "speciesId": null,
+      "sourceDir": "0050303 - Quillara",
+      "portrait": {
+        "file": "portrait/quillstorm.png",
+        "width": 307,
+        "height": 300
+      }
+    },
+    {
+      "key": "rockabolt",
+      "name": "Rockabolt",
+      "speciesId": null,
+      "sourceDir": "0140103 - Pulsebolt",
+      "portrait": {
+        "file": "portrait/rockabolt.png",
+        "width": 300,
+        "height": 368
+      }
+    },
+    {
+      "key": "shokkuri",
+      "name": "Shokkuri",
+      "speciesId": null,
+      "sourceDir": "0010102 - Shokkuri",
+      "sheet": {
+        "file": "sheet/shokkuri.png",
+        "frames": 24,
+        "frameSize": 66,
+        "animations": [
+          "idle",
+          "run",
+          "melee",
+          "atk",
+          "damage",
+          "happy"
+        ]
+      },
+      "front": {
+        "file": "front/shokkuri.png",
+        "frames": 4,
+        "frameSize": 66,
+        "upscale": 2
+      },
+      "portrait": {
+        "file": "portrait/shokkuri.png",
+        "width": 512,
+        "height": 425
+      }
+    },
+    {
+      "key": "stelladon",
+      "name": "Stelladon",
+      "speciesId": null,
+      "sourceDir": "0070103 - Stelladon",
+      "sheet": {
+        "file": "sheet/stelladon.png",
+        "frames": 24,
+        "frameSize": 96,
+        "animations": [
+          "idle",
+          "run",
+          "melee",
+          "atk",
+          "damage",
+          "happy"
+        ]
+      },
+      "front": {
+        "file": "front/stelladon.png",
+        "frames": 4,
+        "frameSize": 96,
+        "upscale": 2
+      },
+      "portrait": {
+        "file": "portrait/stelladon.png",
+        "width": 512,
+        "height": 451
+      },
+      "icon": "icon/stelladon.png"
+    },
+    {
+      "key": "sturtle",
+      "name": "Sturtle",
+      "speciesId": null,
+      "sourceDir": "0070102 - Sturtle",
+      "sheet": {
+        "file": "sheet/sturtle.png",
+        "frames": 24,
+        "frameSize": 64,
+        "animations": [
+          "idle",
+          "run",
+          "melee",
+          "atk",
+          "damage",
+          "happy"
+        ]
+      },
+      "front": {
+        "file": "front/sturtle.png",
+        "frames": 4,
+        "frameSize": 64,
+        "upscale": 2
+      },
+      "portrait": {
+        "file": "portrait/sturtle.png",
+        "width": 512,
+        "height": 403
+      },
+      "icon": "icon/sturtle.png"
+    },
+    {
+      "key": "tupanari",
+      "name": "Tupanari",
+      "speciesId": null,
+      "sourceDir": "0010103 - Kagenari",
+      "portrait": {
+        "file": "portrait/tupanari.png",
+        "width": 444,
+        "height": 512
+      }
+    },
+    {
+      "key": "wenbun",
+      "name": "Wenbun",
+      "speciesId": null,
+      "sourceDir": "0140102 - Pulsebun",
+      "portrait": {
+        "file": "portrait/wenbun.png",
+        "width": 498,
+        "height": 512
+      }
+    },
+    {
+      "key": "whadome",
+      "name": "Whadome",
+      "speciesId": null,
+      "sourceDir": "0070103 - Stelladon",
+      "portrait": {
+        "file": "portrait/whadome.png",
+        "width": 512,
+        "height": 359
+      }
+    },
+    {
+      "key": "xianboo",
+      "name": "Xianboo",
+      "speciesId": null,
+      "sourceDir": "0100102 - Guaxinito",
+      "portrait": {
+        "file": "portrait/xianboo.png",
+        "width": 512,
+        "height": 442
+      }
+    }
+  ]
+}

@@ -8,6 +8,8 @@ Estado de referência: **o engine está pronto; o jogo ainda não existe.** Este
 
 **Franquias (✅ — [02](02-franquias.md), [06](06-arquitetura-franquias.md)):** camada multi-franquia + os 5 sistemas de dimensão. **793 espécies** (649 Pokémon + 101 Digimon de *Adventure* + 10 Medabots + 13 Monster Rancher + 20 Bucky), 659 golpes, 40 Medapeças, 3 discos, dex de Kanto recortada. 412 testes headless.
 
+**V-Monsters (⏳ parcial — [02](02-franquias.md)):** a 6ª dimensão, **IP própria do dono**. Já no repo: franquia **VMO** em `data/Franchises.json` (faixa **970–1069**, dimensão Folklora), os 3 V-Link em `data/ItemsExtra.json` e o gancho `MON.Battle.registerDamageHook(fn)` em `MON_Battle.js` — a fundação da Barra de Elo. Falta todo o conteúdo: `data/species/VMO.json` (**0 espécies**), `MON_Bond.js`, suíte de teste, sprites convertidos e os 6 mapas. Baseline atual: **709 asserts, 0 falhas**.
+
 **Dados:** 559 golpes base + 100 novos; **~77 com efeito implementado** (recuo/dreno/autodestruição incluídos); 18 tipos, 538 itens. Encontros religados para a D1 (4 tabelas), mas **nenhum dispara ainda** — Map001/Map002 estão com a camada de região zerada e `MON_Encounters` exige a Região 1 pintada. 60 treinadores definidos e não usados em mapa nenhum.
 
 **Conteúdo real:** 2 mapas — Map001 (hub de testes, 8 eventos debug) e Map002 (Coral Town, tiles reais, **zero gameplay**). Sprites: só Pokémon (front/back/shiny/icons/footprints/alt). Áudio: 655 cries + RTP padrão do MZ.
@@ -35,6 +37,10 @@ Estado de referência: **o engine está pronto; o jogo ainda não existe.** Este
 | ~~Peças + drop pós-vitória (Medabots)~~ | — | ✅ | |
 | ~~Santuário de Discos (Monster Rancher)~~ | — | ✅ | falta o mapa/evento |
 | ~~Emblemas G.C. como gate de pacto (Bucky)~~ | — | ✅ | |
+| **Barra de Elo — `MON_Bond.js`** (V-Monsters) | M | M8 | único sistema de franquia que ainda falta; gancho de dano já existe |
+| `data/species/VMO.json` + `data/moves/VMO.json` (~16 espécies com ramos de elo) | M | M8 | faixa 970–1069 vazia |
+| Conversão da arte de Folklora (PNG à mão → front 48px) | M | M3 | única dimensão com arte própria — ver risco 1 |
+| **Mapa-vitrine de Folklora** (material público) | P | M3 | única dimensão exibível — ver risco 2 |
 | MOVE_EFFECTS dos golpes usados pelas espécies obtíveis | contínuo | M2+ | Nunca os 559; só o que entra em jogo |
 
 Tam.: P = dias, M = ~1 semana, G = mais que isso.
@@ -46,7 +52,7 @@ Concluído ([roadmap-port-mz.md](roadmap-port-mz.md)).
 
 ### M1 — Mobile Playable + fundação de QA
 - Touch nos gaps de Pokédex/Storage; `touchUI` conferido; build **web + PWA** no ar (hospedagem própria); passe de pngquant (342→~120MB); teste de integridade de assets; `schemaVersion`; limpeza de cache de bitmaps.
-- **Aceite:** demo de teste atual jogável num Android low-end e num iPhone (PWA), save sobrevive a fechar o app, 56 testes verdes.
+- **Aceite:** demo de teste atual jogável num Android low-end e num iPhone (PWA), save sobrevive a fechar o app, suíte headless verde (709 asserts).
 
 ### M2 — Vertical Slice A: Dimensão Pokémon jogável
 - Coral Town eventada pelo template de cidade ([03](03-mundo-e-narrativa.md)); Rota 1, Ginásio de Coral (**Chave 1**), Rota 2 + Fenda; encontros religados aos mapas novos; treinadores dos 60 usados em rota; E2E Playwright rodando.
@@ -55,6 +61,7 @@ Concluído ([roadmap-port-mz.md](roadmap-port-mz.md)).
 
 ### M3 — Vertical Slice B: Nexus + Digimon → **DEMO**
 - Nexus (praça + interior), Vila File, Rota de Dados, Torre de Dados (**Chave 2**, boss Arauto); **evolução ramificada** implementada; 10 Digimon obtíveis; item Digi-Link; cutscene de fechamento da demo.
+- **Antecipação de Folklora:** conversão da arte de V-Monsters + 1 mapa-vitrine. Fora do fluxo da demo — existe só para haver material público antes de M8 (risco 2).
 - **Aceite:** demo 90–120 min completa no celular; um Rookie evolui pra ramos diferentes em saves diferentes; distribuição interna (URL privada) pra playtest.
 
 ### M4 — D1+D2 completas + dívidas de engine
@@ -73,18 +80,25 @@ Concluído ([roadmap-port-mz.md](roadmap-port-mz.md)).
 - 6 mapas (dimensão-hub com câmaras), Templo Elemental (Chaves 11–12), **12 espíritos lendários** com gate de Emblema G.C., golpes Jibaku (recoil/autodesmaio), Troublemonsters (reskins corrompidos como chefes).
 - **Aceite:** caçada dos 12 espíritos jogável cruzando todas as dimensões.
 
-### M8 — Dimensão Zero + release 1.0
-- 3 mapas-colagem, gauntlet de Arautos, Unificador (equipe com 1 ás por franquia), pós-game de captura livre, passe de balanceamento da curva inteira, corte final de assets, **APK Capacitor <250MB**, página de download discreta.
+### M8 — D6 Folklora (V-Monsters)
+- 6 mapas (2 cidades de facção, fronteira, 2 rotas, Torre do V-Link — **Chaves 13–14**), **`MON_Bond.js` com a Barra de Elo**, ~16 espécies VMO com ramos de elo, V-Links na loja, Arauto 4 (o que negocia em vez de invadir).
+- Custo de calendário: a 6ª dimensão empurra a v1.0 em **~1 mês**. Nenhum marco anterior encolhe para compensar.
+- **Aceite:** um V-Monster enche a barra apanhando, evolui no meio da luta escolhendo entre 2 ramos e volta à forma base no fim da batalha — em qualquer time, **inclusive fora de Folklora** (o elo segue o monstro, não o mapa).
+
+### M9 — Dimensão Zero + release 1.0
+- 3 mapas-colagem, gauntlet de Arautos, Unificador (equipe com 1 ás por franquia, agora 6), pós-game de captura livre, passe de balanceamento da curva inteira, corte final de assets, **APK Capacitor <250MB**, página de download discreta.
 - **Aceite:** campanha 10–15h completa; device matrix ([04](04-producao-mobile.md)) verde; plano de resposta a C&D decidido e escrito.
 
 ## Riscos (top 5)
 
-1. **Sprites e dados das outras franquias** — hoje só existem assets de Pokémon. Cada dimensão exige aquisição/curadoria de sprites (rips de fã dos jogos de DS/GBA), padronização 48px e dados de espécie/golpe. É o maior custo desconhecido; atacar já em M2 (o Digimon da Fenda força o pipeline inteiro cedo). Mitigação: dex pequenas por dimensão (30/10/20/12).
+1. **Sprites e dados das outras franquias** — hoje só existem assets de Pokémon. Cada dimensão exige aquisição/curadoria de sprites (rips de fã dos jogos de DS/GBA), padronização 48px e dados de espécie/golpe. É o maior custo desconhecido; atacar já em M2 (o Digimon da Fenda força o pipeline inteiro cedo). Mitigação: dex pequenas por dimensão (30/10/20/12/16).
+   - **Folklora é a exceção:** a arte é do dono e já existe (**16 linhas base + 19 formas alternativas**, PNG desenhado à mão no repo Unity). O custo é conversão e padronização para 48px, não aquisição — e não há risco de o asset ser retirado depois.
 2. **Legal** — multi-franquia soma titulares; visibilidade e monetização são os gatilhos. Mitigações e plano de resposta em [04](04-producao-mobile.md).
+   - **V-Monsters é a única dimensão sem exposição a C&D** — IP do dono, arte própria, trilha original, time creditado. Consequência de produção, não só de risco: **todo material público (trailer, screenshot, página de download, eventual loja) sai de Folklora ou do Nexus**, nunca das outras cinco. Como o cronograma põe a dimensão publicável em **M8**, o único material exibível chegaria no fim — daí o mapa-vitrine antecipado para M3.
 3. **Performance mobile** — memória (cache de bitmaps) mais que peso. Budget e limpeza em M1; medir todo release.
 4. **Scope creep de sistemas** — a regra "1 sistema novo por franquia" ([02](02-franquias.md)) é o contrato. Pedido de sistema extra → corta ou troca.
 5. **Pipeline de segunda identidade visual** — tilesets Digimon na slice validam conversão/estilo; se falhar, replanejar antes de D3–D5.
 
 ## Métricas por release
 
-Testes headless (≥56, nunca regride) · zero erro de console em 15 min de play · FPS no low-end de referência · peso do build e tempo até title em 4G · mapas/treinadores/espécies implementados vs. planejados · tempo até a primeira captura.
+Testes headless (baseline **709 asserts**, nunca regride) · zero erro de console em 15 min de play · FPS no low-end de referência · peso do build e tempo até title em 4G · mapas/treinadores/espécies implementados vs. planejados · tempo até a primeira captura.

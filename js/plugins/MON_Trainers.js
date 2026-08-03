@@ -186,8 +186,8 @@ var MON = MON || {};
         $gameTemp.monTrainer = built;
         $gameTemp.monFoes = built.team;
         $gameTemp.monWild = null;                    // batalha de treinador não tem selvagem
-        if (typeof SceneManager !== "undefined" && typeof Scene_PkmBattle !== "undefined") {
-            SceneManager.push(Scene_PkmBattle);
+        if (typeof SceneManager !== "undefined" && typeof Scene_MonBattle !== "undefined") {
+            SceneManager.push(Scene_MonBattle);
         }
         return true;
     };

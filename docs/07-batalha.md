@@ -15,7 +15,7 @@ O motor antigo tinha a regra de combate presa dentro da cena (`this._player` vs 
 ```
 MON_Field.js      campo em times — puro, headless, testável
 MON_Human.js      Game_Human (estende Game_Monster)
-MON_Battle.js     fórmulas puras (MON.Battle.*) + Scene_PkmBattle (só render e input)
+MON_Battle.js     fórmulas puras (MON.Battle.*) + Scene_MonBattle (só render e input)
 ```
 
 **A cena não decide nada de combate.** Ela pergunta ao campo quem age, em que ordem e contra quem, manda `MON.Battle.executeMove` resolver, e desenha o resultado.

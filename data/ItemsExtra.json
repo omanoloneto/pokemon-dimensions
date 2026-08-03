@@ -1,17 +1,117 @@
 {
-  "DIGILINK": { "id": 2001, "name": "Digi-Link", "pocket": 3, "price": 200, "catchBonus": 1, "description": "Estabelece conexão com um Digimon selvagem e firma parceria." },
-  "DIGILINKPLUS": { "id": 2002, "name": "Digi-Link+", "pocket": 3, "price": 600, "catchBonus": 1.5, "description": "Digivice aprimorado: conexão bem mais estável." },
-  "DIGILINKOMEGA": { "id": 2003, "name": "Digi-Link Ω", "pocket": 3, "price": 1200, "catchBonus": 2.5, "description": "Protótipo do Nexus: conexão quase infalível." },
-  "DIGIMEMORY": { "id": 2004, "name": "Digimemória", "pocket": 2, "price": 3000, "description": "Reverte a digievolução mais recente de um Digimon." },
-  "MEDALCASE": { "id": 2010, "name": "Estojo de Medalha", "pocket": 3, "price": 300, "catchBonus": 1.5, "description": "Ejeta a medalha de um Medabot muito danificado." },
-  "MEDALCASEPRO": { "id": 2011, "name": "Estojo Pro", "pocket": 3, "price": 900, "catchBonus": 3, "description": "Estojo de torneio: ejeção bem mais confiável." },
-  "GCEMBLEM": { "id": 2020, "name": "Emblema G.C.", "pocket": 3, "price": 0, "catchBonus": 12, "keepOnUse": true, "description": "Prova de Grande Criança. Permite firmar pacto com o espírito de um mundo." },
-  "DISCCOMMON": { "id": 2030, "name": "Disco Comum", "pocket": 4, "price": 500, "description": "Disco gasto. Gera um monstro no Santuário." },
-  "DISCRARE": { "id": 2031, "name": "Disco Raro", "pocket": 4, "price": 2000, "description": "Disco bem conservado. Gera monstros melhores no Santuário." },
-  "DISCLEGEND": { "id": 2032, "name": "Disco Lendário", "pocket": 4, "price": 0, "description": "Disco único. Guarda algo que ninguém viu há muito tempo." },
-  "FARMTICKET": { "id": 2033, "name": "Passe da Fazenda", "pocket": 4, "price": 0, "description": "Inscreve sua equipe no Circuito da Fazenda." },
-  "LINKCABLE": { "id": 2040, "name": "Cabo Link", "pocket": 1, "price": 2100, "description": "Cria o vínculo que antes só a troca criava. Faz evoluir quem depende dela." },
-  "VLINK": { "id": 2050, "name": "V-Link", "pocket": 3, "price": 400, "catchBonus": 1, "description": "Dispositivo de Folklora. Abre um elo com um V-Monster selvagem." },
-  "VLINKPRO": { "id": 2051, "name": "V-Link Pro", "pocket": 3, "price": 1100, "catchBonus": 2, "description": "V-Link de competição: o elo se forma bem mais rápido." },
-  "VLINKMAX": { "id": 2052, "name": "V-Link MAX", "pocket": 3, "price": 2400, "catchBonus": 3.5, "description": "Protótipo do elo perdido. Vincula quase qualquer V-Monster." }
+  "DIGILINK": {
+    "id": 2001,
+    "name": "Digi-Link",
+    "pocket": 3,
+    "price": 200,
+    "catchBonus": 1,
+    "description": "Estabelece conexão com um Digimon selvagem e firma parceria."
+  },
+  "DIGILINKPLUS": {
+    "id": 2002,
+    "name": "Digi-Link+",
+    "pocket": 3,
+    "price": 600,
+    "catchBonus": 1.5,
+    "description": "Digivice aprimorado: conexão bem mais estável."
+  },
+  "DIGILINKOMEGA": {
+    "id": 2003,
+    "name": "Digi-Link Ω",
+    "pocket": 3,
+    "price": 1200,
+    "catchBonus": 2.5,
+    "description": "Protótipo do Nexus: conexão quase infalível."
+  },
+  "DIGIMEMORY": {
+    "id": 2004,
+    "name": "Digimemória",
+    "pocket": 2,
+    "price": 3000,
+    "description": "Reverte a digievolução mais recente de um Digimon."
+  },
+  "MEDALCASE": {
+    "id": 2010,
+    "name": "Estojo de Medalha",
+    "pocket": 3,
+    "price": 300,
+    "catchBonus": 1.5,
+    "description": "Ejeta a medalha de um Medabot muito danificado."
+  },
+  "MEDALCASEPRO": {
+    "id": 2011,
+    "name": "Estojo Pro",
+    "pocket": 3,
+    "price": 900,
+    "catchBonus": 3,
+    "description": "Estojo de torneio: ejeção bem mais confiável."
+  },
+  "GCEMBLEM": {
+    "id": 2020,
+    "name": "Emblema G.C.",
+    "pocket": 3,
+    "price": 0,
+    "catchBonus": 12,
+    "keepOnUse": true,
+    "description": "Prova de Grande Criança. Permite firmar pacto com o espírito de um mundo."
+  },
+  "DISCCOMMON": {
+    "id": 2030,
+    "name": "Disco Comum",
+    "pocket": 4,
+    "price": 500,
+    "description": "Disco gasto. Gera um monstro no Santuário."
+  },
+  "DISCRARE": {
+    "id": 2031,
+    "name": "Disco Raro",
+    "pocket": 4,
+    "price": 2000,
+    "description": "Disco bem conservado. Gera monstros melhores no Santuário."
+  },
+  "DISCLEGEND": {
+    "id": 2032,
+    "name": "Disco Lendário",
+    "pocket": 4,
+    "price": 0,
+    "description": "Disco único. Guarda algo que ninguém viu há muito tempo."
+  },
+  "FARMTICKET": {
+    "id": 2033,
+    "name": "Passe da Fazenda",
+    "pocket": 4,
+    "price": 0,
+    "description": "Inscreve sua equipe no Circuito da Fazenda."
+  },
+  "LINKCABLE": {
+    "id": 2040,
+    "name": "Cabo Link",
+    "pocket": 1,
+    "price": 2100,
+    "description": "Cria o vínculo que antes só a troca criava. Faz evoluir quem depende dela."
+  },
+  "VLINK": {
+    "id": 2050,
+    "name": "V-Link",
+    "pocket": 3,
+    "price": 400,
+    "catchBonus": 1,
+    "description": "Dispositivo de Folklora. Absorve os dados de um V-Monster enfraquecido."
+  },
+  "VLINKPRO": {
+    "id": 2051,
+    "name": "V-Link Pro",
+    "pocket": 3,
+    "price": 1100,
+    "catchBonus": 2,
+    "description": "V-Link de competição: absorve dados bem mais rápido."
+  },
+  "VLINKMAX": {
+    "id": 2052,
+    "name": "V-Link MAX",
+    "pocket": 3,
+    "price": 2400,
+    "catchBonus": 3.5,
+    "description": "Protótipo do elo perdido. Absorve os dados de quase qualquer V-Monster."
+  }
 }

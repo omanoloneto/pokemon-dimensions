@@ -182,8 +182,8 @@ var MON = MON || {};
     }
 
     function pushBattleScene() {
-        if (typeof SceneManager === "undefined" || typeof Scene_PkmBattle === "undefined") return;
-        SceneManager.push(Scene_PkmBattle);
+        if (typeof SceneManager === "undefined" || typeof Scene_MonBattle === "undefined") return;
+        SceneManager.push(Scene_MonBattle);
     }
 
     MON.Encounters.startWildTeam = function(members) {

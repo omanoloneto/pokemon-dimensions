@@ -94,31 +94,31 @@ var MON = MON || {};
         const sp = /^\d+$/.test(args.species) ? Number(args.species) : args.species;
         $gameParty.monCreate(sp, lvl);
     });
-    PluginManager.registerCommand("MON_Party", "openParty", () => SceneManager.push(Scene_PkmParty));
+    PluginManager.registerCommand("MON_Party", "openParty", () => SceneManager.push(Scene_MonParty));
     PluginManager.registerCommand("MON_Party", "heal", () => $gameParty.monHealAll());
 
     // headless (testes): só a lógica de party acima
     if (typeof Scene_MenuBase === "undefined" || !Scene_MenuBase.prototype.create) return;
 
     //=========================================================================
-    // Window_PkmPartyList
+    // Window_MonPartyList
     //=========================================================================
-    function Window_PkmPartyList() { this.initialize(...arguments); }
-    Window_PkmPartyList.prototype = Object.create(Window_Selectable.prototype);
-    Window_PkmPartyList.prototype.constructor = Window_PkmPartyList;
+    function Window_MonPartyList() { this.initialize(...arguments); }
+    Window_MonPartyList.prototype = Object.create(Window_Selectable.prototype);
+    Window_MonPartyList.prototype.constructor = Window_MonPartyList;
 
-    Window_PkmPartyList.prototype.initialize = function(rect) {
+    Window_MonPartyList.prototype.initialize = function(rect) {
         Window_Selectable.prototype.initialize.call(this, rect);
         this.refresh();
         this.select(0);
         this.activate();
     };
-    Window_PkmPartyList.prototype.maxItems = function() { return $gameParty.monCount(); };
-    Window_PkmPartyList.prototype.itemHeight = function() { return Math.floor(this.innerHeight / 6); };
-    Window_PkmPartyList.prototype.monster = function(i) { return $gameParty.monParty()[i]; };
-    Window_PkmPartyList.prototype.currentMonster = function() { return this.monster(this.index()); };
+    Window_MonPartyList.prototype.maxItems = function() { return $gameParty.monCount(); };
+    Window_MonPartyList.prototype.itemHeight = function() { return Math.floor(this.innerHeight / 6); };
+    Window_MonPartyList.prototype.monster = function(i) { return $gameParty.monParty()[i]; };
+    Window_MonPartyList.prototype.currentMonster = function() { return this.monster(this.index()); };
 
-    Window_PkmPartyList.prototype.drawItem = function(index) {
+    Window_MonPartyList.prototype.drawItem = function(index) {
         const p = this.monster(index);
         if (!p) return;
         const r = this.itemRect(index);
@@ -134,7 +134,7 @@ var MON = MON || {};
         this.drawText(p.hp + "/" + p.maxHp, bx + bw + 10, by - 12, 110, "left");
         this.changePaintOpacity(true);
     };
-    Window_PkmPartyList.prototype.drawHpBar = function(p, x, y, w, h) {
+    Window_MonPartyList.prototype.drawHpBar = function(p, x, y, w, h) {
         const rate = p.hpRate();
         const color = rate > 0.5 ? "#78c850" : rate > 0.2 ? "#f8d030" : "#f85038";
         this.contents.fillRect(x, y, w, h, "#202020");
@@ -142,43 +142,43 @@ var MON = MON || {};
     };
 
     //=========================================================================
-    // Scene_PkmParty
+    // Scene_MonParty
     //=========================================================================
-    window.Scene_PkmParty = function() { this.initialize(...arguments); };
-    Scene_PkmParty.prototype = Object.create(Scene_MenuBase.prototype);
-    Scene_PkmParty.prototype.constructor = Scene_PkmParty;
+    window.Scene_MonParty = function() { this.initialize(...arguments); };
+    Scene_MonParty.prototype = Object.create(Scene_MenuBase.prototype);
+    Scene_MonParty.prototype.constructor = Scene_MonParty;
 
-    Scene_PkmParty.prototype.create = function() {
+    Scene_MonParty.prototype.create = function() {
         Scene_MenuBase.prototype.create.call(this);
         const rect = new Rectangle(0, this.mainAreaTop(), Graphics.boxWidth, this.mainAreaHeight());
-        this._listWindow = new Window_PkmPartyList(rect);
+        this._listWindow = new Window_MonPartyList(rect);
         this._listWindow.setHandler("ok", this.onOk.bind(this));
         this._listWindow.setHandler("cancel", this.popScene.bind(this));
         this.addWindow(this._listWindow);
     };
-    Scene_PkmParty.prototype.onOk = function() {
+    Scene_MonParty.prototype.onOk = function() {
         const p = this._listWindow.currentMonster();
         if (p) {
             MON._summaryTarget = p;
-            SceneManager.push(Scene_PkmSummary);
+            SceneManager.push(Scene_MonSummary);
         } else {
             this._listWindow.activate();
         }
     };
 
     //=========================================================================
-    // Scene_PkmSummary — ficha de um Pokémon da equipe
+    // Scene_MonSummary — ficha de um Pokémon da equipe
     //=========================================================================
-    function Window_PkmSummary() { this.initialize(...arguments); }
-    Window_PkmSummary.prototype = Object.create(Window_Base.prototype);
-    Window_PkmSummary.prototype.constructor = Window_PkmSummary;
+    function Window_MonSummary() { this.initialize(...arguments); }
+    Window_MonSummary.prototype = Object.create(Window_Base.prototype);
+    Window_MonSummary.prototype.constructor = Window_MonSummary;
 
-    Window_PkmSummary.prototype.initialize = function(rect) {
+    Window_MonSummary.prototype.initialize = function(rect) {
         Window_Base.prototype.initialize.call(this, rect);
         this._pkm = null;
     };
-    Window_PkmSummary.prototype.setMonster = function(p) { this._pkm = p; this.refresh(); };
-    Window_PkmSummary.prototype.refresh = function() {
+    Window_MonSummary.prototype.setMonster = function(p) { this._pkm = p; this.refresh(); };
+    Window_MonSummary.prototype.refresh = function() {
         this.contents.clear();
         const p = this._pkm;
         if (!p) return;
@@ -226,17 +226,17 @@ var MON = MON || {};
         }
     };
 
-    window.Scene_PkmSummary = function() { this.initialize(...arguments); };
-    Scene_PkmSummary.prototype = Object.create(Scene_MenuBase.prototype);
-    Scene_PkmSummary.prototype.constructor = Scene_PkmSummary;
-    Scene_PkmSummary.prototype.create = function() {
+    window.Scene_MonSummary = function() { this.initialize(...arguments); };
+    Scene_MonSummary.prototype = Object.create(Scene_MenuBase.prototype);
+    Scene_MonSummary.prototype.constructor = Scene_MonSummary;
+    Scene_MonSummary.prototype.create = function() {
         Scene_MenuBase.prototype.create.call(this);
         const rect = new Rectangle(0, this.mainAreaTop(), Graphics.boxWidth, this.mainAreaHeight());
-        this._win = new Window_PkmSummary(rect);
+        this._win = new Window_MonSummary(rect);
         this._win.setMonster(MON._summaryTarget);
         this.addWindow(this._win);
     };
-    Scene_PkmSummary.prototype.update = function() {
+    Scene_MonSummary.prototype.update = function() {
         Scene_MenuBase.prototype.update.call(this);
         if (Input.isTriggered("cancel") || Input.isTriggered("ok") || TouchInput.isCancelled()) {
             this.popScene();

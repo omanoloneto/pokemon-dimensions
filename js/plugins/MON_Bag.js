@@ -210,13 +210,13 @@ var MON = MON || {};
     };
 
     //=========================================================================
-    // Scene_PkmBag
+    // Scene_MonBag
     //=========================================================================
-    window.Scene_PkmBag = function() { this.initialize(...arguments); };
-    Scene_PkmBag.prototype = Object.create(Scene_MenuBase.prototype);
-    Scene_PkmBag.prototype.constructor = Scene_PkmBag;
+    window.Scene_MonBag = function() { this.initialize(...arguments); };
+    Scene_MonBag.prototype = Object.create(Scene_MenuBase.prototype);
+    Scene_MonBag.prototype.constructor = Scene_MonBag;
 
-    Scene_PkmBag.prototype.create = function() {
+    Scene_MonBag.prototype.create = function() {
         Scene_MenuBase.prototype.create.call(this);
         const top = this.mainAreaTop();
         const ph = this.calcWindowHeight(1, true);
@@ -251,18 +251,18 @@ var MON = MON || {};
         this.refreshGold();
         this._pockets.activate();
     };
-    Scene_PkmBag.prototype.refreshGold = function() {
+    Scene_MonBag.prototype.refreshGold = function() {
         const c = this._gold.contents; c.clear();
         this._gold.drawText("$ " + $gameParty.monMoney(), 0, 0, this._gold.innerWidth - 8, "right");
     };
-    Scene_PkmBag.prototype.onPocketOk = function() {
+    Scene_MonBag.prototype.onPocketOk = function() {
         this._list.setPocket(this._pockets.currentPocket());
         this._list.activate(); this._list.select(0);
     };
-    Scene_PkmBag.prototype.onItemCancel = function() {
+    Scene_MonBag.prototype.onItemCancel = function() {
         this._list.deselect(); this._pockets.activate();
     };
-    Scene_PkmBag.prototype.onItemOk = function() {
+    Scene_MonBag.prototype.onItemOk = function() {
         const e = this._list.currentEntry();
         if (!e) { this._list.activate(); return; }
         if (MON.Items.isMedicine(e.name)) {
@@ -277,7 +277,7 @@ var MON = MON || {};
             this._list.activate();
         }
     };
-    Scene_PkmBag.prototype.onTargetOk = function() {
+    Scene_MonBag.prototype.onTargetOk = function() {
         const p = this._target.currentMonster();
         const res = MON.Items.useOnMonster(this._pendingItem, p);
         if (res.ok) {
@@ -294,8 +294,8 @@ var MON = MON || {};
             this._target.activate();
         }
     };
-    Scene_PkmBag.prototype.onTargetCancel = function() { this.closeTarget(); };
-    Scene_PkmBag.prototype.closeTarget = function() {
+    Scene_MonBag.prototype.onTargetCancel = function() { this.closeTarget(); };
+    Scene_MonBag.prototype.closeTarget = function() {
         this._target.hide(); this._target.deactivate();
         this._list.refresh(); this._list.activate();
     };
@@ -329,6 +329,6 @@ var MON = MON || {};
     //=========================================================================
     PluginManager.registerCommand("MON_Bag", "giveItem", args => $gameParty.monGainItem(args.item, Number(args.qty) || 1));
     PluginManager.registerCommand("MON_Bag", "takeItem", args => $gameParty.monLoseItem(args.item, Number(args.qty) || 1));
-    PluginManager.registerCommand("MON_Bag", "openBag", () => SceneManager.push(Scene_PkmBag));
+    PluginManager.registerCommand("MON_Bag", "openBag", () => SceneManager.push(Scene_MonBag));
     PluginManager.registerCommand("MON_Bag", "giveMoney", args => $gameParty.monGainMoney(Number(args.amount) || 0));
 })();

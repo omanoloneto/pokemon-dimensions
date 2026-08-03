@@ -282,9 +282,9 @@ MON.Evolution = MON.Evolution || {};
             return { ok: true, message: before + " evoluiu em " + pkm.speciesName + "!" };
         };
 
-        if (typeof Scene_PkmBag === "undefined" || !Scene_PkmBag.prototype.onItemOk) return;
-        const _onItemOk = Scene_PkmBag.prototype.onItemOk;
-        Scene_PkmBag.prototype.onItemOk = function() {
+        if (typeof Scene_MonBag === "undefined" || !Scene_MonBag.prototype.onItemOk) return;
+        const _onItemOk = Scene_MonBag.prototype.onItemOk;
+        Scene_MonBag.prototype.onItemOk = function() {
             const entry = this._list.currentEntry();
             if (!entry || !MON.Evolution.isEvolutionItem(entry.name)) return _onItemOk.call(this);
             this._pendingItem = entry.name;

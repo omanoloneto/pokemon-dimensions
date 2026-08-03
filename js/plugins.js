@@ -15,10 +15,11 @@ var $plugins =
 {"name":"MON_Battle","status":true,"description":"[MON v0.2] Batalha selvagem 1v1: turnos, dano por tipo/STAB/crítico,\ntroca, fuga e CAPTURA (Poké Ball). Fórmulas puras em MON.Battle.","parameters":{}},
 {"name":"MON_Bag","status":true,"description":"[MON v0.3] Mochila por bolsos, dinheiro, efeitos de itens (cura/PP/\nrevive/status) e cena da mochila. Integra Poké Bolas com a batalha.","parameters":{}},
 {"name":"MON_Trainers","status":true,"description":"[MON v0.4] Batalhas de treinador (equipes múltiplas, recompensa em\ndinheiro, sem captura/fuga) e insígnias de ginásio.","parameters":{}},
-{"name":"MON_Storage","status":true,"description":"[MON v0.4] Sistema de PC: 16 caixas × 30 espaços, com depositar,\nretirar, mover/trocar e soltar Pokémon. Cena Scene_PkmStorage.","parameters":{}},
+{"name":"MON_Storage","status":true,"description":"[MON v0.4] Sistema de PC: 16 caixas × 30 espaços, com depositar,\nretirar, mover/trocar e soltar Pokémon. Cena Scene_MonStorage.","parameters":{}},
 {"name":"MON_Parts","status":true,"description":"[MON v0.3] Medabots: medalha + 4 slots de peças trocáveis e drop de peça pós-vitória.","parameters":{}},
 {"name":"MON_Sanctuary","status":true,"description":"[MON v0.3] Monster Rancher: Santuário de Discos e treino de fazenda.","parameters":{}},
 {"name":"MON_Pacts","status":true,"description":"[MON v0.3] Bucky: emblemas de Grande Criança e pacto com os 12 espíritos.","parameters":{}},
+{"name":"MON_Link","status":true,"description":"[MON v0.6] V-Monsters: barra de elo (V-Link) que enche em batalha e libera uma evolução temporária entre ramos.","parameters":{}},
 {"name":"MON_Dex","status":true,"description":"[MON v0.4] Dex regional por dimensão: recorte ordenado de espécies,\nnúmero regional, forma de obtenção e progresso de vistos/capturados.","parameters":{}},
 {"name":"MON_Codex","status":true,"description":"[MON v0.1] Sistema de Pokédex: lista navegável + ficha de detalhes\n(tipos, categoria, altura/peso, descrição), com estado visto/capturado.","parameters":{}},
 {"name":"MON_Audio","status":true,"description":"[MON v0.5] Áudio: cries dos Pokémon, BGM de batalha e fanfarra de\nvitória. Integra-se à batalha automaticamente (opcional).","parameters":{"cryFolder":"Cries/","crySuffix":"Cry","wildBgm":"Battle1","trainerBgm":"Battle2","victoryWildMe":"Victory1","victoryTrainerMe":"Victory2"}}

@@ -4,7 +4,7 @@
 /*:
  * @target MZ
  * @plugindesc [MON v0.4] Sistema de PC: 16 caixas × 30 espaços, com depositar,
- * retirar, mover/trocar e soltar Pokémon. Cena Scene_PkmStorage.
+ * retirar, mover/trocar e soltar Pokémon. Cena Scene_MonStorage.
  * @author Pokémon Dimensions (port MZ)
  * @base MON_Core
  * @base MON_Monster
@@ -108,7 +108,7 @@ var MON = MON || {};
         const tmp = slots[to]; slots[to] = slots[from]; slots[from] = tmp;   // troca/move
     };
 
-    PluginManager.registerCommand("MON_Storage", "openPC", () => SceneManager.push(Scene_PkmStorage));
+    PluginManager.registerCommand("MON_Storage", "openPC", () => SceneManager.push(Scene_MonStorage));
 
     // headless (testes): só a lógica de caixas acima
     if (typeof Scene_MenuBase === "undefined" || !Scene_MenuBase.prototype.create) return;
@@ -182,13 +182,13 @@ var MON = MON || {};
     };
 
     //=========================================================================
-    // Scene_PkmStorage
+    // Scene_MonStorage
     //=========================================================================
-    window.Scene_PkmStorage = function() { this.initialize(...arguments); };
-    Scene_PkmStorage.prototype = Object.create(Scene_MenuBase.prototype);
-    Scene_PkmStorage.prototype.constructor = Scene_PkmStorage;
+    window.Scene_MonStorage = function() { this.initialize(...arguments); };
+    Scene_MonStorage.prototype = Object.create(Scene_MenuBase.prototype);
+    Scene_MonStorage.prototype.constructor = Scene_MonStorage;
 
-    Scene_PkmStorage.prototype.create = function() {
+    Scene_MonStorage.prototype.create = function() {
         Scene_MenuBase.prototype.create.call(this);
         const top = this.mainAreaTop(), mainH = this.mainAreaHeight();
         const line = this.calcWindowHeight(1, false);
@@ -219,18 +219,18 @@ var MON = MON || {};
         this._boxWindow.activate();
     };
 
-    Scene_PkmStorage.prototype.refreshAll = function() {
+    Scene_MonStorage.prototype.refreshAll = function() {
         this.refreshTitle();
         this.drawInfo("");
         this._boxWindow.refresh();
         this._partyWindow.refresh();
     };
-    Scene_PkmStorage.prototype.refreshTitle = function() {
+    Scene_MonStorage.prototype.refreshTitle = function() {
         const c = this._titleWindow.contents; c.clear();
         const box = $gameParty.monBox(this._boxWindow._boxIndex);
         this._titleWindow.drawText("◀ " + box.name + " ▶", 0, 0, this._titleWindow.innerWidth, "center");
     };
-    Scene_PkmStorage.prototype.drawInfo = function(text) {
+    Scene_MonStorage.prototype.drawInfo = function(text) {
         const c = this._infoWindow.contents; c.clear();
         this._infoWindow.contents.fontSize = 20;
         let t = text;
@@ -243,7 +243,7 @@ var MON = MON || {};
         this._infoWindow.resetFontSettings();
     };
 
-    Scene_PkmStorage.prototype.update = function() {
+    Scene_MonStorage.prototype.update = function() {
         Scene_MenuBase.prototype.update.call(this);
         // troca de caixa quando navegando na caixa
         if (this._boxWindow.active) {
@@ -252,7 +252,7 @@ var MON = MON || {};
             this.drawInfo("");
         }
     };
-    Scene_PkmStorage.prototype.changeBox = function(dir) {
+    Scene_MonStorage.prototype.changeBox = function(dir) {
         const n = $gameParty.monBoxCount();
         this._boxWindow._boxIndex = (this._boxWindow._boxIndex + dir + n) % n;
         this._boxWindow.refresh();
@@ -261,7 +261,7 @@ var MON = MON || {};
     };
 
     //--- ações na caixa -------------------------------------------------------
-    Scene_PkmStorage.prototype.onBoxOk = function() {
+    Scene_MonStorage.prototype.onBoxOk = function() {
         // modo mover: segundo OK define o destino
         if (this._boxWindow._moveFrom >= 0) {
             $gameParty.monMoveBoxSlot(this._boxWindow._boxIndex, this._boxWindow._moveFrom, this._boxWindow.index());
@@ -278,9 +278,9 @@ var MON = MON || {};
             : [{ name: "Depositar", symbol: "deposit" }, { name: "Cancelar", symbol: "cancel" }];
         this.openCommand(cmds);
     };
-    Scene_PkmStorage.prototype.onBoxCancel = function() { this.popScene(); };
+    Scene_MonStorage.prototype.onBoxCancel = function() { this.popScene(); };
 
-    Scene_PkmStorage.prototype.openCommand = function(cmds) {
+    Scene_MonStorage.prototype.openCommand = function(cmds) {
         this._cmdWindow.setCommands(cmds);
         this._cmdWindow.height = this._cmdWindow.fittingHeight(cmds.length);
         this._cmdWindow.setHandler("withdraw", this.cmdWithdraw.bind(this));
@@ -291,28 +291,28 @@ var MON = MON || {};
         this._cmdWindow.setHandler("cancel", this.cmdCancel.bind(this));
         this._cmdWindow.show(); this._cmdWindow.activate(); this._cmdWindow.select(0);
     };
-    Scene_PkmStorage.prototype.closeCommand = function() {
+    Scene_MonStorage.prototype.closeCommand = function() {
         this._cmdWindow.hide(); this._cmdWindow.deactivate();
     };
-    Scene_PkmStorage.prototype.cmdCancel = function() { this.closeCommand(); this._boxWindow.activate(); };
-    Scene_PkmStorage.prototype.cmdWithdraw = function() {
+    Scene_MonStorage.prototype.cmdCancel = function() { this.closeCommand(); this._boxWindow.activate(); };
+    Scene_MonStorage.prototype.cmdWithdraw = function() {
         this.closeCommand();
         const r = $gameParty.monWithdraw(this._boxWindow._boxIndex, this._boxWindow.index());
         if (!r.ok) { SoundManager.playBuzzer(); this.drawInfo(r.reason); } else { SoundManager.playOk(); }
         this.refreshAll(); this._boxWindow.activate();
     };
-    Scene_PkmStorage.prototype.cmdSummary = function() {
+    Scene_MonStorage.prototype.cmdSummary = function() {
         this.closeCommand();
         MON._summaryTarget = this._boxWindow.current();
-        SceneManager.push(Scene_PkmSummary);
+        SceneManager.push(Scene_MonSummary);
     };
-    Scene_PkmStorage.prototype.cmdMove = function() {
+    Scene_MonStorage.prototype.cmdMove = function() {
         this.closeCommand();
         this._boxWindow._moveFrom = this._boxWindow.index();
         this.drawInfo("Escolha o destino e confirme.");
         this._boxWindow.refresh(); this._boxWindow.activate();
     };
-    Scene_PkmStorage.prototype.cmdRelease = function() {
+    Scene_MonStorage.prototype.cmdRelease = function() {
         this.closeCommand();
         const p = this._boxWindow.current();
         $gameParty.monReleaseBox(this._boxWindow._boxIndex, this._boxWindow.index());
@@ -321,7 +321,7 @@ var MON = MON || {};
         this.drawInfo((p ? p.name : "O Pokémon") + " foi solto. Adeus!");
         this._boxWindow.activate();
     };
-    Scene_PkmStorage.prototype.cmdDeposit = function() {
+    Scene_MonStorage.prototype.cmdDeposit = function() {
         this.closeCommand();
         if ($gameParty.monCount() <= 1) {
             SoundManager.playBuzzer(); this.drawInfo("Não pode depositar o último Pokémon!");
@@ -332,7 +332,7 @@ var MON = MON || {};
     };
 
     //--- depósito a partir da equipe (vai para a 1ª caixa com espaço) ---------
-    Scene_PkmStorage.prototype.onPartyOk = function() {
+    Scene_MonStorage.prototype.onPartyOk = function() {
         const r = $gameParty.monDeposit(this._partyWindow.index());
         if (!r.ok) { SoundManager.playBuzzer(); this.drawInfo(r.reason); }
         else SoundManager.playOk();
@@ -340,7 +340,7 @@ var MON = MON || {};
         this.refreshAll();
         this._boxWindow.activate();
     };
-    Scene_PkmStorage.prototype.onPartyCancel = function() {
+    Scene_MonStorage.prototype.onPartyCancel = function() {
         this._partyWindow.deactivate();
         this._boxWindow.activate();
     };

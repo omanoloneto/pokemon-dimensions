@@ -17,7 +17,7 @@
  * Duas camadas independentes:
  *   1. MON.Battle.* — fórmulas puras (dano, status, captura, EXP, executeMove).
  *      Rodam headless e são consumidas por outros plugins e pelos testes.
- *   2. Scene_PkmBattle — casca de render e input. Toda a regra de campo vem de
+ *   2. Scene_MonBattle — casca de render e input. Toda a regra de campo vem de
  *      MON.Field e a resolução de golpe de MON.Battle.executeMove.
  *
  * Layout da cena: time do jogador à ESQUERDA, adversário à DIREITA, até 3
@@ -371,7 +371,7 @@ MON.Battle = MON.Battle || {};
     };
 
     //=========================================================================
-    // Scene_PkmBattle  (a partir daqui usa render; ignorado no harness headless)
+    // Scene_MonBattle  (a partir daqui usa render; ignorado no harness headless)
     //=========================================================================
     if (typeof Scene_Base === "undefined" || !Scene_Base.prototype.createWindowLayer) {
         // ambiente headless (testes): só as fórmulas acima.
@@ -402,12 +402,12 @@ MON.Battle = MON.Battle || {};
 
     const isHuman = (unit) => !!(MON.Human && MON.Human.isHuman(unit));
 
-    window.Scene_PkmBattle = function() { this.initialize(...arguments); };
-    Scene_PkmBattle.prototype = Object.create(Scene_Base.prototype);
-    Scene_PkmBattle.prototype.constructor = Scene_PkmBattle;
+    window.Scene_MonBattle = function() { this.initialize(...arguments); };
+    Scene_MonBattle.prototype = Object.create(Scene_Base.prototype);
+    Scene_MonBattle.prototype.constructor = Scene_MonBattle;
 
     //--- construção -----------------------------------------------------------
-    Scene_PkmBattle.prototype.create = function() {
+    Scene_MonBattle.prototype.create = function() {
         Scene_Base.prototype.create.call(this);
         this._field = this.buildField();
         this._participants = [];
@@ -426,7 +426,7 @@ MON.Battle = MON.Battle || {};
     };
 
     // $gameTemp.monFoes (time) tem precedência; monWild mantém o encontro 1x1.
-    Scene_PkmBattle.prototype.buildField = function() {
+    Scene_MonBattle.prototype.buildField = function() {
         const trainer = $gameTemp.monTrainer || null;
         const allies = $gameParty.monBattleTeam
             ? $gameParty.monBattleTeam()
@@ -443,21 +443,21 @@ MON.Battle = MON.Battle || {};
         return MON.Field.create({ allies, foes, isTrainer: !!trainer, trainer });
     };
 
-    Scene_PkmBattle.prototype.createBackground = function() {
+    Scene_MonBattle.prototype.createBackground = function() {
         const bmp = new Bitmap(Graphics.width, Graphics.height);
         bmp.gradientFillRect(0, 0, Graphics.width, Graphics.height, "#bfe9ff", "#7fb24d", true);
         this._bg = new Sprite(bmp);
         this.addChild(this._bg);
     };
 
-    Scene_PkmBattle.prototype.createFlash = function() {
+    Scene_MonBattle.prototype.createFlash = function() {
         const bmp = new Bitmap(Graphics.width, Graphics.height);
         bmp.fillRect(0, 0, Graphics.width, Graphics.height, "#ffffff");
         this._flash = new Sprite(bmp);
         this.addChild(this._flash);
     };
 
-    Scene_PkmBattle.prototype.createFieldSprites = function() {
+    Scene_MonBattle.prototype.createFieldSprites = function() {
         this._views = [];
         for (const side of [ALLY, FOE]) {
             for (let i = 0; i < MON.Field.MAX_ACTIVE; i++) {
@@ -473,7 +473,7 @@ MON.Battle = MON.Battle || {};
         this.addChild(this._hud);
     };
 
-    Scene_PkmBattle.prototype.createAllWindows = function() {
+    Scene_MonBattle.prototype.createAllWindows = function() {
         this._msgWindow = new Window_Base(new Rectangle(0, MSG_Y, Graphics.boxWidth, MSG_H));
         this.addWindow(this._msgWindow);
 
@@ -514,7 +514,7 @@ MON.Battle = MON.Battle || {};
         this.refreshField();
     };
 
-    Scene_PkmBattle.prototype.hideMenus = function() {
+    Scene_MonBattle.prototype.hideMenus = function() {
         for (const win of [this._cmdWindow, this._moveWindow, this._targetWindow, this._listWindow,
             this._entryWindow, this._yesnoWindow, this._forgetWindow]) {
             if (win) { win.hide(); win.deactivate(); }
@@ -522,17 +522,17 @@ MON.Battle = MON.Battle || {};
     };
 
     //--- render do campo ------------------------------------------------------
-    Scene_PkmBattle.prototype.slotY = function(i) { return SLOT_TOP + i * SLOT_H; };
-    Scene_PkmBattle.prototype.panelX = function(side) {
+    Scene_MonBattle.prototype.slotY = function(i) { return SLOT_TOP + i * SLOT_H; };
+    Scene_MonBattle.prototype.panelX = function(side) {
         return side === ALLY ? 8 : Graphics.boxWidth - 8 - PANEL_W;
     };
     // faixas mais ao fundo recuam um pouco para dar sensação de formação
-    Scene_PkmBattle.prototype.artX = function(side, i) {
+    Scene_MonBattle.prototype.artX = function(side, i) {
         const inner = 16 + PANEL_W + ART_BOX / 2;
         return side === ALLY ? inner + i * 16 : Graphics.boxWidth - inner - i * 16;
     };
 
-    Scene_PkmBattle.prototype.refreshField = function() {
+    Scene_MonBattle.prototype.refreshField = function() {
         for (const view of this._views) {
             const unit = MON.Field.slots(this._field, view.side)[view.index] || null;
             if (view.unit !== unit) this.loadArt(view, unit);
@@ -544,7 +544,7 @@ MON.Battle = MON.Battle || {};
 
     // Bitmap.blt não espelha: o lado aliado usa scale.x negativo com anchor 0.5,
     // assim os dois times se encaram reaproveitando a arte de frente.
-    Scene_PkmBattle.prototype.loadArt = function(view, unit) {
+    Scene_MonBattle.prototype.loadArt = function(view, unit) {
         const sprite = view.sprite;
         view.unit = unit;
         view.ready = false;
@@ -556,7 +556,7 @@ MON.Battle = MON.Battle || {};
         sprite.y = this.slotY(view.index) + SLOT_H - 8;
     };
 
-    Scene_PkmBattle.prototype.updateArt = function() {
+    Scene_MonBattle.prototype.updateArt = function() {
         for (const view of this._views) {
             if (!view.unit || !view.sprite.bitmap) continue;
             if (!view.ready) {
@@ -574,7 +574,7 @@ MON.Battle = MON.Battle || {};
     };
 
     // as folhas de sprite do repo são tiras horizontais de quadros quadrados
-    Scene_PkmBattle.prototype.settleArt = function(view) {
+    Scene_MonBattle.prototype.settleArt = function(view) {
         const bmp = view.sprite.bitmap;
         const size = bmp.height || 1;
         const scale = Math.min(1, ART_BOX / size);
@@ -586,7 +586,7 @@ MON.Battle = MON.Battle || {};
         view.sprite.scale.x = view.side === ALLY ? -scale : scale;
     };
 
-    Scene_PkmBattle.prototype.placeholderBitmap = function(unit) {
+    Scene_MonBattle.prototype.placeholderBitmap = function(unit) {
         const size = 88;
         const bmp = new Bitmap(size, size);
         const human = isHuman(unit);
@@ -601,7 +601,7 @@ MON.Battle = MON.Battle || {};
         return bmp;
     };
 
-    Scene_PkmBattle.prototype.drawHud = function() {
+    Scene_MonBattle.prototype.drawHud = function() {
         const bmp = this._hud.bitmap;
         bmp.clear();
         bmp.fontFace = $gameSystem.mainFontFace();
@@ -613,7 +613,7 @@ MON.Battle = MON.Battle || {};
         }
     };
 
-    Scene_PkmBattle.prototype.strokeRect = function(bmp, x, y, w, h, color) {
+    Scene_MonBattle.prototype.strokeRect = function(bmp, x, y, w, h, color) {
         bmp.fillRect(x, y, w, 2, color);
         bmp.fillRect(x, y + h - 2, w, 2, color);
         bmp.fillRect(x, y, 2, h, color);
@@ -621,7 +621,7 @@ MON.Battle = MON.Battle || {};
     };
 
     // o humano ganha cor de destaque e a classe escrita: é a unidade que você é
-    Scene_PkmBattle.prototype.drawUnitPanel = function(bmp, unit, x, y, side) {
+    Scene_MonBattle.prototype.drawUnitPanel = function(bmp, unit, x, y, side) {
         const human = isHuman(unit);
         const accent = human ? "#ffd75e" : side === ALLY ? "#8fd0ff" : "#ff9a8f";
         const rate = unit.hpRate();
@@ -655,24 +655,24 @@ MON.Battle = MON.Battle || {};
     };
 
     //--- mensagens ------------------------------------------------------------
-    Scene_PkmBattle.prototype._drawMessage = function(text) {
+    Scene_MonBattle.prototype._drawMessage = function(text) {
         this._msgWindow.contents.clear();
         this._msgWindow.resetFontSettings();
         this._msgWindow.drawTextEx(text, 12, 8, this._msgWindow.innerWidth - 24);
     };
 
     // fila de passos: cada passo = {text, fn?}
-    Scene_PkmBattle.prototype.showSteps = function(steps, cb) {
+    Scene_MonBattle.prototype.showSteps = function(steps, cb) {
         this._stepQueue = steps.slice();
         this._afterSteps = cb || (() => {});
         this._phase = "message";
         this.hideMenus();
         this._playNextStep();
     };
-    Scene_PkmBattle.prototype.queueStep = function(text) {
+    Scene_MonBattle.prototype.queueStep = function(text) {
         if (this._stepQueue) this._stepQueue.push({ text });
     };
-    Scene_PkmBattle.prototype._playNextStep = function() {
+    Scene_MonBattle.prototype._playNextStep = function() {
         if (this._stepQueue.length === 0) {
             const cb = this._afterSteps;
             this._afterSteps = null;
@@ -686,7 +686,7 @@ MON.Battle = MON.Battle || {};
         this._drawMessage(step.text || "");
     };
 
-    Scene_PkmBattle.prototype.update = function() {
+    Scene_MonBattle.prototype.update = function() {
         Scene_Base.prototype.update.call(this);
         if (this._flash && this._flash.opacity > 0) this._flash.opacity -= 16;
         this.updateArt();
@@ -697,19 +697,19 @@ MON.Battle = MON.Battle || {};
     };
 
     //--- abertura -------------------------------------------------------------
-    Scene_PkmBattle.prototype.foeTag = function() { return this._field.isTrainer ? "" : " selvagem"; };
-    Scene_PkmBattle.prototype.tagOf = function(unit) {
+    Scene_MonBattle.prototype.foeTag = function() { return this._field.isTrainer ? "" : " selvagem"; };
+    Scene_MonBattle.prototype.tagOf = function(unit) {
         return MON.Field.sideOf(this._field, unit) === FOE ? this.foeTag() : "";
     };
-    Scene_PkmBattle.prototype.notePartaker = function(unit) {
+    Scene_MonBattle.prototype.notePartaker = function(unit) {
         if (unit && !this._participants.includes(unit)) this._participants.push(unit);
     };
     // humano não entra na Pokédex nem tem cry
-    Scene_PkmBattle.prototype.noteFoeSeen = function(unit) {
+    Scene_MonBattle.prototype.noteFoeSeen = function(unit) {
         if (!isHuman(unit) && $gameSystem.monSetSeen) $gameSystem.monSetSeen(unit.dexNumber);
     };
 
-    Scene_PkmBattle.prototype.startBattle = function() {
+    Scene_MonBattle.prototype.startBattle = function() {
         const foes = MON.Field.activeUnits(this._field, FOE);
         foes.forEach(f => this.noteFoeSeen(f));
         if (MON.Audio) {
@@ -737,22 +737,22 @@ MON.Battle = MON.Battle || {};
     };
 
     //--- entrada de ações (uma por unidade viva do jogador) --------------------
-    Scene_PkmBattle.prototype.startInput = function() {
+    Scene_MonBattle.prototype.startInput = function() {
         if (MON.Field.outcome(this._field)) return this.concludeByOutcome();
         this._inputUnits = MON.Field.activeUnits(this._field, ALLY);
         this._actions = [];
         this._inputIndex = 0;
         this.nextInput();
     };
-    Scene_PkmBattle.prototype.actor = function() { return this._inputUnits[this._inputIndex] || null; };
+    Scene_MonBattle.prototype.actor = function() { return this._inputUnits[this._inputIndex] || null; };
 
-    Scene_PkmBattle.prototype.nextInput = function() {
+    Scene_MonBattle.prototype.nextInput = function() {
         if (this._inputIndex >= this._inputUnits.length) return this.beginResolve();
         this._cmdWindow.setBackEnabled(this._inputIndex > 0);
         this.openCommand();
     };
 
-    Scene_PkmBattle.prototype.openCommand = function() {
+    Scene_MonBattle.prototype.openCommand = function() {
         this._phase = "input";
         this.hideMenus();
         this._focusUnit = this.actor();
@@ -764,7 +764,7 @@ MON.Battle = MON.Battle || {};
         this._drawMessage("O que " + this.actor().name + " fará?");
     };
 
-    Scene_PkmBattle.prototype.commit = function(action) {
+    Scene_MonBattle.prototype.commit = function(action) {
         this._actions[this._inputIndex] = action;
         this._inputIndex++;
         this._focusUnit = null;
@@ -772,7 +772,7 @@ MON.Battle = MON.Battle || {};
     };
 
     // voltar atrás: refaz a escolha da unidade anterior
-    Scene_PkmBattle.prototype.onCommandCancel = function() {
+    Scene_MonBattle.prototype.onCommandCancel = function() {
         if (this._inputIndex <= 0) { SoundManager.playBuzzer(); this._cmdWindow.activate(); return; }
         this._inputIndex--;
         this._actions.length = this._inputIndex;
@@ -780,12 +780,12 @@ MON.Battle = MON.Battle || {};
         this.openCommand();
     };
 
-    Scene_PkmBattle.prototype.warn = function(text) {
+    Scene_MonBattle.prototype.warn = function(text) {
         this.showSteps([{ text }], () => this.openCommand());
     };
 
     //--- seleção de alvo ------------------------------------------------------
-    Scene_PkmBattle.prototype.openTargets = function(onOk, onCancel) {
+    Scene_MonBattle.prototype.openTargets = function(onOk, onCancel) {
         const targets = MON.Field.validTargets(this._field, this.actor());
         const back = onCancel || (() => this.openCommand());
         if (!targets.length) { SoundManager.playBuzzer(); back(); return; }
@@ -811,7 +811,7 @@ MON.Battle = MON.Battle || {};
     };
 
     //--- comandos -------------------------------------------------------------
-    Scene_PkmBattle.prototype.onFight = function() {
+    Scene_MonBattle.prototype.onFight = function() {
         this._cmdWindow.hide();
         this._cmdWindow.deactivate();
         const unit = this.actor();
@@ -827,12 +827,12 @@ MON.Battle = MON.Battle || {};
         this._moveWindow.select(0);
         this._phase = "selectMove";
     };
-    Scene_PkmBattle.prototype.onMoveCancel = function() {
+    Scene_MonBattle.prototype.onMoveCancel = function() {
         this._moveWindow.hide();
         this._moveWindow.deactivate();
         this.openCommand();
     };
-    Scene_PkmBattle.prototype.onMoveOk = function() {
+    Scene_MonBattle.prototype.onMoveOk = function() {
         const unit = this.actor();
         const move = unit.moves[this._moveWindow.index()];
         if (!move || move.pp <= 0) { SoundManager.playBuzzer(); this._moveWindow.activate(); return; }
@@ -841,7 +841,7 @@ MON.Battle = MON.Battle || {};
         this.openTargets(target => this.commit({ unit, kind: "move", move, target }));
     };
 
-    Scene_PkmBattle.prototype.onBall = function() {
+    Scene_MonBattle.prototype.onBall = function() {
         this._cmdWindow.hide();
         this._cmdWindow.deactivate();
         if (this._field.isTrainer) return this.warn("Não dá para capturar o monstro de outro treinador!");
@@ -865,19 +865,19 @@ MON.Battle = MON.Battle || {};
         this._phase = "selectBall";
         this._drawMessage("Qual item de captura usar?");
     };
-    Scene_PkmBattle.prototype.onBallOk = function() {
+    Scene_MonBattle.prototype.onBallOk = function() {
         const entry = this._entryWindow.currentEntry();
         this._entryWindow.hide();
         this._entryWindow.deactivate();
         if (!entry) return this.openCommand();
         this.chooseCaptureTarget(entry.name, true);
     };
-    Scene_PkmBattle.prototype.onEntryCancel = function() {
+    Scene_MonBattle.prototype.onEntryCancel = function() {
         this._entryWindow.hide();
         this._entryWindow.deactivate();
         this.openCommand();
     };
-    Scene_PkmBattle.prototype.chooseCaptureTarget = function(ball, consume) {
+    Scene_MonBattle.prototype.chooseCaptureTarget = function(ball, consume) {
         const unit = this.actor();
         this.openTargets(target => {
             const rule = MON.Franchise ? MON.Franchise.captureRule(target, ball) : { allowed: true };
@@ -886,7 +886,7 @@ MON.Battle = MON.Battle || {};
         }, () => this.onBall());
     };
 
-    Scene_PkmBattle.prototype.onItem = function() {
+    Scene_MonBattle.prototype.onItem = function() {
         this._cmdWindow.hide();
         this._cmdWindow.deactivate();
         const meds = $gameParty.monPocket ? $gameParty.monPocket(2) : [];
@@ -900,7 +900,7 @@ MON.Battle = MON.Battle || {};
         this._phase = "selectItem";
         this._drawMessage("Qual item usar?");
     };
-    Scene_PkmBattle.prototype.onItemOk = function() {
+    Scene_MonBattle.prototype.onItemOk = function() {
         const entry = this._entryWindow.currentEntry();
         this._entryWindow.hide();
         this._entryWindow.deactivate();
@@ -913,7 +913,7 @@ MON.Battle = MON.Battle || {};
             "Usar " + entry.data.name + " em quem?");
     };
 
-    Scene_PkmBattle.prototype.onSwitch = function() {
+    Scene_MonBattle.prototype.onSwitch = function() {
         this._cmdWindow.hide();
         this._cmdWindow.deactivate();
         const bench = MON.Field.benchReady(this._field, ALLY);
@@ -925,14 +925,14 @@ MON.Battle = MON.Battle || {};
             "Quem entra no lugar de " + unit.name + "?");
     };
 
-    Scene_PkmBattle.prototype.onRun = function() {
+    Scene_MonBattle.prototype.onRun = function() {
         this._cmdWindow.hide();
         this._cmdWindow.deactivate();
         if (this._field.isTrainer) return this.warn("Não dá para fugir de uma batalha de treinador!");
         this.commit({ unit: this.actor(), kind: "run" });
     };
 
-    Scene_PkmBattle.prototype.openUnitList = function(units, onOk, onCancel, prompt) {
+    Scene_MonBattle.prototype.openUnitList = function(units, onOk, onCancel, prompt) {
         const close = () => { this._listWindow.hide(); this._listWindow.deactivate(); };
         this._listWindow.setUnits(units);
         this._listWindow.setCursorCallback(null);
@@ -950,7 +950,7 @@ MON.Battle = MON.Battle || {};
     };
 
     //--- resolução do turno ---------------------------------------------------
-    Scene_PkmBattle.prototype.beginResolve = function() {
+    Scene_MonBattle.prototype.beginResolve = function() {
         this._focusUnit = null;
         this.hideMenus();
         const foeActions = MON.Field.activeUnits(this._field, FOE)
@@ -961,12 +961,12 @@ MON.Battle = MON.Battle || {};
         this.resolveNext();
     };
 
-    Scene_PkmBattle.prototype.onField = function(unit) {
+    Scene_MonBattle.prototype.onField = function(unit) {
         const side = MON.Field.sideOf(this._field, unit);
         return !!side && MON.Field.slots(this._field, side).includes(unit);
     };
 
-    Scene_PkmBattle.prototype.resolveNext = function() {
+    Scene_MonBattle.prototype.resolveNext = function() {
         if (this._endReason) return this.endBattle();
         if (MON.Field.outcome(this._field)) return this.endOfTurn();
         const action = this._order.shift();
@@ -977,7 +977,7 @@ MON.Battle = MON.Battle || {};
         this.showSteps(steps, () => this.resolveNext());
     };
 
-    Scene_PkmBattle.prototype.performAction = function(action) {
+    Scene_MonBattle.prototype.performAction = function(action) {
         const unit = action.unit;
         let steps = [];
         if (action.kind === "capture") steps = this.captureSteps(action);
@@ -989,7 +989,7 @@ MON.Battle = MON.Battle || {};
         return steps;
     };
 
-    Scene_PkmBattle.prototype.moveSteps = function(action) {
+    Scene_MonBattle.prototype.moveSteps = function(action) {
         const unit = action.unit;
         const target = MON.Field.resolveTarget(this._field, unit, action.target);
         if (!target) return [{ text: unit.name + " não encontrou um alvo." }];
@@ -998,14 +998,14 @@ MON.Battle = MON.Battle || {};
         }).map(text => ({ text }));
     };
 
-    Scene_PkmBattle.prototype.itemSteps = function(action) {
+    Scene_MonBattle.prototype.itemSteps = function(action) {
         const label = (MON.Core.item(action.item) || {}).name || action.item;
         const res = MON.Items.useOnMonster(action.item, action.target);
         if (res.ok && $gameParty.monLoseItem) $gameParty.monLoseItem(action.item, 1);
         return [{ text: action.unit.name + " usou " + label + "." }, { text: res.message }];
     };
 
-    Scene_PkmBattle.prototype.switchSteps = function(action) {
+    Scene_MonBattle.prototype.switchSteps = function(action) {
         if (!MON.Field.switchUnit(this._field, ALLY, action.unit, action.replacement)) {
             return [{ text: action.replacement.name + " não pode entrar agora." }];
         }
@@ -1013,7 +1013,7 @@ MON.Battle = MON.Battle || {};
         return [{ text: action.unit.name + ", volte!" }, { text: "Vai, " + action.replacement.name + "!" }];
     };
 
-    Scene_PkmBattle.prototype.runSteps = function(action) {
+    Scene_MonBattle.prototype.runSteps = function(action) {
         const foes = MON.Field.activeUnits(this._field, FOE);
         const fastest = foes.reduce((mx, f) => Math.max(mx, MON.Field.unitSpeed(f)), 0);
         const escaped = MON.Battle.canEscape(MON.Field.unitSpeed(action.unit), fastest, this._field.runAttempts);
@@ -1023,7 +1023,7 @@ MON.Battle = MON.Battle || {};
         return [{ text: "Você fugiu em segurança!" }];
     };
 
-    Scene_PkmBattle.prototype.captureSteps = function(action) {
+    Scene_MonBattle.prototype.captureSteps = function(action) {
         const target = MON.Field.resolveTarget(this._field, action.unit, action.target);
         if (!target) return [{ text: "Não há alvo para capturar." }];
         if (MON.Franchise) {
@@ -1061,7 +1061,7 @@ MON.Battle = MON.Battle || {};
     };
 
     // capturado sai do campo sem desmaiar: não vale EXP nem conta como derrota
-    Scene_PkmBattle.prototype.removeFromField = function(unit) {
+    Scene_MonBattle.prototype.removeFromField = function(unit) {
         const sideId = MON.Field.sideOf(this._field, unit);
         if (!sideId) return;
         const side = MON.Field.side(this._field, sideId);
@@ -1072,7 +1072,7 @@ MON.Battle = MON.Battle || {};
     };
 
     // registra quem caiu: vitórias/derrotas alimentam as condições de evolução
-    Scene_PkmBattle.prototype.noteCasualties = function(actor) {
+    Scene_MonBattle.prototype.noteCasualties = function(actor) {
         for (const unit of MON.Field.allUnits(this._field)) {
             const index = this._down.indexOf(unit);
             if (!unit.isFainted()) {
@@ -1092,7 +1092,7 @@ MON.Battle = MON.Battle || {};
     };
 
     //--- fim de turno ---------------------------------------------------------
-    Scene_PkmBattle.prototype.endOfTurn = function() {
+    Scene_MonBattle.prototype.endOfTurn = function() {
         const living = MON.Field.activeUnits(this._field, ALLY)
             .concat(MON.Field.activeUnits(this._field, FOE))
             .sort((a, b) => MON.Field.unitSpeed(b) - MON.Field.unitSpeed(a));
@@ -1105,7 +1105,7 @@ MON.Battle = MON.Battle || {};
         this.showSteps(steps, () => this.fillSlots());
     };
 
-    Scene_PkmBattle.prototype.fillSlots = function() {
+    Scene_MonBattle.prototype.fillSlots = function() {
         if (MON.Field.outcome(this._field)) return this.concludeByOutcome();
         const steps = [];
         for (const side of [ALLY, FOE]) {
@@ -1127,7 +1127,7 @@ MON.Battle = MON.Battle || {};
         this.showSteps(steps, () => this.concludeByOutcome());
     };
 
-    Scene_PkmBattle.prototype.concludeByOutcome = function() {
+    Scene_MonBattle.prototype.concludeByOutcome = function() {
         const outcome = MON.Field.outcome(this._field);
         if (outcome === "win") return this.onVictory();
         if (outcome === "lose") return this.onDefeat();
@@ -1135,7 +1135,7 @@ MON.Battle = MON.Battle || {};
     };
 
     //--- vitória: EXP, golpes e evolução de todos os participantes vivos -------
-    Scene_PkmBattle.prototype.onVictory = function() {
+    Scene_MonBattle.prototype.onVictory = function() {
         if (MON.Audio) MON.Audio.playVictory(this._field.isTrainer);
         const winners = this._participants.filter(u => !u.isFainted());
         const bonus = this._field.isTrainer ? 1.5 : 1;
@@ -1151,7 +1151,7 @@ MON.Battle = MON.Battle || {};
         this.showSteps(steps, () => this.processGrowth());
     };
 
-    Scene_PkmBattle.prototype.processGrowth = function() {
+    Scene_MonBattle.prototype.processGrowth = function() {
         if (!this._growthQueue.length) {
             const cb = this._afterGrowth;
             this._afterGrowth = null;
@@ -1167,7 +1167,7 @@ MON.Battle = MON.Battle || {};
         this.showSteps(steps, () => this.processNextLearn());
     };
 
-    Scene_PkmBattle.prototype.processNextLearn = function() {
+    Scene_MonBattle.prototype.processNextLearn = function() {
         const winner = this._expWinner;
         if (!this._learnQueue || this._learnQueue.length === 0) return this.evolutionStep();
         const moveId = this._learnQueue.shift();
@@ -1184,7 +1184,7 @@ MON.Battle = MON.Battle || {};
         }
     };
 
-    Scene_PkmBattle.prototype.openForgetPrompt = function() {
+    Scene_MonBattle.prototype.openForgetPrompt = function() {
         this._phase = "learn";
         this.hideMenus();
         this._drawMessage("Esquecer um golpe para aprender " + this._pendingLearn.name + "?");
@@ -1192,7 +1192,7 @@ MON.Battle = MON.Battle || {};
         this._yesnoWindow.activate();
         this._yesnoWindow.select(0);
     };
-    Scene_PkmBattle.prototype.onForgetYes = function() {
+    Scene_MonBattle.prototype.onForgetYes = function() {
         this._yesnoWindow.hide();
         this._yesnoWindow.deactivate();
         this._forgetWindow.setUnit(this._expWinner);
@@ -1202,13 +1202,13 @@ MON.Battle = MON.Battle || {};
         this._phase = "learn";
         this._drawMessage("Qual golpe deve ser esquecido?");
     };
-    Scene_PkmBattle.prototype.onForgetNo = function() {
+    Scene_MonBattle.prototype.onForgetNo = function() {
         this._yesnoWindow.hide();
         this._yesnoWindow.deactivate();
         this.showSteps([{ text: this._expWinner.name + " não aprendeu " + this._pendingLearn.name + "." }],
             () => this.processNextLearn());
     };
-    Scene_PkmBattle.prototype.onForgetOk = function() {
+    Scene_MonBattle.prototype.onForgetOk = function() {
         const winner = this._expWinner;
         const index = this._forgetWindow.index();
         const old = MON.Core.move(winner.moves[index].id);
@@ -1221,14 +1221,14 @@ MON.Battle = MON.Battle || {};
             { text: winner.name + " esqueceu " + oldName + " e aprendeu " + this._pendingLearn.name + "!" }
         ], () => this.processNextLearn());
     };
-    Scene_PkmBattle.prototype.onForgetCancel = function() {
+    Scene_MonBattle.prototype.onForgetCancel = function() {
         this._forgetWindow.hide();
         this._forgetWindow.deactivate();
         this.showSteps([{ text: this._expWinner.name + " não aprendeu " + this._pendingLearn.name + "." }],
             () => this.processNextLearn());
     };
 
-    Scene_PkmBattle.prototype.evolutionStep = function() {
+    Scene_MonBattle.prototype.evolutionStep = function() {
         const winner = this._expWinner;
         const into = winner.evolutionByLevel ? winner.evolutionByLevel() : null;
         if (!into) return this.processGrowth();
@@ -1241,7 +1241,7 @@ MON.Battle = MON.Battle || {};
         });
     };
 
-    Scene_PkmBattle.prototype.trainerDefeated = function() {
+    Scene_MonBattle.prototype.trainerDefeated = function() {
         const trainer = this._field.trainer;
         const reward = trainer.money || 0;
         const steps = [{ text: "Você derrotou " + trainer.name + "!" }];
@@ -1253,21 +1253,21 @@ MON.Battle = MON.Battle || {};
         this.showSteps(steps, () => this.endBattle());
     };
 
-    Scene_PkmBattle.prototype.onDefeat = function() {
+    Scene_MonBattle.prototype.onDefeat = function() {
         this.showSteps([
             { text: "Sua equipe inteira foi derrotada…" },
             { text: "Você voltou correndo para o centro de cura." }
         ], () => { this.healTeam(); this.endBattle(); });
     };
 
-    Scene_PkmBattle.prototype.healTeam = function() {
+    Scene_MonBattle.prototype.healTeam = function() {
         if ($gameParty.monHealAll) $gameParty.monHealAll();
         const avatar = $gameParty.monAvatar ? $gameParty.monAvatar() : null;
         if (avatar && avatar.healFully) avatar.healFully();
     };
 
     //--- fim ------------------------------------------------------------------
-    Scene_PkmBattle.prototype.endBattle = function() {
+    Scene_MonBattle.prototype.endBattle = function() {
         $gameTemp.monWild = null;
         $gameTemp.monFoes = null;
         $gameTemp.monTrainer = null;

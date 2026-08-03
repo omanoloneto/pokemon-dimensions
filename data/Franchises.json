@@ -100,9 +100,10 @@
       "capture": {
         "inField": true,
         "items": ["VLINK", "VLINKPRO", "VLINKMAX"],
-        "verb": "vinculado",
-        "throwText": "Você apontou o {item}!",
-        "successText": "Elo estabelecido! {target} aceitou o vínculo!"
+        "verb": "absorvido",
+        "throwText": "Você apontou o {item} e começou a absorver os dados de {target}!",
+        "successText": "Dados absorvidos! {target} agora existe dentro do seu V-Link.",
+        "deniedText": "Os dados de {target} ainda estão íntegros demais para serem absorvidos."
       }
     },
     "HUM": {
